@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URI = "http://localhost:3000" // Temporary api
+const BASE_URI = "http://localhost:3000" // Temporary url
 
 
 type play = {
