@@ -33,21 +33,20 @@ type BridgeApiInput = {
   parameters: {}
 }
 
-interface Error {
+interface IError {
   isSuccess: boolean;
   message: string;
   error: {}
 }
 
-const sendError = (err: Error) => {
+const sendError = (err: IError) => {
   console.error(err);
-  let error: Error = { isSuccess: err.isSuccess, message: err.message, error: err };
+  let error: IError = { isSuccess: err.isSuccess, message: err.message, error: err };
   return error
 }
 
 
 const bridgeApi = (args: BridgeApiInput) => {
-
   axios({
     method: (args.method).toUpperCase(),
     url: `${BASE_URI}/${args.path}`,
