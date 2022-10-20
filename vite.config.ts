@@ -1,24 +1,43 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 
-import type { UserConfig } from "vitest/config";
+import typescript from "@rollup/plugin-typescript";
+import path from "path";
+import { typescriptPaths } from "rollup-plugin-typescript-paths";
 
-const test = {
-  globals: true,
-  environment: "jsdom",
-  setupFiles: ["src/__tests__/setupTests.ts"],
-  threads: false,
-  watch: false,
-} as UserConfig["test"];
-
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  server: { port: 3000 },
-  build: {
-    minify: false,
-  },
-  root: "",
-  // @ts-ignore
-  test,
+    plugins: [],
+    resolve: {
+        alias: [
+            {
+                find: "~",
+                replacement: path.resolve(__dirname, "./src"),
+            },
+        ],
+    },
+    server: {
+        port: 3000,
+    },
+    build: {
+        manifest: true,
+        minify: true,
+        reportCompressedSize: true,
+        lib: {
+            entry: path.resolve(__dirname, "src/brigdeApis.ts"),
+            fileName: "main",
+            formats: ["es", "cjs"],
+        },
+        rollupOptions: {
+            external: [],
+            plugins: [
+                typescriptPaths({
+                    preserveExtensions: true,
+                }),
+                typescript({
+                    sourceMap: false,
+                    declaration: true,
+                    outDir: "dist",
+                }),
+            ],
+        },
+    },
 });
