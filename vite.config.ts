@@ -22,8 +22,8 @@ export default defineConfig({
         minify: true,
         reportCompressedSize: true,
         lib: {
-            entry: path.resolve(__dirname, "src/brigdeApis.ts"),
-            fileName: "main",
+            entry: path.resolve(__dirname, "./src/bridge.ts"),
+            fileName: "looking-glass-bridge",
             formats: ["es", "cjs"],
         },
         rollupOptions: {

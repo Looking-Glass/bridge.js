@@ -1,16 +1,16 @@
 {
-  "name": "looking-glass-bridge-js",
+  "name": "@lookingglass/bridge.js",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "exports": {
     ".": {
-      "import": "./dist/main.es.js",
-      "require": "./dist/main.cjs.js"
+      "import": "./dist/looking-glass-bridge.es.js",
+      "require": "./dist/looking-glass-bridge.cjs.js"
     }
   },
-  "main": "./dist/main.cjs.js",
-  "module": "./dist/main.es.js",
-  "typings": "./dist/main.d.ts",
+  "main": "./dist/looking-glass-bridge.cjs.js",
+  "module": "./dist/looking-glass-bridge.es.js",
+  "typings": "./dist/looking-glass-bridge.d.ts",
   "files": [
     "dist"
   ],
