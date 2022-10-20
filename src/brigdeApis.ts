@@ -33,18 +33,22 @@ type BridgeApiInput = {
   parameters: {}
 }
 
-interface IError {
+interface IResponse {
   isSuccess: boolean;
   message: string;
-  error: {}
+  error?: {},
+  response?: {}
 }
 
-const sendError = (err: IError) => {
-  console.error(err);
-  let error: IError = { isSuccess: err.isSuccess, message: err.message, error: err };
-  return error
-}
+const sendResponse = (args: IResponse) => {
+  console.log(args);
+  let response: IResponse = { isSuccess: args.isSuccess, message: args.message };
 
+  if (args.error) response["error"] = args.error
+  if (args.response) response["response"] = args.response
+
+  return response
+}
 
 const bridgeApi = (args: BridgeApiInput) => {
   axios({
@@ -53,11 +57,11 @@ const bridgeApi = (args: BridgeApiInput) => {
     data: args.parameters
   })
     .then((response) => {
-      return { isSuccess: true, response: response.data };
+      return sendResponse({ isSuccess: true, message: "Success", response: response.data });
     })
     .catch((error) => {
       console.log("Error: ", error);
-      return { isSuccess: false, error };
+      return sendResponse({ isSuccess: false, message: `Error in /${args.path} api`, error });
     })
 }
 
@@ -69,15 +73,15 @@ export async function isBridgeRunning() {
     let response = await axios.get(BASE_URI);
     if (response.status === 200) {
       console.log("Bridge is running...");
-      return { isSuccess: true, message: "Bridge is running..." };
+      return sendResponse({ isSuccess: true, message: "Bridge is running...", response: response?.data });
     }
 
     console.log("Bridge is NOT running...");
-    return { isSuccess: false, message: "Bridge is NOT running..." };
+    return sendResponse({ isSuccess: false, message: "Bridge is NOT running..." });
 
   } catch (error: any) {
     console.log("Error in checking Bridge status: " + error);
-    return { isSuccess: false, message: "Error in checking Bridge status: " };
+    return sendResponse({ isSuccess: false, message: "Error in checking Bridge status: ", error });
   }
 }
 
@@ -85,14 +89,14 @@ export async function isBridgeRunning() {
 export async function playContent(args: PlayInput) {
   // validation
   if (!args.looking_glass_device_index || !args.source) {
-    return { isSuccess: false, message: "Missing paramaters" };
+    return sendResponse({ isSuccess: false, message: "Missing paramaters" });
   }
 
   const checkbridgeStatus = await isBridgeRunning();
   console.log("checkbridgeStatus: ", checkbridgeStatus);
 
   if (!checkbridgeStatus) {
-    return { isSuccess: false, message: "Please connect to bridge" };
+    return sendResponse({ isSuccess: false, message: "Please connect to bridge" });
   }
 
   return await bridgeApi({ method: "put", path: "play", parameters: args });
@@ -111,14 +115,14 @@ export async function encodeYuv420p(args: Yuv420pInput) {
     !args.scale_x ||
     !args.scale_y
   ) {
-    return { isSuccess: false, message: "Missing paramaters" };
+    return sendResponse({ isSuccess: false, message: "Missing paramaters" });
   }
 
   const checkbridgeStatus = await isBridgeRunning();
   console.log("checkbridgeStatus: ", checkbridgeStatus);
 
   if (!checkbridgeStatus.isSuccess) {
-    return { isSuccess: false, message: "Please connect to bridge" };
+    return sendResponse({ isSuccess: false, message: "Please connect to bridge" });
   }
 
   return await bridgeApi({ method: "put", path: "encode", parameters: args });
@@ -136,14 +140,14 @@ export async function encodeYuv444p(args: Yuv444pInput) {
     !args.crf ||
     !args.pixel_format
   ) {
-    return { isSuccess: false, message: "Missing paramaters" };
+    return sendResponse({ isSuccess: false, message: "Missing paramaters" });
   }
 
   const checkbridgeStatus = await isBridgeRunning();
   console.log("checkbridgeStatus: ", checkbridgeStatus);
 
   if (!checkbridgeStatus.isSuccess) {
-    return { isSuccess: false, message: "Please connect to bridge" };
+    return sendResponse({ isSuccess: false, message: "Please connect to bridge" });
   }
 
   return await bridgeApi({ method: "put", path: "encode", parameters: args });
