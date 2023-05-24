@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Looking Glass WebXR Library -Testing-</title>
+		<link rel="stylesheet" href="../src/index.css" />
+	</head>
+	<body>
+		<div id="root"></div>
+		<h1>Looking Glass Bridge.JS Library</h1>
+		<h2>Connecting to Bridge via WebSockets</h2>
+		<p>
+			Looking Glass Bridge uses the concept of <strong>Orchestrations</strong> to manage connections to the
+			Looking Glass Display(s). You can click the button below to enter an orchestration and connect to
+			Looking Glass Bridge.
+		</p>
+		<script type="module">
+			import { BridgeClient } from "../src/library/client.ts"
+			const Bridge = new BridgeClient()
+			// Connect to Bridge Event Source
+			const orchestration_label = document.getElementById("orchestration-label")
+			orchestration_label.innerHTML = `Orchestration ID: ${await Bridge.CreateOrchestration()}`
+			const event_source_button = document.getElementById("event-source")
+			const eventsource_label = document.getElementById("eventsource-label")
+			event_source_button.addEventListener("click", async () => {
+				let response = await Bridge.EventSource()
+				console.log(response.payload)
+				eventsource_label.innerHTML = `Bridge Event Source: ${response.payload.value.event.value}`
+			})
+			const QueryDisplays_Button = document.getElementById("query_displays")
+			QueryDisplays_Button.addEventListener("click", async () => {
+				let response = await Bridge.QueryDisplays()
+				console.log(response)
+			})
+			const BridgeVersion_Button = document.getElementById("bridge-version")
+			BridgeVersion_Button.addEventListener("click", async () => {
+				let response = await Bridge.QueryBridgeVersion()
+				console.log(response)
+			})
+			const APIVersion_Button = document.getElementById("api-version")
+			APIVersion_Button.addEventListener("click", async () => {
+				let response = await Bridge.QueryAPIVersion()
+				console.log(response)
+			})
+		</script>
+		<label id="orchestration-label">Orchestration ID: </label>
+		<div>
+			<p>
+				After we join an orchestration, we can connect to Looking Glass Bridge's websocket and query display
+				parameters.
+			</p>
+			<button id="query_displays">Query Displays</button>
+			<button id="event-source">Connect to Websocket</button>
+			<button id="bridge-version">Query Bridge Version</button>
+			<button id="api-version">Query API Version</button>
+			<label id="eventsource-label">Bridge Event Source:</label>
+		</div>
+		<br />
+		<h2>Sending holograms to Bridge</h2>
+		<p>
+			Looking Glass Bridge 2.2 and above support playing content directly via the API. Try adding a URL in the
+			fields below to send a hologram from the web to Looking Glass Bridge.
+		</p>
+		<script type="module">
+			import { BridgeClient } from "../src/library/client.ts"
+			import Playlist from "../src/library/playlists/playlist.ts"
+			import { QuiltPlaylistItem } from "../src/library/playlists/playlistItems.ts"
+
+			const Bridge = new BridgeClient()
+			const play_playlist_button = document.getElementById("play-playlist")
+			const add_playlist_item_button = document.getElementById("add-playlist-item")
+			console.log(add_playlist_item_button)
+			const playlist = document.getElementById("playlist")
+
+			play_playlist_button.addEventListener("click", async () => {
+				let newPlaylist = new Playlist()
+				newPlaylist.name = "banana2"
+				newPlaylist.loop = true
+				let quilt = QuiltPlaylistItem(
+					"https://s3.amazonaws.com/lkg-blocks/u/fe76779b7d724315/yggdrasil_qs8x13.jpg",
+					13,
+					8,
+					0.75,
+					8 * 13
+				)
+				newPlaylist.AddItem(quilt)
+
+				let response = await Bridge.PlayPlaylist(newPlaylist, -1)
+			})
+
+			add_playlist_item_button.addEventListener("click", async () => {
+				console.log("banana")
+				let newPlaylistItem = document.createElement("ul")
+				playlist.appendChild(newPlaylistItem)
+				let newPlaylistInput = document.createElement("input")
+				newPlaylistInput.type = "text"
+				newPlaylistInput.placeholder = "Enter URL"
+				newPlaylistItem.appendChild(newPlaylistInput)
+
+				// create quilt input values
+			})
+		</script>
+		<button id="play-playlist">Play Playlist</button>
+		<button id="add-playlist-item">Add Playlist Item</button>
+		<li id="playlist"></li>
+		<br />
+		<h2>Loading a playlist from Looking Glass Studio</h2>
+		<button>not working yet</button>
+	</body>
+</html>

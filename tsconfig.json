@@ -15,6 +15,6 @@
 		"isolatedModules": true,
 		"noEmit": true
 	},
-	"include": ["src"],
+	"include": ["src", "library/bridge.ts"],
 	"exclude": ["node_modules"]
 }
