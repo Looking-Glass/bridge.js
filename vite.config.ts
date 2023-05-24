@@ -21,7 +21,7 @@ export default defineConfig({
 		minify: true,
 		reportCompressedSize: true,
 		lib: {
-			entry: path.resolve(process.cwd(), "src/index.ts"),
+			entry: path.resolve(process.cwd(), "src/library/index.ts"),
 			name: "@lookingglass/bridge.js",
 			fileName: "looking-glass-bridge",
 			formats: ["es", "cjs"],
