@@ -2,7 +2,7 @@ import { Display, TryParseDisplay } from "./components/displays"
 import { TrySendMessage } from "./components/endpoints"
 import { TryEnterOrchestration, TryExitOrchestration } from "./components/orchestration"
 import { ConnectToBridgeEventSource } from "./components/websocket"
-import Playlist from "./playlists/playlist"
+import { Playlist } from "./playlists/playlist"
 
 export class BridgeClient {
 	private orchestration: string

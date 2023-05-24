@@ -16,7 +16,7 @@
 			Looking Glass Bridge.
 		</p>
 		<script type="module">
-			import { BridgeClient } from "../src/library/client.ts"
+			import { BridgeClient } from "../dist/looking-glass-bridge.mjs"
 			const Bridge = new BridgeClient()
 			// Connect to Bridge Event Source
 			const orchestration_label = document.getElementById("orchestration-label")
@@ -63,9 +63,9 @@
 			fields below to send a hologram from the web to Looking Glass Bridge.
 		</p>
 		<script type="module">
-			import { BridgeClient } from "../src/library/client.ts"
-			import Playlist from "../src/library/playlists/playlist.ts"
-			import { QuiltPlaylistItem } from "../src/library/playlists/playlistItems.ts"
+			import { BridgeClient } from "../dist/looking-glass-bridge.mjs"
+			import { Playlist } from "../dist/looking-glass-bridge.mjs"
+			import { QuiltPlaylistItem } from "../dist/looking-glass-bridge.mjs"
 
 			const Bridge = new BridgeClient()
 			const play_playlist_button = document.getElementById("play-playlist")

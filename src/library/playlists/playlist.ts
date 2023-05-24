@@ -1,6 +1,6 @@
 import { PlaylistItemType } from "./playlistItems"
 
-export default class Playlist {
+export class Playlist {
 	public name: string
 	public loop: boolean
 	public items: PlaylistItemType[]
