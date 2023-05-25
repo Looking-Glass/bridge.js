@@ -1,5 +1,27 @@
 import { PlaylistItemType } from "./playlistItems"
 
+export interface PlaylistType {
+	name: string
+	loop: boolean
+	items: PlaylistItemType[]
+}
+
+interface getPlayPlaylistJsonArgs {
+	orchestration: string
+	head: number
+}
+
+export interface PlaylistArgs {
+	/** the playlist class */
+	playlist: Playlist
+	/** display */
+	head?: number
+}
+/**
+ * Playlist class
+ * @class
+ *
+ */
 export class Playlist {
 	public name: string
 	public loop: boolean
@@ -9,6 +31,10 @@ export class Playlist {
 		this.name = ""
 		this.loop = false
 		this.items = []
+	}
+
+	public SetName(name: string) {
+		this.name = name
 	}
 
 	public AddItem(item: PlaylistItemType) {
@@ -24,7 +50,17 @@ export class Playlist {
 		}
 	}
 
-	public GetPlayPlaylistJson(orchestration: string, head: number) {
+	public ClearItems() {
+		this.items = []
+	}
+
+	/**
+	 * creates the json object for playing the playlist
+	 * @param orchestration
+	 * @param head
+	 * @returns
+	 */
+	public GetPlayPlaylistJson({ orchestration, head }: getPlayPlaylistJsonArgs) {
 		const content = JSON.stringify({
 			orchestration: orchestration,
 			name: this.name,
@@ -34,6 +70,11 @@ export class Playlist {
 		return content
 	}
 
+	/**
+	 * create the json object for the playlist instance
+	 * @param orchestration
+	 * @returns
+	 */
 	public GetInstanceJson(orchestration: string) {
 		const content = JSON.stringify({
 			orchestration: orchestration,

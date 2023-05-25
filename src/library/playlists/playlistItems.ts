@@ -15,16 +15,23 @@ export interface PlaylistItemType {
 	depth_loc?: 0 | 1 | 2 | 3
 	depth_inversion?: 0 | 1
 	chroma_depth?: 0 | 1
-	depthiness?: 0
+	depthiness?: number
+	depth_cutoff?: number
 }
-
-export function QuiltPlaylistItem(
-	URI: string,
-	rows: number,
-	columns: number,
-	aspect: number,
+interface QuiltPlaylistItemArgs {
+	URI: string
+	rows: number
+	columns: number
+	aspect: number
 	viewCount: number
-): PlaylistItemType {
+}
+export function QuiltPlaylistItem({
+	URI,
+	rows,
+	columns,
+	aspect,
+	viewCount,
+}: QuiltPlaylistItemArgs): PlaylistItemType {
 	const PlaylistItem: PlaylistItemType = {
 		id: -1,
 		URI: URI,
@@ -37,17 +44,31 @@ export function QuiltPlaylistItem(
 	return PlaylistItem
 }
 
-export function RGBDPlaylistItem(
-	URI: string,
-	rows: number,
-	columns: number,
-	aspect: number,
-	viewCount: number,
-	depth_loc: 0 | 1 | 2 | 3,
-	depth_inversion: 0 | 1,
-	chroma_depth: 0 | 1,
-	depthiness: 0
-): PlaylistItemType {
+interface RGBDPlaylistItemArgs {
+	URI: string
+	rows: number
+	columns: number
+	aspect: number
+	viewCount: number
+	depth_loc: 0 | 1 | 2 | 3
+	depth_inversion: 0 | 1
+	chroma_depth: 0 | 1
+	depthiness: number
+	focus: number
+	depth_cutoff: 1
+}
+
+export function RGBDPlaylistItem({
+	URI,
+	rows,
+	columns,
+	aspect,
+	viewCount,
+	depth_loc,
+	depth_inversion,
+	chroma_depth,
+	depthiness,
+}: RGBDPlaylistItemArgs): PlaylistItemType {
 	const PlaylistItem: PlaylistItemType = {
 		id: -1,
 		URI: URI,

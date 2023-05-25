@@ -1,20 +1,39 @@
 export type BridgeEndpointType =
-	| "api_version"
-	| "instance_playlist"
-	| "insert_playlist_entry"
-	| "delete_playlist"
+	| "instance_studio_playlist"
 	| "bridge_version"
-	| "play_playlist"
-	| "play_playlist_complete"
-	| "play_playlist_cancelled"
-	| "progress_start"
-	| "progress_update"
-	| "progress_complete"
-	| "monitor_connect"
-	| "monitor_disconnect"
+	| "api_version"
+	| "set_named_autostart_playlist"
+	| "set_autostart_playlist"
 	| "available_output_devices"
+	| "enter_orchestration"
+	| "exit_orchestration"
+	| "instance_playlist"
+	| "delete_playlist"
+	| "insert_playlist_entry"
+	| "update_playlist_entry"
+	| "update_current_entry"
+	| "sync_overwrite_playlist"
+	| "cancel_pending"
+	| "synced_file_hash"
+	| "transport_control_play"
+	| "transport_control_pause"
+	| "transport_control_next"
+	| "transport_control_previous"
+	| "transport_control_seek_to_index"
+	| "play_playlist"
 
-export async function TrySendMessage(endpoint: BridgeEndpointType, requestBody?: string, baseURL?: string) {
+/**
+ *
+ * @param endpoint the bridge endpoint to send the message to, defined in BridgeEndpointType
+ * @param requestBody Optional, the Json body to send to Bridge, defaults to empty Json
+ * The requestbody is a json object that has been stringified. For example:
+ * const requestBody = JSON.stringify({
+ * 	orchestration: this.orchestration,
+ * })
+ * @param baseURL Optional, the localhost url that bridge uses, defaults to http://localhost:33334/
+ * @returns the response from the bridge endpoint, as a json object
+ */
+export async function sendMessage(endpoint: BridgeEndpointType, requestBody?: string, baseURL?: string) {
 	if (baseURL == undefined) {
 		baseURL = "http://localhost:33334/"
 	}

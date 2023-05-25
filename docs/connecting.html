@@ -21,26 +21,20 @@
 			// Connect to Bridge Event Source
 			const orchestration_label = document.getElementById("orchestration-label")
 			orchestration_label.innerHTML = `Orchestration ID: ${await Bridge.CreateOrchestration()}`
-			const event_source_button = document.getElementById("event-source")
-			const eventsource_label = document.getElementById("eventsource-label")
-			event_source_button.addEventListener("click", async () => {
-				let response = await Bridge.EventSource()
-				console.log(response.payload)
-				eventsource_label.innerHTML = `Bridge Event Source: ${response.payload.value.event.value}`
-			})
+
 			const QueryDisplays_Button = document.getElementById("query_displays")
 			QueryDisplays_Button.addEventListener("click", async () => {
-				let response = await Bridge.QueryDisplays()
+				let response = await Bridge.displays()
 				console.log(response)
 			})
 			const BridgeVersion_Button = document.getElementById("bridge-version")
 			BridgeVersion_Button.addEventListener("click", async () => {
-				let response = await Bridge.QueryBridgeVersion()
+				let response = await Bridge.bridgeVersion()
 				console.log(response)
 			})
 			const APIVersion_Button = document.getElementById("api-version")
 			APIVersion_Button.addEventListener("click", async () => {
-				let response = await Bridge.QueryAPIVersion()
+				let response = await Bridge.apiVersion()
 				console.log(response)
 			})
 		</script>
@@ -51,10 +45,8 @@
 				parameters.
 			</p>
 			<button id="query_displays">Query Displays</button>
-			<button id="event-source">Connect to Websocket</button>
 			<button id="bridge-version">Query Bridge Version</button>
 			<button id="api-version">Query API Version</button>
-			<label id="eventsource-label">Bridge Event Source:</label>
 		</div>
 		<br />
 		<h2>Sending holograms to Bridge</h2>
@@ -64,45 +56,50 @@
 		</p>
 		<script type="module">
 			import { BridgeClient } from "../dist/looking-glass-bridge.mjs"
-			import { Playlist } from "../dist/looking-glass-bridge.mjs"
-			import { QuiltPlaylistItem } from "../dist/looking-glass-bridge.mjs"
+			import { QuiltPlaylistItem, RGBDPlaylistItem } from "../dist/looking-glass-bridge.mjs"
 
 			const Bridge = new BridgeClient()
-			const play_playlist_button = document.getElementById("play-playlist")
+
+			Bridge.addEventListener("Playlist Instance", (event) => {
+				console.log(event)
+				console.log("Playlist Updated")
+			})
+
+			const cast_button = document.getElementById("cast-hologram")
 			const add_playlist_item_button = document.getElementById("add-playlist-item")
-			console.log(add_playlist_item_button)
 			const playlist = document.getElementById("playlist")
 
-			play_playlist_button.addEventListener("click", async () => {
-				let newPlaylist = new Playlist()
-				newPlaylist.name = "banana2"
-				newPlaylist.loop = true
-				let quilt = QuiltPlaylistItem(
-					"https://s3.amazonaws.com/lkg-blocks/u/fe76779b7d724315/yggdrasil_qs8x13.jpg",
-					13,
-					8,
-					0.75,
-					8 * 13
-				)
-				newPlaylist.AddItem(quilt)
+			const urls = [
+				"https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
+				"https://s3.amazonaws.com/lkg-blocks/u/fe76779b7d724315/yggdrasil_qs8x13.jpg",
+				"https://s3.amazonaws.com/lkg-blocks/u/d2a9cc551f2a4dc2/technomancer_qs8x13.jpg",
+			]
+			let urlIndex = -1
 
-				let response = await Bridge.PlayPlaylist(newPlaylist, -1)
-			})
-
-			add_playlist_item_button.addEventListener("click", async () => {
-				console.log("banana")
-				let newPlaylistItem = document.createElement("ul")
-				playlist.appendChild(newPlaylistItem)
-				let newPlaylistInput = document.createElement("input")
-				newPlaylistInput.type = "text"
-				newPlaylistInput.placeholder = "Enter URL"
-				newPlaylistItem.appendChild(newPlaylistInput)
-
-				// create quilt input values
+			cast_button.addEventListener("click", async () => {
+				let url = urls[++urlIndex % urls.length]
+				let rgbd = RGBDPlaylistItem({
+					URI: "https://dl.blocks.glass/u/d56ea13faa724297/rgbd.png",
+					rows: 8,
+					columns: 6,
+					aspect: 0.75,
+					viewCount: 45,
+					depth_loc: 2,
+					depth_inversion: 0,
+					chroma_depth: 0,
+					depthiness: 0,
+				})
+				let quilt = QuiltPlaylistItem({
+					URI: url,
+					rows: 13,
+					columns: 8,
+					aspect: 0.75,
+					viewCount: 8 * 13,
+				})
+				await Bridge.cast(quilt)
 			})
 		</script>
-		<button id="play-playlist">Play Playlist</button>
-		<button id="add-playlist-item">Add Playlist Item</button>
+		<button id="cast-hologram">Cast Hologram</button>
 		<li id="playlist"></li>
 		<br />
 		<h2>Loading a playlist from Looking Glass Studio</h2>

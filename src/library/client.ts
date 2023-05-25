@@ -1,23 +1,48 @@
 import { Display, TryParseDisplay } from "./components/displays"
-import { TrySendMessage } from "./components/endpoints"
+import { sendMessage } from "./components/endpoints"
+import { BridgeEvent, BridgePayload } from "./components"
 import { TryEnterOrchestration, TryExitOrchestration } from "./components/orchestration"
-import { ConnectToBridgeEventSource } from "./components/websocket"
-import { Playlist } from "./playlists/playlist"
+import { BridgeEventSource } from "./components/eventsource"
+import { Playlist, PlaylistArgs } from "./playlists/playlist"
+import { PlaylistItemType } from "./playlists/playlistItems"
+
+/**
+ * BridgeClient is the main class for interacting with Looking Glass Bridge.
+ * The BridgeClient will attempt to join an orchestration called "default" when it is created.
+ * If the "default" orchestration does not exist, it will be created.
+ * If the BridgeClient is unable to connect to Bridge, it will not create an orchestration.
+ * You can manually call CreateOrchestration() to create an orchestration.
+ * This is useful if Bridge was not running when the class was created.
+ */
+interface EventListenerArgs {
+	event: string
+	MessageHandler: any
+}
 
 export class BridgeClient {
 	private orchestration: string
-	private displays: Display[]
+	private lkgDisplays: Display[]
+	private internalPlaylists: Playlist[]
+	private currentPlaylist: number
+	private eventsource: BridgeEventSource
 
 	constructor() {
 		this.orchestration = ""
-		this.displays = []
+		this.lkgDisplays = []
+		this.eventsource = new BridgeEventSource()
 		this.CreateOrchestration()
+		this.internalPlaylists = []
+		this.currentPlaylist = 0
 	}
 
 	static async init() {
 		new BridgeClient()
 	}
 
+	/**
+	 * A helper function to check and see if Looking Glass Bridge is running or not.
+	 * @returns boolean, true if Bridge is running, false if Bridge is not running
+	 */
 	public async QueryBridge(): Promise<boolean> {
 		try {
 			let response = await fetch("http://localhost:33334/")
@@ -31,70 +56,141 @@ export class BridgeClient {
 		}
 	}
 
-	public async CreateOrchestration() {
+	/**
+	 * Creates an orchestration called "default" if one does not already exist.
+	 * @returns string, the name of the current orchestration
+	 */
+	public async CreateOrchestration(name: string = "default") {
 		if ((await this.QueryBridge()) == false) {
 			return
 		}
-		let new_orchestration = await TryEnterOrchestration("default")
+		let new_orchestration = await TryEnterOrchestration(name)
 		this.orchestration = new_orchestration
+		this.initializeEventSource()
 		return this.orchestration
 	}
 
-	public async QueryBridgeVersion() {
-		let response = await TrySendMessage("bridge_version")
+	/**
+	 * A helper function to get the version of Looking Glass Bridge that is running.
+	 * @returns the current version of Looking Glass Bridge
+	 */
+	public async bridgeVersion() {
+		let response = await sendMessage("bridge_version")
 		let BridgeVersion = response.payload.value
 		return BridgeVersion
 	}
-
-	public async QueryAPIVersion() {
-		let response = await TrySendMessage("api_version")
+	/**
+	 * A helper function to get the version of the Looking Glass Bridge API
+	 * @returns the current version of the Looking Glass API
+	 */
+	public async apiVersion() {
+		let response = await sendMessage("api_version")
 		let APIVersion = response.payload.value
 		return APIVersion
 	}
 
-	public async QueryDisplays() {
-		this.displays = []
+	/**
+	 * QueryDisplays finds all displays that are connected to the computer,
+	 * searches for Looking Glass displays, and returns them as an array of Display objects
+	 * @returns the display object
+	 */
+	public async displays() {
+		this.lkgDisplays = []
 		const requestBody = JSON.stringify({
 			orchestration: this.orchestration,
 		})
-		let response = await TrySendMessage("available_output_devices", requestBody)
+		let response = await sendMessage("available_output_devices", requestBody)
 
 		for (let key in response.payload.value) {
 			let display = response.payload.value[`${key}`]
 			if (display.value.hwid.value.includes("LKG")) {
 				let lkg = TryParseDisplay(display.value)
 				if (lkg != undefined) {
-					this.displays.push(lkg)
+					this.lkgDisplays.push(lkg)
 				}
 			}
 		}
 
-		return this.displays
+		return this.lkgDisplays
 	}
 
-	public async PlayPlaylist(playlist: Playlist, head: number) {
+	/**
+	 * A helper function to create a new Playlist object
+	 * @param name the name of the playlist
+	 */
+	public CreatePlaylist(name: string) {
+		const playlist = new Playlist()
+		playlist.SetName(name)
+		return playlist
+	}
+
+	public async deletePlaylist(playlist: Playlist) {
+		const requestBody = playlist.GetInstanceJson(this.orchestration)
+		let response = await sendMessage("delete_playlist", requestBody)
+		return response
+	}
+
+	/**
+	 * this function will play a playlist on a Looking Glass display
+	 * the playlist must be created and populated with content before calling this function
+	 * @param playlist
+	 * @param head
+	 * @returns
+	 */
+	public async play({ playlist, head }: PlaylistArgs) {
 		const requestBody = playlist.GetInstanceJson(this.orchestration)
 
-		let response = await TrySendMessage("instance_playlist", requestBody)
+		if (!head) {
+			head = -1
+		}
+
+		let message = await sendMessage("instance_playlist", requestBody)
 
 		const PlaylistItems: string[] = playlist.GetPlaylistItemsAsJson(this.orchestration)
-		console.log(PlaylistItems)
 
 		for (let i = 0; i < PlaylistItems.length; i++) {
 			const pRequestBody = PlaylistItems[i]
-			console.log(pRequestBody)
-			let pResponse = await TrySendMessage("insert_playlist_entry", pRequestBody)
+			let pMessage = await sendMessage("insert_playlist_entry", pRequestBody)
 		}
-
-		const playRequestBody = playlist.GetPlayPlaylistJson(this.orchestration, head)
-		let playResponse = await TrySendMessage("play_playlist", playRequestBody)
+		let orchestration = this.orchestration
+		const playRequestBody = playlist.GetPlayPlaylistJson({ orchestration, head })
+		let playMessage = await sendMessage("play_playlist", playRequestBody)
 
 		return true
 	}
 
-	public async EventSource() {
-		let event_source = await ConnectToBridgeEventSource(this.orchestration)
+	/**
+	 * Casting a hologram requires some pretty specific behavior to work with Bridge' new playlist api.
+	 * This function will alternate between two playlists so that you can cast a new hologram without interrupting the current one.
+	 * @param playlistItem
+	 */
+	public async cast(playlistItem: PlaylistItemType) {
+		let newPlaylistIndex = (this.currentPlaylist + 1) % 2
+		if (this.internalPlaylists[newPlaylistIndex] == undefined) {
+			this.internalPlaylists[newPlaylistIndex] = this.CreatePlaylist("cast" + newPlaylistIndex)
+		}
+		let newPlaylist = this.internalPlaylists[newPlaylistIndex]
+		// tell bridge to clear the playlist in its internal memory
+		await this.deletePlaylist(newPlaylist)
+		// clear the playlist in bridge.js
+		newPlaylist.ClearItems()
+		newPlaylist.loop = true
+		newPlaylist.AddItem(playlistItem)
 
-		return event_source
+		await this.play({ playlist: newPlaylist })
+		this.currentPlaylist = newPlaylistIndex
+	}
+
+	/**
+	 * Connect to Looking Glass Bridge's EventSource.
+	 * The event source is a websocket connection that will send events from Bridge to the client.
+	 * @returns the bridge event source
+	 */
+	public initializeEventSource() {
+		this.eventsource.ConnectToBridgeEventSource(this.orchestration)
+	}
+
+	public addEventListener(event: string, MessageHandler: any) {
+		this.eventsource.AddMessageHandler({ event: event, MessageHandler: MessageHandler })
 	}
 }

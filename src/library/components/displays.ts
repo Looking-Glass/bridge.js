@@ -1,4 +1,4 @@
-import { BridgeValue } from "./events"
+import { BridgeValue } from "."
 
 export interface Display {
 	calibration: CalibrationType | null
