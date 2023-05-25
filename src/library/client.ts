@@ -71,8 +71,12 @@ export class BridgeClient {
 	 * @returns the current version of Looking Glass Bridge
 	 */
 	public async bridgeVersion() {
-		let response = await sendMessage("bridge_version")
-		let BridgeVersion = response.payload.value
+		let BridgeVersion = null
+		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
+
+		let response = await sendMessage({ endpoint: "bridge_version", errorMessage: errorMessage })
+		BridgeVersion = response.payload.value
+
 		return BridgeVersion
 	}
 	/**
@@ -80,7 +84,9 @@ export class BridgeClient {
 	 * @returns the current version of the Looking Glass API
 	 */
 	public async apiVersion() {
-		let response = await sendMessage("api_version")
+		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
+		let response = await sendMessage({ endpoint: "api_version", errorMessage: errorMessage })
+
 		let APIVersion = response.payload.value
 		return APIVersion
 	}
@@ -95,7 +101,7 @@ export class BridgeClient {
 		const requestBody = JSON.stringify({
 			orchestration: this.orchestration,
 		})
-		let response = await sendMessage("available_output_devices", requestBody)
+		let response = await sendMessage({ endpoint: "available_output_devices", requestBody: requestBody })
 
 		for (let key in response.payload.value) {
 			let display = response.payload.value[`${key}`]
@@ -122,7 +128,7 @@ export class BridgeClient {
 
 	public async deletePlaylist(playlist: Playlist) {
 		const requestBody = playlist.GetInstanceJson(this.orchestration)
-		let response = await sendMessage("delete_playlist", requestBody)
+		let response = await sendMessage({ endpoint: "delete_playlist", requestBody: requestBody })
 		return response
 	}
 
@@ -140,17 +146,17 @@ export class BridgeClient {
 			head = -1
 		}
 
-		await sendMessage("instance_playlist", requestBody)
+		await sendMessage({ endpoint: "instance_playlist", requestBody: requestBody })
 
 		const PlaylistItems: string[] = playlist.GetPlaylistItemsAsJson(this.orchestration)
 
 		for (let i = 0; i < PlaylistItems.length; i++) {
 			const pRequestBody = PlaylistItems[i]
-			await sendMessage("insert_playlist_entry", pRequestBody)
+			await sendMessage({ endpoint: "insert_playlist_entry", requestBody: pRequestBody })
 		}
 		let orchestration = this.orchestration
 		const playRequestBody = playlist.GetPlayPlaylistJson({ orchestration, head })
-		await sendMessage("play_playlist", playRequestBody)
+		await sendMessage({ endpoint: "play_playlist", requestBody: playRequestBody })
 
 		return true
 	}

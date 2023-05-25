@@ -33,7 +33,15 @@ export type BridgeEndpointType =
  * @param baseURL Optional, the localhost url that bridge uses, defaults to http://localhost:33334/
  * @returns the response from the bridge endpoint, as a json object
  */
-export async function sendMessage(endpoint: BridgeEndpointType, requestBody?: string, baseURL?: string) {
+
+interface sendMessageArgs {
+	endpoint: BridgeEndpointType
+	requestBody?: string
+	baseURL?: string
+	errorMessage?: string
+}
+
+export async function sendMessage({ endpoint, requestBody, baseURL, errorMessage }: sendMessageArgs) {
 	if (baseURL == undefined) {
 		baseURL = "http://localhost:33334/"
 	}
@@ -54,6 +62,15 @@ export async function sendMessage(endpoint: BridgeEndpointType, requestBody?: st
 		throw new Error(`HTTP error! status: ${response.status}`)
 	}
 
-	let data = await response.json()
-	return data
+	try {
+		let data = await response.json()
+		return data
+	} catch (error) {
+		// if we have a custom error message, return that, otherwise return the full error
+		if (errorMessage !== undefined) {
+			throw new Error(errorMessage)
+		} else {
+			console.error(error)
+		}
+	}
 }
