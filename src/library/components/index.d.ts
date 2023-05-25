@@ -44,19 +44,15 @@ export interface BridgeValueMap {
 	[key: string]: BridgeValue
 }
 
-export interface BridgeEvent {
-	name: "event"
-	type: BridgeType
-	value:
-		| "Monitor Connect"
-		| "Monitor Disconnect"
-		| "Progress Start"
-		| "Progress Completion"
-		| "Progress Update"
-		| "Playlist Instance"
-		| "Playlist Insert"
-		| "Playlist Delete"
-		| "Sync/Play Playlist"
-		| "Sync/Play Playlist Complete"
-		| "Sync/Play Playlist Cancelled"
-}
+export type BridgeEvent =
+	| "Monitor Connect"
+	| "Monitor Disconnect"
+	| "Progress Start"
+	| "Progress Completion"
+	| "Progress Update"
+	| "Playlist Instance"
+	| "Playlist Insert"
+	| "Playlist Delete"
+	| "Sync/Play Playlist"
+	| "Sync/Play Playlist Complete"
+	| "Sync/Play Playlist Cancelled"

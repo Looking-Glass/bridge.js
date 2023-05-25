@@ -43,6 +43,7 @@ export class Playlist {
 	}
 
 	public RemoveItem(item: PlaylistItemType) {
+		if (item.id == undefined) return
 		this.items.splice(item.id, 1)
 
 		for (let i = 0; i < this.items.length; i++) {

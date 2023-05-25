@@ -4,6 +4,7 @@ import { TryEnterOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist, PlaylistArgs } from "./playlists/playlist"
 import { PlaylistItemType } from "./playlists/playlistItems"
+import { BridgeEvent } from "./components"
 
 /**
  * BridgeClient is the main class for interacting with Looking Glass Bridge.
@@ -185,7 +186,7 @@ export class BridgeClient {
 		this.eventsource.ConnectToBridgeEventSource(this.orchestration)
 	}
 
-	public addEventListener(event: string, MessageHandler: any) {
+	public addEventListener(event: BridgeEvent, MessageHandler: any) {
 		this.eventsource.AddMessageHandler({ event: event, MessageHandler: MessageHandler })
 	}
 }

@@ -1,5 +1,5 @@
 export interface PlaylistItemType {
-	id: number
+	id?: number
 	URI: string
 	rows: number
 	columns: number
@@ -18,7 +18,7 @@ export interface PlaylistItemType {
 	depthiness?: number
 	depth_cutoff?: number
 }
-interface QuiltPlaylistItemArgs {
+export interface QuiltPlaylistItemArgs {
 	URI: string
 	rows: number
 	columns: number
@@ -44,7 +44,7 @@ export function QuiltPlaylistItem({
 	return PlaylistItem
 }
 
-interface RGBDPlaylistItemArgs {
+export interface RGBDPlaylistItemArgs {
 	URI: string
 	rows: number
 	columns: number
