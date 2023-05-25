@@ -1,5 +1,5 @@
-import { BridgeClient } from "./library/client"
-import { QuiltPlaylistItem } from "./library/playlists/playlistItems"
+import { BridgeClient } from "../library/client"
+import { QuiltPlaylistItem } from "../library/playlists/playlistItems"
 
 const Bridge = new BridgeClient()
 
