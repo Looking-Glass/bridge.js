@@ -89,7 +89,6 @@ export class Playlist {
 		const strings: string[] = []
 
 		for (let i = 0; i < this.items.length; i++) {
-			const item = this.items[i]
 			const itemString = this.GetPlaylistItemJson(orchestration, i)
 			strings.push(itemString)
 		}

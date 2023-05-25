@@ -15,20 +15,31 @@
 		"dist"
 	],
 	"scripts": {
-		"build": "tsc && vite build",
+		"build": "tsc && vite build --mode react",
 		"build:watch": "tsc && vite build --watch",
-		"dev": "vite"
+		"library": "vite build --mode library",
+		"dev": "vite --mode react"
 	},
 	"dependencies": {},
 	"devDependencies": {
 		"@lookingglass/blocks.js": "^0.1.1",
 		"@rollup/plugin-typescript": "^9.0.1",
 		"@types/node": "^18.11.2",
+		"@types/react": "^18.0.28",
+		"@types/react-dom": "^18.0.11",
+		"@typescript-eslint/eslint-plugin": "^5.57.1",
+		"@typescript-eslint/parser": "^5.57.1",
+		"@vitejs/plugin-react": "^4.0.0",
+		"eslint": "^8.38.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.3.4",
 		"prettier": "2.7.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
 		"rollup-plugin-typescript-paths": "^1.3.0",
 		"tslib": "^2.4.0",
 		"typedoc": "^0.24.7",
-		"typescript": "^4.7.2",
-		"vite": "^3.1.8"
+		"typescript": "^5.0.2",
+		"vite": "^4.3.2"
 	}
 }

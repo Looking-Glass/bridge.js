@@ -1,4 +1,8 @@
-export async function TryEnterOrchestration(name: string) {
+export async function TryEnterOrchestration(name?: string) {
+	if (name == undefined) {
+		name = "default"
+	}
+
 	try {
 		let putRequest = {
 			method: "PUT",

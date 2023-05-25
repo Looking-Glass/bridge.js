@@ -1,7 +1,6 @@
 import { Display, TryParseDisplay } from "./components/displays"
 import { sendMessage } from "./components/endpoints"
-import { BridgeEvent, BridgePayload } from "./components"
-import { TryEnterOrchestration, TryExitOrchestration } from "./components/orchestration"
+import { TryEnterOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist, PlaylistArgs } from "./playlists/playlist"
 import { PlaylistItemType } from "./playlists/playlistItems"
@@ -14,10 +13,6 @@ import { PlaylistItemType } from "./playlists/playlistItems"
  * You can manually call CreateOrchestration() to create an orchestration.
  * This is useful if Bridge was not running when the class was created.
  */
-interface EventListenerArgs {
-	event: string
-	MessageHandler: any
-}
 
 export class BridgeClient {
 	private orchestration: string
@@ -144,17 +139,17 @@ export class BridgeClient {
 			head = -1
 		}
 
-		let message = await sendMessage("instance_playlist", requestBody)
+		await sendMessage("instance_playlist", requestBody)
 
 		const PlaylistItems: string[] = playlist.GetPlaylistItemsAsJson(this.orchestration)
 
 		for (let i = 0; i < PlaylistItems.length; i++) {
 			const pRequestBody = PlaylistItems[i]
-			let pMessage = await sendMessage("insert_playlist_entry", pRequestBody)
+			await sendMessage("insert_playlist_entry", pRequestBody)
 		}
 		let orchestration = this.orchestration
 		const playRequestBody = playlist.GetPlayPlaylistJson({ orchestration, head })
-		let playMessage = await sendMessage("play_playlist", playRequestBody)
+		await sendMessage("play_playlist", playRequestBody)
 
 		return true
 	}

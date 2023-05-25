@@ -1,5 +1,3 @@
-import { BridgeEvent, BridgePayload } from "."
-
 function isWebSocketAvailable() {
 	if ("WebSocket" in window) {
 		return true
@@ -63,7 +61,7 @@ export class BridgeEventSource {
 		}
 
 		ws.onerror = function (error) {
-			console.warn("Unable to connect to WebSocket, is Bridge Running?")
+			console.warn("Unable to connect to WebSocket, is Bridge Running?", error)
 		}
 	}
 }

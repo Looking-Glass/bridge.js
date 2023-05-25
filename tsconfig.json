@@ -2,19 +2,29 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"module": "ESNext",
+		"skipLibCheck": true,
+
+		/* Bundler Mode */
 		"types": ["vite/client", "node"],
 		"allowJs": false,
-		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
-		"strict": true,
+		"allowImportingTsExtensions": true,
 		"forceConsistentCasingInFileNames": true,
-		"module": "ESNext",
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"noEmit": true
+		"noEmit": true,
+		"jsx": "react-jsx",
+
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true
 	},
 	"include": ["src", "library/bridge.ts"],
+	"references": [{ "path": "./tsconfig.node.json" }],
 	"exclude": ["node_modules"]
 }
