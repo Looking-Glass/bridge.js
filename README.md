@@ -7,11 +7,17 @@ The Bridge.JS library provides an easy way to connect to and leverage all the aw
 
 ## Using the Library
 
+>**Note**
+> For live examples, checkout [our demo site here](https://bridge-js.vercel.app/)
+
 To get started, import the library, either via script tag or via npm. Then create a new BridgeClient object like so. 
 
 ```js
+import {BridgeClient} from @lookingglass/bridge
 const Bridge = new BridgeClient()
 ```
+
+### Connecting to Bridge
 
 The BridgeClient object will automatically attempt to connect to Looking Glass Bridge. 
 
@@ -23,7 +29,21 @@ You can also query to see if Bridge is running by running
 ```js 
 Bridge.QueryBridge()
 ```
+### Casting a Hologram
 
+The Bridge.JS Library outputs two hologram types, QuiltHologram and RGBDHologram, you need to construct the hologram object, then cast it to Bridge. Here's an example: 
+
+```js
+const hologram = QuiltPlaylistItem({
+	URI: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
+	rows: 13,
+	columns: 8,
+	aspect: 0.75,
+	viewCount: 8 * 13,
+})
+
+await Bridge.cast(hologram)
+```
 ## Developing
 
 > **Note**
