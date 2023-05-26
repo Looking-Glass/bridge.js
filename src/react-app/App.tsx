@@ -1,7 +1,7 @@
-import { BridgeClient } from "../library/client"
+import { Bridge } from "../library/index"
 import { QuiltPlaylistItem, RGBDPlaylistItem } from "../library/playlists/playlistItems"
 
-const Bridge = new BridgeClient()
+Bridge.setVerbosity(0)
 
 const hologram = QuiltPlaylistItem({
 	URI: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
