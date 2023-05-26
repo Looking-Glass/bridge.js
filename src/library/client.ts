@@ -21,6 +21,8 @@ export class BridgeClient {
 	private internalPlaylists: Playlist[]
 	private currentPlaylist: number
 	private eventsource: BridgeEventSource
+	static instance: any
+	static verbosity: 0 | 1 | 2 | 3 = 0
 
 	constructor() {
 		this.orchestration = ""
@@ -29,10 +31,19 @@ export class BridgeClient {
 		this.CreateOrchestration()
 		this.internalPlaylists = []
 		this.currentPlaylist = 0
+
+		if (!BridgeClient.instance) {
+			BridgeClient.instance = this
+		} else {
+			return BridgeClient.instance
+		}
 	}
 
-	static async init() {
-		new BridgeClient()
+	static getInstance() {
+		if (!BridgeClient.instance) {
+			BridgeClient.instance = new BridgeClient()
+		}
+		return BridgeClient.instance
 	}
 
 	/**
@@ -194,5 +205,13 @@ export class BridgeClient {
 
 	public addEventListener(event: BridgeEvent, MessageHandler: any) {
 		this.eventsource.AddMessageHandler({ event: event, MessageHandler: MessageHandler })
+	}
+
+	public getVerbosity() {
+		return BridgeClient.verbosity
+	}
+
+	public setVerbosity(verbosity: 0 | 1 | 2 | 3) {
+		BridgeClient.verbosity = verbosity
 	}
 }

@@ -1,3 +1,5 @@
+import { Bridge } from ".."
+
 export type BridgeEndpointType =
 	| "instance_studio_playlist"
 	| "bridge_version"
@@ -64,10 +66,16 @@ export async function sendMessage({ endpoint, requestBody, baseURL, errorMessage
 
 	try {
 		let data = await response.json()
+		if (Bridge.getVerbosity() == 0) {
+			console.log(data)
+		} else if (Bridge.getVerbosity() == 1) {
+			console.log(data.status)
+		}
+
 		return data
 	} catch (error) {
 		// if we have a custom error message, return that, otherwise return the full error
-		if (errorMessage !== undefined) {
+		if (errorMessage !== undefined || Bridge.getVerbosity() == 0) {
 			throw new Error(errorMessage)
 		} else {
 			console.error(error)
