@@ -100,13 +100,11 @@ export class Playlist {
 	private GetPlaylistItemJson(orchestration: string, index: number) {
 		const item: PlaylistItemType = this.items[index]
 
-		const URI = item.URI
-
 		const content: string = JSON.stringify({
 			orchestration: orchestration,
 			name: this.name,
 			index: index,
-			uri: URI,
+			uri: item.URI,
 			rows: item.rows,
 			cols: item.columns,
 			aspect: item.aspect,

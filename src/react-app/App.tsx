@@ -1,5 +1,5 @@
 import { BridgeClient } from "../library/client"
-import { QuiltPlaylistItem } from "../library/playlists/playlistItems"
+import { QuiltPlaylistItem, RGBDPlaylistItem } from "../library/playlists/playlistItems"
 
 const Bridge = new BridgeClient()
 
@@ -9,6 +9,20 @@ const hologram = QuiltPlaylistItem({
 	columns: 8,
 	aspect: 0.75,
 	viewCount: 8 * 13,
+})
+
+const rgbd_hologram = RGBDPlaylistItem({
+	URI: "https://dl-dev.blocks.glass/u/b528b9def6aa4986/rgbd.png",
+	depthiness: 1.0,
+	rows: 8,
+	columns: 6,
+	focus: 0,
+	aspect: 1,
+	viewCount: 48,
+	chroma_depth: 0,
+	depth_inversion: 0,
+	depth_loc: 2,
+	depth_cutoff: 1,
 })
 
 function App() {
@@ -37,6 +51,12 @@ function App() {
 					await Bridge.cast(hologram)
 				}}>
 				Cast hologram
+			</button>
+			<button
+				onClick={async () => {
+					await Bridge.cast(rgbd_hologram)
+				}}>
+				Cast RGBD hologram
 			</button>
 		</>
 	)
