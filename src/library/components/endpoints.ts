@@ -23,6 +23,7 @@ export type BridgeEndpointType =
 	| "transport_control_previous"
 	| "transport_control_seek_to_index"
 	| "play_playlist"
+	| "show_window"
 
 /**
  *
@@ -43,7 +44,12 @@ interface sendMessageArgs {
 	errorMessage?: string
 }
 
-export async function sendMessage({ endpoint, requestBody, baseURL, errorMessage }: sendMessageArgs) {
+export async function sendMessage({ endpoint, requestBody, baseURL }: sendMessageArgs) {
+	let response: any
+	if (Bridge.getVerbosity() != 0) console.group(endpoint)
+	//REMOVE THIS AFTER MATTY FIXES BRIDGE 5-11-2023
+	await new Promise((r) => setTimeout(r, 50))
+
 	if (baseURL == undefined) {
 		baseURL = "http://localhost:33334/"
 	}
@@ -52,33 +58,61 @@ export async function sendMessage({ endpoint, requestBody, baseURL, errorMessage
 		requestBody = JSON.stringify({})
 	}
 
+	if (Bridge.getVerbosity() == 3) {
+		console.group("message body")
+		console.log(`Sending message to ${baseURL + endpoint}`)
+		console.log("body:", JSON.parse(requestBody))
+		console.groupEnd()
+	}
+
 	const request = {
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
 		body: requestBody,
 	}
 
-	let response = await fetch(`${baseURL + endpoint}`, request)
-
-	if (!response.ok) {
-		throw new Error(`HTTP error! status: ${response.status}`)
-	}
-
 	try {
-		let data = await response.json()
-		if (Bridge.getVerbosity() == 0) {
-			console.log(data)
-		} else if (Bridge.getVerbosity() == 1) {
-			console.log(data.status)
+		response = await fetch(`${baseURL + endpoint}`, request)
+
+		let parsedResponse = await response.json()
+		if (Bridge.getVerbosity() != 0) console.groupEnd()
+		return parsedResponse
+	} catch (error) {
+		console.error(error)
+		console.groupEnd()
+		return null
+	}
+}
+export interface responseStatusArgs {
+	response: any
+	errorMessage?: string
+}
+export async function responseStatus({ response, errorMessage }: responseStatusArgs) {
+	try {
+		if (response == undefined) {
+			throw new Error("response is undefined")
+		}
+		let status: string = response.status.value ? response.status.value : "no status value found"
+		if (Bridge.getVerbosity() == 3) {
+			console.group("response")
+			console.log(response)
+		} else if (Bridge.getVerbosity() == 2) {
+			console.log(response.payload.value)
+			console.log("status:", status)
+		}
+		console.groupEnd()
+		if (status !== "Completion") {
+			console.warn(`Bridge returned status: ${status}`)
 		}
 
-		return data
+		return response
 	} catch (error) {
 		// if we have a custom error message, return that, otherwise return the full error
-		if (errorMessage !== undefined || Bridge.getVerbosity() == 0) {
-			throw new Error(errorMessage)
+		if (errorMessage !== undefined) {
+			console.error(errorMessage)
 		} else {
 			console.error(error)
 		}
+		return false
 	}
 }

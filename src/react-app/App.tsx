@@ -1,7 +1,7 @@
 import { Bridge } from "../library/index"
 import { QuiltPlaylistItem, RGBDPlaylistItem } from "../library/playlists/playlistItems"
 
-Bridge.setVerbosity(0)
+Bridge.setVerbosity(3)
 
 const hologram = QuiltPlaylistItem({
 	URI: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -57,6 +57,12 @@ function App() {
 					await Bridge.cast(rgbd_hologram)
 				}}>
 				Cast RGBD hologram
+			</button>
+			<button
+				onClick={async () => {
+					await Bridge.ShowWindow(false)
+				}}>
+				Toggle Window
 			</button>
 		</>
 	)

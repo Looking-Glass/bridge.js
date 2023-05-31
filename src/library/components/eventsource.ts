@@ -1,3 +1,5 @@
+import { Bridge } from ".."
+
 function isWebSocketAvailable() {
 	if ("WebSocket" in window) {
 		return true
@@ -27,11 +29,20 @@ export class BridgeEventSource {
 		this.MessageHandler = {}
 	}
 
+	/**
+	 * adds a new message handler object to the BridgeEventSource class
+	 * @param event the event name to listen for
+	 * @param MessageHandler the function to call when the event is received
+	 */
 	public AddMessageHandler({ event, MessageHandler }: messageHandlerArgs) {
 		this.MessageHandler[event] = MessageHandler
 	}
 
-	public callMessageHandler(response: any) {
+	/**
+	 * Calls the message handler function for the given event
+	 * @param response the response from Bridge
+	 */
+	private callMessageHandler(response: any) {
 		const bridge_event: string = response.payload.value.event.value
 		if (this.MessageHandler[bridge_event]) {
 			this.MessageHandler[bridge_event](response.payload)
