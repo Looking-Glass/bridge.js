@@ -69,7 +69,6 @@ export class BridgeClient {
 	 * @returns string, the name of the current orchestration
 	 */
 	public async CreateOrchestration(name: string) {
-		name = Math.random().toString()
 		if ((await this.QueryBridge()) == false) {
 			return
 		}
