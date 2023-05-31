@@ -97,7 +97,12 @@ export class BridgeClient {
 		return BridgeVersion
 	}
 
-	public async ShowWindow(showWindow: boolean = true) {
+	/**
+	 * changes the state of the Looking Glass Bridge Window
+	 * @param showWindow boolean, true to show the Looking Glass window, false to hide the Looking Glass window
+	 * @returns
+	 */
+	public async showWindow(showWindow: boolean) {
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		const requestBody = JSON.stringify({
 			orchestration: this.orchestration,
@@ -237,7 +242,7 @@ export class BridgeClient {
 		} else {
 			newPlaylist = this.internalPlaylists[newPlaylistIndex]
 			// tell bridge to clear the playlist in its internal memory
-			await this.ShowWindow(false)
+			await this.showWindow(false)
 			await this.deletePlaylist(newPlaylist)
 			this.internalPlaylists[newPlaylistIndex] = this.CreatePlaylist("cast" + newPlaylistIndex)
 			// clear the playlist in bridge.js

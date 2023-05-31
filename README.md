@@ -1,37 +1,40 @@
-
 > **Warning**
 > Under heavy development, names may and will change abruptly
 
 # bridge.js
-The Bridge.JS library provides an easy way to connect to and leverage all the awesome functionality in [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge). 
+
+The Bridge.JS library provides an easy way to connect to and leverage all the awesome functionality in [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge).
 
 ## Using the Library
 
->**Note**
+> **Note**
 > For live examples, checkout [our demo site here](https://bridge-js.vercel.app/)
 
-To get started, import the library, either via script tag or via npm. Then create a new BridgeClient object like so. 
+To get started, import the library, either via script tag or via npm. Then create a new Bridge object like so.
 
 ```js
-import {BridgeClient} from @lookingglass/bridge
-const Bridge = new BridgeClient()
+import {Bridge} from @lookingglass/bridge
 ```
 
 ### Connecting to Bridge
 
-The BridgeClient object will automatically attempt to connect to Looking Glass Bridge. 
+The BridgeClient object will automatically attempt to connect to Looking Glass Bridge.
 
 If it's unable to connect, for example if Bridge is not running when the object is initialized, you can manually try connecting by calling
+
 ```js
 Bridge.CreateOrchestration()
 ```
-You can also query to see if Bridge is running by running 
-```js 
+
+You can also query to see if Bridge is running by running
+
+```js
 Bridge.QueryBridge()
 ```
+
 ### Casting a Hologram
 
-The Bridge.JS Library outputs two hologram types, QuiltHologram and RGBDHologram, you need to construct the hologram object, then cast it to Bridge. Here's an example: 
+The Bridge.JS Library outputs two hologram types, QuiltHologram and RGBDHologram, you need to construct the hologram object, then cast it to Bridge. Here's an example:
 
 ```js
 const hologram = QuiltPlaylistItem({
@@ -44,14 +47,15 @@ const hologram = QuiltPlaylistItem({
 
 await Bridge.cast(hologram)
 ```
+
 ## Developing
 
 > **Note**
 > This readme assumes your development environment is setup and you have node.js and yarn installed. If you don't have yarn, you can also use npm.
 
-To start developing the library, clone this github repo. Then run `yarn install` & `yarn dev` This will spin up a minimal react environment that imports the library. 
+To start developing the library, clone this github repo. Then run `yarn install` & `yarn dev` This will spin up a minimal react environment that imports the library.
 
-To build the library, run `yarn library` 
+To build the library, run `yarn library`
 
 To build the react-app, run `yarn build`
 
@@ -59,5 +63,4 @@ To build the react-app, run `yarn build`
 
 All files used in the library are in the `src/library` folder. To ensure your file/functionality is exported from the library you must reference the file in index.ts
 
-Files in the react app are in the `src/react-app` folder. 
-
+Files in the react app are in the `src/react-app` folder.
