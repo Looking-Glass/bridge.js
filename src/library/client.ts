@@ -97,10 +97,13 @@ export class BridgeClient {
 	 */
 	public async getVersion(): Promise<number | boolean> {
 		//give enough time for the websocket to connect.
-		await new Promise((r) => setTimeout(r, 50))
+
 		// use a fallback in case the driver version is too old.
-		this.version = await this.fallback.messageCallback()
-		if (this.isVersionCompatible() == false) return false
+		if (this.isValid == false) {
+			await new Promise((r) => setTimeout(r, 250))
+			this.version = await this.fallback.messageCallback()
+		}
+		if (this.isVersionCompatible() == false && this.isValid == false) return false
 
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		let response: z.infer<typeof schema.version> = await sendMessage({ endpoint: "bridge_version" })
