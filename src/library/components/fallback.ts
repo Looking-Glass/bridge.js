@@ -3,7 +3,6 @@ import { Client as HoloPlayClient, InfoMessage } from "holoplay-core"
 
 export class Fallback {
 	private holoPlayClient: HoloPlayClient
-	private message: any
 
 	constructor() {
 		this.holoPlayClient = new HoloPlayClient(this.messageCallback.bind(this), this.errorCallback.bind(this))
@@ -23,7 +22,7 @@ export class Fallback {
 		}
 	}
 
-	public errorCallback(error: any) {
+	public errorCallback() {
 		console.error("Looking Glass Bridge isn't running. Note that this will not work on MacOS using Safari.")
 	}
 }
