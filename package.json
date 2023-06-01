@@ -17,8 +17,10 @@
 	"scripts": {
 		"build": "tsc && vite build --mode react",
 		"build:watch": "tsc && vite build --watch",
-		"library": "vite build --mode library",
-		"dev": "vite --mode react"
+		"library": "vite build --mode library && yarn typedoc",
+		"dev": "vite --mode react",
+		"typedoc": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/library/index.ts --excludePrivate --readme none --disableSources",
+		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/library/index.ts --excludePrivate --readme none --disableSources --watch"
 	},
 	"dependencies": {},
 	"devDependencies": {
@@ -38,7 +40,8 @@
 		"react-dom": "^18.2.0",
 		"rollup-plugin-typescript-paths": "^1.3.0",
 		"tslib": "^2.4.0",
-		"typedoc": "^0.24.7",
+		"typedoc": "^0.24",
+		"typedoc-plugin-markdown": "^3.15.0",
 		"typescript": "^5.0.2",
 		"vite": "^4.3.2"
 	}

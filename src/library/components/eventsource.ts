@@ -1,5 +1,3 @@
-import { Bridge } from ".."
-
 function isWebSocketAvailable() {
 	if ("WebSocket" in window) {
 		return true

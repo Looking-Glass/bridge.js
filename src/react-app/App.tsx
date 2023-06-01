@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Bridge } from "../library/index"
 import { QuiltPlaylistItem, RGBDPlaylistItem } from "../library/playlists/playlistItems"
 
@@ -26,6 +27,7 @@ const rgbd_hologram = RGBDPlaylistItem({
 })
 
 function App() {
+	const [isWindowVisible, setIsWindowVisible] = useState(true)
 	return (
 		<>
 			<button
@@ -36,7 +38,7 @@ function App() {
 			</button>
 			<button
 				onClick={async () => {
-					console.log(await Bridge.bridgeVersion())
+					console.log(await Bridge.version())
 				}}>
 				Get Bridge version
 			</button>
@@ -60,7 +62,8 @@ function App() {
 			</button>
 			<button
 				onClick={async () => {
-					await Bridge.ShowWindow(false)
+					setIsWindowVisible(!isWindowVisible)
+					await Bridge.showWindow(isWindowVisible)
 				}}>
 				Toggle Window
 			</button>

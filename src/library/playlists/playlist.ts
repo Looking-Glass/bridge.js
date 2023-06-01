@@ -6,7 +6,7 @@ export interface PlaylistType {
 	items: PlaylistItemType[]
 }
 
-interface getPlayPlaylistJsonArgs {
+export interface getPlayPlaylistJsonArgs {
 	orchestration: string
 	head: number
 }

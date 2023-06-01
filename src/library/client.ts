@@ -1,6 +1,6 @@
 import { Display, TryParseDisplay } from "./components/displays"
 import { responseStatus, sendMessage } from "./components/endpoints"
-import { tryEnterOrchestration, tryExitOrchestration } from "./components/orchestration"
+import { tryEnterOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist, PlaylistArgs } from "./playlists/playlist"
 import { PlaylistItemType } from "./playlists/playlistItems"
@@ -29,7 +29,7 @@ export class BridgeClient {
 		this.orchestration = ""
 		this.lkgDisplays = []
 		this.eventsource = new BridgeEventSource()
-		this.CreateOrchestration("")
+		this.createOrchestration("")
 		this.internalPlaylists = []
 		this.currentPlaylist = 0
 
@@ -51,7 +51,7 @@ export class BridgeClient {
 	 * A helper function to check and see if Looking Glass Bridge is running or not.
 	 * @returns boolean, true if Bridge is running, false if Bridge is not running
 	 */
-	public async QueryBridge(): Promise<boolean> {
+	public async query(): Promise<boolean> {
 		try {
 			let response = await fetch("http://localhost:33334/")
 			if (!response.ok) {
@@ -68,8 +68,8 @@ export class BridgeClient {
 	 * Creates an orchestration called "default" if one does not already exist.
 	 * @returns string, the name of the current orchestration
 	 */
-	public async CreateOrchestration(name: string) {
-		if ((await this.QueryBridge()) == false) {
+	public async createOrchestration(name: string) {
+		if ((await this.query()) == false) {
 			return
 		}
 		let new_orchestration = await tryEnterOrchestration({ name: name, orchestration: this.orchestration })
@@ -84,7 +84,7 @@ export class BridgeClient {
 	 * A helper function to get the version of Looking Glass Bridge that is running.
 	 * @returns the current version of Looking Glass Bridge
 	 */
-	public async bridgeVersion() {
+	public async version() {
 		let BridgeVersion = null
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 
@@ -162,7 +162,7 @@ export class BridgeClient {
 	 * A helper function to create a new Playlist object
 	 * @param name the name of the playlist
 	 */
-	public CreatePlaylist(name: string) {
+	public createPlaylist(name: string) {
 		const playlist = new Playlist()
 		playlist.SetName(name)
 		return playlist
@@ -237,14 +237,14 @@ export class BridgeClient {
 		let newPlaylist = null
 
 		if (this.internalPlaylists[newPlaylistIndex] == undefined) {
-			this.internalPlaylists[newPlaylistIndex] = this.CreatePlaylist("cast" + newPlaylistIndex)
+			this.internalPlaylists[newPlaylistIndex] = this.createPlaylist("cast" + newPlaylistIndex)
 			newPlaylist = this.internalPlaylists[newPlaylistIndex]
 		} else {
 			newPlaylist = this.internalPlaylists[newPlaylistIndex]
 			// tell bridge to clear the playlist in its internal memory
 			await this.showWindow(false)
 			await this.deletePlaylist(newPlaylist)
-			this.internalPlaylists[newPlaylistIndex] = this.CreatePlaylist("cast" + newPlaylistIndex)
+			this.internalPlaylists[newPlaylistIndex] = this.createPlaylist("cast" + newPlaylistIndex)
 			// clear the playlist in bridge.js
 			newPlaylist.ClearItems()
 		}

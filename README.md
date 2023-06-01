@@ -23,13 +23,13 @@ The BridgeClient object will automatically attempt to connect to Looking Glass B
 If it's unable to connect, for example if Bridge is not running when the object is initialized, you can manually try connecting by calling
 
 ```js
-Bridge.CreateOrchestration()
+Bridge.createOrchestration()
 ```
 
 You can also query to see if Bridge is running by running
 
 ```js
-Bridge.QueryBridge()
+Bridge.query()
 ```
 
 ### Casting a Hologram
