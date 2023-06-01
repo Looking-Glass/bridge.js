@@ -22,7 +22,10 @@
 		"typedoc": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/library/index.ts --excludePrivate --readme none --disableSources",
 		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs src/library/index.ts --excludePrivate --readme none --disableSources --watch"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"holoplay-core": "^0.0.9",
+		"zod": "^3.21.4"
+	},
 	"devDependencies": {
 		"@lookingglass/blocks.js": "^0.1.1",
 		"@rollup/plugin-typescript": "^9.0.1",

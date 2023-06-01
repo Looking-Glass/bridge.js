@@ -5,6 +5,9 @@ import { BridgeEventSource } from "./components/eventsource"
 import { Playlist, PlaylistArgs } from "./playlists/playlist"
 import { PlaylistItemType } from "./playlists/playlistItems"
 import { BridgeEvent } from "./components"
+import * as schema from "./schemas"
+import { z } from "zod"
+import { Fallback } from "./components/fallback"
 
 /**
  * BridgeClient is the main class for interacting with Looking Glass Bridge.
@@ -17,21 +20,27 @@ import { BridgeEvent } from "./components"
 
 export class BridgeClient {
 	private orchestration: string
+	private isValid: boolean
 	private lkgDisplays: Display[]
 	private internalPlaylists: Playlist[]
 	private currentPlaylist: number
 	private eventsource: BridgeEventSource
-	static instance: any
+	static instance: BridgeClient
 	static verbosity: 0 | 1 | 2 | 3 = 3
 	private isCasting = false
+	private fallback: Fallback
+	public version: number
 
 	constructor() {
 		this.orchestration = ""
+		this.isValid = false
 		this.lkgDisplays = []
 		this.eventsource = new BridgeEventSource()
 		this.createOrchestration("")
 		this.internalPlaylists = []
 		this.currentPlaylist = 0
+		this.fallback = new Fallback()
+		this.version = 0
 
 		if (!BridgeClient.instance) {
 			BridgeClient.instance = this
@@ -57,6 +66,7 @@ export class BridgeClient {
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
 			}
+			this.isValid = true
 			return true
 		} catch (error) {
 			console.error(`Looking Glass Bridge is not running, please start Bridge and try again.`)
@@ -70,31 +80,39 @@ export class BridgeClient {
 	 */
 	public async createOrchestration(name: string) {
 		if ((await this.query()) == false) {
-			return
+			return false
 		}
 		let new_orchestration = await tryEnterOrchestration({ name: name, orchestration: this.orchestration })
 		if (new_orchestration !== false && new_orchestration !== undefined) {
 			this.orchestration = new_orchestration
 		}
 		this.initializeEventSource()
+		this.isValid = true
 		return this.orchestration
 	}
 
 	/**
 	 * A helper function to get the version of Looking Glass Bridge that is running.
-	 * @returns the current version of Looking Glass Bridge
+	 * @returns string of the version of Looking Glass Bridge that is running
 	 */
-	public async version() {
-		let BridgeVersion = null
-		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
+	public async getVersion(): Promise<number | boolean> {
+		//give enough time for the websocket to connect.
+		await new Promise((r) => setTimeout(r, 50))
+		// use a fallback in case the driver version is too old.
+		this.version = await this.fallback.messageCallback()
+		if (this.isVersionCompatible() == false) return false
 
-		let response: any = await sendMessage({ endpoint: "bridge_version" })
-		if ((await responseStatus({ response: response, errorMessage: errorMessage })) == false) {
+		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
+		let response: z.infer<typeof schema.version> = await sendMessage({ endpoint: "bridge_version" })
+		if (
+			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.version })) ==
+			false
+		) {
 			return false
 		}
-		BridgeVersion = response.payload.value
-
-		return BridgeVersion
+		this.version = parseFloat(response.payload.value)
+		this.isValid = true
+		return this.version
 	}
 
 	/**
@@ -104,25 +122,41 @@ export class BridgeClient {
 	 */
 	public async showWindow(showWindow: boolean) {
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
+		if (this.isVersionCompatible() == false) {
+			console.error(errorMessage)
+			return false
+		}
 		const requestBody = JSON.stringify({
 			orchestration: this.orchestration,
 			show_window: showWindow,
 			head_index: -1,
 		})
-		let response: any = await sendMessage({ endpoint: "show_window", requestBody: requestBody })
+		let response: z.infer<typeof schema.showWindow> = await sendMessage({
+			endpoint: "show_window",
+			requestBody: requestBody,
+		})
 
-		if ((await responseStatus({ response: response, errorMessage: errorMessage })) == false) {
+		if (
+			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.showWindow })) ==
+			false
+		) {
 			return false
 		}
 	}
+
 	/**
 	 * A helper function to get the version of the Looking Glass Bridge API
 	 * @returns the current version of the Looking Glass API
 	 */
 	public async apiVersion() {
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
-		let response: any = await sendMessage({ endpoint: "api_version" })
-		if ((await responseStatus({ response: response, errorMessage: errorMessage })) == false) {
+		if (this.isValid == false) return false
+		if (this.isVersionCompatible() == false) return false
+		let response: z.infer<typeof schema.version> = await sendMessage({ endpoint: "api_version" })
+		if (
+			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.version })) ==
+			false
+		) {
 			return false
 		}
 
@@ -137,11 +171,16 @@ export class BridgeClient {
 	 */
 	public async displays() {
 		this.lkgDisplays = []
+		// if there is no orchestration, attempt to create one, if that fails, return false
+		if (this.isValid == false) return false
 		const requestBody = JSON.stringify({
 			orchestration: this.orchestration,
 		})
-		let response: any = await sendMessage({ endpoint: "available_output_devices", requestBody: requestBody })
-		if ((await responseStatus({ response: response })) == false) {
+		let response: z.infer<typeof schema.displays> = await sendMessage({
+			endpoint: "available_output_devices",
+			requestBody: requestBody,
+		})
+		if ((await responseStatus({ response: response, schema: schema.displays })) == false) {
 			return false
 		}
 
@@ -169,9 +208,10 @@ export class BridgeClient {
 	}
 
 	public async deletePlaylist(playlist: Playlist) {
+		if (this.isValid == false) return false
 		const requestBody = playlist.GetInstanceJson(this.orchestration)
 		let response = await sendMessage({ endpoint: "delete_playlist", requestBody: requestBody })
-		if ((await responseStatus({ response: response })) == false) {
+		if ((await responseStatus({ response: response, schema: schema.deletePlaylist })) == false) {
 			return false
 		}
 		return response
@@ -185,6 +225,7 @@ export class BridgeClient {
 	 * @returns
 	 */
 	public async play({ playlist, head }: PlaylistArgs) {
+		if (this.isValid == false) return false
 		const requestBody = playlist.GetInstanceJson(this.orchestration)
 
 		if (!head) {
@@ -192,7 +233,7 @@ export class BridgeClient {
 		}
 
 		let instancePlaylist = await sendMessage({ endpoint: "instance_playlist", requestBody: requestBody })
-		if ((await responseStatus({ response: instancePlaylist })) == false) {
+		if ((await responseStatus({ response: instancePlaylist, schema: schema.instancePlaylist })) == false) {
 			console.error("failed to initialize playlist")
 			return false
 		}
@@ -202,7 +243,7 @@ export class BridgeClient {
 		for (let i = 0; i < PlaylistItems.length; i++) {
 			const pRequestBody = PlaylistItems[i]
 			let message = await sendMessage({ endpoint: "insert_playlist_entry", requestBody: pRequestBody })
-			if ((await responseStatus({ response: message })) == false) {
+			if ((await responseStatus({ response: message, schema: schema.insertPlaylist })) == false) {
 				console.error("failed to insert playlist entry")
 				return false
 			}
@@ -211,7 +252,7 @@ export class BridgeClient {
 		const playRequestBody = playlist.GetPlayPlaylistJson({ orchestration, head })
 		let play_playlist = await sendMessage({ endpoint: "play_playlist", requestBody: playRequestBody })
 
-		if ((await responseStatus({ response: play_playlist })) == false) {
+		if ((await responseStatus({ response: play_playlist, schema: schema.play })) == false) {
 			console.error("failed to play the playlist")
 			return false
 		}
@@ -225,7 +266,7 @@ export class BridgeClient {
 	 * @param playlistItem
 	 */
 	public async cast(playlistItem: PlaylistItemType) {
-		// only cast if we're not already casting
+		if (this.isValid == false) return false
 		if (this.isCasting == true) {
 			console.warn("already casting please wait")
 			return
@@ -283,5 +324,20 @@ export class BridgeClient {
 	 */
 	public setVerbosity(verbosity: 0 | 1 | 2 | 3) {
 		BridgeClient.verbosity = verbosity
+	}
+
+	/**
+	 * helper function for determining if the version of Bridge is valid.
+	 * @returns boolean, true if the version is compatible, false if not
+	 */
+	private isVersionCompatible() {
+		if (this.version == 0) {
+			console.error("BridgeClient has not been initialized")
+			this.isValid = false
+			return this.isValid
+		}
+		if (this.version < 2.2) console.warn("Please update to the latest version for the best experience")
+		this.isValid = false
+		return this.isValid
 	}
 }

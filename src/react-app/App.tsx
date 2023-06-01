@@ -38,7 +38,7 @@ function App() {
 			</button>
 			<button
 				onClick={async () => {
-					console.log(await Bridge.version())
+					console.log(await Bridge.getVersion())
 				}}>
 				Get Bridge version
 			</button>

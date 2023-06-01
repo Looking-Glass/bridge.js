@@ -56,3 +56,5 @@ export type BridgeEvent =
 	| "Sync/Play Playlist"
 	| "Sync/Play Playlist Complete"
 	| "Sync/Play Playlist Cancelled"
+
+declare module "holoplay-core"

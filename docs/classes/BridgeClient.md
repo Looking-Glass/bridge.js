@@ -275,15 +275,15 @@ ___
 
 ### version
 
-▸ **version**(): `Promise`<`any`\>
+▸ **version**(): `Promise`<`string` \| `boolean`\>
 
 A helper function to get the version of Looking Glass Bridge that is running.
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`<`string` \| `boolean`\>
 
-the current version of Looking Glass Bridge
+string of the version of Looking Glass Bridge that is running
 
 ___
 

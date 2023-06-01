@@ -1,5 +1,7 @@
 import { Bridge } from ".."
 import { responseStatus, sendMessage } from "./endpoints"
+import * as schema from "../schemas"
+import { z } from "zod"
 
 export interface OrchestrationArgs {
 	name?: string
@@ -25,8 +27,11 @@ export async function tryEnterOrchestration({ name, orchestration }: Orchestrati
 	let requestBody = JSON.stringify({
 		name: name,
 	})
-	let response = await sendMessage({ endpoint: "enter_orchestration", requestBody: requestBody })
-	if ((await responseStatus({ response: response })) == false) {
+	let response: z.infer<typeof schema.orchestration> = await sendMessage({
+		endpoint: "enter_orchestration",
+		requestBody: requestBody,
+	})
+	if ((await responseStatus({ response: response, schema: schema.orchestration })) == false) {
 		return false
 	}
 	let new_orchestration = response.payload.value
@@ -40,8 +45,11 @@ export async function tryExitOrchestration(orchestration: string) {
 		orchestration: orchestration,
 	})
 
-	let response = await sendMessage({ endpoint: "exit_orchestration", requestBody: body })
-	if ((await responseStatus({ response: response })) == false) {
+	let response: z.infer<typeof schema.orchestration> = await sendMessage({
+		endpoint: "exit_orchestration",
+		requestBody: body,
+	})
+	if ((await responseStatus({ response: response, schema: schema.orchestration })) == false) {
 		return false
 	}
 

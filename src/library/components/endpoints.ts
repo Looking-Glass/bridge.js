@@ -86,13 +86,34 @@ export async function sendMessage({ endpoint, requestBody, baseURL }: sendMessag
 export interface responseStatusArgs {
 	response: any
 	errorMessage?: string
+	schema: any
 }
-export async function responseStatus({ response, errorMessage }: responseStatusArgs) {
+/**
+ * a utility function for verifying the response from bridge.
+ * @param response the response from bridge
+ * @param errorMessage Optional: A custom error message to display if the response is undefined
+ * @param schema the schema to verify the response against
+ * @returns
+ */
+export async function responseStatus({ response, errorMessage, schema }: responseStatusArgs) {
 	try {
 		if (response == undefined) {
 			throw new Error("response is undefined")
 		}
-		let status: string = response.status.value ? response.status.value : "no status value found"
+		// verify that the response matches the schema
+		const parsed = schema.safeParse(response)
+		if (!parsed.success) {
+			console.error("🚫Bridge Response does not match expected value", {
+				recieved: response,
+				validationErrors: parsed.error.formErrors.fieldErrors,
+				// or for a formatted error message:
+				errorMessage: parsed.error.message,
+			})
+			return false
+		} else if (Bridge.getVerbosity() == 3) {
+			console.log("%c ✅ response matches expected schema", "color: lime")
+		}
+		let status: string = response.status.value
 		if (Bridge.getVerbosity() == 3) {
 			console.group("response")
 			console.log(response)
@@ -109,7 +130,7 @@ export async function responseStatus({ response, errorMessage }: responseStatusA
 	} catch (error) {
 		// if we have a custom error message, return that, otherwise return the full error
 		if (errorMessage !== undefined) {
-			console.error(errorMessage)
+			console.error(errorMessage, error)
 		} else {
 			console.error(error)
 		}
