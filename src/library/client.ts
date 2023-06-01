@@ -250,7 +250,10 @@ export class BridgeClient {
 		}
 		let orchestration = this.orchestration
 		const playRequestBody = playlist.GetPlayPlaylistJson({ orchestration, head })
-		let play_playlist = await sendMessage({ endpoint: "play_playlist", requestBody: playRequestBody })
+		let play_playlist: z.infer<typeof schema.play> = await sendMessage({
+			endpoint: "play_playlist",
+			requestBody: playRequestBody,
+		})
 
 		if ((await responseStatus({ response: play_playlist, schema: schema.play })) == false) {
 			console.error("failed to play the playlist")
@@ -335,9 +338,13 @@ export class BridgeClient {
 			console.error("BridgeClient has not been initialized")
 			this.isValid = false
 			return this.isValid
+		} else if (this.version < 2.1) {
+			console.warn("Please update to the latest version for the best experience")
+			this.isValid = false
+			return this.isValid
+		} else if (this.version >= 2.1) {
+			this.isValid = true
+			return this.isValid
 		}
-		if (this.version < 2.2) console.warn("Please update to the latest version for the best experience")
-		this.isValid = false
-		return this.isValid
 	}
 }
