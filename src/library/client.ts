@@ -82,6 +82,10 @@ export class BridgeClient {
 		if ((await this.query()) == false) {
 			return false
 		}
+		if ((await this.getVersion()) == false) {
+			console.error(`Unable to get Looking Glass Bridge version, please upgrade Looking Glass Bridge.`)
+			return false
+		}
 		let new_orchestration = await tryEnterOrchestration({ name: name, orchestration: this.orchestration })
 		if (new_orchestration !== false && new_orchestration !== undefined) {
 			this.orchestration = new_orchestration
@@ -97,13 +101,16 @@ export class BridgeClient {
 	 */
 	public async getVersion(): Promise<number | boolean> {
 		//give enough time for the websocket to connect.
-
+		console.group("getVersion")
 		// use a fallback in case the driver version is too old.
-		if (this.isValid == false) {
+		if (this.isValid != false) {
 			await new Promise((r) => setTimeout(r, 250))
 			this.version = await this.fallback.messageCallback()
 		}
-		if (this.isVersionCompatible() == false && this.isValid == false) return false
+		if ((await this.isVersionCompatible()) == false && this.isValid == false) {
+			console.groupEnd()
+			return false
+		}
 
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		let response: z.infer<typeof schema.version> = await sendMessage({ endpoint: "bridge_version" })
@@ -111,10 +118,12 @@ export class BridgeClient {
 			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.version })) ==
 			false
 		) {
+			console.groupEnd()
 			return false
 		}
 		this.version = parseFloat(response.payload.value)
 		this.isValid = true
+		console.groupEnd()
 		return this.version
 	}
 
@@ -125,7 +134,7 @@ export class BridgeClient {
 	 */
 	public async showWindow(showWindow: boolean) {
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
-		if (this.isVersionCompatible() == false) {
+		if ((await this.isVersionCompatible()) == false) {
 			console.error(errorMessage)
 			return false
 		}
@@ -154,7 +163,7 @@ export class BridgeClient {
 	public async apiVersion() {
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		if (this.isValid == false) return false
-		if (this.isVersionCompatible() == false) return false
+		if ((await this.isVersionCompatible()) == false) return false
 		let response: z.infer<typeof schema.version> = await sendMessage({ endpoint: "api_version" })
 		if (
 			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.version })) ==
@@ -211,12 +220,18 @@ export class BridgeClient {
 	}
 
 	public async deletePlaylist(playlist: Playlist) {
-		if (this.isValid == false) return false
+		console.group("deletePlaylist")
+		if (this.isValid == false) {
+			console.groupEnd()
+			return false
+		}
 		const requestBody = playlist.GetInstanceJson(this.orchestration)
 		let response = await sendMessage({ endpoint: "delete_playlist", requestBody: requestBody })
 		if ((await responseStatus({ response: response, schema: schema.deletePlaylist })) == false) {
+			console.groupEnd()
 			return false
 		}
+		console.groupEnd()
 		return response
 	}
 
@@ -336,9 +351,8 @@ export class BridgeClient {
 	 * helper function for determining if the version of Bridge is valid.
 	 * @returns boolean, true if the version is compatible, false if not
 	 */
-	private isVersionCompatible() {
+	private async isVersionCompatible() {
 		if (this.version == 0) {
-			console.error("BridgeClient has not been initialized")
 			this.isValid = false
 			return this.isValid
 		} else if (this.version < 2.1) {

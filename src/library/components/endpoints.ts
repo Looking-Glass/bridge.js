@@ -46,7 +46,7 @@ interface sendMessageArgs {
 
 export async function sendMessage({ endpoint, requestBody, baseURL }: sendMessageArgs) {
 	let response: any
-	if (Bridge.getVerbosity() != 0) console.group(endpoint)
+	if (Bridge.getVerbosity() != 0) console.group("Endpoint:", endpoint)
 	//REMOVE THIS AFTER MATTY FIXES BRIDGE 5-11-2023
 	await new Promise((r) => setTimeout(r, 50))
 
@@ -59,8 +59,8 @@ export async function sendMessage({ endpoint, requestBody, baseURL }: sendMessag
 	}
 
 	if (Bridge.getVerbosity() == 3) {
-		console.group("message body")
-		console.log(`Sending message to ${baseURL + endpoint}`)
+		console.group("Message:")
+		console.log(`${baseURL + endpoint}`)
 		console.log("body:", JSON.parse(requestBody))
 		console.groupEnd()
 	}

@@ -121,10 +121,21 @@ export const insertPlaylist = z.object({
 
 export const deletePlaylist = z.object({
 	name: name,
-	payload: z.object({
+	orchestration: z.object({
 		name: name,
 		type: wstring,
 		value: z.string(),
+	}),
+	payload: z.object({
+		name: name,
+		type: variant_map,
+		value: z.object({
+			name: z.object({
+				name: name,
+				type: wstring,
+				value: z.string(),
+			}),
+		}),
 	}),
 	status: status,
 })
