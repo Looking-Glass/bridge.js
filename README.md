@@ -62,7 +62,7 @@ const cast = Bridge.cast(hologram)
 if (cast.success) {
 	console.log("🥳 yay we did it!")
 } else {
-	;("😭")
+	console.log("😭")
 }
 ```
 
