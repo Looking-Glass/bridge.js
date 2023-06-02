@@ -50,7 +50,23 @@ const hologram = QuiltPlaylistItem({
 await Bridge.cast(hologram)
 ```
 
-### Organization
+### Checking if functions succeeded.
+
+All functions in Bridge.js return an object that contains a success value.
+Given that most functions are asynchronous, you'll need to store the result as a variable and then check it.
+
+For example:
+
+```javascript
+const cast = Bridge.cast(hologram)
+if (cast.success) {
+	console.log("🥳 yay we did it!")
+} else {
+	;("😭")
+}
+```
+
+## Organization
 
 All files used in the library are in the `src/library` folder.
 

@@ -47,8 +47,6 @@ interface sendMessageArgs {
 export async function sendMessage({ endpoint, requestBody, baseURL }: sendMessageArgs) {
 	let response: any
 	if (Bridge.getVerbosity() != 0) console.group("Endpoint:", endpoint)
-	//REMOVE THIS AFTER MATTY FIXES BRIDGE 5-11-2023
-	await new Promise((r) => setTimeout(r, 50))
 
 	if (baseURL == undefined) {
 		baseURL = "http://localhost:33334/"

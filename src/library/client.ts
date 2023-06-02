@@ -93,7 +93,7 @@ export class BridgeClient {
 		}
 		this.initializeEventSource()
 		this.isValid = true
-		return { success: false, response: this.orchestration }
+		return { success: true, response: this.orchestration }
 	}
 
 	/**
@@ -180,7 +180,7 @@ export class BridgeClient {
 		}
 
 		let APIVersion = parseFloat(response.payload.value)
-		return { success: false, response: APIVersion }
+		return { success: true, response: APIVersion }
 	}
 
 	/**
@@ -214,7 +214,7 @@ export class BridgeClient {
 			}
 		}
 
-		return { success: false, response: this.lkgDisplays }
+		return { success: true, response: this.lkgDisplays }
 	}
 
 	/**
