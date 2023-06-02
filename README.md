@@ -16,9 +16,11 @@ To get started, import the library, either via script tag or via npm. Then creat
 import {Bridge} from @lookingglass/bridge
 ```
 
+Bridge is a singleton class, meaning only one `Bridge` object can exist at a time.
+
 ### Connecting to Bridge
 
-The BridgeClient object will automatically attempt to connect to Looking Glass Bridge.
+The Bridge object will automatically attempt to connect to Looking Glass Bridge.
 
 If it's unable to connect, for example if Bridge is not running when the object is initialized, you can manually try connecting by calling
 
@@ -26,7 +28,7 @@ If it's unable to connect, for example if Bridge is not running when the object 
 Bridge.createOrchestration()
 ```
 
-You can also query to see if Bridge is running by running
+You can also query to see if you can connect to Bridge by running
 
 ```js
 Bridge.query()
@@ -48,19 +50,25 @@ const hologram = QuiltPlaylistItem({
 await Bridge.cast(hologram)
 ```
 
+### Organization
+
+All files used in the library are in the `src/library` folder.
+
+Most core functionality is exported as part of the `Bridge` object, though there are some helper functions that assist in creating proper hologram and playlist objects.
+
+**To ensure your file/functionality is exported from the library you must reference the file in index.ts**
+
+Files in the react app are in the `src/react-app` folder.
+
 ## Developing
 
 > **Note**
 > This readme assumes your development environment is setup and you have node.js and yarn installed. If you don't have yarn, you can also use npm.
 
-To start developing the library, clone this github repo. Then run `yarn install` & `yarn dev` This will spin up a minimal react environment that imports the library.
+To start developing the library, clone this github repo. Then run `yarn install`
 
-To build the library, run `yarn library`
+To develop the library run `yarn dev` This will spin up a minimal react environment that imports the library and supports full typesafety + hot reloading.
+
+To build the library, run `yarn library` This will also auto-generate documentation via typedoc.
 
 To build the react-app, run `yarn build`
-
-### Organization
-
-All files used in the library are in the `src/library` folder. To ensure your file/functionality is exported from the library you must reference the file in index.ts
-
-Files in the react app are in the `src/react-app` folder.
