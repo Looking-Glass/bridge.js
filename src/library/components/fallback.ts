@@ -1,6 +1,10 @@
 //@ts-ignore
 import { Client as HoloPlayClient, InfoMessage } from "holoplay-core"
 
+/**
+ * provide a fallback in case we're unable to connect to bridge.
+ * This class uses HoloPlay Core to see if the older API endpoint used in HoloPlay Service is available.
+ */
 export class Fallback {
 	private holoPlayClient: HoloPlayClient
 
@@ -17,12 +21,12 @@ export class Fallback {
 			})
 			return version
 		} catch (error) {
-			console.error("unable to get version")
+			console.error("unable to get version", error)
 			return 0
 		}
 	}
 
 	public errorCallback() {
-		console.error("Looking Glass Bridge isn't running. Note that this will not work on MacOS using Safari.")
+		console.error("unable to connect to Legacy API")
 	}
 }

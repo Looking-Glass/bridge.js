@@ -17,6 +17,7 @@ This is useful if Bridge was not running when the class was created.
 
 ### Properties
 
+- [version](BridgeClient.md#version)
 - [instance](BridgeClient.md#instance)
 - [verbosity](BridgeClient.md#verbosity)
 
@@ -30,12 +31,12 @@ This is useful if Bridge was not running when the class was created.
 - [deletePlaylist](BridgeClient.md#deleteplaylist)
 - [displays](BridgeClient.md#displays)
 - [getVerbosity](BridgeClient.md#getverbosity)
+- [getVersion](BridgeClient.md#getversion)
 - [initializeEventSource](BridgeClient.md#initializeeventsource)
 - [play](BridgeClient.md#play)
 - [query](BridgeClient.md#query)
 - [setVerbosity](BridgeClient.md#setverbosity)
 - [showWindow](BridgeClient.md#showwindow)
-- [version](BridgeClient.md#version)
 - [getInstance](BridgeClient.md#getinstance)
 
 ## Constructors
@@ -46,9 +47,15 @@ This is useful if Bridge was not running when the class was created.
 
 ## Properties
 
+### version
+
+• **version**: `number`
+
+___
+
 ### instance
 
-▪ `Static` **instance**: `any`
+▪ `Static` **instance**: [`BridgeClient`](BridgeClient.md)
 
 ___
 
@@ -79,13 +86,13 @@ ___
 
 ### apiVersion
 
-▸ **apiVersion**(): `Promise`<`any`\>
+▸ **apiVersion**(): `Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
 
 A helper function to get the version of the Looking Glass Bridge API
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
 
 the current version of the Looking Glass API
 
@@ -93,7 +100,7 @@ ___
 
 ### cast
 
-▸ **cast**(`playlistItem`): `Promise`<`void`\>
+▸ **cast**(`playlistItem`): `Promise`<{ `success`: `boolean`  }\>
 
 Casting a hologram requires some pretty specific behavior to work with Bridge' new playlist api.
 This function will alternate between two playlists so that you can cast a new hologram without interrupting the current one.
@@ -106,13 +113,13 @@ This function will alternate between two playlists so that you can cast a new ho
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`<{ `success`: `boolean`  }\>
 
 ___
 
 ### createOrchestration
 
-▸ **createOrchestration**(`name`): `Promise`<`undefined` \| `string`\>
+▸ **createOrchestration**(`name`): `Promise`<{ `response`: ``null`` \| `string` ; `success`: `boolean`  }\>
 
 Creates an orchestration called "default" if one does not already exist.
 
@@ -124,7 +131,7 @@ Creates an orchestration called "default" if one does not already exist.
 
 #### Returns
 
-`Promise`<`undefined` \| `string`\>
+`Promise`<{ `response`: ``null`` \| `string` ; `success`: `boolean`  }\>
 
 string, the name of the current orchestration
 
@@ -150,7 +157,7 @@ ___
 
 ### deletePlaylist
 
-▸ **deletePlaylist**(`playlist`): `Promise`<`any`\>
+▸ **deletePlaylist**(`playlist`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { name: string; type: "WSTRING"; value: string; } ; `payload`: { name: string; type: "VARIANT\_MAP"; value: { name: { name: string; type: "WSTRING"; value: string; }; }; } ; `status`: { name: string; type: "WSTRING"; value: string; } = status } ; `success`: `boolean`  }\>
 
 #### Parameters
 
@@ -160,20 +167,20 @@ ___
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { name: string; type: "WSTRING"; value: string; } ; `payload`: { name: string; type: "VARIANT\_MAP"; value: { name: { name: string; type: "WSTRING"; value: string; }; }; } ; `status`: { name: string; type: "WSTRING"; value: string; } = status } ; `success`: `boolean`  }\>
 
 ___
 
 ### displays
 
-▸ **displays**(): `Promise`<``false`` \| `Display`[]\>
+▸ **displays**(): `Promise`<{ `response`: ``null`` \| `Display`[] ; `success`: `boolean`  }\>
 
 QueryDisplays finds all displays that are connected to the computer,
 searches for Looking Glass displays, and returns them as an array of Display objects
 
 #### Returns
 
-`Promise`<``false`` \| `Display`[]\>
+`Promise`<{ `response`: ``null`` \| `Display`[] ; `success`: `boolean`  }\>
 
 the display object
 
@@ -186,6 +193,20 @@ ___
 #### Returns
 
 ``0`` \| ``1`` \| ``2`` \| ``3``
+
+___
+
+### getVersion
+
+▸ **getVersion**(): `Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
+
+A helper function to get the version of Looking Glass Bridge that is running.
+
+#### Returns
+
+`Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
+
+string of the version of Looking Glass Bridge that is running
 
 ___
 
@@ -257,7 +278,7 @@ ___
 
 ### showWindow
 
-▸ **showWindow**(`showWindow`): `Promise`<`undefined` \| ``false``\>
+▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { name: string; type: "WSTRING"; value: string; } ; `status`: { name: string; type: "WSTRING"; value: string; } = status } ; `success`: `boolean`  }\>
 
 changes the state of the Looking Glass Bridge Window
 
@@ -269,28 +290,14 @@ changes the state of the Looking Glass Bridge Window
 
 #### Returns
 
-`Promise`<`undefined` \| ``false``\>
-
-___
-
-### version
-
-▸ **version**(): `Promise`<`string` \| `boolean`\>
-
-A helper function to get the version of Looking Glass Bridge that is running.
-
-#### Returns
-
-`Promise`<`string` \| `boolean`\>
-
-string of the version of Looking Glass Bridge that is running
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { name: string; type: "WSTRING"; value: string; } ; `status`: { name: string; type: "WSTRING"; value: string; } = status } ; `success`: `boolean`  }\>
 
 ___
 
 ### getInstance
 
-▸ `Static` **getInstance**(): `any`
+▸ `Static` **getInstance**(): [`BridgeClient`](BridgeClient.md)
 
 #### Returns
 
-`any`
+[`BridgeClient`](BridgeClient.md)

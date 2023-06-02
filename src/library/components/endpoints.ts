@@ -78,7 +78,7 @@ export async function sendMessage({ endpoint, requestBody, baseURL }: sendMessag
 		if (Bridge.getVerbosity() != 0) console.groupEnd()
 		return parsedResponse
 	} catch (error) {
-		console.error(error)
+		console.error("Couldn't connect to Bridge", error)
 		console.groupEnd()
 		return null
 	}
@@ -110,8 +110,6 @@ export async function responseStatus({ response, errorMessage, schema }: respons
 				errorMessage: parsed.error.message,
 			})
 			return false
-		} else if (Bridge.getVerbosity() == 3) {
-			console.log("%c ✅ response matches expected schema", "color: lime")
 		}
 		let status: string = response.status.value
 		if (Bridge.getVerbosity() == 3) {

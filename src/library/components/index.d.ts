@@ -58,3 +58,8 @@ export type BridgeEvent =
 	| "Sync/Play Playlist Cancelled"
 
 declare module "holoplay-core"
+
+export type success = {
+	success: boolean
+	response: any
+}

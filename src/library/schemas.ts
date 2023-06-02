@@ -77,6 +77,27 @@ export const play = z.object({
 	status: status,
 })
 
+export const playlist_failed = z.object({
+	name: name,
+	orchestration: z.object({
+		name: name,
+		type: wstring,
+		value: z.string(),
+	}),
+	payload: z.object({
+		name: name,
+		type: variant_map,
+		value: z.object({
+			message: z.object({
+				name: name,
+				type: wstring,
+				value: z.string(),
+			}),
+		}),
+	}),
+	status: status,
+})
+
 export const instancePlaylist = z.object({
 	name: name,
 	orchestration: z.object({

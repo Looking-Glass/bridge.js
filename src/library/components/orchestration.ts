@@ -14,7 +14,11 @@ export interface OrchestrationArgs {
  * @returns
  */
 export async function tryEnterOrchestration({ name, orchestration }: OrchestrationArgs) {
-	if (Bridge.getVerbosity() != 0) console.group("tryEnterOrchestration")
+	if (Bridge.getVerbosity() != 0)
+		console.group(
+			"%c function call: tryEnterOrchestration ",
+			"color: magenta; font-weight: bold; border: solid"
+		)
 	if (name == undefined) {
 		name = "default"
 	}

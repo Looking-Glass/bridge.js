@@ -69,7 +69,7 @@ export class BridgeClient {
 			this.isValid = true
 			return true
 		} catch (error) {
-			console.error(`Looking Glass Bridge is not running, please start Bridge and try again.`)
+			console.warn(`Looking Glass Bridge is not running, please start Bridge and try again.`)
 			return false
 		}
 	}
@@ -78,13 +78,14 @@ export class BridgeClient {
 	 * Creates an orchestration called "default" if one does not already exist.
 	 * @returns string, the name of the current orchestration
 	 */
-	public async createOrchestration(name: string) {
+	public async createOrchestration(name: string): Promise<{ success: boolean; response: null | string }> {
 		if ((await this.query()) == false) {
-			return false
+			return { success: false, response: null }
 		}
-		if ((await this.getVersion()) == false) {
+		const version = await this.getVersion()
+		if (version.success == false) {
 			console.error(`Unable to get Looking Glass Bridge version, please upgrade Looking Glass Bridge.`)
-			return false
+			return { success: false, response: null }
 		}
 		let new_orchestration = await tryEnterOrchestration({ name: name, orchestration: this.orchestration })
 		if (new_orchestration !== false && new_orchestration !== undefined) {
@@ -92,24 +93,23 @@ export class BridgeClient {
 		}
 		this.initializeEventSource()
 		this.isValid = true
-		return this.orchestration
+		return { success: false, response: this.orchestration }
 	}
 
 	/**
 	 * A helper function to get the version of Looking Glass Bridge that is running.
 	 * @returns string of the version of Looking Glass Bridge that is running
 	 */
-	public async getVersion(): Promise<number | boolean> {
+	public async getVersion(): Promise<{ success: boolean; response: number }> {
 		//give enough time for the websocket to connect.
-		console.group("getVersion")
+		console.log("%c function call: getVersion ", "color: magenta; font-weight: bold; border: solid")
 		// use a fallback in case the driver version is too old.
 		if (this.isValid != false) {
-			await new Promise((r) => setTimeout(r, 250))
+			await new Promise((r) => setTimeout(r, 1000))
 			this.version = await this.fallback.messageCallback()
 		}
 		if ((await this.isVersionCompatible()) == false && this.isValid == false) {
-			console.groupEnd()
-			return false
+			return { success: false, response: 0 }
 		}
 
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
@@ -118,13 +118,11 @@ export class BridgeClient {
 			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.version })) ==
 			false
 		) {
-			console.groupEnd()
-			return false
+			return { success: false, response: 0 }
 		}
 		this.version = parseFloat(response.payload.value)
 		this.isValid = true
-		console.groupEnd()
-		return this.version
+		return { success: true, response: this.version }
 	}
 
 	/**
@@ -132,11 +130,16 @@ export class BridgeClient {
 	 * @param showWindow boolean, true to show the Looking Glass window, false to hide the Looking Glass window
 	 * @returns
 	 */
-	public async showWindow(showWindow: boolean) {
+	public async showWindow(
+		showWindow: boolean
+	): Promise<{ success: boolean; response: z.infer<typeof schema.showWindow> | null }> {
+		if (this.isValid == false) return { success: false, response: null }
+		console.log("%c function call: showWindow ", "color: magenta; font-weight: bold; border: solid")
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		if ((await this.isVersionCompatible()) == false) {
-			console.error(errorMessage)
-			return false
+			console.warn(errorMessage)
+
+			return { success: false, response: null }
 		}
 		const requestBody = JSON.stringify({
 			orchestration: this.orchestration,
@@ -152,28 +155,32 @@ export class BridgeClient {
 			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.showWindow })) ==
 			false
 		) {
-			return false
+			return { success: false, response: null }
 		}
+		return { success: true, response: response }
 	}
 
 	/**
 	 * A helper function to get the version of the Looking Glass Bridge API
 	 * @returns the current version of the Looking Glass API
 	 */
-	public async apiVersion() {
+	public async apiVersion(): Promise<{ success: boolean; response: number }> {
+		console.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid")
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
-		if (this.isValid == false) return false
-		if ((await this.isVersionCompatible()) == false) return false
+		if (this.isValid == false) {
+			return { success: false, response: 0 }
+		}
+		if ((await this.isVersionCompatible()) == false) return { success: false, response: 0 }
 		let response: z.infer<typeof schema.version> = await sendMessage({ endpoint: "api_version" })
 		if (
 			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.version })) ==
 			false
 		) {
-			return false
+			return { success: false, response: 0 }
 		}
 
-		let APIVersion = response.payload.value
-		return APIVersion
+		let APIVersion = parseFloat(response.payload.value)
+		return { success: false, response: APIVersion }
 	}
 
 	/**
@@ -181,10 +188,11 @@ export class BridgeClient {
 	 * searches for Looking Glass displays, and returns them as an array of Display objects
 	 * @returns the display object
 	 */
-	public async displays() {
+	public async displays(): Promise<{ success: boolean; response: Display[] | null }> {
+		console.log("%c function call: displays ", "color: magenta; font-weight: bold; border: solid")
 		this.lkgDisplays = []
 		// if there is no orchestration, attempt to create one, if that fails, return false
-		if (this.isValid == false) return false
+		if (this.isValid == false) return { success: false, response: null }
 		const requestBody = JSON.stringify({
 			orchestration: this.orchestration,
 		})
@@ -193,7 +201,7 @@ export class BridgeClient {
 			requestBody: requestBody,
 		})
 		if ((await responseStatus({ response: response, schema: schema.displays })) == false) {
-			return false
+			return { success: false, response: null }
 		}
 
 		for (let key in response.payload.value) {
@@ -206,7 +214,7 @@ export class BridgeClient {
 			}
 		}
 
-		return this.lkgDisplays
+		return { success: false, response: this.lkgDisplays }
 	}
 
 	/**
@@ -219,20 +227,23 @@ export class BridgeClient {
 		return playlist
 	}
 
-	public async deletePlaylist(playlist: Playlist) {
-		console.group("deletePlaylist")
+	public async deletePlaylist(
+		playlist: Playlist
+	): Promise<{ success: boolean; response: z.infer<typeof schema.deletePlaylist> | null }> {
+		console.log("%c function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isValid == false) {
-			console.groupEnd()
-			return false
+			return { success: false, response: null }
 		}
 		const requestBody = playlist.GetInstanceJson(this.orchestration)
-		let response = await sendMessage({ endpoint: "delete_playlist", requestBody: requestBody })
+		let response: z.infer<typeof schema.deletePlaylist> = await sendMessage({
+			endpoint: "delete_playlist",
+			requestBody: requestBody,
+		})
 		if ((await responseStatus({ response: response, schema: schema.deletePlaylist })) == false) {
-			console.groupEnd()
-			return false
+			return { success: false, response: null }
 		}
-		console.groupEnd()
-		return response
+
+		return { success: true, response: response }
 	}
 
 	/**
@@ -242,7 +253,7 @@ export class BridgeClient {
 	 * @param head
 	 * @returns
 	 */
-	public async play({ playlist, head }: PlaylistArgs) {
+	public async play({ playlist, head }: PlaylistArgs): Promise<boolean> {
 		if (this.isValid == false) return false
 		const requestBody = playlist.GetInstanceJson(this.orchestration)
 
@@ -274,7 +285,10 @@ export class BridgeClient {
 		})
 
 		if ((await responseStatus({ response: play_playlist, schema: schema.play })) == false) {
-			console.error("failed to play the playlist")
+			if ((await responseStatus({ response: play_playlist, schema: schema.playlist_failed })) == false) {
+				console.error("failed to play playlist", play_playlist)
+				return false
+			}
 			return false
 		}
 
@@ -286,14 +300,15 @@ export class BridgeClient {
 	 * This function will alternate between two playlists so that you can cast a new hologram without interrupting the current one.
 	 * @param playlistItem
 	 */
-	public async cast(playlistItem: PlaylistItemType) {
-		if (this.isValid == false) return false
+	public async cast(playlistItem: PlaylistItemType): Promise<{ success: boolean }> {
+		if (this.isValid == false) return { success: false }
+		console.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isCasting == true) {
 			console.warn("already casting please wait")
-			return
+
+			return { success: false }
 		}
 		this.isCasting = true
-		if (this.getVerbosity() != 0) console.group("casting hologram")
 		let newPlaylistIndex = (this.currentPlaylist + 1) % 2
 		// placeholder value for playlist
 		let newPlaylist = null
@@ -304,8 +319,10 @@ export class BridgeClient {
 		} else {
 			newPlaylist = this.internalPlaylists[newPlaylistIndex]
 			// tell bridge to clear the playlist in its internal memory
-			await this.showWindow(false)
-			await this.deletePlaylist(newPlaylist)
+			const deleteResult = await this.deletePlaylist(newPlaylist)
+			if (deleteResult.success == false) {
+				return { success: false }
+			}
 			this.internalPlaylists[newPlaylistIndex] = this.createPlaylist("cast" + newPlaylistIndex)
 			// clear the playlist in bridge.js
 			newPlaylist.ClearItems()
@@ -315,8 +332,9 @@ export class BridgeClient {
 
 		await this.play({ playlist: newPlaylist })
 		this.currentPlaylist = newPlaylistIndex
-		if (this.getVerbosity() != 0) console.groupEnd()
+
 		this.isCasting = false
+		return { success: true }
 	}
 
 	/**

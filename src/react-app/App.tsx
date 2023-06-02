@@ -50,20 +50,23 @@ function App() {
 			</button>
 			<button
 				onClick={async () => {
-					await Bridge.cast(hologram)
+					let cast = await Bridge.cast(hologram)
+					console.log(cast)
 				}}>
 				Cast hologram
 			</button>
 			<button
 				onClick={async () => {
-					await Bridge.cast(rgbd_hologram)
+					let cast = await Bridge.cast(rgbd_hologram)
+					console.log(cast)
 				}}>
 				Cast RGBD hologram
 			</button>
 			<button
 				onClick={async () => {
 					setIsWindowVisible(!isWindowVisible)
-					await Bridge.showWindow(isWindowVisible)
+					let showWindow = await Bridge.showWindow(isWindowVisible)
+					console.log(showWindow)
 				}}>
 				Toggle Window
 			</button>
