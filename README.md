@@ -25,13 +25,13 @@ The Bridge object will automatically attempt to connect to Looking Glass Bridge.
 If it's unable to connect, for example if Bridge is not running when the object is initialized, you can manually try connecting by calling
 
 ```js
-Bridge.createOrchestration()
+await Bridge.createOrchestration()
 ```
 
 You can also query to see if you can connect to Bridge by running
 
 ```js
-Bridge.query()
+await Bridge.query()
 ```
 
 ### Casting a Hologram
