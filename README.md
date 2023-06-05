@@ -58,7 +58,7 @@ Given that most functions are asynchronous, you'll need to store the result as a
 For example:
 
 ```javascript
-const cast = Bridge.cast(hologram)
+const cast = await Bridge.cast(hologram)
 if (cast.success) {
 	console.log("🥳 yay we did it!")
 } else {
