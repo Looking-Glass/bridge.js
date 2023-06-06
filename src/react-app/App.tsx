@@ -5,7 +5,7 @@ import { QuiltPlaylistItem, RGBDPlaylistItem } from "../library/playlists/playli
 Bridge.setVerbosity(3)
 
 const hologram = QuiltPlaylistItem({
-	URI: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
+	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
 	rows: 13,
 	columns: 8,
 	aspect: 0.75,
@@ -13,7 +13,7 @@ const hologram = QuiltPlaylistItem({
 })
 
 const rgbd_hologram = RGBDPlaylistItem({
-	URI: "https://dl-dev.blocks.glass/u/b528b9def6aa4986/rgbd.png",
+	uri: "https://dl-dev.blocks.glass/u/b528b9def6aa4986/rgbd.png",
 	depthiness: 1.0,
 	rows: 8,
 	columns: 6,

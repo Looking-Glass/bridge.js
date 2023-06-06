@@ -1,6 +1,6 @@
 export interface PlaylistItemType {
 	id?: number
-	URI: string
+	uri: string
 	rows: number
 	columns: number
 	viewCount: number
@@ -19,14 +19,14 @@ export interface PlaylistItemType {
 	depth_cutoff?: number
 }
 export interface QuiltPlaylistItemArgs {
-	URI: string
+	uri: string
 	rows: number
 	columns: number
 	aspect: number
 	viewCount: number
 }
 export function QuiltPlaylistItem({
-	URI,
+	uri,
 	rows,
 	columns,
 	aspect,
@@ -34,7 +34,7 @@ export function QuiltPlaylistItem({
 }: QuiltPlaylistItemArgs): PlaylistItemType {
 	const PlaylistItem: PlaylistItemType = {
 		id: -1,
-		URI: URI,
+		uri: uri,
 		rows: rows,
 		columns: columns,
 		aspect: aspect,
@@ -45,7 +45,7 @@ export function QuiltPlaylistItem({
 }
 
 export interface RGBDPlaylistItemArgs {
-	URI: string
+	uri: string
 	rows: number
 	columns: number
 	aspect: number
@@ -59,7 +59,7 @@ export interface RGBDPlaylistItemArgs {
 }
 
 export function RGBDPlaylistItem({
-	URI,
+	uri,
 	rows,
 	columns,
 	aspect,
@@ -71,7 +71,7 @@ export function RGBDPlaylistItem({
 }: RGBDPlaylistItemArgs): PlaylistItemType {
 	const PlaylistItem: PlaylistItemType = {
 		id: -1,
-		URI: URI,
+		uri: uri,
 		rows: rows,
 		columns: columns,
 		aspect: aspect,

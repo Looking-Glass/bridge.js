@@ -6,7 +6,7 @@
 
 ### Properties
 
-- [URI](QuiltPlaylistItemArgs.md#uri)
+- [uri](QuiltPlaylistItemArgs.md#uri)
 - [aspect](QuiltPlaylistItemArgs.md#aspect)
 - [columns](QuiltPlaylistItemArgs.md#columns)
 - [rows](QuiltPlaylistItemArgs.md#rows)
@@ -14,29 +14,29 @@
 
 ## Properties
 
-### URI
+### uri
 
-• **URI**: `string`
+• **uri**: `string`
 
-___
+---
 
 ### aspect
 
 • **aspect**: `number`
 
-___
+---
 
 ### columns
 
 • **columns**: `number`
 
-___
+---
 
 ### rows
 
 • **rows**: `number`
 
-___
+---
 
 ### viewCount
 

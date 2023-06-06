@@ -6,15 +6,15 @@
 
 ### Properties
 
-- [URI](PlaylistItemType.md#uri)
+- [uri](PlaylistItemType.md#uri)
 - [aspect](PlaylistItemType.md#aspect)
-- [chroma\_depth](PlaylistItemType.md#chroma_depth)
+- [chroma_depth](PlaylistItemType.md#chroma_depth)
 - [columns](PlaylistItemType.md#columns)
-- [crop\_pos\_x](PlaylistItemType.md#crop_pos_x)
-- [crop\_pos\_y](PlaylistItemType.md#crop_pos_y)
-- [depth\_cutoff](PlaylistItemType.md#depth_cutoff)
-- [depth\_inversion](PlaylistItemType.md#depth_inversion)
-- [depth\_loc](PlaylistItemType.md#depth_loc)
+- [crop_pos_x](PlaylistItemType.md#crop_pos_x)
+- [crop_pos_y](PlaylistItemType.md#crop_pos_y)
+- [depth_cutoff](PlaylistItemType.md#depth_cutoff)
+- [depth_inversion](PlaylistItemType.md#depth_inversion)
+- [depth_loc](PlaylistItemType.md#depth_loc)
 - [depthiness](PlaylistItemType.md#depthiness)
 - [focus](PlaylistItemType.md#focus)
 - [id](PlaylistItemType.md#id)
@@ -25,96 +25,96 @@
 
 ## Properties
 
-### URI
+### uri
 
-• **URI**: `string`
+• **uri**: `string`
 
-___
+---
 
 ### aspect
 
 • **aspect**: `number`
 
-___
+---
 
-### chroma\_depth
+### chroma_depth
 
-• `Optional` **chroma\_depth**: ``0`` \| ``1``
+• `Optional` **chroma_depth**: `0` \| `1`
 
-___
+---
 
 ### columns
 
 • **columns**: `number`
 
-___
+---
 
-### crop\_pos\_x
+### crop_pos_x
 
-• `Optional` **crop\_pos\_x**: `number`
+• `Optional` **crop_pos_x**: `number`
 
-___
+---
 
-### crop\_pos\_y
+### crop_pos_y
 
-• `Optional` **crop\_pos\_y**: `number`
+• `Optional` **crop_pos_y**: `number`
 
-___
+---
 
-### depth\_cutoff
+### depth_cutoff
 
-• `Optional` **depth\_cutoff**: `number`
+• `Optional` **depth_cutoff**: `number`
 
-___
+---
 
-### depth\_inversion
+### depth_inversion
 
-• `Optional` **depth\_inversion**: ``0`` \| ``1``
+• `Optional` **depth_inversion**: `0` \| `1`
 
-___
+---
 
-### depth\_loc
+### depth_loc
 
-• `Optional` **depth\_loc**: ``0`` \| ``1`` \| ``2`` \| ``3``
+• `Optional` **depth_loc**: `0` \| `1` \| `2` \| `3`
 
-___
+---
 
 ### depthiness
 
 • `Optional` **depthiness**: `number`
 
-___
+---
 
 ### focus
 
-• `Optional` **focus**: ``0``
+• `Optional` **focus**: `0`
 
-___
+---
 
 ### id
 
 • `Optional` **id**: `number`
 
-___
+---
 
 ### isRGBD
 
-• `Optional` **isRGBD**: ``0`` \| ``1``
+• `Optional` **isRGBD**: `0` \| `1`
 
-___
+---
 
 ### rows
 
 • **rows**: `number`
 
-___
+---
 
 ### viewCount
 
 • **viewCount**: `number`
 
-___
+---
 
 ### zoom
 
-• `Optional` **zoom**: ``0``
+• `Optional` **zoom**: `0`

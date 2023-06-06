@@ -104,7 +104,7 @@ export class Playlist {
 			orchestration: orchestration,
 			name: this.name,
 			index: index,
-			uri: item.URI,
+			uri: item.uri,
 			rows: item.rows,
 			cols: item.columns,
 			aspect: item.aspect,
