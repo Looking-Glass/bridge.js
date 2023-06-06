@@ -22,12 +22,17 @@ const int2 = z.literal("INT2")
 const wstring = z.literal("WSTRING")
 const variant_map = z.literal("VARIANT_MAP")
 
+// possible types that can be returned by bridge' status object.
+const completion = z.literal("Completion")
+const pending = z.literal("Pending")
+const failure = z.literal("Failure")
+
 const name = z.string()
 
-const status = z.object({
+export const status = z.object({
 	name: name,
 	type: wstring,
-	value: z.string(),
+	value: z.union([completion, pending, failure]),
 })
 
 export const version = z.object({

@@ -1,4 +1,6 @@
 import { Bridge } from ".."
+import * as schemas from "../schemas"
+import { z } from "zod"
 
 export type BridgeEndpointType =
 	| "instance_studio_playlist"
@@ -109,17 +111,17 @@ export async function responseStatus({ response, errorMessage, schema }: respons
 			})
 			return false
 		}
-		let status: string = response.status.value
+		let status: z.infer<typeof schemas.status> = response.status
 		if (Bridge.getVerbosity() == 3) {
 			console.group("response")
 			console.log(response)
 		} else if (Bridge.getVerbosity() == 2) {
 			console.log(response.payload.value)
-			console.log("status:", status)
+			console.log("status:", status.value)
 		}
 		console.groupEnd()
-		if (status !== "Completion") {
-			console.warn(`Bridge returned status: ${status}`)
+		if (status.value !== "Completion") {
+			console.warn(`Bridge returned status: ${status.value}`)
 		}
 
 		return response
