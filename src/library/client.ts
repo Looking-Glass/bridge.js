@@ -60,7 +60,7 @@ export class BridgeClient {
 	 * A helper function to check and see if Looking Glass Bridge is running or not.
 	 * @returns boolean, true if Bridge is running, false if Bridge is not running
 	 */
-	public async query(): Promise<boolean> {
+	public async status(): Promise<boolean> {
 		try {
 			let response = await fetch("http://localhost:33334/")
 			if (!response.ok) {
@@ -79,7 +79,7 @@ export class BridgeClient {
 	 * @returns string, the name of the current orchestration
 	 */
 	public async createOrchestration(name: string): Promise<{ success: boolean; response: null | string }> {
-		if ((await this.query()) == false) {
+		if ((await this.status()) == false) {
 			return { success: false, response: null }
 		}
 		const version = await this.getVersion()
@@ -372,14 +372,13 @@ export class BridgeClient {
 	private async isVersionCompatible() {
 		if (this.version == 0) {
 			this.isValid = false
-			return this.isValid
 		} else if (this.version < 2.1) {
 			console.warn("Please update to the latest version for the best experience")
 			this.isValid = false
-			return this.isValid
 		} else if (this.version >= 2.1) {
 			this.isValid = true
-			return this.isValid
 		}
+
+		return this.isValid
 	}
 }

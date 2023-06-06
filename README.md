@@ -5,6 +5,73 @@
 
 The Bridge.JS library provides an easy way to connect to and leverage all the awesome functionality in [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge).
 
+## Key Concepts
+
+### Orchestrations
+
+Looking Glass Bridge supports "orchestrations", these are essentially multi-user sessions. This means you can have multiple apps connected to the same orchestration, and get events from one another using the events from Bridge's websocket connection.
+
+Orchestrations can be created by passing a keyword like `Orchestration2` or `gerald` into bridge. Bridge will return an `Orchestration Token` which is a specific string of characters that can be used internally in the Bridge.JS library.
+
+As a developer, you shouldn't have to worry about this token, since this is always handled in the library for you once an orchestration is created. The only thing you'll need to pass to Bridge if you want an individual session is the string to create the orchestration. If you don't pass a string then a default orchestration will be used with the `default` keyword.
+
+### Holograms
+
+The Bridge.JS Library currently supports two hologram types, Quilts and RGBD, you need to construct the hologram object, then cast it to Bridge. Here's an example:
+
+```js
+const hologram = QuiltPlaylistItem({
+	URI: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
+	rows: 13,
+	columns: 8,
+	aspect: 0.75,
+	viewCount: 8 * 13,
+})
+
+const rgbd_hologram = RGBDPlaylistItem({
+	URI: "https://dl-dev.blocks.glass/u/b528b9def6aa4986/rgbd.png",
+	depthiness: 1.0,
+	rows: 8,
+	columns: 6,
+	focus: 0,
+	aspect: 1,
+	viewCount: 48,
+	chroma_depth: 0,
+	depth_inversion: 0,
+	depth_loc: 2,
+	depth_cutoff: 1,
+})
+```
+
+### Playlists
+
+Looking Glass Bridge supports playing back Playlists of holograms. Like Orchestrations, Playlists are created by passing a keyword into the `createPlaylist` function. A Playlist isn't sent to Bridge itself until you play the playlist.
+
+You'll want to add items to your playlist, which you can do with the `addItem` function.
+
+```js
+const playlist = Bridge.createPlaylist("banana")
+
+const hologram = QuiltPlaylistItem({
+	URI: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
+	rows: 13,
+	columns: 8,
+	aspect: 0.75,
+	viewCount: 8 * 13,
+})
+
+playlist.addItem = hologram
+await Bridge.play(playlist)
+```
+
+### Casting a Hologram
+
+To show a single hologram on the display, you can use the `cast` function like so:
+
+```js
+await Bridge.cast(hologram)
+```
+
 ## Using the Library
 
 > **Note**
@@ -28,26 +95,10 @@ If it's unable to connect, for example if Bridge is not running when the object 
 await Bridge.createOrchestration()
 ```
 
-You can also query to see if you can connect to Bridge by running
+You can also check to see if you can connect to Bridge by running
 
 ```js
-await Bridge.query()
-```
-
-### Casting a Hologram
-
-The Bridge.JS Library outputs two hologram types, QuiltHologram and RGBDHologram, you need to construct the hologram object, then cast it to Bridge. Here's an example:
-
-```js
-const hologram = QuiltPlaylistItem({
-	URI: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
-	rows: 13,
-	columns: 8,
-	aspect: 0.75,
-	viewCount: 8 * 13,
-})
-
-await Bridge.cast(hologram)
+await Bridge.status()
 ```
 
 ### Checking if functions succeeded.
