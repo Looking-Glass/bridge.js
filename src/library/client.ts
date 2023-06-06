@@ -1,5 +1,5 @@
 import { Display, tryParseDisplay } from "./components/displays"
-import { responseStatus, sendMessage } from "./components/endpoints"
+import { sendMessage } from "./components/endpoints"
 import { tryEnterOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist, PlaylistArgs } from "./playlists/playlist"
@@ -112,15 +112,12 @@ class BridgeClient {
 			return { success: false, response: 0 }
 		}
 
-		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
-		let response: z.infer<typeof schema.version> = await sendMessage({ endpoint: "bridge_version" })
-		if (
-			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.version })) ==
-			false
-		) {
+		let response = await sendMessage({ endpoint: "bridge_version" })
+		if (response.success == false) {
+			console.warn(`this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`)
 			return { success: false, response: 0 }
 		}
-		this.version = parseFloat(response.payload.value)
+		this.version = parseFloat(response.response.payload.value)
 		this.isValid = true
 		return { success: true, response: this.version }
 	}
@@ -132,7 +129,7 @@ class BridgeClient {
 	 */
 	public async showWindow(
 		showWindow: boolean
-	): Promise<{ success: boolean; response: z.infer<typeof schema.showWindow> | null }> {
+	): Promise<{ success: boolean; response: z.infer<typeof schema.show_window> | null }> {
 		if (this.isValid == false) return { success: false, response: null }
 		console.log("%c function call: showWindow ", "color: magenta; font-weight: bold; border: solid")
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
@@ -146,18 +143,15 @@ class BridgeClient {
 			show_window: showWindow,
 			head_index: -1,
 		})
-		let response: z.infer<typeof schema.showWindow> = await sendMessage({
+		let response = await sendMessage({
 			endpoint: "show_window",
 			requestBody: requestBody,
 		})
 
-		if (
-			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.showWindow })) ==
-			false
-		) {
+		if (response.success == false) {
 			return { success: false, response: null }
 		}
-		return { success: true, response: response }
+		return { success: true, response: response.response }
 	}
 
 	/**
@@ -166,20 +160,17 @@ class BridgeClient {
 	 */
 	public async apiVersion(): Promise<{ success: boolean; response: number }> {
 		console.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid")
-		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		if (this.isValid == false) {
 			return { success: false, response: 0 }
 		}
 		if ((await this.isVersionCompatible()) == false) return { success: false, response: 0 }
-		let response: z.infer<typeof schema.version> = await sendMessage({ endpoint: "api_version" })
-		if (
-			(await responseStatus({ response: response, errorMessage: errorMessage, schema: schema.version })) ==
-			false
-		) {
+		let response = await sendMessage({ endpoint: "api_version" })
+		if (response.success == false) {
+			console.warn(`this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`)
 			return { success: false, response: 0 }
 		}
 
-		let APIVersion = parseFloat(response.payload.value)
+		let APIVersion = parseFloat(response.response.payload.value)
 		return { success: true, response: APIVersion }
 	}
 
@@ -196,16 +187,16 @@ class BridgeClient {
 		const requestBody = JSON.stringify({
 			orchestration: this.orchestration,
 		})
-		let response: z.infer<typeof schema.displays> = await sendMessage({
+		let response = await sendMessage({
 			endpoint: "available_output_devices",
 			requestBody: requestBody,
 		})
-		if ((await responseStatus({ response: response, schema: schema.displays })) == false) {
+		if (response.success == false) {
 			return { success: false, response: null }
 		}
 
-		for (let key in response.payload.value) {
-			let display = response.payload.value[`${key}`]
+		for (let key in response.response.payload.value) {
+			let display = response.response.payload.value[`${key}`]
 			if (display.value.hwid.value.includes("LKG")) {
 				let lkg = tryParseDisplay(display.value)
 				if (lkg != undefined) {
@@ -229,21 +220,22 @@ class BridgeClient {
 
 	public async deletePlaylist(
 		playlist: Playlist
-	): Promise<{ success: boolean; response: z.infer<typeof schema.deletePlaylist> | null }> {
+	): Promise<{ success: boolean; response: z.infer<typeof schema.delete_playlist> | null }> {
 		console.log("%c function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isValid == false) {
 			return { success: false, response: null }
 		}
 		const requestBody = playlist.getInstanceJson(this.orchestration)
-		let response: z.infer<typeof schema.deletePlaylist> = await sendMessage({
+		let response = await sendMessage({
 			endpoint: "delete_playlist",
 			requestBody: requestBody,
 		})
-		if ((await responseStatus({ response: response, schema: schema.deletePlaylist })) == false) {
+
+		if (response.success == false) {
 			return { success: false, response: null }
 		}
 
-		return { success: true, response: response }
+		return response
 	}
 
 	/**
@@ -262,7 +254,7 @@ class BridgeClient {
 		}
 
 		let instancePlaylist = await sendMessage({ endpoint: "instance_playlist", requestBody: requestBody })
-		if ((await responseStatus({ response: instancePlaylist, schema: schema.instancePlaylist })) == false) {
+		if (instancePlaylist.success == false) {
 			console.error("failed to initialize playlist")
 			return false
 		}
@@ -272,23 +264,19 @@ class BridgeClient {
 		for (let i = 0; i < PlaylistItems.length; i++) {
 			const pRequestBody = PlaylistItems[i]
 			let message = await sendMessage({ endpoint: "insert_playlist_entry", requestBody: pRequestBody })
-			if ((await responseStatus({ response: message, schema: schema.insertPlaylist })) == false) {
+			if (message.success == false) {
 				console.error("failed to insert playlist entry")
 				return false
 			}
 		}
 		let orchestration = this.orchestration
 		const playRequestBody = playlist.getPlayPlaylistJson({ orchestration, head })
-		let play_playlist: z.infer<typeof schema.play> = await sendMessage({
+		let play_playlist = await sendMessage({
 			endpoint: "play_playlist",
 			requestBody: playRequestBody,
 		})
 
-		if ((await responseStatus({ response: play_playlist, schema: schema.play })) == false) {
-			if ((await responseStatus({ response: play_playlist, schema: schema.playlist_failed })) == false) {
-				console.error("failed to play playlist", play_playlist)
-				return false
-			}
+		if (play_playlist.success == false) {
 			return false
 		}
 

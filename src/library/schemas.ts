@@ -56,7 +56,7 @@ export const orchestration = z.object({
 	status: status,
 })
 
-export const play = z.object({
+export const play_playlist = z.object({
 	name: name,
 	orchestration: z.object({
 		name: name,
@@ -67,11 +67,13 @@ export const play = z.object({
 		name: name,
 		type: variant_map,
 		value: z.object({
-			id: z.object({
-				name: name,
-				type: wstring,
-				value: z.string(),
-			}),
+			id: z
+				.object({
+					name: name,
+					type: wstring,
+					value: z.string(),
+				})
+				.optional(),
 			message: z.object({
 				name: name,
 				type: wstring,
@@ -82,28 +84,7 @@ export const play = z.object({
 	status: status,
 })
 
-export const playlist_failed = z.object({
-	name: name,
-	orchestration: z.object({
-		name: name,
-		type: wstring,
-		value: z.string(),
-	}),
-	payload: z.object({
-		name: name,
-		type: variant_map,
-		value: z.object({
-			message: z.object({
-				name: name,
-				type: wstring,
-				value: z.string(),
-			}),
-		}),
-	}),
-	status: status,
-})
-
-export const instancePlaylist = z.object({
+export const instance_playlist = z.object({
 	name: name,
 	orchestration: z.object({
 		name: name,
@@ -124,7 +105,7 @@ export const instancePlaylist = z.object({
 	status: status,
 })
 
-export const insertPlaylist = z.object({
+export const insert_playlist_entry = z.object({
 	name: name,
 	orchestration: z.object({
 		name: name,
@@ -145,7 +126,7 @@ export const insertPlaylist = z.object({
 	status: status,
 })
 
-export const deletePlaylist = z.object({
+export const delete_playlist = z.object({
 	name: name,
 	orchestration: z.object({
 		name: name,
@@ -166,7 +147,7 @@ export const deletePlaylist = z.object({
 	status: status,
 })
 
-export const showWindow = z.object({
+export const show_window = z.object({
 	name: name,
 	orchestration: z.object({
 		name: name,
@@ -221,7 +202,7 @@ const displayItem = z.object({
 	}),
 })
 
-export const displays = z.object({
+export const available_output_devices = z.object({
 	name: name,
 	orchestration: z.object({
 		name: name,
