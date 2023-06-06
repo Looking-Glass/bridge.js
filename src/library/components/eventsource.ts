@@ -32,7 +32,7 @@ export class BridgeEventSource {
 	 * @param event the event name to listen for
 	 * @param MessageHandler the function to call when the event is received
 	 */
-	public AddMessageHandler({ event, MessageHandler }: messageHandlerArgs) {
+	public addMessageHandler({ event, MessageHandler }: messageHandlerArgs) {
 		this.MessageHandler[event] = MessageHandler
 	}
 
@@ -47,7 +47,7 @@ export class BridgeEventSource {
 		}
 	}
 
-	public ConnectToBridgeEventSource(orchestration: string) {
+	public connectToBridgeEventSource(orchestration: string) {
 		if (!isWebSocketAvailable()) return
 		let bridgeEventSource = this
 		// provided we have web socket support, we can proceed to query Bridge

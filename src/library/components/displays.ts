@@ -57,7 +57,7 @@ export interface QuiltType {
 	columns: number
 }
 
-export function TryParseCalibration(value: string): CalibrationType | null {
+export function tryParseCalibration(value: string): CalibrationType | null {
 	const parsedValue = JSON.parse(value) as BridgeCalibrationResponse
 
 	if (parsedValue == undefined) {
@@ -85,7 +85,7 @@ export function TryParseCalibration(value: string): CalibrationType | null {
 	return calibration
 }
 
-export function TryParseQuilt(value: string): QuiltType | null {
+export function tryParseQuilt(value: string): QuiltType | null {
 	const parsedValue = JSON.parse(value)
 
 	if (parsedValue == undefined) {
@@ -102,10 +102,10 @@ export function TryParseQuilt(value: string): QuiltType | null {
 	return quilt
 }
 
-export function TryParseDisplay(value: any): Display | null {
+export function tryParseDisplay(value: any): Display | null {
 	const display: Display = {
-		calibration: TryParseCalibration(value.calibration.value),
-		defaultQuilt: TryParseQuilt(value.defaultQuilt.value),
+		calibration: tryParseCalibration(value.calibration.value),
+		defaultQuilt: tryParseQuilt(value.defaultQuilt.value),
 		hardwareVersion: value.hardwareVersion.value,
 		index: value.index.value,
 		state: value.state.value,

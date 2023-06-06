@@ -33,16 +33,16 @@ export class Playlist {
 		this.items = []
 	}
 
-	public SetName(name: string) {
+	public setName(name: string) {
 		this.name = name
 	}
 
-	public AddItem(item: PlaylistItemType) {
+	public addItem(item: PlaylistItemType) {
 		item.id = this.items.length
 		this.items.push(item)
 	}
 
-	public RemoveItem(item: PlaylistItemType) {
+	public removeItem(item: PlaylistItemType) {
 		if (item.id == undefined) return
 		this.items.splice(item.id, 1)
 
@@ -51,7 +51,7 @@ export class Playlist {
 		}
 	}
 
-	public ClearItems() {
+	public clearItems() {
 		this.items = []
 	}
 
@@ -61,7 +61,7 @@ export class Playlist {
 	 * @param head
 	 * @returns
 	 */
-	public GetPlayPlaylistJson({ orchestration, head }: getPlayPlaylistJsonArgs) {
+	public getPlayPlaylistJson({ orchestration, head }: getPlayPlaylistJsonArgs) {
 		const content = JSON.stringify({
 			orchestration: orchestration,
 			name: this.name,
@@ -76,7 +76,7 @@ export class Playlist {
 	 * @param orchestration
 	 * @returns
 	 */
-	public GetInstanceJson(orchestration: string) {
+	public getInstanceJson(orchestration: string) {
 		const content = JSON.stringify({
 			orchestration: orchestration,
 			name: this.name,
@@ -86,18 +86,18 @@ export class Playlist {
 		return content
 	}
 
-	public GetPlaylistItemsAsJson(orchestration: string) {
+	public getPlaylistItemsAsJson(orchestration: string) {
 		const strings: string[] = []
 
 		for (let i = 0; i < this.items.length; i++) {
-			const itemString = this.GetPlaylistItemJson(orchestration, i)
+			const itemString = this.getPlaylistItemJson(orchestration, i)
 			strings.push(itemString)
 		}
 
 		return strings
 	}
 
-	private GetPlaylistItemJson(orchestration: string, index: number) {
+	private getPlaylistItemJson(orchestration: string, index: number) {
 		const item: PlaylistItemType = this.items[index]
 
 		const content: string = JSON.stringify({

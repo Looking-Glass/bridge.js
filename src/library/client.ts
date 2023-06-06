@@ -1,4 +1,4 @@
-import { Display, TryParseDisplay } from "./components/displays"
+import { Display, tryParseDisplay } from "./components/displays"
 import { responseStatus, sendMessage } from "./components/endpoints"
 import { tryEnterOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
@@ -207,7 +207,7 @@ class BridgeClient {
 		for (let key in response.payload.value) {
 			let display = response.payload.value[`${key}`]
 			if (display.value.hwid.value.includes("LKG")) {
-				let lkg = TryParseDisplay(display.value)
+				let lkg = tryParseDisplay(display.value)
 				if (lkg != undefined) {
 					this.lkgDisplays.push(lkg)
 				}
@@ -223,7 +223,7 @@ class BridgeClient {
 	 */
 	public createPlaylist(name: string) {
 		const playlist = new Playlist()
-		playlist.SetName(name)
+		playlist.setName(name)
 		return playlist
 	}
 
@@ -234,7 +234,7 @@ class BridgeClient {
 		if (this.isValid == false) {
 			return { success: false, response: null }
 		}
-		const requestBody = playlist.GetInstanceJson(this.orchestration)
+		const requestBody = playlist.getInstanceJson(this.orchestration)
 		let response: z.infer<typeof schema.deletePlaylist> = await sendMessage({
 			endpoint: "delete_playlist",
 			requestBody: requestBody,
@@ -255,7 +255,7 @@ class BridgeClient {
 	 */
 	public async play({ playlist, head }: PlaylistArgs): Promise<boolean> {
 		if (this.isValid == false) return false
-		const requestBody = playlist.GetInstanceJson(this.orchestration)
+		const requestBody = playlist.getInstanceJson(this.orchestration)
 
 		if (!head) {
 			head = -1
@@ -267,7 +267,7 @@ class BridgeClient {
 			return false
 		}
 
-		const PlaylistItems: string[] = playlist.GetPlaylistItemsAsJson(this.orchestration)
+		const PlaylistItems: string[] = playlist.getPlaylistItemsAsJson(this.orchestration)
 
 		for (let i = 0; i < PlaylistItems.length; i++) {
 			const pRequestBody = PlaylistItems[i]
@@ -278,7 +278,7 @@ class BridgeClient {
 			}
 		}
 		let orchestration = this.orchestration
-		const playRequestBody = playlist.GetPlayPlaylistJson({ orchestration, head })
+		const playRequestBody = playlist.getPlayPlaylistJson({ orchestration, head })
 		let play_playlist: z.infer<typeof schema.play> = await sendMessage({
 			endpoint: "play_playlist",
 			requestBody: playRequestBody,
@@ -325,10 +325,10 @@ class BridgeClient {
 			}
 			this.internalPlaylists[newPlaylistIndex] = this.createPlaylist("cast" + newPlaylistIndex)
 			// clear the playlist in bridge.js
-			newPlaylist.ClearItems()
+			newPlaylist.clearItems()
 		}
 		newPlaylist.loop = true
-		newPlaylist.AddItem(playlistItem)
+		newPlaylist.addItem(playlistItem)
 
 		await this.play({ playlist: newPlaylist })
 		this.currentPlaylist = newPlaylistIndex
@@ -343,7 +343,7 @@ class BridgeClient {
 	 * @returns the bridge event source
 	 */
 	public initializeEventSource() {
-		this.eventsource.ConnectToBridgeEventSource(this.orchestration)
+		this.eventsource.connectToBridgeEventSource(this.orchestration)
 	}
 	/**
 	 * Adds an event listener that returns a message from Bridge's websocket based event source.
@@ -351,7 +351,7 @@ class BridgeClient {
 	 * @param MessageHandler the function to call when the event is received
 	 */
 	public addEventListener(event: BridgeEvent, MessageHandler: any) {
-		this.eventsource.AddMessageHandler({ event: event, MessageHandler: MessageHandler })
+		this.eventsource.addMessageHandler({ event: event, MessageHandler: MessageHandler })
 	}
 
 	public getVerbosity() {
