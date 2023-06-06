@@ -18,7 +18,7 @@ import { Fallback } from "./components/fallback"
  * This is useful if Bridge was not running when the class was created.
  */
 
-export class BridgeClient {
+class BridgeClient {
 	private orchestration: string
 	private isValid: boolean
 	private lkgDisplays: Display[]
@@ -382,3 +382,5 @@ export class BridgeClient {
 		return this.isValid
 	}
 }
+
+export const Bridge: BridgeClient = BridgeClient.getInstance()
