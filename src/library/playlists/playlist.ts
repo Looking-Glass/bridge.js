@@ -1,8 +1,8 @@
 import { sendMessage } from "../components/endpoints"
 import { Hologram, QuiltHologram, RGBDHologram } from "../components/hologram"
-import { PlaylistItemRGBD, PlaylistItemQuilt } from "./playlistItems"
+import { RGBDPlaylistItem, QuiltPlaylistItem } from "./playlistItems"
 
-export type PlaylistItemType = PlaylistItemQuilt | PlaylistItemRGBD
+export type PlaylistItemType = QuiltPlaylistItem | RGBDPlaylistItem
 
 export interface PlaylistType {
 	name: string
@@ -46,7 +46,7 @@ export class Playlist {
 	public addItem(hologram: Hologram) {
 		let item: PlaylistItemType
 		if (hologram.type == "quilt") {
-			item = new PlaylistItemQuilt({
+			item = new QuiltPlaylistItem({
 				hologram: hologram as QuiltHologram,
 				id: this.items.length,
 				index: this.items.length,
@@ -56,7 +56,7 @@ export class Playlist {
 
 			this.items.push(item)
 		} else if (hologram.type == "rgbd") {
-			item = new PlaylistItemRGBD({
+			item = new RGBDPlaylistItem({
 				hologram: hologram as RGBDHologram,
 				id: this.items.length,
 				index: this.items.length,

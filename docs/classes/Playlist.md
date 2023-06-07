@@ -15,28 +15,39 @@ Playlist class
 - [items](Playlist.md#items)
 - [loop](Playlist.md#loop)
 - [name](Playlist.md#name)
+- [orchestration](Playlist.md#orchestration)
 
 ### Methods
 
-- [AddItem](Playlist.md#additem)
-- [ClearItems](Playlist.md#clearitems)
-- [GetInstanceJson](Playlist.md#getinstancejson)
-- [GetPlayPlaylistJson](Playlist.md#getplayplaylistjson)
-- [GetPlaylistItemsAsJson](Playlist.md#getplaylistitemsasjson)
-- [RemoveItem](Playlist.md#removeitem)
-- [SetName](Playlist.md#setname)
+- [addItem](Playlist.md#additem)
+- [clearItems](Playlist.md#clearitems)
+- [getCurrent](Playlist.md#getcurrent)
+- [getInstance](Playlist.md#getinstance)
+- [play](Playlist.md#play)
+- [removeItem](Playlist.md#removeitem)
+- [setName](Playlist.md#setname)
 
 ## Constructors
 
 ### constructor
 
-• **new Playlist**()
+• **new Playlist**(`args`)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `args` | `Object` |
+| `args.items` | [`PlaylistItemType`](../README.md#playlistitemtype)[] |
+| `args.loop` | `boolean` |
+| `args.name` | `string` |
+| `args.orchestration` | `string` |
 
 ## Properties
 
 ### items
 
-• **items**: [`PlaylistItemType`](../interfaces/PlaylistItemType.md)[]
+• **items**: [`PlaylistItemType`](../README.md#playlistitemtype)[]
 
 ___
 
@@ -50,17 +61,23 @@ ___
 
 • **name**: `string`
 
+___
+
+### orchestration
+
+• **orchestration**: `string`
+
 ## Methods
 
-### AddItem
+### addItem
 
-▸ **AddItem**(`item`): `void`
+▸ **addItem**(`hologram`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `item` | [`PlaylistItemType`](../interfaces/PlaylistItemType.md) |
+| `hologram` | `Hologram` |
 
 #### Returns
 
@@ -68,9 +85,9 @@ ___
 
 ___
 
-### ClearItems
+### clearItems
 
-▸ **ClearItems**(): `void`
+▸ **clearItems**(): `void`
 
 #### Returns
 
@@ -78,9 +95,33 @@ ___
 
 ___
 
-### GetInstanceJson
+### getCurrent
 
-▸ **GetInstanceJson**(`orchestration`): `string`
+▸ **getCurrent**(`«destructured»`): `Object`
+
+gets the object for the current playlist that is currently being played
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | [`getPlayPlaylistJsonArgs`](../interfaces/getPlayPlaylistJsonArgs.md) |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `head_index` | `number` |
+| `name` | `string` |
+| `orchestration` | `string` |
+
+___
+
+### getInstance
+
+▸ **getInstance**(`orchestration`): `Object`
 
 create the json object for the playlist instance
 
@@ -92,53 +133,44 @@ create the json object for the playlist instance
 
 #### Returns
 
-`string`
-
-___
-
-### GetPlayPlaylistJson
-
-▸ **GetPlayPlaylistJson**(`«destructured»`): `string`
-
-creates the json object for playing the playlist
-
-#### Parameters
+`Object`
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | [`getPlayPlaylistJsonArgs`](../interfaces/getPlayPlaylistJsonArgs.md) |
-
-#### Returns
-
-`string`
-
-___
-
-### GetPlaylistItemsAsJson
-
-▸ **GetPlaylistItemsAsJson**(`orchestration`): `string`[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
+| `loop` | `boolean` |
+| `name` | `string` |
 | `orchestration` | `string` |
 
-#### Returns
-
-`string`[]
-
 ___
 
-### RemoveItem
+### play
 
-▸ **RemoveItem**(`item`): `void`
+▸ **play**(`«destructured»`): `Promise`<`boolean`\>
+
+this function will play a playlist on a Looking Glass display
+the playlist must be created and populated with content before calling this function
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `item` | [`PlaylistItemType`](../interfaces/PlaylistItemType.md) |
+| `«destructured»` | [`PlaylistArgs`](../interfaces/PlaylistArgs.md) |
+
+#### Returns
+
+`Promise`<`boolean`\>
+
+___
+
+### removeItem
+
+▸ **removeItem**(`item`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `item` | [`PlaylistItemType`](../README.md#playlistitemtype) |
 
 #### Returns
 
@@ -146,9 +178,9 @@ ___
 
 ___
 
-### SetName
+### setName
 
-▸ **SetName**(`name`): `void`
+▸ **setName**(`name`): `void`
 
 #### Parameters
 

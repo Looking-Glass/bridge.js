@@ -2,13 +2,6 @@
 
 # Class: BridgeClient
 
-BridgeClient is the main class for interacting with Looking Glass Bridge.
-The BridgeClient will attempt to join an orchestration called "default" when it is created.
-If the "default" orchestration does not exist, it will be created.
-If the BridgeClient is unable to connect to Bridge, it will not create an orchestration.
-You can manually call CreateOrchestration() to create an orchestration.
-This is useful if Bridge was not running when the class was created.
-
 ## Table of contents
 
 ### Constructors
@@ -27,16 +20,14 @@ This is useful if Bridge was not running when the class was created.
 - [apiVersion](BridgeClient.md#apiversion)
 - [cast](BridgeClient.md#cast)
 - [createOrchestration](BridgeClient.md#createorchestration)
-- [createPlaylist](BridgeClient.md#createplaylist)
 - [deletePlaylist](BridgeClient.md#deleteplaylist)
 - [displays](BridgeClient.md#displays)
 - [getVerbosity](BridgeClient.md#getverbosity)
 - [getVersion](BridgeClient.md#getversion)
 - [initializeEventSource](BridgeClient.md#initializeeventsource)
-- [play](BridgeClient.md#play)
-- [query](BridgeClient.md#query)
 - [setVerbosity](BridgeClient.md#setverbosity)
 - [showWindow](BridgeClient.md#showwindow)
+- [status](BridgeClient.md#status)
 - [getInstance](BridgeClient.md#getinstance)
 
 ## Constructors
@@ -61,7 +52,7 @@ ___
 
 ### verbosity
 
-▪ `Static` **verbosity**: ``0`` \| ``1`` \| ``2`` \| ``3`` = `3`
+▪ `Static` **verbosity**: ``0`` \| ``2`` \| ``1`` \| ``3`` = `3`
 
 ## Methods
 
@@ -100,7 +91,7 @@ ___
 
 ### cast
 
-▸ **cast**(`playlistItem`): `Promise`<{ `success`: `boolean`  }\>
+▸ **cast**(`hologram`): `Promise`<{ `success`: `boolean`  }\>
 
 Casting a hologram requires some pretty specific behavior to work with Bridge' new playlist api.
 This function will alternate between two playlists so that you can cast a new hologram without interrupting the current one.
@@ -109,7 +100,7 @@ This function will alternate between two playlists so that you can cast a new ho
 
 | Name | Type |
 | :------ | :------ |
-| `playlistItem` | [`PlaylistItemType`](../interfaces/PlaylistItemType.md) |
+| `hologram` | `Hologram` |
 
 #### Returns
 
@@ -137,27 +128,9 @@ string, the name of the current orchestration
 
 ___
 
-### createPlaylist
-
-▸ **createPlaylist**(`name`): [`Playlist`](Playlist.md)
-
-A helper function to create a new Playlist object
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `name` | `string` | the name of the playlist |
-
-#### Returns
-
-[`Playlist`](Playlist.md)
-
-___
-
 ### deletePlaylist
 
-▸ **deletePlaylist**(`playlist`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { name: string; type: "WSTRING"; value: string; } ; `payload`: { name: string; type: "VARIANT\_MAP"; value: { name: { name: string; type: "WSTRING"; value: string; }; }; } ; `status`: { name: string; type: "WSTRING"; value: string; } = status } ; `success`: `boolean`  }\>
+▸ **deletePlaylist**(`playlist`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `payload`: { type: "VARIANT\_MAP"; value: { name: { type: "WSTRING"; value: string; name: string; }; }; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = status } ; `success`: `boolean`  }\>
 
 #### Parameters
 
@@ -167,7 +140,7 @@ ___
 
 #### Returns
 
-`Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { name: string; type: "WSTRING"; value: string; } ; `payload`: { name: string; type: "VARIANT\_MAP"; value: { name: { name: string; type: "WSTRING"; value: string; }; }; } ; `status`: { name: string; type: "WSTRING"; value: string; } = status } ; `success`: `boolean`  }\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `payload`: { type: "VARIANT\_MAP"; value: { name: { type: "WSTRING"; value: string; name: string; }; }; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = status } ; `success`: `boolean`  }\>
 
 ___
 
@@ -188,11 +161,11 @@ ___
 
 ### getVerbosity
 
-▸ **getVerbosity**(): ``0`` \| ``1`` \| ``2`` \| ``3``
+▸ **getVerbosity**(): ``0`` \| ``2`` \| ``1`` \| ``3``
 
 #### Returns
 
-``0`` \| ``1`` \| ``2`` \| ``3``
+``0`` \| ``2`` \| ``1`` \| ``3``
 
 ___
 
@@ -225,39 +198,6 @@ the bridge event source
 
 ___
 
-### play
-
-▸ **play**(`«destructured»`): `Promise`<`boolean`\>
-
-this function will play a playlist on a Looking Glass display
-the playlist must be created and populated with content before calling this function
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | [`PlaylistArgs`](../interfaces/PlaylistArgs.md) |
-
-#### Returns
-
-`Promise`<`boolean`\>
-
-___
-
-### query
-
-▸ **query**(): `Promise`<`boolean`\>
-
-A helper function to check and see if Looking Glass Bridge is running or not.
-
-#### Returns
-
-`Promise`<`boolean`\>
-
-boolean, true if Bridge is running, false if Bridge is not running
-
-___
-
 ### setVerbosity
 
 ▸ **setVerbosity**(`verbosity`): `void`
@@ -268,7 +208,7 @@ Set the level of console logging that Bridge.js library will do.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `verbosity` | ``0`` \| ``1`` \| ``2`` \| ``3`` | 0 = no logging, 1 = errors only, 2 = only bridge values, 3 = full bridge response |
+| `verbosity` | ``0`` \| ``2`` \| ``1`` \| ``3`` | 0 = no logging, 1 = errors only, 2 = only bridge values, 3 = full bridge response |
 
 #### Returns
 
@@ -278,7 +218,7 @@ ___
 
 ### showWindow
 
-▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { name: string; type: "WSTRING"; value: string; } ; `status`: { name: string; type: "WSTRING"; value: string; } = status } ; `success`: `boolean`  }\>
+▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = status } ; `success`: `boolean`  }\>
 
 changes the state of the Looking Glass Bridge Window
 
@@ -290,7 +230,21 @@ changes the state of the Looking Glass Bridge Window
 
 #### Returns
 
-`Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { name: string; type: "WSTRING"; value: string; } ; `status`: { name: string; type: "WSTRING"; value: string; } = status } ; `success`: `boolean`  }\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = status } ; `success`: `boolean`  }\>
+
+___
+
+### status
+
+▸ **status**(): `Promise`<`boolean`\>
+
+A helper function to check and see if Looking Glass Bridge is running or not.
+
+#### Returns
+
+`Promise`<`boolean`\>
+
+boolean, true if Bridge is running, false if Bridge is not running
 
 ___
 

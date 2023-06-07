@@ -9,16 +9,7 @@ import * as schema from "./schemas/responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
 
-/**
- * BridgeClient is the main class for interacting with Looking Glass Bridge.
- * The BridgeClient will attempt to join an orchestration called "default" when it is created.
- * If the "default" orchestration does not exist, it will be created.
- * If the BridgeClient is unable to connect to Bridge, it will not create an orchestration.
- * You can manually call CreateOrchestration() to create an orchestration.
- * This is useful if Bridge was not running when the class was created.
- */
-
-class BridgeClient {
+export class BridgeClient {
 	private orchestration: string
 	private isValid: boolean
 	private lkgDisplays: Display[]
@@ -229,8 +220,7 @@ class BridgeClient {
 	}
 
 	/**
-	 * Casting a hologram requires some pretty specific behavior to work with Bridge' new playlist api.
-	 * This function will alternate between two playlists so that you can cast a new hologram without interrupting the current one.
+	 * This function will allow you to cast a single hologram to the Looking Glass
 	 * @param hologram
 	 */
 	public async cast(hologram: Hologram): Promise<{ success: boolean }> {
@@ -320,5 +310,21 @@ class BridgeClient {
 		return this.isValid
 	}
 }
-
+/**
+ * The singleton instance of the `BridgeClient` class.
+ * @see {@link BridgeClient}
+ *
+ * It exposes the following methods:
+ *  - {@link Bridge.displays}
+ *  - {@link Bridge.cast}
+ *  - {@link Bridge.addEventListener}
+ *  - {@link Bridge.initializeEventSource}
+ *  - {@link Bridge.getVerbosity}
+ *  - {@link Bridge.setVerbosity}
+ *  - {@link Bridge.isVersionCompatible}
+ *  - {@link Bridge.isValid}
+ *  - {@link Bridge.version}
+ *  - {@link Bridge.orchestration}
+ *  - {@link Bridge.lkgDisplays}
+ */
 export const Bridge: BridgeClient = BridgeClient.getInstance()

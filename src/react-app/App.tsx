@@ -29,6 +29,8 @@ function App() {
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
 	return (
 		<>
+			<h1>Looking Glass Bridge API Library</h1>
+			<h2>Methods</h2>
 			<button
 				onClick={async () => {
 					console.log(await Bridge.displays())
@@ -52,7 +54,7 @@ function App() {
 					let cast = await Bridge.cast(quilt)
 					console.log(cast)
 				}}>
-				Cast hologram
+				Cast Quilt hologram
 			</button>
 			<button
 				onClick={async () => {

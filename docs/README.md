@@ -8,24 +8,29 @@
 
 - [BridgeClient](classes/BridgeClient.md)
 - [Playlist](classes/Playlist.md)
+- [PlaylistItemQuilt](classes/PlaylistItemQuilt.md)
+- [PlaylistItemRGBD](classes/PlaylistItemRGBD.md)
 
 ### Interfaces
 
 - [PlaylistArgs](interfaces/PlaylistArgs.md)
-- [PlaylistItemType](interfaces/PlaylistItemType.md)
+- [PlaylistItemArgs](interfaces/PlaylistItemArgs.md)
 - [PlaylistType](interfaces/PlaylistType.md)
-- [QuiltPlaylistItemArgs](interfaces/QuiltPlaylistItemArgs.md)
-- [RGBDPlaylistItemArgs](interfaces/RGBDPlaylistItemArgs.md)
 - [getPlayPlaylistJsonArgs](interfaces/getPlayPlaylistJsonArgs.md)
+
+### Type Aliases
+
+- [PlaylistItemType](README.md#playlistitemtype)
 
 ### Variables
 
 - [Bridge](README.md#bridge)
 
-### Functions
+## Type Aliases
 
-- [QuiltPlaylistItem](README.md#quiltplaylistitem)
-- [RGBDPlaylistItem](README.md#rgbdplaylistitem)
+### PlaylistItemType
+
+Ƭ **PlaylistItemType**: [`PlaylistItemQuilt`](classes/PlaylistItemQuilt.md) \| [`PlaylistItemRGBD`](classes/PlaylistItemRGBD.md)
 
 ## Variables
 
@@ -33,34 +38,21 @@
 
 • `Const` **Bridge**: [`BridgeClient`](classes/BridgeClient.md)
 
-## Functions
+The singleton instance of the `BridgeClient` class.
 
-### QuiltPlaylistItem
+**`See`**
 
-▸ **QuiltPlaylistItem**(`«destructured»`): [`PlaylistItemType`](interfaces/PlaylistItemType.md)
+[BridgeClient](classes/BridgeClient.md)
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | [`QuiltPlaylistItemArgs`](interfaces/QuiltPlaylistItemArgs.md) |
-
-#### Returns
-
-[`PlaylistItemType`](interfaces/PlaylistItemType.md)
-
-___
-
-### RGBDPlaylistItem
-
-▸ **RGBDPlaylistItem**(`«destructured»`): [`PlaylistItemType`](interfaces/PlaylistItemType.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | [`RGBDPlaylistItemArgs`](interfaces/RGBDPlaylistItemArgs.md) |
-
-#### Returns
-
-[`PlaylistItemType`](interfaces/PlaylistItemType.md)
+It exposes the following methods:
+ - [displays](classes/BridgeClient.md#displays)
+ - [cast](classes/BridgeClient.md#cast)
+ - [addEventListener](classes/BridgeClient.md#addeventlistener)
+ - [initializeEventSource](classes/BridgeClient.md#initializeeventsource)
+ - [getVerbosity](classes/BridgeClient.md#getverbosity)
+ - [setVerbosity](classes/BridgeClient.md#setverbosity)
+ - Bridge.isVersionCompatible
+ - Bridge.isValid
+ - [version](classes/BridgeClient.md#version)
+ - Bridge.orchestration
+ - Bridge.lkgDisplays

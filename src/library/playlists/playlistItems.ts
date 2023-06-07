@@ -83,7 +83,7 @@ class PlaylistItem {
 	}
 }
 
-export class PlaylistItemQuilt extends PlaylistItem {
+export class QuiltPlaylistItem extends PlaylistItem {
 	constructor(args: {
 		hologram: QuiltHologram
 		id: number
@@ -95,7 +95,7 @@ export class PlaylistItemQuilt extends PlaylistItem {
 	}
 }
 
-export class PlaylistItemRGBD extends PlaylistItem {
+export class RGBDPlaylistItem extends PlaylistItem {
 	constructor(args: {
 		hologram: RGBDHologram
 		id: number

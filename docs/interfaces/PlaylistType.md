@@ -14,7 +14,7 @@
 
 ### items
 
-• **items**: [`PlaylistItemType`](PlaylistItemType.md)[]
+• **items**: [`PlaylistItemType`](../README.md#playlistitemtype)[]
 
 ___
 
