@@ -56,17 +56,17 @@ export class Playlist {
 	}
 
 	/**
-	 * creates the json object for playing the playlist
+	 * gets the object for the current playlist that is currently being played
 	 * @param orchestration
 	 * @param head
 	 * @returns
 	 */
-	public getPlayPlaylistJson({ orchestration, head }: getPlayPlaylistJsonArgs) {
-		const content = JSON.stringify({
+	public getCurrent({ orchestration, head }: getPlayPlaylistJsonArgs) {
+		const content = {
 			orchestration: orchestration,
 			name: this.name,
 			head_index: head,
-		})
+		}
 
 		return content
 	}
@@ -76,46 +76,8 @@ export class Playlist {
 	 * @param orchestration
 	 * @returns
 	 */
-	public getInstanceJson(orchestration: string) {
-		const content = JSON.stringify({
-			orchestration: orchestration,
-			name: this.name,
-			loop: this.loop,
-		})
-
-		return content
-	}
-
-	public getPlaylistItemsAsJson(orchestration: string) {
-		const strings: string[] = []
-
-		for (let i = 0; i < this.items.length; i++) {
-			const itemString = this.getPlaylistItemJson(orchestration, i)
-			strings.push(itemString)
-		}
-
-		return strings
-	}
-
-	private getPlaylistItemJson(orchestration: string, index: number) {
-		const item: PlaylistItemType = this.items[index]
-
-		const content: string = JSON.stringify({
-			orchestration: orchestration,
-			name: this.name,
-			index: index,
-			uri: item.uri,
-			rows: item.rows,
-			cols: item.columns,
-			aspect: item.aspect,
-			view_count: item.viewCount,
-			isRGBD: item.isRGBD,
-			depth_loc: item.depth_loc,
-			depth_inversion: item.depth_inversion,
-			chroma_depth: item.chroma_depth,
-			depthiness: item.depthiness,
-			zoom: item.zoom,
-		})
+	public getInstance(orchestration: string) {
+		const content = { orchestration: orchestration, name: this.name, loop: this.loop }
 
 		return content
 	}

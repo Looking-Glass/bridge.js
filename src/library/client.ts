@@ -5,7 +5,7 @@ import { BridgeEventSource } from "./components/eventsource"
 import { Playlist, PlaylistArgs } from "./playlists/playlist"
 import { PlaylistItemType } from "./playlists/playlistItems"
 import { BridgeEvent } from "./components"
-import * as schema from "./schemas"
+import * as schema from "./schemas/responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
 
@@ -112,7 +112,7 @@ class BridgeClient {
 			return { success: false, response: 0 }
 		}
 
-		let response = await sendMessage({ endpoint: "bridge_version" })
+		let response = await sendMessage({ endpoint: "bridge_version", requestBody: {} })
 		if (response.success == false) {
 			console.warn(`this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`)
 			return { success: false, response: 0 }
@@ -138,11 +138,11 @@ class BridgeClient {
 
 			return { success: false, response: null }
 		}
-		const requestBody = JSON.stringify({
+		const requestBody = {
 			orchestration: this.orchestration,
 			show_window: showWindow,
 			head_index: -1,
-		})
+		}
 		let response = await sendMessage({
 			endpoint: "show_window",
 			requestBody: requestBody,
@@ -164,7 +164,7 @@ class BridgeClient {
 			return { success: false, response: 0 }
 		}
 		if ((await this.isVersionCompatible()) == false) return { success: false, response: 0 }
-		let response = await sendMessage({ endpoint: "api_version" })
+		let response = await sendMessage({ endpoint: "api_version", requestBody: {} })
 		if (response.success == false) {
 			console.warn(`this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`)
 			return { success: false, response: 0 }
@@ -184,9 +184,9 @@ class BridgeClient {
 		this.lkgDisplays = []
 		// if there is no orchestration, attempt to create one, if that fails, return false
 		if (this.isValid == false) return { success: false, response: null }
-		const requestBody = JSON.stringify({
+		const requestBody = {
 			orchestration: this.orchestration,
-		})
+		}
 		let response = await sendMessage({
 			endpoint: "available_output_devices",
 			requestBody: requestBody,
@@ -225,7 +225,7 @@ class BridgeClient {
 		if (this.isValid == false) {
 			return { success: false, response: null }
 		}
-		const requestBody = playlist.getInstanceJson(this.orchestration)
+		const requestBody = playlist.getInstance(this.orchestration)
 		let response = await sendMessage({
 			endpoint: "delete_playlist",
 			requestBody: requestBody,
@@ -247,7 +247,7 @@ class BridgeClient {
 	 */
 	public async play({ playlist, head }: PlaylistArgs): Promise<boolean> {
 		if (this.isValid == false) return false
-		const requestBody = playlist.getInstanceJson(this.orchestration)
+		const requestBody = playlist.getInstance(this.orchestration)
 
 		if (!head) {
 			head = -1
@@ -259,7 +259,7 @@ class BridgeClient {
 			return false
 		}
 
-		const PlaylistItems: string[] = playlist.getPlaylistItemsAsJson(this.orchestration)
+		const PlaylistItems: PlaylistItemType[] = playlist.items
 
 		for (let i = 0; i < PlaylistItems.length; i++) {
 			const pRequestBody = PlaylistItems[i]
@@ -270,7 +270,7 @@ class BridgeClient {
 			}
 		}
 		let orchestration = this.orchestration
-		const playRequestBody = playlist.getPlayPlaylistJson({ orchestration, head })
+		const playRequestBody = playlist.getCurrent({ orchestration, head })
 		let play_playlist = await sendMessage({
 			endpoint: "play_playlist",
 			requestBody: playRequestBody,

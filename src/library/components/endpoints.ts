@@ -1,5 +1,6 @@
 import { Bridge } from ".."
-import * as schemas from "../schemas"
+import * as BridgeResponse from "../schemas/responses"
+import * as BridgeRequest from "../schemas/requests"
 import { z } from "zod"
 
 export type BridgeEndpointType =
@@ -28,29 +29,55 @@ export type BridgeEndpointType =
 	| "show_window"
 
 type BridgeEndpointSchemaMap = {
-	// instance_studio_playlist: z.infer<typeof schemas.instance_studio_playlist>
-	bridge_version: z.infer<typeof schemas.version>
-	api_version: z.infer<typeof schemas.version>
-	// set_named_autostart_playlist: z.infer<typeof schemas.set_named_autostart_playlist>
-	// set_autostart_playlist: z.infer<typeof schemas.set_autostart_playlist>
-	available_output_devices: z.infer<typeof schemas.available_output_devices>
-	enter_orchestration: z.infer<typeof schemas.orchestration>
-	exit_orchestration: z.infer<typeof schemas.orchestration>
-	instance_playlist: z.infer<typeof schemas.instance_playlist>
-	delete_playlist: z.infer<typeof schemas.delete_playlist>
-	insert_playlist_entry: z.infer<typeof schemas.insert_playlist_entry>
-	// update_playlist_entry: z.infer<typeof schemas.update_playlist_entry>
-	// update_current_entry: z.infer<typeof schemas.update_current_entry>
-	// sync_overwrite_playlist: z.infer<typeof schemas.sync_overwrite_playlist>
-	// cancel_pending: z.infer<typeof schemas.cancel_pending>
-	// synced_file_hash: z.infer<typeof schemas.synced_file_hash>
-	// transport_control_play: z.infer<typeof schemas.transport_control_play>
-	// transport_control_pause: z.infer<typeof schemas.transport_control_pause>
-	// transport_control_next: z.infer<typeof schemas.transport_control_next>
-	// transport_control_previous: z.infer<typeof schemas.transport_control_previous>
-	// transport_control_seek_to_index: z.infer<typeof schemas.transport_control_seek_to_index>
-	play_playlist: z.infer<typeof schemas.play_playlist>
-	show_window: z.infer<typeof schemas.show_window>
+	// instance_studio_playlist: z.infer<typeof BridgeResponse.instance_studio_playlist>
+	bridge_version: z.infer<typeof BridgeResponse.version>
+	api_version: z.infer<typeof BridgeResponse.version>
+	// set_named_autostart_playlist: z.infer<typeof BridgeResponse.set_named_autostart_playlist>
+	// set_autostart_playlist: z.infer<typeof BridgeResponse.set_autostart_playlist>
+	available_output_devices: z.infer<typeof BridgeResponse.available_output_devices>
+	enter_orchestration: z.infer<typeof BridgeResponse.orchestration>
+	exit_orchestration: z.infer<typeof BridgeResponse.orchestration>
+	instance_playlist: z.infer<typeof BridgeResponse.instance_playlist>
+	delete_playlist: z.infer<typeof BridgeResponse.delete_playlist>
+	insert_playlist_entry: z.infer<typeof BridgeResponse.insert_playlist_entry>
+	// update_playlist_entry: z.infer<typeof BridgeResponse.update_playlist_entry>
+	// update_current_entry: z.infer<typeof BridgeResponse.update_current_entry>
+	// sync_overwrite_playlist: z.infer<typeof BridgeResponse.sync_overwrite_playlist>
+	// cancel_pending: z.infer<typeof BridgeResponse.cancel_pending>
+	// synced_file_hash: z.infer<typeof BridgeResponse.synced_file_hash>
+	// transport_control_play: z.infer<typeof BridgeResponse.transport_control_play>
+	// transport_control_pause: z.infer<typeof BridgeResponse.transport_control_pause>
+	// transport_control_next: z.infer<typeof BridgeResponse.transport_control_next>
+	// transport_control_previous: z.infer<typeof BridgeResponse.transport_control_previous>
+	// transport_control_seek_to_index: z.infer<typeof BridgeResponse.transport_control_seek_to_index>
+	play_playlist: z.infer<typeof BridgeResponse.play_playlist>
+	show_window: z.infer<typeof BridgeResponse.show_window>
+}
+
+type BridgeRequestBodyMap = {
+	// instance_studio_playlist: z.infer<typeof BridgeRequest.instance_studio_playlist>
+	bridge_version: z.infer<typeof BridgeRequest.version>
+	api_version: z.infer<typeof BridgeRequest.version>
+	// set_named_autostart_playlist: z.infer<typeof BridgeRequest.set_named_autostart_playlist>
+	// set_autostart_playlist: z.infer<typeof BridgeRequest.set_autostart_playlist>
+	available_output_devices: z.infer<typeof BridgeRequest.available_output_devices>
+	enter_orchestration: z.infer<typeof BridgeRequest.orchestration>
+	exit_orchestration: z.infer<typeof BridgeRequest.orchestration>
+	instance_playlist: z.infer<typeof BridgeRequest.instance_playlist>
+	delete_playlist: z.infer<typeof BridgeRequest.delete_playlist>
+	insert_playlist_entry: z.infer<typeof BridgeRequest.insert_playlist_entry>
+	// update_playlist_entry: z.infer<typeof BridgeRequest.update_playlist_entry>
+	// update_current_entry: z.infer<typeof BridgeRequest.update_current_entry>
+	// sync_overwrite_playlist: z.infer<typeof BridgeRequest.sync_overwrite_playlist>
+	// cancel_pending: z.infer<typeof BridgeRequest.cancel_pending>
+	// synced_file_hash: z.infer<typeof BridgeRequest.synced_file_hash>
+	// transport_control_play: z.infer<typeof BridgeRequest.transport_control_play>
+	// transport_control_pause: z.infer<typeof BridgeRequest.transport_control_pause>
+	// transport_control_next: z.infer<typeof BridgeRequest.transport_control_next>
+	// transport_control_previous: z.infer<typeof BridgeRequest.transport_control_previous>
+	// transport_control_seek_to_index: z.infer<typeof BridgeRequest.transport_control_seek_to_index>
+	play_playlist: z.infer<typeof BridgeRequest.play_playlist>
+	show_window: z.infer<typeof BridgeRequest.show_window>
 }
 
 type SuccessResponse<T> = { success: true; response: T }
@@ -70,39 +97,35 @@ type Response<T> = SuccessResponse<T> | ErrorResponse
  * @returns the response from the bridge endpoint, as a json object
  */
 
-export async function sendMessage<T extends keyof BridgeEndpointSchemaMap>(params: {
+export async function sendMessage<
+	T extends keyof BridgeEndpointSchemaMap & keyof BridgeRequestBodyMap
+>(params: {
 	endpoint: T
-	requestBody?: string
+	requestBody: BridgeRequestBodyMap[T]
 	baseUrl?: string
 }): Promise<Response<BridgeEndpointSchemaMap[T]>> {
-	let response: any
 	if (Bridge.getVerbosity() != 0) console.group("Endpoint:", params.endpoint)
 
 	if (params.baseUrl == undefined) {
 		params.baseUrl = "http://localhost:33334/"
 	}
 
-	if (params.requestBody == undefined) {
-		params.requestBody = JSON.stringify({})
-	}
-
 	if (Bridge.getVerbosity() == 3) {
 		console.group("Message:")
 		console.log(`${params.baseUrl + params.endpoint}`)
-		console.log("body:", JSON.parse(params.requestBody))
+		console.log("body:", params.requestBody)
 		console.groupEnd()
 	}
 
 	const request = {
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
-		body: params.requestBody,
+		body: JSON.stringify(params.requestBody),
 	}
 
 	try {
-		response = await fetch(`${params.baseUrl + params.endpoint}`, request)
-
-		let parsedResponse = await response.json()
+		let bridgeResponse = await fetch(`${params.baseUrl + params.endpoint}`, request)
+		let parsedResponse: BridgeEndpointSchemaMap[T] = await bridgeResponse.json()
 		if (Bridge.getVerbosity() != 0) console.groupEnd()
 		return { success: true, response: parsedResponse }
 	} catch (error) {
