@@ -1,29 +1,28 @@
 import { useState } from "react"
 import { Bridge } from "../library/index"
-import { QuiltPlaylistItem, RGBDPlaylistItem } from "../library/playlists/playlistItems"
+import { QuiltHologram, RGBDHologram } from "../library/components/hologram"
 
 Bridge.setVerbosity(3)
 
-const hologram = QuiltPlaylistItem({
+const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
-	rows: 13,
-	columns: 8,
-	aspect: 0.75,
-	viewCount: 8 * 13,
+	settings: { rows: 13, columns: 8, aspect: 0.75, viewCount: 8 * 13 },
 })
 
-const rgbd_hologram = RGBDPlaylistItem({
+const rgbd = new RGBDHologram({
 	uri: "https://dl-dev.blocks.glass/u/b528b9def6aa4986/rgbd.png",
-	depthiness: 1.0,
-	rows: 8,
-	columns: 6,
-	focus: 0,
-	aspect: 1,
-	viewCount: 48,
-	chroma_depth: 0,
-	depth_inversion: 0,
-	depth_loc: 2,
-	depth_cutoff: 1,
+	settings: {
+		depthiness: 1.0,
+		rows: 8,
+		columns: 6,
+		focus: 0,
+		aspect: 1,
+		viewCount: 48,
+		chroma_depth: 0,
+		depth_inversion: 0,
+		depth_loc: 2,
+		depth_cutoff: 1,
+	},
 })
 
 function App() {
@@ -50,14 +49,14 @@ function App() {
 			</button>
 			<button
 				onClick={async () => {
-					let cast = await Bridge.cast(hologram)
+					let cast = await Bridge.cast(quilt)
 					console.log(cast)
 				}}>
 				Cast hologram
 			</button>
 			<button
 				onClick={async () => {
-					let cast = await Bridge.cast(rgbd_hologram)
+					let cast = await Bridge.cast(rgbd)
 					console.log(cast)
 				}}>
 				Cast RGBD hologram

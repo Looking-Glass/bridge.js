@@ -24,6 +24,7 @@ const variant_map = z.literal("VARIANT_MAP")
 
 // possible types that can be returned by bridge' status object.
 const completion = z.literal("Completion")
+const unknown = z.literal("UnknownOrchestration")
 const pending = z.literal("Pending")
 const failure = z.literal("Failure")
 
@@ -32,7 +33,7 @@ const name = z.string()
 export const status = z.object({
 	name: name,
 	type: wstring,
-	value: z.union([completion, pending, failure]),
+	value: z.union([completion, pending, failure, unknown]),
 })
 
 export const version = z.object({

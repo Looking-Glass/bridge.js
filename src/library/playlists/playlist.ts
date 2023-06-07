@@ -1,4 +1,8 @@
-import { PlaylistItemType } from "./playlistItems"
+import { sendMessage } from "../components/endpoints"
+import { Hologram, QuiltHologram, RGBDHologram } from "../components/hologram"
+import { PlaylistItemRGBD, PlaylistItemQuilt } from "./playlistItems"
+
+export type PlaylistItemType = PlaylistItemQuilt | PlaylistItemRGBD
 
 export interface PlaylistType {
 	name: string
@@ -26,20 +30,41 @@ export class Playlist {
 	public name: string
 	public loop: boolean
 	public items: PlaylistItemType[]
+	public orchestration: string
 
-	constructor() {
-		this.name = ""
-		this.loop = false
-		this.items = []
+	constructor(args: { name: string; loop: boolean; items: PlaylistItemType[]; orchestration: string }) {
+		this.name = args.name
+		this.loop = args.loop
+		this.items = args.items
+		this.orchestration = args.orchestration
 	}
 
 	public setName(name: string) {
 		this.name = name
 	}
 
-	public addItem(item: PlaylistItemType) {
-		item.id = this.items.length
-		this.items.push(item)
+	public addItem(hologram: Hologram) {
+		let item: PlaylistItemType
+		if (hologram.type == "quilt") {
+			item = new PlaylistItemQuilt({
+				hologram: hologram as QuiltHologram,
+				id: this.items.length,
+				index: this.items.length,
+				playlistName: this.name,
+				orchestration: this.orchestration,
+			})
+
+			this.items.push(item)
+		} else if (hologram.type == "rgbd") {
+			item = new PlaylistItemRGBD({
+				hologram: hologram as RGBDHologram,
+				id: this.items.length,
+				index: this.items.length,
+				playlistName: this.name,
+				orchestration: this.orchestration,
+			})
+			this.items.push(item)
+		}
 	}
 
 	public removeItem(item: PlaylistItemType) {
@@ -80,5 +105,55 @@ export class Playlist {
 		const content = { orchestration: orchestration, name: this.name, loop: this.loop }
 
 		return content
+	}
+
+	/**
+	 * this function will play a playlist on a Looking Glass display
+	 * the playlist must be created and populated with content before calling this function
+	 * @param playlist
+	 * @param head
+	 * @returns
+	 */
+	public async play({ playlist, head }: PlaylistArgs): Promise<boolean> {
+		let orchestration = this.orchestration
+		const requestBody = playlist.getInstance(this.orchestration)
+
+		if (!head) {
+			head = -1
+		}
+
+		let instancePlaylist = await sendMessage({ endpoint: "instance_playlist", requestBody: requestBody })
+		if (instancePlaylist.success == false) {
+			console.error("failed to initialize playlist")
+			return false
+		}
+
+		const PlaylistItems: PlaylistItemType[] = playlist.items
+		if (instancePlaylist.success == true) {
+			if (orchestration !== undefined) {
+				for (let i = 0; i < PlaylistItems.length; i++) {
+					PlaylistItems[i].orchestration = this.orchestration
+					const pRequestBody = PlaylistItems[i].toBridge()
+
+					let message = await sendMessage({ endpoint: "insert_playlist_entry", requestBody: pRequestBody })
+					if (message.success == false) {
+						console.error("failed to insert playlist entry")
+						return false
+					}
+				}
+			}
+		}
+
+		const playRequestBody = playlist.getCurrent({ orchestration, head })
+		let play_playlist = await sendMessage({
+			endpoint: "play_playlist",
+			requestBody: playRequestBody,
+		})
+
+		if (play_playlist.success == false) {
+			return false
+		}
+
+		return true
 	}
 }

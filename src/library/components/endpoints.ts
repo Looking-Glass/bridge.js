@@ -90,9 +90,9 @@ type Response<T> = SuccessResponse<T> | ErrorResponse
  * @param endpoint the bridge endpoint to send the message to, defined in BridgeEndpointType
  * @param requestBody Optional, the Json body to send to Bridge, defaults to empty Json
  * The requestbody is a json object that has been stringified. For example:
- * const requestBody = JSON.stringify({
+ * const requestBody = {
  * 	orchestration: this.orchestration,
- * })
+ * }
  * @param baseUrl Optional, the localhost url that bridge uses, defaults to http://localhost:33334/
  * @returns the response from the bridge endpoint, as a json object
  */
@@ -104,6 +104,7 @@ export async function sendMessage<
 	requestBody: BridgeRequestBodyMap[T]
 	baseUrl?: string
 }): Promise<Response<BridgeEndpointSchemaMap[T]>> {
+	let parsedResponse: BridgeEndpointSchemaMap[T]
 	if (Bridge.getVerbosity() != 0) console.group("Endpoint:", params.endpoint)
 
 	if (params.baseUrl == undefined) {
@@ -125,17 +126,18 @@ export async function sendMessage<
 
 	try {
 		let bridgeResponse = await fetch(`${params.baseUrl + params.endpoint}`, request)
-		let parsedResponse: BridgeEndpointSchemaMap[T] = await bridgeResponse.json()
+		parsedResponse = await bridgeResponse.json()
+
+		if (parsedResponse.status.value == "Failure" || parsedResponse.status.value == "UnknownOrchestration") {
+			console.error(parsedResponse)
+			throw new Error("Bridge returned failure")
+		}
+
 		if (Bridge.getVerbosity() != 0) console.groupEnd()
 		return { success: true, response: parsedResponse }
 	} catch (error) {
-		console.error("Couldn't connect to Bridge", error)
+		console.error("Bridge Error", error)
 		console.groupEnd()
 		return { success: false, response: null }
 	}
-}
-export interface responseStatusArgs {
-	response: any
-	errorMessage?: string
-	schema: any
 }

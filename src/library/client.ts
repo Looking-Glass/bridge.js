@@ -2,8 +2,8 @@ import { Display, tryParseDisplay } from "./components/displays"
 import { sendMessage } from "./components/endpoints"
 import { tryEnterOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
-import { Playlist, PlaylistArgs } from "./playlists/playlist"
-import { PlaylistItemType } from "./playlists/playlistItems"
+import { Playlist } from "./playlists/playlist"
+import { Hologram } from "./components/hologram"
 import { BridgeEvent } from "./components"
 import * as schema from "./schemas/responses"
 import { z } from "zod"
@@ -208,16 +208,6 @@ class BridgeClient {
 		return { success: true, response: this.lkgDisplays }
 	}
 
-	/**
-	 * A helper function to create a new Playlist object
-	 * @param name the name of the playlist
-	 */
-	public createPlaylist(name: string) {
-		const playlist = new Playlist()
-		playlist.setName(name)
-		return playlist
-	}
-
 	public async deletePlaylist(
 		playlist: Playlist
 	): Promise<{ success: boolean; response: z.infer<typeof schema.delete_playlist> | null }> {
@@ -239,56 +229,11 @@ class BridgeClient {
 	}
 
 	/**
-	 * this function will play a playlist on a Looking Glass display
-	 * the playlist must be created and populated with content before calling this function
-	 * @param playlist
-	 * @param head
-	 * @returns
-	 */
-	public async play({ playlist, head }: PlaylistArgs): Promise<boolean> {
-		if (this.isValid == false) return false
-		const requestBody = playlist.getInstance(this.orchestration)
-
-		if (!head) {
-			head = -1
-		}
-
-		let instancePlaylist = await sendMessage({ endpoint: "instance_playlist", requestBody: requestBody })
-		if (instancePlaylist.success == false) {
-			console.error("failed to initialize playlist")
-			return false
-		}
-
-		const PlaylistItems: PlaylistItemType[] = playlist.items
-
-		for (let i = 0; i < PlaylistItems.length; i++) {
-			const pRequestBody = PlaylistItems[i]
-			let message = await sendMessage({ endpoint: "insert_playlist_entry", requestBody: pRequestBody })
-			if (message.success == false) {
-				console.error("failed to insert playlist entry")
-				return false
-			}
-		}
-		let orchestration = this.orchestration
-		const playRequestBody = playlist.getCurrent({ orchestration, head })
-		let play_playlist = await sendMessage({
-			endpoint: "play_playlist",
-			requestBody: playRequestBody,
-		})
-
-		if (play_playlist.success == false) {
-			return false
-		}
-
-		return true
-	}
-
-	/**
 	 * Casting a hologram requires some pretty specific behavior to work with Bridge' new playlist api.
 	 * This function will alternate between two playlists so that you can cast a new hologram without interrupting the current one.
-	 * @param playlistItem
+	 * @param hologram
 	 */
-	public async cast(playlistItem: PlaylistItemType): Promise<{ success: boolean }> {
+	public async cast(hologram: Hologram): Promise<{ success: boolean }> {
 		if (this.isValid == false) return { success: false }
 		console.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isCasting == true) {
@@ -297,28 +242,33 @@ class BridgeClient {
 			return { success: false }
 		}
 		this.isCasting = true
-		let newPlaylistIndex = (this.currentPlaylist + 1) % 2
-		// placeholder value for playlist
-		let newPlaylist = null
 
-		if (this.internalPlaylists[newPlaylistIndex] == undefined) {
-			this.internalPlaylists[newPlaylistIndex] = this.createPlaylist("cast" + newPlaylistIndex)
-			newPlaylist = this.internalPlaylists[newPlaylistIndex]
-		} else {
-			newPlaylist = this.internalPlaylists[newPlaylistIndex]
+		let newPlaylistIndex = (this.currentPlaylist + 1) % 2
+		let playlist = this.internalPlaylists[newPlaylistIndex]
+
+		// delete the playlist if it already exists
+		if (playlist != undefined) {
 			// tell bridge to clear the playlist in its internal memory
-			const deleteResult = await this.deletePlaylist(newPlaylist)
+			const deleteResult = await this.deletePlaylist(playlist)
 			if (deleteResult.success == false) {
 				return { success: false }
 			}
-			this.internalPlaylists[newPlaylistIndex] = this.createPlaylist("cast" + newPlaylistIndex)
 			// clear the playlist in bridge.js
-			newPlaylist.clearItems()
+			playlist.clearItems()
 		}
-		newPlaylist.loop = true
-		newPlaylist.addItem(playlistItem)
 
-		await this.play({ playlist: newPlaylist })
+		playlist = new Playlist({
+			name: "cast" + newPlaylistIndex,
+			loop: true,
+			items: [],
+			orchestration: this.orchestration,
+		})
+
+		playlist.addItem(hologram)
+		console.log("item", playlist.items[0].toBridge())
+		await playlist.play({
+			playlist: playlist,
+		})
 		this.currentPlaylist = newPlaylistIndex
 
 		this.isCasting = false

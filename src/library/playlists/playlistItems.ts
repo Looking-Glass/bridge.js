@@ -1,87 +1,108 @@
-export interface PlaylistItemType {
-	id?: number
+import { z } from "zod"
+import { Hologram, QuiltHologram, RGBDHologram } from "../components/hologram"
+import { insert_playlist_entry } from "../schemas/requests"
+
+export interface PlaylistItemArgs {
+	orchestration: string
+	name: string
+	index: number
+	id: string
 	uri: string
 	rows: number
-	columns: number
-	viewCount: number
+	cols: number
 	aspect: number
-	crop_pos_x?: number
-	crop_pos_y?: number
-	focus?: 0
-	zoom?: 0
-
-	// only RGBD below
-	isRGBD?: 0 | 1
-	depth_loc?: 0 | 1 | 2 | 3
-	depth_inversion?: 0 | 1
-	chroma_depth?: 0 | 1
-	depthiness?: number
-	depth_cutoff?: number
-}
-export interface QuiltPlaylistItemArgs {
-	uri: string
-	rows: number
-	columns: number
-	aspect: number
-	viewCount: number
-}
-export function QuiltPlaylistItem({
-	uri,
-	rows,
-	columns,
-	aspect,
-	viewCount,
-}: QuiltPlaylistItemArgs): PlaylistItemType {
-	const PlaylistItem: PlaylistItemType = {
-		id: -1,
-		uri: uri,
-		rows: rows,
-		columns: columns,
-		aspect: aspect,
-		viewCount: viewCount,
-	}
-
-	return PlaylistItem
-}
-
-export interface RGBDPlaylistItemArgs {
-	uri: string
-	rows: number
-	columns: number
-	aspect: number
-	viewCount: number
+	view_count: number
+	isRGBD: 0 | 1
 	depth_loc: 0 | 1 | 2 | 3
 	depth_inversion: 0 | 1
 	chroma_depth: 0 | 1
 	depthiness: number
-	focus: number
-	depth_cutoff: 1
+	zoom: number
 }
 
-export function RGBDPlaylistItem({
-	uri,
-	rows,
-	columns,
-	aspect,
-	viewCount,
-	depth_loc,
-	depth_inversion,
-	chroma_depth,
-	depthiness,
-}: RGBDPlaylistItemArgs): PlaylistItemType {
-	const PlaylistItem: PlaylistItemType = {
-		id: -1,
-		uri: uri,
-		rows: rows,
-		columns: columns,
-		aspect: aspect,
-		isRGBD: 1,
-		depth_loc: depth_loc,
-		depth_inversion: depth_inversion,
-		chroma_depth: chroma_depth,
-		depthiness: depthiness,
-		viewCount: viewCount,
+class PlaylistItem {
+	public orchestration: string
+	public hologram: Hologram
+	public id: number
+	public index: number
+	public playlistName: string
+
+	constructor(args: {
+		hologram: Hologram
+		id: number
+		index: number
+		playlistName: string
+		orchestration: string
+	}) {
+		this.hologram = args.hologram
+		this.id = args.id
+		this.index = args.index
+		this.playlistName = args.playlistName
+		this.orchestration = args.orchestration
 	}
 
-	return PlaylistItem
+	public toBridge(): z.infer<typeof insert_playlist_entry> | never {
+		let playlistItem: z.infer<typeof insert_playlist_entry>
+		if (this.hologram.type == "quilt") {
+			const settings = this.hologram.settings
+			playlistItem = {
+				orchestration: this.orchestration,
+				id: this.id,
+				name: this.playlistName,
+				index: this.index,
+				uri: this.hologram.uri,
+				rows: settings.rows,
+				cols: settings.columns,
+				aspect: settings.aspect,
+				view_count: settings.viewCount,
+				isRGBD: 0,
+			}
+			return playlistItem
+		} else if (this.hologram.type == "rgbd") {
+			const settings = this.hologram.settings
+			playlistItem = {
+				orchestration: this.orchestration,
+				id: this.id,
+				name: this.playlistName,
+				index: this.index,
+				uri: this.hologram.uri,
+				rows: settings.rows,
+				cols: settings.columns,
+				aspect: settings.aspect,
+				view_count: settings.viewCount,
+				isRGBD: 1,
+				depth_loc: settings.depth_loc,
+				depth_inversion: settings.depth_inversion,
+				chroma_depth: settings.chroma_depth,
+				depthiness: settings.depthiness,
+				zoom: settings.zoom,
+			}
+			return playlistItem
+		}
+		throw new Error("Invalid hologram type")
+	}
+}
+
+export class PlaylistItemQuilt extends PlaylistItem {
+	constructor(args: {
+		hologram: QuiltHologram
+		id: number
+		index: number
+		playlistName: string
+		orchestration: string
+	}) {
+		super(args)
+	}
+}
+
+export class PlaylistItemRGBD extends PlaylistItem {
+	constructor(args: {
+		hologram: RGBDHologram
+		id: number
+		index: number
+		playlistName: string
+		orchestration: string
+	}) {
+		super(args)
+	}
 }

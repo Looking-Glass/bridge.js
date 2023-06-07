@@ -2,8 +2,8 @@ import { Bridge } from ".."
 import { sendMessage } from "./endpoints"
 
 export interface OrchestrationArgs {
-	name?: string
-	orchestration?: string
+	name: string
+	orchestration: string
 }
 
 /**
@@ -17,7 +17,7 @@ export async function tryEnterOrchestration({ name, orchestration }: Orchestrati
 			"%c function call: tryEnterOrchestration ",
 			"color: magenta; font-weight: bold; border: solid"
 		)
-	if (name == undefined) {
+	if (name == undefined || name == "") {
 		name = "default"
 	}
 
@@ -26,9 +26,9 @@ export async function tryEnterOrchestration({ name, orchestration }: Orchestrati
 		await tryExitOrchestration(orchestration)
 	}
 	// a new orchestration will be created if the name is different.
-	let requestBody = JSON.stringify({
+	let requestBody = {
 		name: name,
-	})
+	}
 	let response = await sendMessage({
 		endpoint: "enter_orchestration",
 		requestBody: requestBody,
@@ -44,9 +44,9 @@ export async function tryEnterOrchestration({ name, orchestration }: Orchestrati
 }
 
 export async function tryExitOrchestration(orchestration: string) {
-	let body = JSON.stringify({
+	let body = {
 		orchestration: orchestration,
-	})
+	}
 
 	let response = await sendMessage({
 		endpoint: "exit_orchestration",

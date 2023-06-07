@@ -27,22 +27,21 @@ export const instance_playlist = z.object({
 })
 
 export const insert_playlist_entry = z.object({
-	id: z.number().optional(),
+	orchestration: z.string(),
+	name: z.string(),
+	id: z.number(),
+	index: z.number(),
 	uri: z.string(),
 	rows: z.number(),
-	columns: z.number(),
-	viewCount: z.number(),
+	cols: z.number(),
 	aspect: z.number(),
-	crop_pos_x: z.number().optional(),
-	crop_pos_y: z.number().optional(),
-	focus: z.literal(0).optional(),
-	zoom: z.literal(0).optional(),
-	isRGBD: z.union([z.literal(0), z.literal(1)]).optional(),
+	view_count: z.number(),
+	isRGBD: z.union([z.literal(0), z.literal(1)]),
 	depth_loc: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]).optional(),
 	depth_inversion: z.union([z.literal(0), z.literal(1)]).optional(),
 	chroma_depth: z.union([z.literal(0), z.literal(1)]).optional(),
 	depthiness: z.number().optional(),
-	depth_cutoff: z.number().optional(),
+	zoom: z.number().optional(),
 })
 
 export const play_playlist = z.object({
