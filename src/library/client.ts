@@ -4,23 +4,25 @@ import { tryEnterOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist } from "./playlists/playlist"
 import { Hologram } from "./components/hologram"
-import { BridgeEvent } from "./schemas/events"
+import { BridgeEventMap } from "./schemas/events"
 import * as schema from "./schemas/responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
+import { ClientResponse } from "./components"
 
 export class BridgeClient {
 	private orchestration: string
 	private isValid: boolean
 	private lkgDisplays: Display[]
 	public playlists: Playlist[] | undefined[]
-	public currentPlaylist: number
+	public currentPlaylistIndex: number
 	private eventsource: BridgeEventSource
 	static instance: BridgeClient
 	static verbosity: 0 | 1 | 2 | 3 = 3
-	private isCasting = false
+	private isCastPending = false
 	private fallback: Fallback
 	public version: number
+	private currentHologram: Hologram | undefined
 
 	constructor() {
 		this.orchestration = ""
@@ -29,7 +31,7 @@ export class BridgeClient {
 		this.eventsource = new BridgeEventSource()
 		this.createOrchestration("")
 		this.playlists = []
-		this.currentPlaylist = 0
+		this.currentPlaylistIndex = 0
 		this.fallback = new Fallback()
 		this.version = 0
 
@@ -120,7 +122,7 @@ export class BridgeClient {
 	 */
 	public async showWindow(
 		showWindow: boolean
-	): Promise<{ success: boolean; response: z.infer<typeof schema.show_window> | null }> {
+	): Promise<{ response: z.infer<typeof schema.show_window> | null } & ClientResponse> {
 		if (this.isValid == false) return { success: false, response: null }
 		console.log("%c function call: showWindow ", "color: magenta; font-weight: bold; border: solid")
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
@@ -178,16 +180,16 @@ export class BridgeClient {
 		const requestBody = {
 			orchestration: this.orchestration,
 		}
-		let response = await sendMessage({
+		let data = await sendMessage({
 			endpoint: "available_output_devices",
 			requestBody: requestBody,
 		})
-		if (response.success == false) {
+		if (data.success == false) {
 			return { success: false, response: null }
 		}
 
-		for (let key in response.response.payload.value) {
-			let display = response.response.payload.value[`${key}`]
+		for (let key in data.response.payload.value) {
+			let display = data.response.payload.value[`${key}`]
 			if (display.value.hwid.value.includes("LKG")) {
 				let lkg = tryParseDisplay(display.value)
 				if (lkg != undefined) {
@@ -226,14 +228,21 @@ export class BridgeClient {
 	public async cast(hologram: Hologram): Promise<{ success: boolean }> {
 		if (this.isValid == false) return { success: false }
 		console.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid")
-		if (this.isCasting == true) {
+		if (hologram == this.currentHologram) {
+			console.warn("already casting this hologram")
+
+			return { success: true }
+		}
+
+		if (this.isCastPending == true) {
 			console.warn("already casting please wait")
 
 			return { success: false }
 		}
-		this.isCasting = true
 
-		let newPlaylistIndex = (this.currentPlaylist + 1) % 2
+		this.isCastPending = true
+
+		let newPlaylistIndex = (this.currentPlaylistIndex + 1) % 2
 		let playlist = this.playlists[newPlaylistIndex]
 
 		// delete the playlist if it already exists
@@ -245,6 +254,7 @@ export class BridgeClient {
 			}
 			// clear the playlist in bridge.js
 			playlist.clearItems()
+			this.playlists[newPlaylistIndex] = undefined
 		}
 
 		playlist = new Playlist({
@@ -255,13 +265,13 @@ export class BridgeClient {
 		})
 
 		playlist.addItem(hologram)
-		await playlist.play({
-			playlist: playlist,
-		})
-		this.currentPlaylist = newPlaylistIndex
+		await playlist.play({ playlist })
+
+		this.currentPlaylistIndex = newPlaylistIndex
 		this.playlists[newPlaylistIndex] = playlist
 
-		this.isCasting = false
+		this.isCastPending = false
+		this.currentHologram = hologram
 		return { success: true }
 	}
 
@@ -278,7 +288,10 @@ export class BridgeClient {
 	 * @param event the event to listen for
 	 * @param MessageHandler the function to call when the event is received
 	 */
-	public addEventListener(event: z.infer<typeof BridgeEvent>, MessageHandler: any) {
+	public addEventListener<T extends keyof BridgeEventMap>(
+		event: T,
+		MessageHandler: (event: BridgeEventMap[T]) => void
+	) {
 		this.eventsource.addMessageHandler({ event: event, MessageHandler: MessageHandler })
 	}
 

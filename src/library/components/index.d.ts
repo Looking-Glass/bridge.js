@@ -46,7 +46,6 @@ export interface BridgeValueMap {
 
 declare module "holoplay-core"
 
-export type success = {
+interface ClientResponse {
 	success: boolean
-	response: any
 }

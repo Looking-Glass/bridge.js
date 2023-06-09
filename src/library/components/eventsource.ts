@@ -61,7 +61,7 @@ export class BridgeEventSource {
 			// console.log(handlers)
 
 			if (handlers) {
-				handlers.forEach((handler: any) => handler(parsedResponse.payload))
+				handlers.forEach((handler: any) => handler(parsedResponse))
 			}
 		}
 	}

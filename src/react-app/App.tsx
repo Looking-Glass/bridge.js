@@ -107,9 +107,9 @@ function App() {
 			<h2>Bridge Events</h2>
 			<button
 				onClick={() => {
-					Bridge.addEventListener("Progress Update", (event: any) => {
+					Bridge.addEventListener("Progress Update", (event) => {
 						if (eventsink.current) {
-							eventsink.current.value = JSON.stringify(event.value.progress.value)
+							eventsink.current.value = JSON.stringify(event.payload.value.progress.value)
 						}
 					})
 				}}>
