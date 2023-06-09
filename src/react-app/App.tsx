@@ -1,18 +1,19 @@
 import { useRef, useState } from "react"
 import { Bridge } from "../library/index"
 import { QuiltHologram, RGBDHologram } from "../library/components/hologram"
-// import {
-// 	MonitorConnectedMessageHandler,
-// 	PlaylistDeleteMessageHandler,
-// 	PlaylistInsertMessageHandler,
-// 	PlaylistInstanceMessageHandler,
-// } from "../library/components/messageHandler"
+import {
+	MonitorConnectedMessageHandler,
+	PlaylistDeleteMessageHandler,
+	PlaylistInsertMessageHandler,
+	PlaylistInstanceMessageHandler,
+} from "../library/components/messageHandler"
+import { BridgeEventMap } from "../library/schemas/events"
 
 Bridge.setVerbosity(3)
-// const monitor = new MonitorConnectedMessageHandler({ client: Bridge })
-// const playlistinsert = new PlaylistInsertMessageHandler({ client: Bridge })
-// const playlistInstance = new PlaylistInstanceMessageHandler({ client: Bridge })
-// const playlistDelete = new PlaylistDeleteMessageHandler({ client: Bridge })
+new MonitorConnectedMessageHandler({ client: Bridge })
+new PlaylistInsertMessageHandler({ client: Bridge })
+new PlaylistInstanceMessageHandler({ client: Bridge })
+new PlaylistDeleteMessageHandler({ client: Bridge })
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -107,13 +108,13 @@ function App() {
 			<h2>Bridge Events</h2>
 			<button
 				onClick={() => {
-					// Bridge.addEventListener("All Events", (event: any) => {
-					// 	if (eventsink.current) {
-					// 		eventsink.current.value += JSON.stringify(event)
-					// 	}
-					// })
+					Bridge.addEventListener("Progress Update", (event: any) => {
+						if (eventsink.current) {
+							eventsink.current.value = JSON.stringify(event.value.progress.value)
+						}
+					})
 				}}>
-				Subscribe to Bridge Events
+				Subscribe to Progress Updates
 			</button>
 			<textarea ref={eventsink}></textarea>
 		</>
