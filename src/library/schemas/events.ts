@@ -178,7 +178,6 @@ const PayloadResponse = <T extends z.ZodType<any, any>>(valueSchema: T) =>
 			type: schema.variant_map,
 			value: valueSchema,
 		}),
-		status: schema.status,
 	})
 
 export const monitorConnectResponse = PayloadResponse(monitorConnected)
