@@ -12,7 +12,7 @@
 
 ### Properties
 
-- [currentPlaylist](client.BridgeClient.md#currentplaylist)
+- [currentPlaylistIndex](client.BridgeClient.md#currentplaylistindex)
 - [playlists](client.BridgeClient.md#playlists)
 - [version](client.BridgeClient.md#version)
 - [instance](client.BridgeClient.md#instance)
@@ -42,9 +42,9 @@
 
 ## Properties
 
-### currentPlaylist
+### currentPlaylistIndex
 
-• **currentPlaylist**: `number`
+• **currentPlaylistIndex**: `number`
 
 ___
 
@@ -74,16 +74,22 @@ ___
 
 ### addEventListener
 
-▸ **addEventListener**(`event`, `MessageHandler`): `void`
+▸ **addEventListener**<`T`\>(`event`, `MessageHandler`): `void`
 
 Adds an event listener that returns a message from Bridge's websocket based event source.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `event` | ``"Monitor Connect"`` \| ``"Monitor Disconnect"`` \| ``"Progress Start"`` \| ``"Progress Completion"`` \| ``"Progress Update"`` \| ``"Playlist Instance"`` \| ``"Playlist Insert"`` \| ``"Playlist Delete"`` \| ``"Sync/Play Playlist"`` \| ``"Sync/Play Playlist Complete"`` \| ``"Sync/Play Playlist Cancelled"`` | the event to listen for |
-| `MessageHandler` | `any` | the function to call when the event is received |
+| `event` | `T` | the event to listen for |
+| `MessageHandler` | (`event`: [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap)[`T`]) => `void` | the function to call when the event is received |
 
 #### Returns
 
@@ -233,7 +239,7 @@ ___
 
 ### showWindow
 
-▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status }  } & [`ClientResponse`](../interfaces/components.ClientResponse.md)\>
 
 changes the state of the Looking Glass Bridge Window
 
@@ -245,7 +251,7 @@ changes the state of the Looking Glass Bridge Window
 
 #### Returns
 
-`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status }  } & [`ClientResponse`](../interfaces/components.ClientResponse.md)\>
 
 ___
 

@@ -76,7 +76,6 @@ ___
 | `message.name` | `string` | `schema.name` |
 | `message.orchestration` | { type: "WSTRING"; value: string; name: string; } | `undefined` |
 | `message.payload` | { type: "VARIANT\_MAP"; value: { message: { type: "WSTRING"; value: string; name: string; }; head\_index: { type: "UNSIGNED\_INT"; value: number; name: string; }; name: { type: "WSTRING"; value: string; name: string; }; ... 8 more ...; y: { ...; }; }; name: string; } | `undefined` |
-| `message.status` | { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } | `schema.status` |
 
 #### Returns
 
