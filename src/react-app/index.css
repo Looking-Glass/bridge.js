@@ -87,8 +87,8 @@ body {
 
 .flex-container {
 	display: flex;
-	gap: 6px;
-	flex-direction: column;
-	justify-content: center; /* align item horizontally */
-	align-items: center; /* align item vertically */
+	gap: 24px;
+	flex-direction: row;
+	justify-content: start; /* align item horizontally */
+	align-items: start; /* align item vertically */
 }

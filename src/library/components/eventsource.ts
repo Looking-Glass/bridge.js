@@ -1,3 +1,5 @@
+import { BridgeEventMap } from "../schemas/events"
+
 function isWebSocketAvailable() {
 	if ("WebSocket" in window) {
 		return true
@@ -7,9 +9,8 @@ function isWebSocketAvailable() {
 	}
 }
 
-interface messageHandlerArgs {
-	event: string
-	MessageHandler: any
+export type MessageHandlerType = {
+	[event in keyof BridgeEventMap]?: ((payload: BridgeEventMap[event]) => void)[]
 }
 
 /**
@@ -20,7 +21,7 @@ interface messageHandlerArgs {
  */
 export class BridgeEventSource {
 	public eventSource: any
-	public MessageHandler: any
+	public MessageHandler: MessageHandlerType
 
 	constructor() {
 		this.eventSource = null
@@ -32,18 +33,36 @@ export class BridgeEventSource {
 	 * @param event the event name to listen for
 	 * @param MessageHandler the function to call when the event is received
 	 */
-	public addMessageHandler({ event, MessageHandler }: messageHandlerArgs) {
-		this.MessageHandler[event] = MessageHandler
+	public addMessageHandler<K extends keyof BridgeEventMap>({
+		event,
+		MessageHandler,
+	}: {
+		event: K
+		MessageHandler: (payload: BridgeEventMap[K]) => void
+	}) {
+		if (!(event in this.MessageHandler)) {
+			this.MessageHandler[event] = []
+		}
+		this.MessageHandler[event]?.push(MessageHandler)
 	}
 
-	/**
-	 * Calls the message handler function for the given event
-	 * @param response the response from Bridge
-	 */
-	private callMessageHandler(response: any) {
-		const bridge_event: string = response.payload.value.event.value
-		if (this.MessageHandler[bridge_event]) {
-			this.MessageHandler[bridge_event](response.payload)
+	private callMessageHandler<K extends keyof BridgeEventMap>(response: string) {
+		let parsedResponse: BridgeEventMap[K]
+		try {
+			parsedResponse = JSON.parse(response)
+		} catch (error) {
+			console.error("Failed to parse JSON", error)
+			return
+		}
+
+		if (parsedResponse.payload.value.event.value in this.MessageHandler) {
+			// console.log(parsedResponse.payload.value.event.value)
+			const handlers = this.MessageHandler[parsedResponse.payload.value.event.value]
+			// console.log(handlers)
+
+			if (handlers) {
+				handlers.forEach((handler: any) => handler(parsedResponse.payload))
+			}
 		}
 	}
 
@@ -62,7 +81,7 @@ export class BridgeEventSource {
 		}
 
 		ws.onmessage = function (evt) {
-			bridgeEventSource.callMessageHandler(JSON.parse(evt.data))
+			bridgeEventSource.callMessageHandler(evt.data)
 		}
 
 		ws.onclose = function () {

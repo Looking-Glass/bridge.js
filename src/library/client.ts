@@ -4,7 +4,7 @@ import { tryEnterOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist } from "./playlists/playlist"
 import { Hologram } from "./components/hologram"
-import { BridgeEvent } from "./components"
+import { BridgeEvent } from "./schemas/events"
 import * as schema from "./schemas/responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
@@ -13,8 +13,8 @@ export class BridgeClient {
 	private orchestration: string
 	private isValid: boolean
 	private lkgDisplays: Display[]
-	private internalPlaylists: Playlist[]
-	private currentPlaylist: number
+	public playlists: Playlist[] | undefined[]
+	public currentPlaylist: number
 	private eventsource: BridgeEventSource
 	static instance: BridgeClient
 	static verbosity: 0 | 1 | 2 | 3 = 3
@@ -28,7 +28,7 @@ export class BridgeClient {
 		this.lkgDisplays = []
 		this.eventsource = new BridgeEventSource()
 		this.createOrchestration("")
-		this.internalPlaylists = []
+		this.playlists = []
 		this.currentPlaylist = 0
 		this.fallback = new Fallback()
 		this.version = 0
@@ -234,7 +234,7 @@ export class BridgeClient {
 		this.isCasting = true
 
 		let newPlaylistIndex = (this.currentPlaylist + 1) % 2
-		let playlist = this.internalPlaylists[newPlaylistIndex]
+		let playlist = this.playlists[newPlaylistIndex]
 
 		// delete the playlist if it already exists
 		if (playlist != undefined) {
@@ -255,11 +255,11 @@ export class BridgeClient {
 		})
 
 		playlist.addItem(hologram)
-		console.log("item", playlist.items[0].toBridge())
 		await playlist.play({
 			playlist: playlist,
 		})
 		this.currentPlaylist = newPlaylistIndex
+		this.playlists[newPlaylistIndex] = playlist
 
 		this.isCasting = false
 		return { success: true }
@@ -278,7 +278,7 @@ export class BridgeClient {
 	 * @param event the event to listen for
 	 * @param MessageHandler the function to call when the event is received
 	 */
-	public addEventListener(event: BridgeEvent, MessageHandler: any) {
+	public addEventListener(event: z.infer<typeof BridgeEvent>, MessageHandler: any) {
 		this.eventsource.addMessageHandler({ event: event, MessageHandler: MessageHandler })
 	}
 

@@ -1,8 +1,18 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Bridge } from "../library/index"
 import { QuiltHologram, RGBDHologram } from "../library/components/hologram"
+// import {
+// 	MonitorConnectedMessageHandler,
+// 	PlaylistDeleteMessageHandler,
+// 	PlaylistInsertMessageHandler,
+// 	PlaylistInstanceMessageHandler,
+// } from "../library/components/messageHandler"
 
 Bridge.setVerbosity(3)
+// const monitor = new MonitorConnectedMessageHandler({ client: Bridge })
+// const playlistinsert = new PlaylistInsertMessageHandler({ client: Bridge })
+// const playlistInstance = new PlaylistInstanceMessageHandler({ client: Bridge })
+// const playlistDelete = new PlaylistDeleteMessageHandler({ client: Bridge })
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -27,50 +37,85 @@ const rgbd = new RGBDHologram({
 
 function App() {
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
+	const [bridgeResponse, setResponse] = useState<string | null>(null)
+	const [playlist, setPlaylist] = useState<string>()
+	const eventsink = useRef<HTMLTextAreaElement>(null)
+
 	return (
 		<>
 			<h1>Looking Glass Bridge API Library</h1>
-			<h2>Methods</h2>
+			<div className="flex-container">
+				<div>
+					<h2>Methods</h2>
+					<button
+						onClick={async () => {
+							let call = await Bridge.displays()
+							setResponse(JSON.stringify(call.response))
+						}}>
+						Get currently connected Looking Glass
+					</button>
+					<button
+						onClick={async () => {
+							let call = await Bridge.getVersion()
+							setResponse(`Looking Glass Bridge Version: ${JSON.stringify(call.response)}`)
+						}}>
+						Get Bridge version
+					</button>
+					<button
+						onClick={async () => {
+							let call = await Bridge.apiVersion()
+							setResponse(`Looking Glass Bridge API Version: ${JSON.stringify(call.response)}`)
+						}}>
+						Get API version
+					</button>
+					<button
+						onClick={async () => {
+							setResponse("Casting Hologram")
+							let call = await Bridge.cast(quilt)
+							setResponse(JSON.stringify(call))
+							setPlaylist(JSON.stringify(Bridge.playlists))
+						}}>
+						Cast Quilt hologram
+					</button>
+					<button
+						onClick={async () => {
+							setResponse("Casting Hologram")
+							let call = await Bridge.cast(rgbd)
+
+							setResponse(JSON.stringify(call))
+							setPlaylist(JSON.stringify(Bridge.playlists))
+						}}>
+						Cast RGBD hologram
+					</button>
+					<button
+						onClick={async () => {
+							setIsWindowVisible(!isWindowVisible)
+							let call = await Bridge.showWindow(isWindowVisible)
+							setResponse(JSON.stringify(call.response))
+						}}>
+						Toggle Window
+					</button>
+				</div>
+				<div>
+					<h2>Properties</h2>
+					<h3>Playlists</h3>
+					<p>{playlist}</p>
+				</div>
+			</div>
+			<h2>Response</h2>
+			<p>{bridgeResponse}</p>
+			<h2>Bridge Events</h2>
 			<button
-				onClick={async () => {
-					console.log(await Bridge.displays())
+				onClick={() => {
+					// Bridge.addEventListener("All Events", (event: any) => {
+					// 	if (eventsink.current) {
+					// 		eventsink.current.value += JSON.stringify(event)
+					// 	}
+					// })
 				}}>
-				Get currently connected Looking Glass
+				Subscribe to Bridge Events
 			</button>
-			<button
-				onClick={async () => {
-					console.log(await Bridge.getVersion())
-				}}>
-				Get Bridge version
-			</button>
-			<button
-				onClick={async () => {
-					console.log(await Bridge.apiVersion())
-				}}>
-				Get API version
-			</button>
-			<button
-				onClick={async () => {
-					let cast = await Bridge.cast(quilt)
-					console.log(cast)
-				}}>
-				Cast Quilt hologram
-			</button>
-			<button
-				onClick={async () => {
-					let cast = await Bridge.cast(rgbd)
-					console.log(cast)
-				}}>
-				Cast RGBD hologram
-			</button>
-			<button
-				onClick={async () => {
-					setIsWindowVisible(!isWindowVisible)
-					let showWindow = await Bridge.showWindow(isWindowVisible)
-					console.log(showWindow)
-				}}>
-				Toggle Window
-			</button>
+			<textarea ref={eventsink}></textarea>
 		</>
 	)
 }

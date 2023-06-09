@@ -28,7 +28,7 @@ export type BridgeEndpointType =
 	| "play_playlist"
 	| "show_window"
 
-type BridgeEndpointSchemaMap = {
+export type BridgeEndpointSchemaMap = {
 	// instance_studio_playlist: z.infer<typeof BridgeResponse.instance_studio_playlist>
 	bridge_version: z.infer<typeof BridgeResponse.version>
 	api_version: z.infer<typeof BridgeResponse.version>
@@ -54,7 +54,7 @@ type BridgeEndpointSchemaMap = {
 	show_window: z.infer<typeof BridgeResponse.show_window>
 }
 
-type BridgeRequestBodyMap = {
+export type BridgeRequestBodyMap = {
 	// instance_studio_playlist: z.infer<typeof BridgeRequest.instance_studio_playlist>
 	bridge_version: z.infer<typeof BridgeRequest.version>
 	api_version: z.infer<typeof BridgeRequest.version>
@@ -80,10 +80,10 @@ type BridgeRequestBodyMap = {
 	show_window: z.infer<typeof BridgeRequest.show_window>
 }
 
-type SuccessResponse<T> = { success: true; response: T }
-type ErrorResponse = { success: false; response: null }
+export type SuccessResponse<T> = { success: true; response: T }
+export type ErrorResponse = { success: false; response: null }
 
-type Response<T> = SuccessResponse<T> | ErrorResponse
+export type Response<T> = SuccessResponse<T> | ErrorResponse
 
 /**
  *

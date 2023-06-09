@@ -44,19 +44,6 @@ export interface BridgeValueMap {
 	[key: string]: BridgeValue
 }
 
-export type BridgeEvent =
-	| "Monitor Connect"
-	| "Monitor Disconnect"
-	| "Progress Start"
-	| "Progress Completion"
-	| "Progress Update"
-	| "Playlist Instance"
-	| "Playlist Insert"
-	| "Playlist Delete"
-	| "Sync/Play Playlist"
-	| "Sync/Play Playlist Complete"
-	| "Sync/Play Playlist Cancelled"
-
 declare module "holoplay-core"
 
 export type success = {
