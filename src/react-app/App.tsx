@@ -7,7 +7,6 @@ import {
 	PlaylistInsertMessageHandler,
 	PlaylistInstanceMessageHandler,
 } from "../library/components/messageHandler"
-import { BridgeEventMap } from "../library/schemas/events"
 
 Bridge.setVerbosity(3)
 new MonitorConnectedMessageHandler({ client: Bridge })
