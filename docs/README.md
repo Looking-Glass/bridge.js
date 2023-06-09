@@ -4,55 +4,21 @@
 
 ## Table of contents
 
-### Classes
+### Modules
 
-- [BridgeClient](classes/BridgeClient.md)
-- [Playlist](classes/Playlist.md)
-- [PlaylistItemQuilt](classes/PlaylistItemQuilt.md)
-- [PlaylistItemRGBD](classes/PlaylistItemRGBD.md)
-
-### Interfaces
-
-- [PlaylistArgs](interfaces/PlaylistArgs.md)
-- [PlaylistItemArgs](interfaces/PlaylistItemArgs.md)
-- [PlaylistType](interfaces/PlaylistType.md)
-- [getPlayPlaylistJsonArgs](interfaces/getPlayPlaylistJsonArgs.md)
-
-### Type Aliases
-
-- [PlaylistItemType](README.md#playlistitemtype)
-
-### Variables
-
-- [Bridge](README.md#bridge)
-
-## Type Aliases
-
-### PlaylistItemType
-
-Ƭ **PlaylistItemType**: [`PlaylistItemQuilt`](classes/PlaylistItemQuilt.md) \| [`PlaylistItemRGBD`](classes/PlaylistItemRGBD.md)
-
-## Variables
-
-### Bridge
-
-• `Const` **Bridge**: [`BridgeClient`](classes/BridgeClient.md)
-
-The singleton instance of the `BridgeClient` class.
-
-**`See`**
-
-[BridgeClient](classes/BridgeClient.md)
-
-It exposes the following methods:
- - [displays](classes/BridgeClient.md#displays)
- - [cast](classes/BridgeClient.md#cast)
- - [addEventListener](classes/BridgeClient.md#addeventlistener)
- - [initializeEventSource](classes/BridgeClient.md#initializeeventsource)
- - [getVerbosity](classes/BridgeClient.md#getverbosity)
- - [setVerbosity](classes/BridgeClient.md#setverbosity)
- - Bridge.isVersionCompatible
- - Bridge.isValid
- - [version](classes/BridgeClient.md#version)
- - Bridge.orchestration
- - Bridge.lkgDisplays
+- [client](modules/client.md)
+- [components](modules/components.md)
+- [components/displays](modules/components_displays.md)
+- [components/endpoints](modules/components_endpoints.md)
+- [components/eventsource](modules/components_eventsource.md)
+- [components/fallback](modules/components_fallback.md)
+- [components/hologram](modules/components_hologram.md)
+- [components/messageHandler](modules/components_messageHandler.md)
+- [components/orchestration](modules/components_orchestration.md)
+- [index](modules/index.md)
+- [playlists/playlist](modules/playlists_playlist.md)
+- [playlists/playlistItems](modules/playlists_playlistItems.md)
+- [schemas/events](modules/schemas_events.md)
+- [schemas/requests](modules/schemas_requests.md)
+- [schemas/responses](modules/schemas_responses.md)
+- [schemas/schema](modules/schemas_schema.md)

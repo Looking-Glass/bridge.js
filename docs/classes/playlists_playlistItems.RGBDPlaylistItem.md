@@ -1,43 +1,45 @@
-[@lookingglass/bridge.js](../README.md) / PlaylistItemQuilt
+[@lookingglass/bridge.js](../README.md) / [playlists/playlistItems](../modules/playlists_playlistItems.md) / RGBDPlaylistItem
 
-# Class: PlaylistItemQuilt
+# Class: RGBDPlaylistItem
+
+[playlists/playlistItems](../modules/playlists_playlistItems.md).RGBDPlaylistItem
 
 ## Hierarchy
 
 - `PlaylistItem`
 
-  ↳ **`PlaylistItemQuilt`**
+  ↳ **`RGBDPlaylistItem`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](PlaylistItemQuilt.md#constructor)
+- [constructor](playlists_playlistItems.RGBDPlaylistItem.md#constructor)
 
 ### Properties
 
-- [hologram](PlaylistItemQuilt.md#hologram)
-- [id](PlaylistItemQuilt.md#id)
-- [index](PlaylistItemQuilt.md#index)
-- [orchestration](PlaylistItemQuilt.md#orchestration)
-- [playlistName](PlaylistItemQuilt.md#playlistname)
+- [hologram](playlists_playlistItems.RGBDPlaylistItem.md#hologram)
+- [id](playlists_playlistItems.RGBDPlaylistItem.md#id)
+- [index](playlists_playlistItems.RGBDPlaylistItem.md#index)
+- [orchestration](playlists_playlistItems.RGBDPlaylistItem.md#orchestration)
+- [playlistName](playlists_playlistItems.RGBDPlaylistItem.md#playlistname)
 
 ### Methods
 
-- [toBridge](PlaylistItemQuilt.md#tobridge)
+- [toBridge](playlists_playlistItems.RGBDPlaylistItem.md#tobridge)
 
 ## Constructors
 
 ### constructor
 
-• **new PlaylistItemQuilt**(`args`)
+• **new RGBDPlaylistItem**(`args`)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `args` | `Object` |
-| `args.hologram` | `QuiltHologram` |
+| `args.hologram` | [`RGBDHologram`](components_hologram.RGBDHologram.md) |
 | `args.id` | `number` |
 | `args.index` | `number` |
 | `args.orchestration` | `string` |
@@ -51,7 +53,7 @@ PlaylistItem.constructor
 
 ### hologram
 
-• **hologram**: `Hologram`
+• **hologram**: [`Hologram`](../modules/components_hologram.md#hologram)
 
 #### Inherited from
 

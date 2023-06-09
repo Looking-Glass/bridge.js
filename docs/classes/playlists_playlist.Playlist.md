@@ -1,6 +1,8 @@
-[@lookingglass/bridge.js](../README.md) / Playlist
+[@lookingglass/bridge.js](../README.md) / [playlists/playlist](../modules/playlists_playlist.md) / Playlist
 
 # Class: Playlist
+
+[playlists/playlist](../modules/playlists_playlist.md).Playlist
 
 Playlist class
 
@@ -8,24 +10,24 @@ Playlist class
 
 ### Constructors
 
-- [constructor](Playlist.md#constructor)
+- [constructor](playlists_playlist.Playlist.md#constructor)
 
 ### Properties
 
-- [items](Playlist.md#items)
-- [loop](Playlist.md#loop)
-- [name](Playlist.md#name)
-- [orchestration](Playlist.md#orchestration)
+- [items](playlists_playlist.Playlist.md#items)
+- [loop](playlists_playlist.Playlist.md#loop)
+- [name](playlists_playlist.Playlist.md#name)
+- [orchestration](playlists_playlist.Playlist.md#orchestration)
 
 ### Methods
 
-- [addItem](Playlist.md#additem)
-- [clearItems](Playlist.md#clearitems)
-- [getCurrent](Playlist.md#getcurrent)
-- [getInstance](Playlist.md#getinstance)
-- [play](Playlist.md#play)
-- [removeItem](Playlist.md#removeitem)
-- [setName](Playlist.md#setname)
+- [addItem](playlists_playlist.Playlist.md#additem)
+- [clearItems](playlists_playlist.Playlist.md#clearitems)
+- [getCurrent](playlists_playlist.Playlist.md#getcurrent)
+- [getInstance](playlists_playlist.Playlist.md#getinstance)
+- [play](playlists_playlist.Playlist.md#play)
+- [removeItem](playlists_playlist.Playlist.md#removeitem)
+- [setName](playlists_playlist.Playlist.md#setname)
 
 ## Constructors
 
@@ -38,7 +40,7 @@ Playlist class
 | Name | Type |
 | :------ | :------ |
 | `args` | `Object` |
-| `args.items` | [`PlaylistItemType`](../README.md#playlistitemtype)[] |
+| `args.items` | [`PlaylistItemType`](../modules/playlists_playlist.md#playlistitemtype)[] |
 | `args.loop` | `boolean` |
 | `args.name` | `string` |
 | `args.orchestration` | `string` |
@@ -47,7 +49,7 @@ Playlist class
 
 ### items
 
-• **items**: [`PlaylistItemType`](../README.md#playlistitemtype)[]
+• **items**: [`PlaylistItemType`](../modules/playlists_playlist.md#playlistitemtype)[]
 
 ___
 
@@ -77,7 +79,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `hologram` | `Hologram` |
+| `hologram` | [`Hologram`](../modules/components_hologram.md#hologram) |
 
 #### Returns
 
@@ -105,7 +107,7 @@ gets the object for the current playlist that is currently being played
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | [`getPlayPlaylistJsonArgs`](../interfaces/getPlayPlaylistJsonArgs.md) |
+| `«destructured»` | [`getPlayPlaylistJsonArgs`](../interfaces/playlists_playlist.getPlayPlaylistJsonArgs.md) |
 
 #### Returns
 
@@ -154,7 +156,7 @@ the playlist must be created and populated with content before calling this func
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | [`PlaylistArgs`](../interfaces/PlaylistArgs.md) |
+| `«destructured»` | [`PlaylistArgs`](../interfaces/playlists_playlist.PlaylistArgs.md) |
 
 #### Returns
 
@@ -170,7 +172,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `item` | [`PlaylistItemType`](../README.md#playlistitemtype) |
+| `item` | [`PlaylistItemType`](../modules/playlists_playlist.md#playlistitemtype) |
 
 #### Returns
 
