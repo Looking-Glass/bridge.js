@@ -107,6 +107,9 @@ export async function sendMessage<
 	let parsedResponse: BridgeEndpointSchemaMap[T]
 	if (Bridge.getVerbosity() != 0) console.group("Endpoint:", params.endpoint)
 
+	// TEMPORARY: delay to give bridge a chance to handle events
+	await new Promise((resolve) => setTimeout(resolve, 10))
+
 	if (params.baseUrl == undefined) {
 		params.baseUrl = "http://localhost:33334/"
 	}
