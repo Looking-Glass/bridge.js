@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components](../modules/components.md) / BridgeValueMap
+[@lookingglass/bridge](../README.md) / [components](../modules/components.md) / BridgeValueMap
 
 # Interface: BridgeValueMap
 

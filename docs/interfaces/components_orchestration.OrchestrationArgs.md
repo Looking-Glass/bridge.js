@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/orchestration](../modules/components_orchestration.md) / OrchestrationArgs
+[@lookingglass/bridge](../README.md) / [components/orchestration](../modules/components_orchestration.md) / OrchestrationArgs
 
 # Interface: OrchestrationArgs
 

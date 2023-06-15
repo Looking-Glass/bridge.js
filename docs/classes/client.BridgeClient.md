@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [client](../modules/client.md) / BridgeClient
+[@lookingglass/bridge](../README.md) / [client](../modules/client.md) / BridgeClient
 
 # Class: BridgeClient
 
@@ -15,6 +15,8 @@
 - [currentPlaylistIndex](client.BridgeClient.md#currentplaylistindex)
 - [playlists](client.BridgeClient.md#playlists)
 - [version](client.BridgeClient.md#version)
+- [eventsource](client.BridgeClient.md#eventsource)
+- [fallback](client.BridgeClient.md#fallback)
 - [instance](client.BridgeClient.md#instance)
 - [verbosity](client.BridgeClient.md#verbosity)
 
@@ -23,12 +25,14 @@
 - [addEventListener](client.BridgeClient.md#addeventlistener)
 - [apiVersion](client.BridgeClient.md#apiversion)
 - [cast](client.BridgeClient.md#cast)
+- [connect](client.BridgeClient.md#connect)
 - [createOrchestration](client.BridgeClient.md#createorchestration)
 - [deletePlaylist](client.BridgeClient.md#deleteplaylist)
+- [disconnect](client.BridgeClient.md#disconnect)
 - [displays](client.BridgeClient.md#displays)
 - [getVerbosity](client.BridgeClient.md#getverbosity)
 - [getVersion](client.BridgeClient.md#getversion)
-- [initializeEventSource](client.BridgeClient.md#initializeeventsource)
+- [removeEventListener](client.BridgeClient.md#removeeventlistener)
 - [setVerbosity](client.BridgeClient.md#setverbosity)
 - [showWindow](client.BridgeClient.md#showwindow)
 - [status](client.BridgeClient.md#status)
@@ -46,11 +50,15 @@
 
 • **currentPlaylistIndex**: `number`
 
+The index of playlists that is currently active
+
 ___
 
 ### playlists
 
 • **playlists**: `undefined`[] \| [`Playlist`](playlists_playlist.Playlist.md)[]
+
+an Array containing Playlists, we store this to easily switch between multiple playlists
 
 ___
 
@@ -58,11 +66,29 @@ ___
 
 • **version**: `number`
 
+the version of the Looking Glass Driver that's running
+
+___
+
+### eventsource
+
+▪ `Static` **eventsource**: [`BridgeEventSource`](components_eventsource.BridgeEventSource.md)
+
+The websocket connection to Bridge's Event Source, this returns information from Bridge
+
+___
+
+### fallback
+
+▪ `Static` **fallback**: [`Fallback`](components_fallback.Fallback.md)
+
 ___
 
 ### instance
 
 ▪ `Static` **instance**: [`BridgeClient`](client.BridgeClient.md)
+
+the instance of the client that we create, BridgeClient is a singleton, there can only be one
 
 ___
 
@@ -70,11 +96,13 @@ ___
 
 ▪ `Static` **verbosity**: ``0`` \| ``2`` \| ``1`` \| ``3`` = `3`
 
+control how often we log to the console, 3 is everything, 0 is nothing
+
 ## Methods
 
 ### addEventListener
 
-▸ **addEventListener**<`T`\>(`event`, `MessageHandler`): `void`
+▸ **addEventListener**<`T`\>(`event`, `MessageHandler`): `Promise`<`void`\>
 
 Adds an event listener that returns a message from Bridge's websocket based event source.
 
@@ -93,7 +121,7 @@ Adds an event listener that returns a message from Bridge's websocket based even
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ___
 
@@ -121,11 +149,23 @@ This function will allow you to cast a single hologram to the Looking Glass
 
 | Name | Type |
 | :------ | :------ |
-| `hologram` | [`Hologram`](../modules/components_hologram.md#hologram) |
+| `hologram` | [`HologramType`](../modules/components_hologram.md#hologramtype) |
 
 #### Returns
 
 `Promise`<{ `success`: `boolean`  }\>
+
+___
+
+### connect
+
+▸ **connect**(): `Promise`<{ `response`: { `orchestration`: `string` ; `version`: `number`  } ; `success`: `boolean`  }\>
+
+Attempt to connect to Looking Glass Bridge.
+
+#### Returns
+
+`Promise`<{ `response`: { `orchestration`: `string` ; `version`: `number`  } ; `success`: `boolean`  }\>
 
 ___
 
@@ -162,6 +202,18 @@ ___
 #### Returns
 
 `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `payload`: { type: "VARIANT\_MAP"; value: { name: { type: "WSTRING"; value: string; name: string; }; }; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+___
+
+### disconnect
+
+▸ **disconnect**(): `Promise`<{ `success`: `boolean`  }\>
+
+Disconnect from Looking Glass Bridge, free up resources.
+
+#### Returns
+
+`Promise`<{ `success`: `boolean`  }\>
 
 ___
 
@@ -204,18 +256,26 @@ string of the version of Looking Glass Bridge that is running
 
 ___
 
-### initializeEventSource
+### removeEventListener
 
-▸ **initializeEventSource**(): `void`
+▸ **removeEventListener**<`T`\>(`event`, `MessageHandler`): `Promise`<`void`\>
 
-Connect to Looking Glass Bridge's EventSource.
-The event source is a websocket connection that will send events from Bridge to the client.
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `event` | `T` |
+| `MessageHandler` | (`event`: [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap)[`T`]) => `void` |
 
 #### Returns
 
-`void`
-
-the bridge event source
+`Promise`<`void`\>
 
 ___
 
@@ -239,7 +299,7 @@ ___
 
 ### showWindow
 
-▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status }  } & [`ClientResponse`](../interfaces/components.ClientResponse.md)\>
+▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 changes the state of the Looking Glass Bridge Window
 
@@ -251,7 +311,7 @@ changes the state of the Looking Glass Bridge Window
 
 #### Returns
 
-`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status }  } & [`ClientResponse`](../interfaces/components.ClientResponse.md)\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 

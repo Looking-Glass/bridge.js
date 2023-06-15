@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / components/orchestration
+[@lookingglass/bridge](../README.md) / components/orchestration
 
 # Module: components/orchestration
 
@@ -17,7 +17,7 @@
 
 ### tryEnterOrchestration
 
-▸ **tryEnterOrchestration**(`name`): `Promise`<`string` \| ``false``\>
+▸ **tryEnterOrchestration**(`name`): `Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
 
 this function will attempt to enter an orchestration
 
@@ -29,13 +29,13 @@ this function will attempt to enter an orchestration
 
 #### Returns
 
-`Promise`<`string` \| ``false``\>
+`Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
 
 ___
 
 ### tryExitOrchestration
 
-▸ **tryExitOrchestration**(`orchestration`): `Promise`<``false`` \| [`SuccessResponse`](components_endpoints.md#successresponse)<{ `name`: `string` = schema.name; `payload`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status }\>\>
+▸ **tryExitOrchestration**(`orchestration`): `Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
 
 #### Parameters
 
@@ -45,4 +45,4 @@ ___
 
 #### Returns
 
-`Promise`<``false`` \| [`SuccessResponse`](components_endpoints.md#successresponse)<{ `name`: `string` = schema.name; `payload`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status }\>\>
+`Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>

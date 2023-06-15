@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / schemas/responses
+[@lookingglass/bridge](../README.md) / schemas/responses
 
 # Module: schemas/responses
 

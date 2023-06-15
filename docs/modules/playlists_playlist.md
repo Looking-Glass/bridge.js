@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / playlists/playlist
+[@lookingglass/bridge](../README.md) / playlists/playlist
 
 # Module: playlists/playlist
 

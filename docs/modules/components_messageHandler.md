@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / components/messageHandler
+[@lookingglass/bridge](../README.md) / components/messageHandler
 
 # Module: components/messageHandler
 

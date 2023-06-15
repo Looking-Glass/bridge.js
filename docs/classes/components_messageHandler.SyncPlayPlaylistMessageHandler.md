@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/messageHandler](../modules/components_messageHandler.md) / SyncPlayPlaylistMessageHandler
+[@lookingglass/bridge](../README.md) / [components/messageHandler](../modules/components_messageHandler.md) / SyncPlayPlaylistMessageHandler
 
 # Class: SyncPlayPlaylistMessageHandler
 
@@ -76,6 +76,7 @@ ___
 | `message.name` | `string` | `schema.name` |
 | `message.orchestration` | { type: "WSTRING"; value: string; name: string; } | `undefined` |
 | `message.payload` | { type: "VARIANT\_MAP"; value: { message: { type: "WSTRING"; value: string; name: string; }; event: { type: "WSTRING"; value: "Monitor Connect" \| "Monitor Disconnect" \| "Progress Start" \| "Progress Completion" \| ... 6 more ... \| "Sync/Play Playlist Cancelled"; name: string; }; progress: { ...; }; progress\_type: { ...... | `undefined` |
+| `message.status` | { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } | `schema.status` |
 
 #### Returns
 

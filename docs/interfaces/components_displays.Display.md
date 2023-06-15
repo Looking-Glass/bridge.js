@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/displays](../modules/components_displays.md) / Display
+[@lookingglass/bridge](../README.md) / [components/displays](../modules/components_displays.md) / Display
 
 # Interface: Display
 

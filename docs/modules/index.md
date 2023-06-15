@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / index
+[@lookingglass/bridge](../README.md) / index
 
 # Module: index
 
@@ -6,8 +6,8 @@
 
 ### References
 
-- [Bridge](index.md#bridge)
 - [BridgeClient](index.md#bridgeclient)
+- [HologramType](index.md#hologramtype)
 - [MessageHandler](index.md#messagehandler)
 - [MonitorConnectedMessageHandler](index.md#monitorconnectedmessagehandler)
 - [MonitorDisconnectedMessageHandler](index.md#monitordisconnectedmessagehandler)
@@ -22,7 +22,11 @@
 - [ProgressCompletionMessageHandler](index.md#progresscompletionmessagehandler)
 - [ProgressStartMessageHandler](index.md#progressstartmessagehandler)
 - [ProgressUpdateMessageHandler](index.md#progressupdatemessagehandler)
+- [QuiltHologram](index.md#quilthologram)
+- [QuiltHologramArgs](index.md#quilthologramargs)
 - [QuiltPlaylistItem](index.md#quiltplaylistitem)
+- [RGBDHologram](index.md#rgbdhologram)
+- [RGBDHologramArgs](index.md#rgbdhologramargs)
 - [RGBDPlaylistItem](index.md#rgbdplaylistitem)
 - [SyncPlayPlaylistCancelledMessageHandler](index.md#syncplayplaylistcancelledmessagehandler)
 - [SyncPlayPlaylistCompleteMessageHandler](index.md#syncplayplaylistcompletemessagehandler)
@@ -31,15 +35,15 @@
 
 ## References
 
-### Bridge
-
-Re-exports [Bridge](client.md#bridge)
-
-___
-
 ### BridgeClient
 
 Re-exports [BridgeClient](../classes/client.BridgeClient.md)
+
+___
+
+### HologramType
+
+Re-exports [HologramType](components_hologram.md#hologramtype)
 
 ___
 
@@ -127,9 +131,33 @@ Re-exports [ProgressUpdateMessageHandler](../classes/components_messageHandler.P
 
 ___
 
+### QuiltHologram
+
+Re-exports [QuiltHologram](../classes/components_hologram.QuiltHologram.md)
+
+___
+
+### QuiltHologramArgs
+
+Re-exports [QuiltHologramArgs](components_hologram.md#quilthologramargs)
+
+___
+
 ### QuiltPlaylistItem
 
 Re-exports [QuiltPlaylistItem](../classes/playlists_playlistItems.QuiltPlaylistItem.md)
+
+___
+
+### RGBDHologram
+
+Re-exports [RGBDHologram](../classes/components_hologram.RGBDHologram.md)
+
+___
+
+### RGBDHologramArgs
+
+Re-exports [RGBDHologramArgs](components_hologram.md#rgbdhologramargs)
 
 ___
 

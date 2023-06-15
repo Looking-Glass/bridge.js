@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [playlists/playlist](../modules/playlists_playlist.md) / Playlist
+[@lookingglass/bridge](../README.md) / [playlists/playlist](../modules/playlists_playlist.md) / Playlist
 
 # Class: Playlist
 
@@ -79,7 +79,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `hologram` | [`Hologram`](../modules/components_hologram.md#hologram) |
+| `hologram` | [`HologramType`](../modules/components_hologram.md#hologramtype) |
 
 #### Returns
 

@@ -1,6 +1,6 @@
-@lookingglass/bridge.js
+@lookingglass/bridge
 
-# @lookingglass/bridge.js
+# @lookingglass/bridge
 
 ## Table of contents
 

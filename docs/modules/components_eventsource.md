@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / components/eventsource
+[@lookingglass/bridge](../README.md) / components/eventsource
 
 # Module: components/eventsource
 

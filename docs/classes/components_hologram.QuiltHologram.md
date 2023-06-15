@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/hologram](../modules/components_hologram.md) / QuiltHologram
+[@lookingglass/bridge](../README.md) / [components/hologram](../modules/components_hologram.md) / QuiltHologram
 
 # Class: QuiltHologram
 

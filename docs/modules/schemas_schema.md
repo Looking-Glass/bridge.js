@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / schemas/schema
+[@lookingglass/bridge](../README.md) / schemas/schema
 
 # Module: schemas/schema
 

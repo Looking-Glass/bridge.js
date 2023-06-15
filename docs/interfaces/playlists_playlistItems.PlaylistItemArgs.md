@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [playlists/playlistItems](../modules/playlists_playlistItems.md) / PlaylistItemArgs
+[@lookingglass/bridge](../README.md) / [playlists/playlistItems](../modules/playlists_playlistItems.md) / PlaylistItemArgs
 
 # Interface: PlaylistItemArgs
 

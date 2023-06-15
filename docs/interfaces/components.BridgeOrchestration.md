@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components](../modules/components.md) / BridgeOrchestration
+[@lookingglass/bridge](../README.md) / [components](../modules/components.md) / BridgeOrchestration
 
 # Interface: BridgeOrchestration
 

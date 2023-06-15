@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / components
+[@lookingglass/bridge](../README.md) / components
 
 # Module: components
 

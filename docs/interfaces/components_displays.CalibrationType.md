@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/displays](../modules/components_displays.md) / CalibrationType
+[@lookingglass/bridge](../README.md) / [components/displays](../modules/components_displays.md) / CalibrationType
 
 # Interface: CalibrationType
 

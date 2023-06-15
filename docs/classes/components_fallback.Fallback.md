@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/fallback](../modules/components_fallback.md) / Fallback
+[@lookingglass/bridge](../README.md) / [components/fallback](../modules/components_fallback.md) / Fallback
 
 # Class: Fallback
 
@@ -13,9 +13,15 @@ This class uses HoloPlay Core to see if the older API endpoint used in HoloPlay 
 
 - [constructor](components_fallback.Fallback.md#constructor)
 
+### Properties
+
+- [versionPromise](components_fallback.Fallback.md#versionpromise)
+- [ws](components_fallback.Fallback.md#ws)
+
 ### Methods
 
 - [errorCallback](components_fallback.Fallback.md#errorcallback)
+- [getLegacyVersion](components_fallback.Fallback.md#getlegacyversion)
 - [messageCallback](components_fallback.Fallback.md#messagecallback)
 
 ## Constructors
@@ -23,6 +29,18 @@ This class uses HoloPlay Core to see if the older API endpoint used in HoloPlay 
 ### constructor
 
 • **new Fallback**()
+
+## Properties
+
+### versionPromise
+
+• **versionPromise**: `Promise`<`number`\>
+
+___
+
+### ws
+
+• **ws**: `WebSocket`
 
 ## Methods
 
@@ -36,10 +54,26 @@ This class uses HoloPlay Core to see if the older API endpoint used in HoloPlay 
 
 ___
 
-### messageCallback
+### getLegacyVersion
 
-▸ **messageCallback**(): `Promise`<`number`\>
+▸ **getLegacyVersion**(): `Promise`<`number`\>
 
 #### Returns
 
 `Promise`<`number`\>
+
+___
+
+### messageCallback
+
+▸ **messageCallback**(`message`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `message` | `any` |
+
+#### Returns
+
+`Promise`<`void`\>

@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [playlists/playlistItems](../modules/playlists_playlistItems.md) / QuiltPlaylistItem
+[@lookingglass/bridge](../README.md) / [playlists/playlistItems](../modules/playlists_playlistItems.md) / QuiltPlaylistItem
 
 # Class: QuiltPlaylistItem
 
@@ -53,7 +53,7 @@ PlaylistItem.constructor
 
 ### hologram
 
-• **hologram**: [`Hologram`](../modules/components_hologram.md#hologram)
+• **hologram**: [`HologramType`](../modules/components_hologram.md#hologramtype)
 
 #### Inherited from
 

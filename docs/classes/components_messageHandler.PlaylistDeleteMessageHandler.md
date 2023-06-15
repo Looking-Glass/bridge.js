@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/messageHandler](../modules/components_messageHandler.md) / PlaylistDeleteMessageHandler
+[@lookingglass/bridge](../README.md) / [components/messageHandler](../modules/components_messageHandler.md) / PlaylistDeleteMessageHandler
 
 # Class: PlaylistDeleteMessageHandler
 
@@ -76,6 +76,7 @@ ___
 | `message.name` | `string` | `schema.name` |
 | `message.orchestration` | { type: "WSTRING"; value: string; name: string; } | `undefined` |
 | `message.payload` | { type: "VARIANT\_MAP"; value: { message: { type: "WSTRING"; value: string; name: string; }; name: { type: "WSTRING"; value: string; name: string; }; event: { type: "WSTRING"; value: "Monitor Connect" \| "Monitor Disconnect" \| ... 8 more ... \| "Sync/Play Playlist Cancelled"; name: string; }; }; name: string; } | `undefined` |
+| `message.status` | { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } | `schema.status` |
 
 #### Returns
 

@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/hologram](../modules/components_hologram.md) / RGBDHologram
+[@lookingglass/bridge](../README.md) / [components/hologram](../modules/components_hologram.md) / RGBDHologram
 
 # Class: RGBDHologram
 
@@ -30,14 +30,11 @@
 | `args.settings` | `Object` |
 | `args.settings.aspect` | `number` |
 | `args.settings.chroma_depth` | ``0`` \| ``1`` |
-| `args.settings.columns` | `number` |
-| `args.settings.depth_cutoff?` | ``1`` |
+| `args.settings.depth_cutoff?` | ``0`` \| ``1`` |
 | `args.settings.depth_inversion` | ``0`` \| ``1`` |
 | `args.settings.depth_loc` | ``0`` \| ``2`` \| ``1`` \| ``3`` |
 | `args.settings.depthiness` | `number` |
 | `args.settings.focus?` | `number` |
-| `args.settings.rows` | `number` |
-| `args.settings.viewCount` | `number` |
 | `args.settings.zoom?` | `number` |
 | `args.uri` | `string` |
 
@@ -53,14 +50,11 @@
 | :------ | :------ |
 | `aspect` | `number` |
 | `chroma_depth` | ``0`` \| ``1`` |
-| `columns` | `number` |
-| `depth_cutoff?` | ``1`` |
+| `depth_cutoff?` | ``0`` \| ``1`` |
 | `depth_inversion` | ``0`` \| ``1`` |
 | `depth_loc` | ``0`` \| ``2`` \| ``1`` \| ``3`` |
 | `depthiness` | `number` |
 | `focus?` | `number` |
-| `rows` | `number` |
-| `viewCount` | `number` |
 | `zoom?` | `number` |
 
 ___

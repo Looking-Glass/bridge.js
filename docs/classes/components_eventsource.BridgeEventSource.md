@@ -1,4 +1,4 @@
-[@lookingglass/bridge.js](../README.md) / [components/eventsource](../modules/components_eventsource.md) / BridgeEventSource
+[@lookingglass/bridge](../README.md) / [components/eventsource](../modules/components_eventsource.md) / BridgeEventSource
 
 # Class: BridgeEventSource
 
@@ -19,11 +19,15 @@ the websocket connection will send events from Bridge to the client.
 
 - [MessageHandler](components_eventsource.BridgeEventSource.md#messagehandler)
 - [eventSource](components_eventsource.BridgeEventSource.md#eventsource)
+- [ws](components_eventsource.BridgeEventSource.md#ws)
 
 ### Methods
 
 - [addMessageHandler](components_eventsource.BridgeEventSource.md#addmessagehandler)
+- [connectEvent](components_eventsource.BridgeEventSource.md#connectevent)
 - [connectToBridgeEventSource](components_eventsource.BridgeEventSource.md#connecttobridgeeventsource)
+- [disconnectEvent](components_eventsource.BridgeEventSource.md#disconnectevent)
+- [removeMessageHandler](components_eventsource.BridgeEventSource.md#removemessagehandler)
 
 ## Constructors
 
@@ -42,6 +46,12 @@ ___
 ### eventSource
 
 • **eventSource**: `any`
+
+___
+
+### ws
+
+• **ws**: `undefined` \| `WebSocket`
 
 ## Methods
 
@@ -71,15 +81,59 @@ adds a new message handler object to the BridgeEventSource class
 
 ___
 
+### connectEvent
+
+▸ **connectEvent**(): `void`
+
+#### Returns
+
+`void`
+
+___
+
 ### connectToBridgeEventSource
 
-▸ **connectToBridgeEventSource**(`orchestration`): `void`
+▸ **connectToBridgeEventSource**(`orchestration`): `Promise`<{ `success`: `boolean`  }\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `orchestration` | `string` |
+
+#### Returns
+
+`Promise`<{ `success`: `boolean`  }\>
+
+___
+
+### disconnectEvent
+
+▸ **disconnectEvent**(): `void`
+
+#### Returns
+
+`void`
+
+___
+
+### removeMessageHandler
+
+▸ **removeMessageHandler**<`K`\>(`«destructured»`): `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `K` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `MessageHandler` | (`payload`: [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap)[`K`]) => `void` |
+| › `event` | `K` |
 
 #### Returns
 
