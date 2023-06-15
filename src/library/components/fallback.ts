@@ -12,7 +12,7 @@ export class Fallback {
 	private resolveVersion!: (value: number | PromiseLike<number>) => void
 
 	constructor() {
-		this.versionPromise = new Promise((resolve, reject) => {
+		this.versionPromise = new Promise((resolve) => {
 			this.resolveVersion = resolve
 		})
 		this.holoPlayClient = new HoloPlayClient(this.messageCallback.bind(this), this.errorCallback.bind(this))
