@@ -16,6 +16,8 @@ export class BridgeClient {
 	 *  If the orchestration is not valid, some functions will not work
 	 */
 	private isConnected: boolean
+	/**A boolean for checking the status of the current disconnect event */
+	public isDisconnecting: boolean
 	/**An array containing the connected Looking Glass Displays */
 	private lkgDisplays: Display[]
 	/**an Array containing Playlists, we store this to easily switch between multiple playlists */
@@ -38,6 +40,7 @@ export class BridgeClient {
 	constructor() {
 		this.orchestration = ""
 		this.isConnected = false
+		this.isDisconnecting = false
 		this.lkgDisplays = []
 		BridgeClient.eventsource = new BridgeEventSource()
 		BridgeClient.fallback = new Fallback()
@@ -135,20 +138,26 @@ export class BridgeClient {
 
 	public async disconnect(): Promise<{ success: boolean }> {
 		console.log("%c function call: disconnect ", "color: magenta; font-weight: bold; border: solid")
-		let exit = await tryExitOrchestration(this.orchestration)
-		if (exit.success == false) {
-			console.error(`Unable to exit orchestration, please try again.`)
+		if (this.isDisconnecting == true) {
 			return { success: false }
-		}
-		BridgeClient.fallback.ws.close()
-		BridgeClient.eventsource.disconnectEvent()
-		BridgeClient.eventsource.ws?.close()
-		BridgeClient.eventsource.ws = undefined
-		this.playlists = []
-		this.currentHologram = undefined
-		this.orchestration = ""
+		} else {
+			this.isDisconnecting = true
+			let exit = await tryExitOrchestration(this.orchestration)
+			if (exit.success == false) {
+				console.error(` ⚠️ Unable to exit orchestration, Bridge is not reachable.`)
+			}
 
-		return { success: true }
+			BridgeClient.fallback.ws.close()
+			BridgeClient.eventsource.ws?.close()
+			BridgeClient.eventsource.ws = undefined
+			this.playlists = []
+			this.currentHologram = undefined
+			this.orchestration = ""
+			BridgeClient.eventsource.disconnectEvent()
+			this.isDisconnecting = false
+
+			return { success: true }
+		}
 	}
 
 	/**

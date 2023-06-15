@@ -1,4 +1,5 @@
 import { BridgeEventMap } from "../schemas/events"
+import { BridgeClient } from ".."
 
 function isWindowAvailable() {
 	if (window !== undefined) {
@@ -118,7 +119,6 @@ export class BridgeEventSource {
 		this.ws = new WebSocket("ws://localhost:9724/event_source")
 
 		return new Promise((resolve) => {
-			let eventsource = this
 			if (this.ws !== undefined) {
 				this.ws.onopen = () => {
 					console.log("%c Connected to Websocket ", "color: chartreuse; font-weight: bold; border: solid")
@@ -135,7 +135,9 @@ export class BridgeEventSource {
 				}
 
 				this.ws.onclose = function () {
-					eventsource.disconnectEvent()
+					const client = BridgeClient.getInstance()
+					client.disconnect()
+
 					console.log("%c Disconnected from Websocket ", "color: red; font-weight: bold; border: solid")
 				}
 
