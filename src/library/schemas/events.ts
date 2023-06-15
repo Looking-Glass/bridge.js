@@ -178,6 +178,7 @@ const PayloadResponse = <T extends z.ZodType<any, any>>(valueSchema: T) =>
 			type: schema.variant_map,
 			value: valueSchema,
 		}),
+		status: schema.status,
 	})
 
 export const monitorConnectResponse = PayloadResponse(monitorConnected)
@@ -201,6 +202,9 @@ export type BridgeEventMap = {
 	"Sync/Play Playlist Complete": z.infer<typeof progressUpdateResponse>
 	"Sync/Play Playlist Cancelled": z.infer<typeof progressUpdateResponse>
 	// "All Events": all_events,
+	/**CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE */
+	"Bridge Connected": z.infer<typeof progressUpdateResponse>
+	"Bridge Disconnected": z.infer<typeof progressUpdateResponse>
 }
 
 export type BridgeEventKey = keyof BridgeEventMap

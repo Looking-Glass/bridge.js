@@ -1,10 +1,10 @@
 {
-	"name": "@lookingglass/bridge.js",
+	"name": "@lookingglass/bridge",
 	"private": true,
 	"version": "0.0.1",
 	"main": "./dist/looking-glass-bridge.js",
 	"module": "./dist/looking-glass-bridge.mjs",
-	"types": "./dist/bridge.d.ts",
+	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/looking-glass-bridge.js",
@@ -17,7 +17,7 @@
 	"scripts": {
 		"build": "tsc && vite build --mode react",
 		"build:watch": "tsc && vite build --watch",
-		"library": "vite build --mode library && yarn typedoc",
+		"library": "vite build --mode library && yarn typedoc && node ./post-build.js",
 		"dev": "vite --mode react",
 		"typedoc": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources",
 		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources --watch"

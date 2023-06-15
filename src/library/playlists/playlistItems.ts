@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { Hologram, QuiltHologram, RGBDHologram } from "../components/hologram"
+import { HologramType, QuiltHologram, RGBDHologram } from "../components/hologram"
 import { insert_playlist_entry } from "../schemas/requests"
 
 export interface PlaylistItemArgs {
@@ -22,13 +22,13 @@ export interface PlaylistItemArgs {
 
 class PlaylistItem {
 	public orchestration: string
-	public hologram: Hologram
+	public hologram: HologramType
 	public id: number
 	public index: number
 	public playlistName: string
 
 	constructor(args: {
-		hologram: Hologram
+		hologram: HologramType
 		id: number
 		index: number
 		playlistName: string
@@ -66,10 +66,10 @@ class PlaylistItem {
 				name: this.playlistName,
 				index: this.index,
 				uri: this.hologram.uri,
-				rows: settings.rows,
-				cols: settings.columns,
+				rows: 8,
+				cols: 13,
 				aspect: settings.aspect,
-				view_count: settings.viewCount,
+				view_count: 8 * 13,
 				isRGBD: 1,
 				depth_loc: settings.depth_loc,
 				depth_inversion: settings.depth_inversion,

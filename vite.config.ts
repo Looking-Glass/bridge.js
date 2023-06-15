@@ -37,9 +37,10 @@ export default defineConfig(({ mode }) => {
 							preserveExtensions: true,
 						}),
 						typescript({
+							tsconfig: path.resolve(__dirname, "src/library/tsconfig.json"),
 							sourceMap: false,
 							declaration: true,
-							outDir: "dist",
+							outDir: path.resolve(__dirname, "dist"),
 						}),
 					],
 				},
@@ -51,6 +52,11 @@ export default defineConfig(({ mode }) => {
 				outDir: "app",
 			},
 			plugins: [react()],
+			resolve: {
+				alias: {
+					"@library": path.resolve(__dirname, "./src/library"),
+				},
+			},
 			rollupOptions: {
 				external: [],
 				plugins: [
@@ -58,6 +64,7 @@ export default defineConfig(({ mode }) => {
 						preserveExtensions: true,
 					}),
 					typescript({
+						tsconfig: path.resolve(__dirname, "src/react-app/tsconfig.json"),
 						sourceMap: false,
 						declaration: true,
 						outDir: "app",

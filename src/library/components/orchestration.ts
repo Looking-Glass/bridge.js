@@ -1,5 +1,7 @@
-import { Bridge } from ".."
+import { BridgeClient } from ".."
 import { sendMessage } from "./endpoints"
+import { z } from "zod"
+import * as BridgeResponse from "../schemas/responses"
 
 export interface OrchestrationArgs {
 	name: string
@@ -11,9 +13,13 @@ export interface OrchestrationArgs {
  * @param name
  * @returns
  */
-export async function tryEnterOrchestration({ name, orchestration }: OrchestrationArgs) {
+export async function tryEnterOrchestration({ name, orchestration }: OrchestrationArgs): Promise<{
+	success: boolean
+	response: z.infer<typeof BridgeResponse.orchestration> | null
+}> {
+	let Bridge = BridgeClient.getInstance()
 	if (Bridge.getVerbosity() != 0)
-		console.group(
+		console.log(
 			"%c function call: tryEnterOrchestration ",
 			"color: magenta; font-weight: bold; border: solid"
 		)
@@ -23,38 +29,38 @@ export async function tryEnterOrchestration({ name, orchestration }: Orchestrati
 
 	// if we're already in an orchestration, exit it
 	if (orchestration !== "" && orchestration !== undefined) {
-		await tryExitOrchestration(orchestration)
+		return { success: false, response: null }
 	}
 	// a new orchestration will be created if the name is different.
 	let requestBody = {
 		name: name,
 	}
-	let response = await sendMessage({
+	let message = await sendMessage({
 		endpoint: "enter_orchestration",
 		requestBody: requestBody,
 	})
-	if (response.success == false) {
-		console.error("failed to enter orchestration", response)
-		return false
+	if (message.success == false) {
+		console.error("failed to enter orchestration", message)
+		return { success: false, response: null }
 	}
-	let new_orchestration = response.response.payload.value
-	orchestration = new_orchestration
 	console.groupEnd()
-	return orchestration
+	return { success: true, response: message.response }
 }
 
-export async function tryExitOrchestration(orchestration: string) {
+export async function tryExitOrchestration(
+	orchestration: string
+): Promise<{ success: boolean; response: z.infer<typeof BridgeResponse.orchestration> | null }> {
 	let body = {
 		orchestration: orchestration,
 	}
 
-	let response = await sendMessage({
+	let message = await sendMessage({
 		endpoint: "exit_orchestration",
 		requestBody: body,
 	})
-	if (response.success == false) {
-		return false
+	if (message.success == false) {
+		return { success: false, response: null }
 	}
 
-	return response
+	return { success: true, response: message.response }
 }

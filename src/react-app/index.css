@@ -40,6 +40,10 @@ button:hover {
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+button:disabled {
+	background-image: linear-gradient(to left, rgb(20, 20, 20), rgb(200, 200, 200));
+}
+
 .center-ish {
 	margin-top: 8em;
 }

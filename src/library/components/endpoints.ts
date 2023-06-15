@@ -1,4 +1,4 @@
-import { Bridge } from ".."
+import { BridgeClient } from ".."
 import * as BridgeResponse from "../schemas/responses"
 import * as BridgeRequest from "../schemas/requests"
 import { z } from "zod"
@@ -105,6 +105,7 @@ export async function sendMessage<
 	baseUrl?: string
 }): Promise<Response<BridgeEndpointSchemaMap[T]>> {
 	let parsedResponse: BridgeEndpointSchemaMap[T]
+	let Bridge = BridgeClient.getInstance()
 	if (Bridge.getVerbosity() != 0) console.group("Endpoint:", params.endpoint)
 
 	// TEMPORARY: delay to give bridge a chance to handle events
@@ -129,17 +130,26 @@ export async function sendMessage<
 
 	try {
 		let bridgeResponse = await fetch(`${params.baseUrl + params.endpoint}`, request)
+
+		if (!bridgeResponse.ok) {
+			return { success: false, response: null }
+		}
+
 		parsedResponse = await bridgeResponse.json()
 
 		if (parsedResponse.status.value == "Failure" || parsedResponse.status.value == "UnknownOrchestration") {
-			console.error(parsedResponse)
-			throw new Error("Bridge returned failure")
+			return { success: true, response: parsedResponse }
 		}
 
-		if (Bridge.getVerbosity() != 0) console.groupEnd()
+		if (Bridge.getVerbosity() != 0) {
+			console.log("%c Response:", "color: #00aa00", parsedResponse)
+			console.groupEnd()
+		}
 		return { success: true, response: parsedResponse }
 	} catch (error) {
+		console.group("%c Bridge Error:", "color: #ff0000")
 		console.error("Bridge Error", error)
+		console.groupEnd()
 		console.groupEnd()
 		return { success: false, response: null }
 	}

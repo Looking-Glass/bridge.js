@@ -1,38 +1,49 @@
 import { Display, tryParseDisplay } from "./components/displays"
 import { sendMessage } from "./components/endpoints"
-import { tryEnterOrchestration } from "./components/orchestration"
+import { tryEnterOrchestration, tryExitOrchestration } from "./components/orchestration"
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist } from "./playlists/playlist"
-import { Hologram } from "./components/hologram"
+import { HologramType } from "./components/hologram"
 import { BridgeEventMap } from "./schemas/events"
 import * as schema from "./schemas/responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
-import { ClientResponse } from "./components"
 
 export class BridgeClient {
+	/** The name of the current orchestration */
 	private orchestration: string
-	private isValid: boolean
+	/** A boolean that stores if the Bridge session is valid or not
+	 *  If the orchestration is not valid, some functions will not work
+	 */
+	private isConnected: boolean
+	/**An array containing the connected Looking Glass Displays */
 	private lkgDisplays: Display[]
+	/**an Array containing Playlists, we store this to easily switch between multiple playlists */
 	public playlists: Playlist[] | undefined[]
+	/** The index of playlists that is currently active */
 	public currentPlaylistIndex: number
-	private eventsource: BridgeEventSource
+	/** the instance of the client that we create, BridgeClient is a singleton, there can only be one */
 	static instance: BridgeClient
+	static fallback: Fallback
+	/** The websocket connection to Bridge's Event Source, this returns information from Bridge */
+	static eventsource: BridgeEventSource
+	/**control how often we log to the console, 3 is everything, 0 is nothing */
 	static verbosity: 0 | 1 | 2 | 3 = 3
+	/**store if we're currently in the middle of a cast */
 	private isCastPending = false
-	private fallback: Fallback
+	/**the version of the Looking Glass Driver that's running */
 	public version: number
-	private currentHologram: Hologram | undefined
+	private currentHologram: HologramType | undefined
 
 	constructor() {
 		this.orchestration = ""
-		this.isValid = false
+		this.isConnected = false
 		this.lkgDisplays = []
-		this.eventsource = new BridgeEventSource()
-		this.createOrchestration("")
+		BridgeClient.eventsource = new BridgeEventSource()
+		BridgeClient.fallback = new Fallback()
 		this.playlists = []
+
 		this.currentPlaylistIndex = 0
-		this.fallback = new Fallback()
 		this.version = 0
 
 		if (!BridgeClient.instance) {
@@ -40,9 +51,11 @@ export class BridgeClient {
 		} else {
 			return BridgeClient.instance
 		}
+
+		this.connect()
 	}
 
-	static getInstance() {
+	static getInstance(): BridgeClient {
 		if (!BridgeClient.instance) {
 			BridgeClient.instance = new BridgeClient()
 		}
@@ -54,12 +67,13 @@ export class BridgeClient {
 	 * @returns boolean, true if Bridge is running, false if Bridge is not running
 	 */
 	public async status(): Promise<boolean> {
+		console.log("%c function call: status ", "color: magenta; font-weight: bold; border: solid")
 		try {
 			let response = await fetch("http://localhost:33334/")
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
 			}
-			this.isValid = true
+			this.isConnected = true
 			return true
 		} catch (error) {
 			console.warn(`Looking Glass Bridge is not running, please start Bridge and try again.`)
@@ -68,51 +82,73 @@ export class BridgeClient {
 	}
 
 	/**
+	 * Attempt to connect to Looking Glass Bridge.
+	 * @returns
+	 */
+	public async connect(): Promise<{
+		success: boolean
+		response: { version: number; orchestration: string }
+	}> {
+		console.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid")
+		let call = await this.createOrchestration("")
+		if (call.success == false) {
+			let version = await this.getVersion()
+			if (version.success == false) {
+				return { success: false, response: { version: 0, orchestration: "" } }
+			} else if (version.response < 2) {
+				return { success: false, response: { version: version.response, orchestration: "" } }
+			}
+		}
+
+		await this.subscribeToEvents()
+		BridgeClient.eventsource.connectEvent()
+		return { success: true, response: { version: this.version, orchestration: this.orchestration } }
+	}
+
+	/**
 	 * Creates an orchestration called "default" if one does not already exist.
 	 * @returns string, the name of the current orchestration
 	 */
 	public async createOrchestration(name: string): Promise<{ success: boolean; response: null | string }> {
+		console.log("%c function call: createOrchestration ", "color: magenta; font-weight: bold; border: solid")
 		if ((await this.status()) == false) {
 			return { success: false, response: null }
 		}
 		const version = await this.getVersion()
-		if (version.success == false) {
+		if (version.response < 2.1) {
 			console.error(`Unable to get Looking Glass Bridge version, please upgrade Looking Glass Bridge.`)
 			return { success: false, response: null }
 		}
 		let new_orchestration = await tryEnterOrchestration({ name: name, orchestration: this.orchestration })
-		if (new_orchestration !== false && new_orchestration !== undefined) {
-			this.orchestration = new_orchestration
+		if (new_orchestration.success == true) {
+			if (new_orchestration.response?.payload.value) {
+				this.orchestration = new_orchestration.response?.payload.value
+			}
 		}
-		this.initializeEventSource()
-		this.isValid = true
+		this.isConnected = true
 		return { success: true, response: this.orchestration }
 	}
 
 	/**
-	 * A helper function to get the version of Looking Glass Bridge that is running.
-	 * @returns string of the version of Looking Glass Bridge that is running
+	 * Disconnect from Looking Glass Bridge, free up resources.
 	 */
-	public async getVersion(): Promise<{ success: boolean; response: number }> {
-		//give enough time for the websocket to connect.
-		console.log("%c function call: getVersion ", "color: magenta; font-weight: bold; border: solid")
-		// use a fallback in case the driver version is too old.
-		if (this.isValid != false) {
-			await new Promise((r) => setTimeout(r, 1000))
-			this.version = await this.fallback.messageCallback()
-		}
-		if ((await this.isVersionCompatible()) == false && this.isValid == false) {
-			return { success: false, response: 0 }
-		}
 
-		let response = await sendMessage({ endpoint: "bridge_version", requestBody: {} })
-		if (response.success == false) {
-			console.warn(`this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`)
-			return { success: false, response: 0 }
+	public async disconnect(): Promise<{ success: boolean }> {
+		console.log("%c function call: disconnect ", "color: magenta; font-weight: bold; border: solid")
+		let exit = await tryExitOrchestration(this.orchestration)
+		if (exit.success == false) {
+			console.error(`Unable to exit orchestration, please try again.`)
+			return { success: false }
 		}
-		this.version = parseFloat(response.response.payload.value)
-		this.isValid = true
-		return { success: true, response: this.version }
+		BridgeClient.fallback.ws.close()
+		BridgeClient.eventsource.disconnectEvent()
+		BridgeClient.eventsource.ws?.close()
+		BridgeClient.eventsource.ws = undefined
+		this.playlists = []
+		this.currentHologram = undefined
+		this.orchestration = ""
+
+		return { success: true }
 	}
 
 	/**
@@ -122,8 +158,8 @@ export class BridgeClient {
 	 */
 	public async showWindow(
 		showWindow: boolean
-	): Promise<{ response: z.infer<typeof schema.show_window> | null } & ClientResponse> {
-		if (this.isValid == false) return { success: false, response: null }
+	): Promise<{ success: boolean; response: z.infer<typeof schema.show_window> | null }> {
+		if (this.isConnected == false) return { success: false, response: null }
 		console.log("%c function call: showWindow ", "color: magenta; font-weight: bold; border: solid")
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		if ((await this.isVersionCompatible()) == false) {
@@ -136,15 +172,34 @@ export class BridgeClient {
 			show_window: showWindow,
 			head_index: -1,
 		}
-		let response = await sendMessage({
+		let message = await sendMessage({
 			endpoint: "show_window",
 			requestBody: requestBody,
 		})
 
-		if (response.success == false) {
+		if (message.success == false) {
 			return { success: false, response: null }
 		}
-		return { success: true, response: response.response }
+		return { success: true, response: message.response }
+	}
+
+	/**
+	 * A helper function to get the version of Looking Glass Bridge that is running.
+	 * @returns string of the version of Looking Glass Bridge that is running
+	 */
+	public async getVersion(): Promise<{ success: boolean; response: number }> {
+		console.log("%c function call: getVersion ", "color: magenta; font-weight: bold; border: solid")
+
+		let message = await sendMessage({ endpoint: "bridge_version", requestBody: {} })
+		if (message.success == true) {
+			this.version = parseFloat(message.response.payload.value)
+			this.isConnected = true
+			return { success: true, response: this.version }
+		} else {
+			let version = await BridgeClient.fallback?.getLegacyVersion()
+			console.warn(version, "version")
+			return { success: true, response: version }
+		}
 	}
 
 	/**
@@ -153,7 +208,7 @@ export class BridgeClient {
 	 */
 	public async apiVersion(): Promise<{ success: boolean; response: number }> {
 		console.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid")
-		if (this.isValid == false) {
+		if (this.isConnected == false) {
 			return { success: false, response: 0 }
 		}
 		if ((await this.isVersionCompatible()) == false) return { success: false, response: 0 }
@@ -176,7 +231,7 @@ export class BridgeClient {
 		console.log("%c function call: displays ", "color: magenta; font-weight: bold; border: solid")
 		this.lkgDisplays = []
 		// if there is no orchestration, attempt to create one, if that fails, return false
-		if (this.isValid == false) return { success: false, response: null }
+		if (this.isConnected == false) return { success: false, response: null }
 		const requestBody = {
 			orchestration: this.orchestration,
 		}
@@ -187,6 +242,8 @@ export class BridgeClient {
 		if (data.success == false) {
 			return { success: false, response: null }
 		}
+
+		schema.available_output_devices.safeParse(data.response)
 
 		for (let key in data.response.payload.value) {
 			let display = data.response.payload.value[`${key}`]
@@ -205,7 +262,7 @@ export class BridgeClient {
 		playlist: Playlist
 	): Promise<{ success: boolean; response: z.infer<typeof schema.delete_playlist> | null }> {
 		console.log("%c function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid")
-		if (this.isValid == false) {
+		if (this.isConnected == false) {
 			return { success: false, response: null }
 		}
 		const requestBody = playlist.getInstance(this.orchestration)
@@ -225,10 +282,10 @@ export class BridgeClient {
 	 * This function will allow you to cast a single hologram to the Looking Glass
 	 * @param hologram
 	 */
-	public async cast(hologram: Hologram): Promise<{ success: boolean }> {
-		if (this.isValid == false) return { success: false }
+	public async cast(hologram: HologramType): Promise<{ success: boolean }> {
+		if (this.isConnected == false) return { success: false }
 		console.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid")
-		if (hologram == this.currentHologram) {
+		if (hologram.uri == this.currentHologram?.uri) {
 			console.warn("already casting this hologram")
 
 			return { success: true }
@@ -280,19 +337,39 @@ export class BridgeClient {
 	 * The event source is a websocket connection that will send events from Bridge to the client.
 	 * @returns the bridge event source
 	 */
-	public initializeEventSource() {
-		this.eventsource.connectToBridgeEventSource(this.orchestration)
+	private async subscribeToEvents(): Promise<{ success: boolean }> {
+		console.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid")
+
+		let events = await BridgeClient.eventsource.connectToBridgeEventSource(this.orchestration)
+
+		if (events.success == true) return { success: true }
+		else return { success: false }
 	}
 	/**
 	 * Adds an event listener that returns a message from Bridge's websocket based event source.
 	 * @param event the event to listen for
 	 * @param MessageHandler the function to call when the event is received
 	 */
-	public addEventListener<T extends keyof BridgeEventMap>(
+	public async addEventListener<T extends keyof BridgeEventMap>(
 		event: T,
 		MessageHandler: (event: BridgeEventMap[T]) => void
 	) {
-		this.eventsource.addMessageHandler({ event: event, MessageHandler: MessageHandler })
+		if (BridgeClient.eventsource == undefined) {
+			await this.subscribeToEvents()
+		} else {
+			BridgeClient.eventsource.addMessageHandler({ event: event, MessageHandler: MessageHandler })
+		}
+	}
+
+	public async removeEventListener<T extends keyof BridgeEventMap>(
+		event: T,
+		MessageHandler: (event: BridgeEventMap[T]) => void
+	) {
+		if (BridgeClient.eventsource == undefined) {
+			await this.subscribeToEvents()
+		} else {
+			BridgeClient.eventsource.removeMessageHandler({ event: event, MessageHandler: MessageHandler })
+		}
 	}
 
 	public getVerbosity() {
@@ -312,32 +389,14 @@ export class BridgeClient {
 	 */
 	private async isVersionCompatible() {
 		if (this.version == 0) {
-			this.isValid = false
+			this.isConnected = false
 		} else if (this.version < 2.1) {
 			console.warn("Please update to the latest version for the best experience")
-			this.isValid = false
+			this.isConnected = false
 		} else if (this.version >= 2.1) {
-			this.isValid = true
+			this.isConnected = true
 		}
 
-		return this.isValid
+		return this.isConnected
 	}
 }
-/**
- * The singleton instance of the `BridgeClient` class.
- * @see {@link BridgeClient}
- *
- * It exposes the following methods:
- *  - {@link Bridge.displays}
- *  - {@link Bridge.cast}
- *  - {@link Bridge.addEventListener}
- *  - {@link Bridge.initializeEventSource}
- *  - {@link Bridge.getVerbosity}
- *  - {@link Bridge.setVerbosity}
- *  - {@link Bridge.isVersionCompatible}
- *  - {@link Bridge.isValid}
- *  - {@link Bridge.version}
- *  - {@link Bridge.orchestration}
- *  - {@link Bridge.lkgDisplays}
- */
-export const Bridge: BridgeClient = BridgeClient.getInstance()

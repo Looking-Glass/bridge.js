@@ -8,16 +8,13 @@ export const QuiltHologramArgs = z.object({
 })
 
 export const RGBDHologramArgs = z.object({
-	rows: z.number(),
-	columns: z.number(),
 	aspect: z.number(),
-	viewCount: z.number(),
 	depth_loc: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
 	depth_inversion: z.union([z.literal(0), z.literal(1)]),
 	chroma_depth: z.union([z.literal(0), z.literal(1)]),
 	depthiness: z.number(),
 	focus: z.number().optional(),
-	depth_cutoff: z.literal(1).optional(),
+	depth_cutoff: z.union([z.literal(1), z.literal(0)]).optional(),
 	zoom: z.number().optional(),
 })
 
@@ -45,4 +42,4 @@ export class RGBDHologram {
 	}
 }
 
-export type Hologram = QuiltHologram | RGBDHologram
+export type HologramType = QuiltHologram | RGBDHologram

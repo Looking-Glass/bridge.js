@@ -7,26 +7,30 @@ import { Client as HoloPlayClient, InfoMessage } from "holoplay-core"
  */
 export class Fallback {
 	private holoPlayClient: HoloPlayClient
+	public ws: WebSocket
+	public versionPromise: Promise<number>
+	private resolveVersion!: (value: number | PromiseLike<number>) => void
 
 	constructor() {
+		this.versionPromise = new Promise((resolve, reject) => {
+			this.resolveVersion = resolve
+		})
 		this.holoPlayClient = new HoloPlayClient(this.messageCallback.bind(this), this.errorCallback.bind(this))
+		this.ws = this.holoPlayClient.ws
 	}
 
-	public async messageCallback() {
-		let version = 0
+	public async messageCallback(message: any) {
+		this.resolveVersion(parseFloat(message.version))
+	}
+
+	public async getLegacyVersion(): Promise<number> {
 		let infoMsg = new InfoMessage()
-		try {
-			await this.holoPlayClient.sendMessage(infoMsg).then((res: any) => {
-				version = parseFloat(res.version)
-			})
-			return version
-		} catch (error) {
-			console.error("unable to get version", error)
-			return 0
-		}
+		this.holoPlayClient.sendMessage(infoMsg)
+
+		return this.versionPromise
 	}
 
 	public errorCallback() {
-		console.error("unable to connect to Legacy API")
+		console.warn("unable to connect to Legacy API")
 	}
 }

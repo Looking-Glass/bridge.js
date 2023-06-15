@@ -25,6 +25,20 @@ export const completion = z.literal("Completion")
 export const unknown = z.literal("UnknownOrchestration")
 export const pending = z.literal("Pending")
 export const failure = z.literal("Failure")
+// these types exist, but haven't been seen in the wild.
+
+// export const NotImplemented = z.literal("NotImplemented")
+// export const aborted = z.literal("Aborted")
+// export const fileNotFound = z.literal("FileNotFound")
+// export const invalidCast = z.literal("InvalidCast")
+// export const errorInParams = z.literal("ErrorInParams")
+// export const inComplete = z.literal("Incomplete")
+// export const inTearDown = z.literal("InTeardown")
+// export const verbNotFound = z.literal("VerbNotFound")
+// export const unknownWork = z.literal("UnknownWork")
+// export const unknownPlaylist = z.literal("UnknownPlaylist")
+// export const objectDelted = z.literal("ObjectDeleted")
+// export const framesExhausted = z.literal("FramesExhausted")
 
 export const name = z.string()
 
