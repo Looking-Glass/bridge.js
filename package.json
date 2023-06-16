@@ -1,10 +1,17 @@
 {
 	"name": "@lookingglass/bridge",
 	"private": true,
-	"version": "0.0.1",
+	"version": "0.0.1-alpha.1",
+	"license": "MIT",
+	"description": "Official Looking Glass Library for interacting with Looking Glass holographic displays.",
+	"types": "./dist/index.d.ts",
+	"author": "Looking Glass Factory",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Looking-Glass/bridge.js"
+	},
 	"main": "./dist/looking-glass-bridge.js",
 	"module": "./dist/looking-glass-bridge.mjs",
-	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/looking-glass-bridge.js",
