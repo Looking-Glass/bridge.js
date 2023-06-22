@@ -1,7 +1,7 @@
 import { BridgeClient } from ".."
 import { sendMessage } from "./endpoints"
 import { z } from "zod"
-import * as BridgeResponse from "../schemas/responses"
+import * as BridgeResponse from "../schemas/schema.responses"
 
 export interface OrchestrationArgs {
 	name: string

@@ -1,6 +1,6 @@
 import { BridgeClient } from ".."
-import * as BridgeResponse from "../schemas/responses"
-import * as BridgeRequest from "../schemas/requests"
+import * as BridgeResponse from "../schemas/schema.responses"
+import * as BridgeRequest from "../schemas/schema.requests"
 import { z } from "zod"
 
 export type BridgeEndpointType =
@@ -137,7 +137,10 @@ export async function sendMessage<
 
 		parsedResponse = await bridgeResponse.json()
 
-		if (parsedResponse.status.value == "Failure" || parsedResponse.status.value == "UnknownOrchestration") {
+		if (parsedResponse.status.value !== "Completion") {
+			console.log("%c Bridge Failure:", "color: #ff0000", parsedResponse)
+			console.groupEnd()
+			// the call worked, but the response failed. 
 			return { success: true, response: parsedResponse }
 		}
 

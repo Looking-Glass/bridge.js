@@ -90,8 +90,28 @@ body {
 
 .flex-container {
 	display: flex;
-	gap: 24px;
+	gap: 16px;
 	flex-direction: row;
 	justify-content: start; /* align item horizontally */
 	align-items: start; /* align item vertically */
+}
+
+.flex-between {
+	display: flex;
+	gap: 16px;
+	flex-direction: row;
+	justify-content: space-between; /* align item horizontally */
+	align-items: start; /* align item vertically */
+}
+
+input {
+	display: block;
+	width: 100%;
+}
+
+select {
+	display: block;
+	width: 100%;
+	margin-top: 8px;
+	margin-bottom: 8px;
 }

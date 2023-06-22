@@ -5,10 +5,10 @@ import * as schema from "./schema"
 
 export const version = z.object({
 	name: schema.name,
+	// the payload value is unique to each bridge response.
 	payload: z.object({
 		name: schema.name,
 		type: schema.wstring,
-		// the payload value is unique to each bridge response.
 		value: z.string(),
 	}),
 	status: schema.status,

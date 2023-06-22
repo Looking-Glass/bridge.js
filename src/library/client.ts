@@ -4,8 +4,8 @@ import { tryEnterOrchestration, tryExitOrchestration } from "./components/orches
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist } from "./playlists/playlist"
 import { HologramType } from "./components/hologram"
-import { BridgeEventMap } from "./schemas/events"
-import * as schema from "./schemas/responses"
+import { BridgeEventMap } from "./schemas/schema.events"
+import * as schema from "./schemas/schema.responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
 
@@ -380,6 +380,10 @@ export class BridgeClient {
 			BridgeClient.eventsource.removeMessageHandler({ event: event, MessageHandler: MessageHandler })
 		}
 	}
+
+	public getCurrentHologram(): HologramType | undefined {
+        return this.currentHologram;
+    }
 
 	public getVerbosity() {
 		return BridgeClient.verbosity
