@@ -294,7 +294,7 @@ export class BridgeClient {
 	public async cast(hologram: HologramType): Promise<{ success: boolean }> {
 		if (this.isConnected == false) return { success: false }
 		console.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid")
-		if (hologram.uri == this.currentHologram?.uri) {
+		if (hologram.uri == this.currentHologram?.uri && hologram.settings == this.currentHologram.settings) {
 			console.warn("already casting this hologram")
 
 			return { success: true }
@@ -382,8 +382,8 @@ export class BridgeClient {
 	}
 
 	public getCurrentHologram(): HologramType | undefined {
-        return this.currentHologram;
-    }
+		return this.currentHologram
+	}
 
 	public getVerbosity() {
 		return BridgeClient.verbosity
