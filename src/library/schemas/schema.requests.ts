@@ -56,3 +56,24 @@ export const play_playlist = z.object({
 	name: z.string(),
 	head_index: z.number(),
 })
+
+export const transport_control_play = z.object({
+	orchestration: z.string(),
+})
+
+export const transport_control_pause = z.object({
+	orchestration: z.string(),
+})
+
+export const transport_control_next = z.object({
+	orchestration: z.string(),
+})
+
+export const transport_control_previous = z.object({
+	orchestration: z.string(),
+})
+
+export const transport_control_seek_to_index = z.object({
+	orchestration: z.string(),
+	index: z.number(),
+})

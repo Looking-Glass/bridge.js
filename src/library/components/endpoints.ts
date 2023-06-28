@@ -45,11 +45,11 @@ export type BridgeEndpointSchemaMap = {
 	// sync_overwrite_playlist: z.infer<typeof BridgeResponse.sync_overwrite_playlist>
 	// cancel_pending: z.infer<typeof BridgeResponse.cancel_pending>
 	// synced_file_hash: z.infer<typeof BridgeResponse.synced_file_hash>
-	// transport_control_play: z.infer<typeof BridgeResponse.transport_control_play>
-	// transport_control_pause: z.infer<typeof BridgeResponse.transport_control_pause>
-	// transport_control_next: z.infer<typeof BridgeResponse.transport_control_next>
-	// transport_control_previous: z.infer<typeof BridgeResponse.transport_control_previous>
-	// transport_control_seek_to_index: z.infer<typeof BridgeResponse.transport_control_seek_to_index>
+	transport_control_play: z.infer<typeof BridgeResponse.transport_control_play>
+	transport_control_pause: z.infer<typeof BridgeResponse.transport_control_pause>
+	transport_control_next: z.infer<typeof BridgeResponse.transport_control_next>
+	transport_control_previous: z.infer<typeof BridgeResponse.transport_control_previous>
+	transport_control_seek_to_index: z.infer<typeof BridgeResponse.transport_control_seek_to_index>
 	play_playlist: z.infer<typeof BridgeResponse.play_playlist>
 	show_window: z.infer<typeof BridgeResponse.show_window>
 }
@@ -71,11 +71,11 @@ export type BridgeRequestBodyMap = {
 	// sync_overwrite_playlist: z.infer<typeof BridgeRequest.sync_overwrite_playlist>
 	// cancel_pending: z.infer<typeof BridgeRequest.cancel_pending>
 	// synced_file_hash: z.infer<typeof BridgeRequest.synced_file_hash>
-	// transport_control_play: z.infer<typeof BridgeRequest.transport_control_play>
-	// transport_control_pause: z.infer<typeof BridgeRequest.transport_control_pause>
-	// transport_control_next: z.infer<typeof BridgeRequest.transport_control_next>
-	// transport_control_previous: z.infer<typeof BridgeRequest.transport_control_previous>
-	// transport_control_seek_to_index: z.infer<typeof BridgeRequest.transport_control_seek_to_index>
+	transport_control_play: z.infer<typeof BridgeRequest.transport_control_play>
+	transport_control_pause: z.infer<typeof BridgeRequest.transport_control_pause>
+	transport_control_next: z.infer<typeof BridgeRequest.transport_control_next>
+	transport_control_previous: z.infer<typeof BridgeRequest.transport_control_previous>
+	transport_control_seek_to_index: z.infer<typeof BridgeRequest.transport_control_seek_to_index>
 	play_playlist: z.infer<typeof BridgeRequest.play_playlist>
 	show_window: z.infer<typeof BridgeRequest.show_window>
 }
@@ -137,7 +137,7 @@ export async function sendMessage<
 
 		parsedResponse = await bridgeResponse.json()
 
-		if (parsedResponse.status.value !== "Completion") {
+		if (parsedResponse.status.value !== "Completion" && parsedResponse.status.value !== "Pending") {
 			console.log("%c Bridge Failure:", "color: #ff0000", parsedResponse)
 			console.groupEnd()
 			// the call worked, but the response failed.

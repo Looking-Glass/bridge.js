@@ -373,6 +373,79 @@ export class BridgeClient {
 		return { success: true, response: play_playlist.response }
 	}
 
+	public async stopStudioPlaylist() {
+		console.log("%c function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid")
+		if (this.isConnected == false) return { success: false }
+
+		const requestBody = {
+			orchestration: this.orchestration,
+			name: "Studio Playlist",
+			loop: false,
+		}
+
+		await sendMessage({
+			endpoint: "delete_playlist",
+			requestBody: requestBody,
+		})
+
+		await this.showWindow(false)
+	}
+	// TRANSPORT CONTROLS
+	public async play() {
+		let requestBody = {
+			orchestration: this.orchestration,
+		}
+
+		await sendMessage({
+			endpoint: "transport_control_play",
+			requestBody: requestBody,
+		})
+	}
+
+	public async pause() {
+		let requestBody = {
+			orchestration: this.orchestration,
+		}
+
+		await sendMessage({
+			endpoint: "transport_control_pause",
+			requestBody: requestBody,
+		})
+	}
+
+	public async next() {
+		let requestBody = {
+			orchestration: this.orchestration,
+		}
+
+		await sendMessage({
+			endpoint: "transport_control_next",
+			requestBody: requestBody,
+		})
+	}
+
+	public async previous() {
+		let requestBody = {
+			orchestration: this.orchestration,
+		}
+
+		await sendMessage({
+			endpoint: "transport_control_previous",
+			requestBody: requestBody,
+		})
+	}
+
+	public async seek(index: number) {
+		let requestBody = {
+			orchestration: this.orchestration,
+			index: index,
+		}
+
+		await sendMessage({
+			endpoint: "transport_control_seek_to_index",
+			requestBody: requestBody,
+		})
+	}
 	/**
 	 * Connect to Looking Glass Bridge's EventSource.
 	 * The event source is a websocket connection that will send events from Bridge to the client.

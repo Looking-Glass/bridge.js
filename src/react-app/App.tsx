@@ -39,6 +39,7 @@ function App() {
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
 	const [playlist, setPlaylist] = useState<string>()
 	const [studioPlaylistPath, setStudioPlaylistPath] = useState<string>("")
+	const [index, setIndex] = useState<number>(0)
 
 	// Custom Hologram State
 	const [hologram, setHologram] = useState<QuiltHologram | RGBDHologram>(quilt)
@@ -180,11 +181,73 @@ function App() {
 							onClick={async () => {
 								let call = await Bridge.playStudioPlaylist(studioPlaylistPath)
 								setResponse(JSON.stringify(call.response))
-							}}>
+							}}
+							disabled={!connected}>
 							Play Studio Playlist
 						</button>
+						<button
+							onClick={async () => {
+								let call = await Bridge.stopStudioPlaylist()
+								// setResponse(JSON.stringify(call.response))
+							}}
+							disabled={!connected}>
+							Stop Studio Playlist
+						</button>
 					</div>
-
+					<h2>Controls</h2>
+					<hr />
+					<div className="flex-container">
+						<button
+							onClick={async () => {
+								await Bridge.play()
+								// setResponse(JSON.stringify(call.response))
+							}}
+							disabled={!connected}>
+							PLAY
+						</button>
+						<button
+							onClick={async () => {
+								await Bridge.pause()
+								// setResponse(JSON.stringify(call.response))
+							}}
+							disabled={!connected}>
+							PAUSE
+						</button>
+						<button
+							onClick={async () => {
+								await Bridge.previous()
+								// setResponse(JSON.stringify(call.response))
+							}}
+							disabled={!connected}>
+							PREVIOUS
+						</button>
+						<button
+							onClick={async () => {
+								await Bridge.next()
+								// setResponse(JSON.stringify(call.response))
+							}}
+							disabled={!connected}>
+							NEXT
+						</button>
+						<div>
+							<label>
+								Index to seek to
+								<input
+									type="number"
+									onChange={(e) => {
+										// remove "" from the uri, quotes are auto-added by windows' copy as path option.
+										setIndex(parseInt(e.target.value))
+									}}></input>
+							</label>
+						</div>
+						<button
+							onClick={async () => {
+								await Bridge.seek(index)
+							}}
+							disabled={!connected}>
+							SEEK
+						</button>
+					</div>
 					<div className="flex-container">
 						<div>
 							<h2>Casting</h2>
@@ -235,6 +298,7 @@ function App() {
 					</div>
 				</div>
 			</div>
+
 			<h2>Response</h2>
 			<hr />
 			<p>{bridgeResponse}</p>
