@@ -1,4 +1,4 @@
-import { BridgeClient, HologramFactory, QuiltHologram, RGBDHologram, hologramTypes } from "@library/index"
+import { BridgeClient, hologramFactory, QuiltHologram, RGBDHologram, hologramTypes } from "@library/index"
 import { useState } from "react"
 
 export interface HologramFactoryArgs {
@@ -134,7 +134,7 @@ export default function HologramForm({
 			<button
 				onClick={async () => {
 					setResponse("Casting Hologram")
-					let hologram = HologramFactory({
+					let hologram = hologramFactory({
 						uri: hologramUri,
 						type: hologramType,
 						settings: hologramSettings,

@@ -29,7 +29,7 @@ export class RGBDHologram {
 
 /**Allow the user to create a hologram manually based on type,
  * this is useful for when we want to allow the end user to create a hologram themselves via a UI interface  */
-export function HologramFactory<T extends keyof schema.HologramClasses>({
+export function hologramFactory<T extends keyof schema.HologramClasses>({
 	uri,
 	type,
 	settings,
