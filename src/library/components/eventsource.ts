@@ -1,4 +1,4 @@
-import { BridgeEventMap } from "../schemas/events"
+import { BridgeEventMap } from "../schemas/schema.events"
 import { BridgeClient } from ".."
 
 function isWindowAvailable() {

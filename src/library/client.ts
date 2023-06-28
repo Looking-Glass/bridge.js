@@ -4,8 +4,8 @@ import { tryEnterOrchestration, tryExitOrchestration } from "./components/orches
 import { BridgeEventSource } from "./components/eventsource"
 import { Playlist } from "./playlists/playlist"
 import { HologramType } from "./components/hologram"
-import { BridgeEventMap } from "./schemas/events"
-import * as schema from "./schemas/responses"
+import { BridgeEventMap } from "./schemas/schema.events"
+import * as schema from "./schemas/schema.responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
 
@@ -294,7 +294,7 @@ export class BridgeClient {
 	public async cast(hologram: HologramType): Promise<{ success: boolean }> {
 		if (this.isConnected == false) return { success: false }
 		console.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid")
-		if (hologram.uri == this.currentHologram?.uri) {
+		if (hologram.uri == this.currentHologram?.uri && hologram.settings == this.currentHologram.settings) {
 			console.warn("already casting this hologram")
 
 			return { success: true }
@@ -379,6 +379,10 @@ export class BridgeClient {
 		} else {
 			BridgeClient.eventsource.removeMessageHandler({ event: event, MessageHandler: MessageHandler })
 		}
+	}
+
+	public getCurrentHologram(): HologramType | undefined {
+		return this.currentHologram
 	}
 
 	public getVerbosity() {

@@ -1,5 +1,5 @@
 import { BridgeClient } from ".."
-import { BridgeEventMap } from "../schemas/events"
+import { BridgeEventMap } from "../schemas/schema.events"
 
 export abstract class MessageHandler<E extends keyof BridgeEventMap> {
 	public bridgeEventName: E

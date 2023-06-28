@@ -1,44 +1,52 @@
 import { z } from "zod"
+import * as schema from "../schemas/schema.hologram"
 
-export const QuiltHologramArgs = z.object({
-	rows: z.number(),
-	columns: z.number(),
-	aspect: z.number(),
-	viewCount: z.number(),
-})
-
-export const RGBDHologramArgs = z.object({
-	aspect: z.number(),
-	depth_loc: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
-	depth_inversion: z.union([z.literal(0), z.literal(1)]),
-	chroma_depth: z.union([z.literal(0), z.literal(1)]),
-	depthiness: z.number(),
-	focus: z.number().optional(),
-	depth_cutoff: z.union([z.literal(1), z.literal(0)]).optional(),
-	zoom: z.number().optional(),
-})
-
+/**Create a new Quilt Hologram */
 export class QuiltHologram {
 	public uri: string
 	public type: "quilt"
-	public settings: z.infer<typeof QuiltHologramArgs>
+	public settings: z.infer<typeof schema.QuiltHologramArgs>
 
-	constructor(args: { uri: string; settings: z.infer<typeof QuiltHologramArgs> }) {
+	constructor(args: { uri: string; settings: z.infer<typeof schema.QuiltHologramArgs> }) {
 		this.uri = args.uri
 		this.type = "quilt"
 		this.settings = args.settings
 	}
 }
 
+/**Create a new RGBD Hologram */
 export class RGBDHologram {
 	public uri: string
 	public type: "rgbd"
-	public settings: z.infer<typeof RGBDHologramArgs>
+	public settings: z.infer<typeof schema.RGBDHologramArgs>
 
-	constructor(args: { uri: string; settings: z.infer<typeof RGBDHologramArgs> }) {
+	constructor(args: { uri: string; settings: z.infer<typeof schema.RGBDHologramArgs> }) {
 		this.uri = args.uri
 		this.type = "rgbd"
 		this.settings = args.settings
+	}
+}
+
+/**Allow the user to create a hologram manually based on type,
+ * this is useful for when we want to allow the end user to create a hologram themselves via a UI interface  */
+export function hologramFactory<T extends keyof schema.HologramClasses>({
+	uri,
+	type,
+	settings,
+}: {
+	uri: string
+	type: T
+	settings: schema.HologramSettings[T]
+}) {
+	const ArgsSchema = schema.hologramMap[type]
+	ArgsSchema.safeParse(settings)
+	switch (type) {
+		case "quilt":
+			return new QuiltHologram({ uri, settings: settings as z.infer<typeof schema.QuiltHologramArgs> })
+		case "rgbd":
+			return new RGBDHologram({ uri, settings: settings as z.infer<typeof schema.RGBDHologramArgs> })
+		default:
+			throw new Error(`Invalid type: ${type}`)
 	}
 }
 

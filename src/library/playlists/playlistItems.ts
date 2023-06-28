@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { HologramType, QuiltHologram, RGBDHologram } from "../components/hologram"
-import { insert_playlist_entry } from "../schemas/requests"
+import { insert_playlist_entry } from "../schemas/schema.requests"
 
 export interface PlaylistItemArgs {
 	orchestration: string
@@ -20,6 +20,9 @@ export interface PlaylistItemArgs {
 	zoom: number
 }
 
+/**Playist items are what we actually end up sending to Bridge. 
+ * These are managed by the Playlist class, and should not be called externally.
+ * We take the hologram object the user creates and prepare it to be added to a playlist with the toBridge function. */
 class PlaylistItem {
 	public orchestration: string
 	public hologram: HologramType
