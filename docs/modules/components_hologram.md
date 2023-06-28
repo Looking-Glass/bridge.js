@@ -13,10 +13,9 @@
 
 - [HologramType](components_hologram.md#hologramtype)
 
-### Variables
+### Functions
 
-- [QuiltHologramArgs](components_hologram.md#quilthologramargs)
-- [RGBDHologramArgs](components_hologram.md#rgbdhologramargs)
+- [hologramFactory](components_hologram.md#hologramfactory)
 
 ## Type Aliases
 
@@ -24,14 +23,30 @@
 
 Ƭ **HologramType**: [`QuiltHologram`](../classes/components_hologram.QuiltHologram.md) \| [`RGBDHologram`](../classes/components_hologram.RGBDHologram.md)
 
-## Variables
+## Functions
 
-### QuiltHologramArgs
+### hologramFactory
 
-• `Const` **QuiltHologramArgs**: `ZodObject`<{ `aspect`: `ZodNumber` ; `columns`: `ZodNumber` ; `rows`: `ZodNumber` ; `viewCount`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `aspect`: `number` ; `columns`: `number` ; `rows`: `number` ; `viewCount`: `number`  }, { `aspect`: `number` ; `columns`: `number` ; `rows`: `number` ; `viewCount`: `number`  }\>
+▸ **hologramFactory**<`T`\>(`«destructured»`): [`QuiltHologram`](../classes/components_hologram.QuiltHologram.md) \| [`RGBDHologram`](../classes/components_hologram.RGBDHologram.md)
 
-___
+Allow the user to create a hologram manually based on type,
+this is useful for when we want to allow the end user to create a hologram themselves via a UI interface
 
-### RGBDHologramArgs
+#### Type parameters
 
-• `Const` **RGBDHologramArgs**: `ZodObject`<{ `aspect`: `ZodNumber` ; `chroma_depth`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `depth_cutoff`: `ZodOptional`<`ZodUnion`<[`ZodLiteral`<``1``\>, `ZodLiteral`<``0``\>]\>\> ; `depth_inversion`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `depth_loc`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>, `ZodLiteral`<``2``\>, `ZodLiteral`<``3``\>]\> ; `depthiness`: `ZodNumber` ; `focus`: `ZodOptional`<`ZodNumber`\> ; `zoom`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `aspect`: `number` ; `chroma_depth`: ``0`` \| ``1`` ; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` ; `focus?`: `number` ; `zoom?`: `number`  }, { `aspect`: `number` ; `chroma_depth`: ``0`` \| ``1`` ; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` ; `focus?`: `number` ; `zoom?`: `number`  }\>
+| Name | Type |
+| :------ | :------ |
+| `T` | extends keyof [`HologramClasses`](../interfaces/schemas_schema_hologram.HologramClasses.md) |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `settings` | [`HologramSettings`](schemas_schema_hologram.md#hologramsettings)[`T`] |
+| › `type` | `T` |
+| › `uri` | `string` |
+
+#### Returns
+
+[`QuiltHologram`](../classes/components_hologram.QuiltHologram.md) \| [`RGBDHologram`](../classes/components_hologram.RGBDHologram.md)

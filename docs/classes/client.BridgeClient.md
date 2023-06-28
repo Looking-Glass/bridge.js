@@ -13,6 +13,7 @@
 ### Properties
 
 - [currentPlaylistIndex](client.BridgeClient.md#currentplaylistindex)
+- [isDisconnecting](client.BridgeClient.md#isdisconnecting)
 - [playlists](client.BridgeClient.md#playlists)
 - [version](client.BridgeClient.md#version)
 - [eventsource](client.BridgeClient.md#eventsource)
@@ -30,12 +31,20 @@
 - [deletePlaylist](client.BridgeClient.md#deleteplaylist)
 - [disconnect](client.BridgeClient.md#disconnect)
 - [displays](client.BridgeClient.md#displays)
+- [getCurrentHologram](client.BridgeClient.md#getcurrenthologram)
 - [getVerbosity](client.BridgeClient.md#getverbosity)
 - [getVersion](client.BridgeClient.md#getversion)
+- [next](client.BridgeClient.md#next)
+- [pause](client.BridgeClient.md#pause)
+- [play](client.BridgeClient.md#play)
+- [playStudioPlaylist](client.BridgeClient.md#playstudioplaylist)
+- [previous](client.BridgeClient.md#previous)
 - [removeEventListener](client.BridgeClient.md#removeeventlistener)
+- [seek](client.BridgeClient.md#seek)
 - [setVerbosity](client.BridgeClient.md#setverbosity)
 - [showWindow](client.BridgeClient.md#showwindow)
 - [status](client.BridgeClient.md#status)
+- [stopStudioPlaylist](client.BridgeClient.md#stopstudioplaylist)
 - [getInstance](client.BridgeClient.md#getinstance)
 
 ## Constructors
@@ -51,6 +60,14 @@
 • **currentPlaylistIndex**: `number`
 
 The index of playlists that is currently active
+
+___
+
+### isDisconnecting
+
+• **isDisconnecting**: `boolean`
+
+A boolean for checking the status of the current disconnect event
 
 ___
 
@@ -110,14 +127,14 @@ Adds an event listener that returns a message from Bridge's websocket based even
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
+| `T` | extends keyof [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap) |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `event` | `T` | the event to listen for |
-| `MessageHandler` | (`event`: [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap)[`T`]) => `void` | the function to call when the event is received |
+| `MessageHandler` | (`event`: [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap)[`T`]) => `void` | the function to call when the event is received |
 
 #### Returns
 
@@ -191,7 +208,7 @@ ___
 
 ### deletePlaylist
 
-▸ **deletePlaylist**(`playlist`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `payload`: { type: "VARIANT\_MAP"; value: { name: { type: "WSTRING"; value: string; name: string; }; }; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+▸ **deletePlaylist**(`playlist`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 #### Parameters
 
@@ -201,7 +218,7 @@ ___
 
 #### Returns
 
-`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `payload`: { type: "VARIANT\_MAP"; value: { name: { type: "WSTRING"; value: string; name: string; }; }; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
@@ -232,6 +249,16 @@ the display object
 
 ___
 
+### getCurrentHologram
+
+▸ **getCurrentHologram**(): `undefined` \| [`HologramType`](../modules/components_hologram.md#hologramtype)
+
+#### Returns
+
+`undefined` \| [`HologramType`](../modules/components_hologram.md#hologramtype)
+
+___
+
 ### getVerbosity
 
 ▸ **getVerbosity**(): ``0`` \| ``2`` \| ``1`` \| ``3``
@@ -256,6 +283,62 @@ string of the version of Looking Glass Bridge that is running
 
 ___
 
+### next
+
+▸ **next**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+___
+
+### pause
+
+▸ **pause**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+___
+
+### play
+
+▸ **play**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+___
+
+### playStudioPlaylist
+
+▸ **playStudioPlaylist**(`playlistPath`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { message: { value: string; type: "WSTRING"; name: string; }; id?: { value: string; type: "WSTRING"; name: string; } \| undefined; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `playlistPath` | `string` |
+
+#### Returns
+
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { message: { value: string; type: "WSTRING"; name: string; }; id?: { value: string; type: "WSTRING"; name: string; } \| undefined; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+___
+
+### previous
+
+▸ **previous**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+___
+
 ### removeEventListener
 
 ▸ **removeEventListener**<`T`\>(`event`, `MessageHandler`): `Promise`<`void`\>
@@ -264,14 +347,30 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
+| `T` | extends keyof [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `event` | `T` |
-| `MessageHandler` | (`event`: [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap)[`T`]) => `void` |
+| `MessageHandler` | (`event`: [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap)[`T`]) => `void` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+___
+
+### seek
+
+▸ **seek**(`index`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `index` | `number` |
 
 #### Returns
 
@@ -299,7 +398,7 @@ ___
 
 ### showWindow
 
-▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+▸ **showWindow**(`showWindow`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 changes the state of the Looking Glass Bridge Window
 
@@ -311,7 +410,7 @@ changes the state of the Looking Glass Bridge Window
 
 #### Returns
 
-`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { type: "WSTRING"; value: string; name: string; } ; `status`: { type: "WSTRING"; value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
@@ -326,6 +425,16 @@ A helper function to check and see if Looking Glass Bridge is running or not.
 `Promise`<`boolean`\>
 
 boolean, true if Bridge is running, false if Bridge is not running
+
+___
+
+### stopStudioPlaylist
+
+▸ **stopStudioPlaylist**(): `Promise`<`undefined` \| { `success`: `boolean` = false }\>
+
+#### Returns
+
+`Promise`<`undefined` \| { `success`: `boolean` = false }\>
 
 ___
 

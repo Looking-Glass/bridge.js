@@ -17,7 +17,7 @@
 
 ### tryEnterOrchestration
 
-▸ **tryEnterOrchestration**(`name`): `Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
+▸ **tryEnterOrchestration**(`name`): `Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_schema_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
 
 this function will attempt to enter an orchestration
 
@@ -29,13 +29,13 @@ this function will attempt to enter an orchestration
 
 #### Returns
 
-`Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
+`Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_schema_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
 
 ___
 
 ### tryExitOrchestration
 
-▸ **tryExitOrchestration**(`orchestration`): `Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
+▸ **tryExitOrchestration**(`orchestration`): `Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_schema_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
 
 #### Parameters
 
@@ -45,4 +45,4 @@ ___
 
 #### Returns
 
-`Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>
+`Promise`<{ `response`: `z.infer`<typeof [`orchestration`](schemas_schema_responses.md#orchestration)\> \| ``null`` ; `success`: `boolean`  }\>

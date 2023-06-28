@@ -65,14 +65,14 @@ adds a new message handler object to the BridgeEventSource class
 
 | Name | Type |
 | :------ | :------ |
-| `K` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
+| `K` | extends keyof [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `«destructured»` | `Object` |
-| › `MessageHandler` | (`payload`: [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap)[`K`]) => `void` |
+| › `MessageHandler` | (`payload`: [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap)[`K`]) => `void` |
 | › `event` | `K` |
 
 #### Returns
@@ -125,14 +125,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `K` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
+| `K` | extends keyof [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `«destructured»` | `Object` |
-| › `MessageHandler` | (`payload`: [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap)[`K`]) => `void` |
+| › `MessageHandler` | (`payload`: [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap)[`K`]) => `void` |
 | › `event` | `K` |
 
 #### Returns

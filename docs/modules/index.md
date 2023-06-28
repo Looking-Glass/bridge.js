@@ -7,6 +7,8 @@
 ### References
 
 - [BridgeClient](index.md#bridgeclient)
+- [HologramClasses](index.md#hologramclasses)
+- [HologramSettings](index.md#hologramsettings)
 - [HologramType](index.md#hologramtype)
 - [MessageHandler](index.md#messagehandler)
 - [MonitorConnectedMessageHandler](index.md#monitorconnectedmessagehandler)
@@ -32,12 +34,28 @@
 - [SyncPlayPlaylistCompleteMessageHandler](index.md#syncplayplaylistcompletemessagehandler)
 - [SyncPlayPlaylistMessageHandler](index.md#syncplayplaylistmessagehandler)
 - [getPlayPlaylistJsonArgs](index.md#getplayplaylistjsonargs)
+- [hologramFactory](index.md#hologramfactory)
+- [hologramMap](index.md#hologrammap)
+- [hologramTypeSchema](index.md#hologramtypeschema)
+- [hologramTypes](index.md#hologramtypes)
 
 ## References
 
 ### BridgeClient
 
 Re-exports [BridgeClient](../classes/client.BridgeClient.md)
+
+___
+
+### HologramClasses
+
+Re-exports [HologramClasses](../interfaces/schemas_schema_hologram.HologramClasses.md)
+
+___
+
+### HologramSettings
+
+Re-exports [HologramSettings](schemas_schema_hologram.md#hologramsettings)
 
 ___
 
@@ -139,7 +157,7 @@ ___
 
 ### QuiltHologramArgs
 
-Re-exports [QuiltHologramArgs](components_hologram.md#quilthologramargs)
+Re-exports [QuiltHologramArgs](schemas_schema_hologram.md#quilthologramargs)
 
 ___
 
@@ -157,7 +175,7 @@ ___
 
 ### RGBDHologramArgs
 
-Re-exports [RGBDHologramArgs](components_hologram.md#rgbdhologramargs)
+Re-exports [RGBDHologramArgs](schemas_schema_hologram.md#rgbdhologramargs)
 
 ___
 
@@ -188,3 +206,27 @@ ___
 ### getPlayPlaylistJsonArgs
 
 Re-exports [getPlayPlaylistJsonArgs](../interfaces/playlists_playlist.getPlayPlaylistJsonArgs.md)
+
+___
+
+### hologramFactory
+
+Re-exports [hologramFactory](components_hologram.md#hologramfactory)
+
+___
+
+### hologramMap
+
+Re-exports [hologramMap](schemas_schema_hologram.md#hologrammap)
+
+___
+
+### hologramTypeSchema
+
+Re-exports [hologramTypeSchema](schemas_schema_hologram.md#hologramtypeschema)
+
+___
+
+### hologramTypes
+
+Re-exports [hologramTypes](schemas_schema_hologram.md#hologramtypes)

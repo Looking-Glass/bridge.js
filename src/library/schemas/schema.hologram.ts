@@ -2,7 +2,7 @@ import { z } from "zod"
 import { QuiltHologram, RGBDHologram } from ".."
 import { DEPTHINESS, ZOOM } from "./defaults"
 
-const hologramTypeSchema = z.union([z.literal("quilt"), z.literal("rgbd")])
+export const hologramTypeSchema = z.union([z.literal("quilt"), z.literal("rgbd")])
 
 export type hologramTypes = z.infer<typeof hologramTypeSchema>
 

@@ -1,19 +1,25 @@
-[@lookingglass/bridge](../README.md) / schemas/requests
+[@lookingglass/bridge](../README.md) / schemas/schema.requests
 
-# Module: schemas/requests
+# Module: schemas/schema.requests
 
 ## Table of contents
 
 ### Variables
 
-- [available\_output\_devices](schemas_requests.md#available_output_devices)
-- [delete\_playlist](schemas_requests.md#delete_playlist)
-- [insert\_playlist\_entry](schemas_requests.md#insert_playlist_entry)
-- [instance\_playlist](schemas_requests.md#instance_playlist)
-- [orchestration](schemas_requests.md#orchestration)
-- [play\_playlist](schemas_requests.md#play_playlist)
-- [show\_window](schemas_requests.md#show_window)
-- [version](schemas_requests.md#version)
+- [available\_output\_devices](schemas_schema_requests.md#available_output_devices)
+- [delete\_playlist](schemas_schema_requests.md#delete_playlist)
+- [insert\_playlist\_entry](schemas_schema_requests.md#insert_playlist_entry)
+- [instance\_playlist](schemas_schema_requests.md#instance_playlist)
+- [instance\_studio\_playlist](schemas_schema_requests.md#instance_studio_playlist)
+- [orchestration](schemas_schema_requests.md#orchestration)
+- [play\_playlist](schemas_schema_requests.md#play_playlist)
+- [show\_window](schemas_schema_requests.md#show_window)
+- [transport\_control\_next](schemas_schema_requests.md#transport_control_next)
+- [transport\_control\_pause](schemas_schema_requests.md#transport_control_pause)
+- [transport\_control\_play](schemas_schema_requests.md#transport_control_play)
+- [transport\_control\_previous](schemas_schema_requests.md#transport_control_previous)
+- [transport\_control\_seek\_to\_index](schemas_schema_requests.md#transport_control_seek_to_index)
+- [version](schemas_schema_requests.md#version)
 
 ## Variables
 
@@ -41,6 +47,12 @@ ___
 
 ___
 
+### instance\_studio\_playlist
+
+• `Const` **instance\_studio\_playlist**: `ZodObject`<{ `loop`: `ZodBoolean` ; `name`: `ZodString` ; `orchestration`: `ZodString` ; `playlist_path`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `loop`: `boolean` ; `name`: `string` ; `orchestration`: `string` ; `playlist_path`: `string`  }, { `loop`: `boolean` ; `name`: `string` ; `orchestration`: `string` ; `playlist_path`: `string`  }\>
+
+___
+
 ### orchestration
 
 • `Const` **orchestration**: `ZodObject`<{}, ``"strict"``, `ZodTypeAny`, {}, {}\>
@@ -56,6 +68,36 @@ ___
 ### show\_window
 
 • `Const` **show\_window**: `ZodObject`<{ `head_index`: `ZodNumber` ; `orchestration`: `ZodString` ; `show_window`: `ZodBoolean`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `orchestration`: `string` ; `show_window`: `boolean`  }, { `head_index`: `number` ; `orchestration`: `string` ; `show_window`: `boolean`  }\>
+
+___
+
+### transport\_control\_next
+
+• `Const` **transport\_control\_next**: `ZodObject`<{ `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `orchestration`: `string`  }, { `orchestration`: `string`  }\>
+
+___
+
+### transport\_control\_pause
+
+• `Const` **transport\_control\_pause**: `ZodObject`<{ `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `orchestration`: `string`  }, { `orchestration`: `string`  }\>
+
+___
+
+### transport\_control\_play
+
+• `Const` **transport\_control\_play**: `ZodObject`<{ `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `orchestration`: `string`  }, { `orchestration`: `string`  }\>
+
+___
+
+### transport\_control\_previous
+
+• `Const` **transport\_control\_previous**: `ZodObject`<{ `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `orchestration`: `string`  }, { `orchestration`: `string`  }\>
+
+___
+
+### transport\_control\_seek\_to\_index
+
+• `Const` **transport\_control\_seek\_to\_index**: `ZodObject`<{ `index`: `ZodNumber` ; `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `index`: `number` ; `orchestration`: `string`  }, { `index`: `number` ; `orchestration`: `string`  }\>
 
 ___
 

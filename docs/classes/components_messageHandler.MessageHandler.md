@@ -8,7 +8,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `E` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
+| `E` | extends keyof [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap) |
 
 ## Hierarchy
 
@@ -61,7 +61,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `E` | extends keyof [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap) |
+| `E` | extends keyof [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap) |
 
 #### Parameters
 
@@ -93,7 +93,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `message` | [`BridgeEventMap`](../modules/schemas_events.md#bridgeeventmap)[`E`] |
+| `message` | [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap)[`E`] |
 
 #### Returns
 

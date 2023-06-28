@@ -4,6 +4,8 @@
 
 [components/hologram](../modules/components_hologram.md).QuiltHologram
 
+Create a new Quilt Hologram
+
 ## Table of contents
 
 ### Constructors
