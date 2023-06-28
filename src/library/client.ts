@@ -341,6 +341,7 @@ export class BridgeClient {
 		return { success: true }
 	}
 
+	/**Play a Playlist created by Looking Glass Studio, requires the full path to the playlist.json file. */
 	public async playStudioPlaylist(
 		playlistPath: string
 	): Promise<{ success: boolean; response: z.infer<typeof schema.play_playlist> | null }> {
@@ -373,7 +374,8 @@ export class BridgeClient {
 		return { success: true, response: play_playlist.response }
 	}
 
-	public async stopStudioPlaylist() {
+	/**stop playing the studio playlist */
+	public async stopStudioPlaylist(): Promise<{ success: boolean }> {
 		console.log("%c function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) return { success: false }
 
@@ -383,68 +385,124 @@ export class BridgeClient {
 			loop: false,
 		}
 
-		await sendMessage({
+		let message = await sendMessage({
 			endpoint: "delete_playlist",
 			requestBody: requestBody,
 		})
+		if (message.success == false) {
+			return { success: false }
+		}
 
 		await this.showWindow(false)
+
+		return { success: true }
 	}
+
 	// TRANSPORT CONTROLS
-	public async play() {
+
+	/**Play the currently instanced playlist */
+	public async play(): Promise<{
+		success: boolean
+		response: z.infer<typeof schema.transport_control_play> | null
+	}> {
 		let requestBody = {
 			orchestration: this.orchestration,
 		}
 
-		await sendMessage({
+		let message = await sendMessage({
 			endpoint: "transport_control_play",
 			requestBody: requestBody,
 		})
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
 	}
 
-	public async pause() {
+	/**Pause the currently playing playlist */
+	public async pause(): Promise<{
+		success: boolean
+		response: z.infer<typeof schema.transport_control_pause> | null
+	}> {
 		let requestBody = {
 			orchestration: this.orchestration,
 		}
 
-		await sendMessage({
+		let message = await sendMessage({
 			endpoint: "transport_control_pause",
 			requestBody: requestBody,
 		})
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
 	}
 
-	public async next() {
+	/**Got to the next playlist item */
+	public async next(): Promise<{
+		success: boolean
+		response: z.infer<typeof schema.transport_control_next> | null
+	}> {
 		let requestBody = {
 			orchestration: this.orchestration,
 		}
 
-		await sendMessage({
+		let message = await sendMessage({
 			endpoint: "transport_control_next",
 			requestBody: requestBody,
 		})
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
 	}
 
-	public async previous() {
+	/**Go to the previous playlist item */
+	public async previous(): Promise<{
+		success: boolean
+		response: z.infer<typeof schema.transport_control_previous> | null
+	}> {
 		let requestBody = {
 			orchestration: this.orchestration,
 		}
 
-		await sendMessage({
+		let message = await sendMessage({
 			endpoint: "transport_control_previous",
 			requestBody: requestBody,
 		})
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
 	}
 
-	public async seek(index: number) {
+	/**Seek to a specific item in a playlist */
+	public async seek(
+		index: number
+	): Promise<{ success: boolean; response: z.infer<typeof schema.transport_control_seek_to_index> | null }> {
 		let requestBody = {
 			orchestration: this.orchestration,
 			index: index,
 		}
 
-		await sendMessage({
+		let message = await sendMessage({
 			endpoint: "transport_control_seek_to_index",
 			requestBody: requestBody,
 		})
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
 	}
 	/**
 	 * Connect to Looking Glass Bridge's EventSource.

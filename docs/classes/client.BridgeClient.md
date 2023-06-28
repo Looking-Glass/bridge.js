@@ -285,37 +285,45 @@ ___
 
 ### next
 
-▸ **next**(): `Promise`<`void`\>
+▸ **next**(): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+Got to the next playlist item
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
 ### pause
 
-▸ **pause**(): `Promise`<`void`\>
+▸ **pause**(): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+Pause the currently playing playlist
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
 ### play
 
-▸ **play**(): `Promise`<`void`\>
+▸ **play**(): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+Play the currently instanced playlist
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
 ### playStudioPlaylist
 
 ▸ **playStudioPlaylist**(`playlistPath`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { message: { value: string; type: "WSTRING"; name: string; }; id?: { value: string; type: "WSTRING"; name: string; } \| undefined; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+Play a Playlist created by Looking Glass Studio, requires the full path to the playlist.json file.
 
 #### Parameters
 
@@ -331,11 +339,13 @@ ___
 
 ### previous
 
-▸ **previous**(): `Promise`<`void`\>
+▸ **previous**(): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+Go to the previous playlist item
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
@@ -364,7 +374,9 @@ ___
 
 ### seek
 
-▸ **seek**(`index`): `Promise`<`void`\>
+▸ **seek**(`index`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+Seek to a specific item in a playlist
 
 #### Parameters
 
@@ -374,7 +386,7 @@ ___
 
 #### Returns
 
-`Promise`<`void`\>
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
@@ -430,11 +442,13 @@ ___
 
 ### stopStudioPlaylist
 
-▸ **stopStudioPlaylist**(): `Promise`<`undefined` \| { `success`: `boolean` = false }\>
+▸ **stopStudioPlaylist**(): `Promise`<{ `success`: `boolean`  }\>
+
+stop playing the studio playlist
 
 #### Returns
 
-`Promise`<`undefined` \| { `success`: `boolean` = false }\>
+`Promise`<{ `success`: `boolean`  }\>
 
 ___
 
