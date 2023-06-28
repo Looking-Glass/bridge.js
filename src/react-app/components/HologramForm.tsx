@@ -44,7 +44,7 @@ export default function HologramForm({
 						<input
 							type="text"
 							onChange={(e) => {
-								// remove "" from the uri
+								// remove "" from the uri, quotes are auto-added by windows' copy as path option.
 								let cleaned = e.target.value.replace(/"/g, "")
 								setHologramUri(cleaned)
 							}}></input>
