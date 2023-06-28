@@ -184,3 +184,24 @@ export const available_output_devices = z.object({
 	}),
 	status: schema.status,
 })
+
+export const instance_studio_playlist = z.object({
+	name: schema.name,
+	orchestration: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	payload: z.object({
+		name: schema.name,
+		type: schema.variant_map,
+		value: z.object({
+			name: z.object({
+				name: schema.name,
+				type: schema.wstring,
+				value: z.string(),
+			}),
+		}),
+	}),
+	status: schema.status,
+})

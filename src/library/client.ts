@@ -341,6 +341,38 @@ export class BridgeClient {
 		return { success: true }
 	}
 
+	public async playStudioPlaylist(
+		playlistPath: string
+	): Promise<{ success: boolean; response: z.infer<typeof schema.play_playlist> | null }> {
+		console.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid")
+		if (this.isConnected == false) return { success: false, response: null }
+
+		const requestBody = {
+			orchestration: this.orchestration,
+			name: "Studio Playlist",
+			playlist_path: playlistPath,
+			loop: true,
+		}
+
+		await sendMessage({
+			endpoint: "instance_studio_playlist",
+			requestBody: requestBody,
+		})
+
+		const playRequestBody = {
+			orchestration: this.orchestration,
+			name: "Studio Playlist",
+			head_index: -1,
+		}
+
+		let play_playlist = await sendMessage({
+			endpoint: "play_playlist",
+			requestBody: playRequestBody,
+		})
+
+		return { success: true, response: play_playlist.response }
+	}
+
 	/**
 	 * Connect to Looking Glass Bridge's EventSource.
 	 * The event source is a websocket connection that will send events from Bridge to the client.

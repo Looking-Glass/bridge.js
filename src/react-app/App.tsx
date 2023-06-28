@@ -38,6 +38,7 @@ function App() {
 	//internal application state
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
 	const [playlist, setPlaylist] = useState<string>()
+	const [studioPlaylistPath, setStudioPlaylistPath] = useState<string>("")
 
 	// Custom Hologram State
 	const [hologram, setHologram] = useState<QuiltHologram | RGBDHologram>(quilt)
@@ -162,6 +163,25 @@ function App() {
 							}}
 							disabled={!connected}>
 							Toggle Window
+						</button>
+						<div>
+							<label>
+								Full Path to Playlist.json
+								<input
+									type="text"
+									onChange={(e) => {
+										// remove "" from the uri, quotes are auto-added by windows' copy as path option.
+										let cleaned = e.target.value.replace(/"/g, "")
+										setStudioPlaylistPath(cleaned)
+									}}></input>
+							</label>
+						</div>
+						<button
+							onClick={async () => {
+								let call = await Bridge.playStudioPlaylist(studioPlaylistPath)
+								setResponse(JSON.stringify(call.response))
+							}}>
+							Play Studio Playlist
 						</button>
 					</div>
 

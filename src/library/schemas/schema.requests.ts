@@ -10,6 +10,13 @@ export const show_window = z.object({
 	head_index: z.number(),
 })
 
+export const instance_studio_playlist = z.object({
+	orchestration: z.string(),
+	name: z.string(),
+	playlist_path: z.string(),
+	loop: z.boolean(),
+})
+
 export const available_output_devices = z.object({
 	orchestration: z.string(),
 })

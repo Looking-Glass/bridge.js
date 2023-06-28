@@ -29,7 +29,7 @@ export type BridgeEndpointType =
 	| "show_window"
 
 export type BridgeEndpointSchemaMap = {
-	// instance_studio_playlist: z.infer<typeof BridgeResponse.instance_studio_playlist>
+	instance_studio_playlist: z.infer<typeof BridgeResponse.instance_studio_playlist>
 	bridge_version: z.infer<typeof BridgeResponse.version>
 	api_version: z.infer<typeof BridgeResponse.version>
 	// set_named_autostart_playlist: z.infer<typeof BridgeResponse.set_named_autostart_playlist>
@@ -55,7 +55,7 @@ export type BridgeEndpointSchemaMap = {
 }
 
 export type BridgeRequestBodyMap = {
-	// instance_studio_playlist: z.infer<typeof BridgeRequest.instance_studio_playlist>
+	instance_studio_playlist: z.infer<typeof BridgeRequest.instance_studio_playlist>
 	bridge_version: z.infer<typeof BridgeRequest.version>
 	api_version: z.infer<typeof BridgeRequest.version>
 	// set_named_autostart_playlist: z.infer<typeof BridgeRequest.set_named_autostart_playlist>
@@ -140,7 +140,7 @@ export async function sendMessage<
 		if (parsedResponse.status.value !== "Completion") {
 			console.log("%c Bridge Failure:", "color: #ff0000", parsedResponse)
 			console.groupEnd()
-			// the call worked, but the response failed. 
+			// the call worked, but the response failed.
 			return { success: true, response: parsedResponse }
 		}
 
