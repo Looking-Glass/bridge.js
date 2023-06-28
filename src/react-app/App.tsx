@@ -187,7 +187,7 @@ function App() {
 						</button>
 						<button
 							onClick={async () => {
-								let call = await Bridge.stopStudioPlaylist()
+								await Bridge.stopStudioPlaylist()
 								// setResponse(JSON.stringify(call.response))
 							}}
 							disabled={!connected}>
