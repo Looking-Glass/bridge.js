@@ -29,6 +29,8 @@
 		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources --watch"
 	},
 	"dependencies": {
+		"utf-8-validate": "6.0.3",
+		"bufferutil": "^4.0.7",
 		"holoplay-core": "^0.0.9",
 		"zod": "^3.21.4"
 	},
