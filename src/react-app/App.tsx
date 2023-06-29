@@ -40,6 +40,7 @@ function App() {
 	const [playlist, setPlaylist] = useState<string>()
 	const [studioPlaylistPath, setStudioPlaylistPath] = useState<string>("")
 	const [index, setIndex] = useState<number>(0)
+	const [progress, setProgress] = useState(0)
 
 	// Custom Hologram State
 	const [hologram, setHologram] = useState<QuiltHologram | RGBDHologram>(quilt)
@@ -248,6 +249,11 @@ function App() {
 							SEEK
 						</button>
 					</div>
+					<br />
+					<div className="w3-light-grey">
+						<div className="w3-container w3-green w3-center" style={{ width: `${progress}%` }}></div>
+						<div className="w3-center">{Math.round(progress)}%</div>
+					</div>
 					<div className="flex-container">
 						<div>
 							<h2>Casting</h2>
@@ -298,7 +304,6 @@ function App() {
 					</div>
 				</div>
 			</div>
-
 			<h2>Response</h2>
 			<hr />
 			<p>{bridgeResponse}</p>
@@ -323,10 +328,13 @@ function App() {
 			<button
 				onClick={() => {
 					Bridge.addEventListener("Progress Update", (event) => {
+						setProgress(event.payload.value.progress.value)
 						if (eventsink.current) {
-							eventsink.current.value =
-								JSON.stringify(event.payload.value.progress_type.value) +
-								JSON.stringify(event.payload.value.progress.value)
+							if (event.payload.value.progress_type.value === "Playlist Progress") {
+								eventsink.current.value =
+									JSON.stringify(event.payload.value.progress_type.value) +
+									JSON.stringify(event.payload.value.progress.value)
+							}
 						}
 					})
 				}}
