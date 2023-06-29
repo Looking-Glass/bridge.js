@@ -267,6 +267,7 @@ export class BridgeClient {
 		return { success: true, response: this.lkgDisplays }
 	}
 
+	/**Delete the instance of the playlist from Bridge, this will stop the playlist from playing if it's active. */
 	public async deletePlaylist(
 		playlist: Playlist
 	): Promise<{ success: boolean; response: z.infer<typeof schema.delete_playlist> | null }> {

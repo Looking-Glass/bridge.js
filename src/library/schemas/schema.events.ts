@@ -13,6 +13,7 @@ export const BridgeEvent = z.union([
 	z.literal("Sync/Play Playlist"),
 	z.literal("Sync/Play Playlist Complete"),
 	z.literal("Sync/Play Playlist Cancelled"),
+	z.literal("Transport Control Pause"),
 	// z.literal("All Events"),
 ])
 
@@ -161,6 +162,24 @@ const deletePlaylist = z.object({
 	}),
 })
 
+const transportControlPause = z.object({
+	event: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: BridgeEvent,
+	}),
+	message: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	name: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+})
+
 /**
  * events contain the same payload structure, up until the value of the payload
  * this is a helper type to make it easier to define the payload of each event
@@ -186,6 +205,7 @@ export const progressUpdateResponse = PayloadResponse(progressUpdate)
 export const insertPlaylistResponse = PayloadResponse(insertPlaylist)
 export const instancePlaylistResponse = PayloadResponse(playlistInstance)
 export const deletePlaylistResponse = PayloadResponse(deletePlaylist)
+export const transportControlPauseResponse = PayloadResponse(transportControlPause)
 
 // export const all_events = z.union([monitorConnectResponse, progressUpdateResponse])
 
@@ -201,6 +221,7 @@ export type BridgeEventMap = {
 	"Sync/Play Playlist": z.infer<typeof progressUpdateResponse>
 	"Sync/Play Playlist Complete": z.infer<typeof progressUpdateResponse>
 	"Sync/Play Playlist Cancelled": z.infer<typeof progressUpdateResponse>
+	"Transport Control Pause": z.infer<typeof transportControlPauseResponse>
 	// "All Events": all_events,
 	/**CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE */
 	"Bridge Connected": z.infer<typeof progressUpdateResponse>
