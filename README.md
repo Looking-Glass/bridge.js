@@ -1,11 +1,49 @@
 > **Warning**
 > Under heavy development, names may and will change abruptly
 
-# bridge.js
+# 🌉 bridge.js
 
 The Bridge.JS library provides an easy way to connect to and leverage all the awesome functionality in [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge).
 
-## Key Concepts
+> **Note**
+> For live examples, checkout [our demo site here](https://bridge-js.vercel.app/)
+
+## Get Started
+
+To get started, Make sure you have [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge) running along with a [Looking Glass Display](https://lookingglassfactory.com/product-overview)
+
+You can import the library via a script tag or via npm.
+
+**We strongly recommend using [Typescript](https://www.typescriptlang.org/)**
+
+> **Note**
+> The Bridge.JS library is published to npm [here](https://www.npmjs.com/package/@lookingglass/bridge)
+
+```js
+import {BridgeClient} from @lookingglass/bridge
+
+const Bridge = BridgeClient.getInstance()
+```
+
+Bridge is a singleton class, meaning only one `Bridge` object can exist at a time. This is why we use the `getInstance()` function instead of trying to create a `new BridgeClient`
+
+### Connecting to Bridge
+
+The BridgeClient object will attempt to automatically connect to Bridge when created. You can connect or disconnect to Bridge by running the following:
+
+```js
+await Bridge.connect()
+
+await Bridge.disconnect()
+```
+
+You can also check to see if you can connect to Bridge by running
+
+```js
+await Bridge.status()
+```
+
+## 🔑 Key Concepts
 
 ### Orchestrations
 
@@ -17,52 +55,33 @@ As a developer, you shouldn't have to worry about this token, since this is alwa
 
 ### Holograms
 
-The Bridge.JS Library currently supports two hologram types, Quilts and RGBD, you need to construct the hologram object, then cast it to Bridge. Here's an example:
+The Bridge.JS Library currently supports two hologram types, Quilts and RGBD, you need to construct the hologram object, then cast it to Bridge.
+
+> **Note**
+> In the examples below we use web based URLs in the `uri` field, but you can also use a file path location as well.
 
 ```js
-const hologram = QuiltPlaylistItem({
+const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
-	rows: 13,
-	columns: 8,
-	aspect: 0.75,
-	viewCount: 8 * 13,
+	settings: { rows: 13, columns: 8, aspect: 0.75, viewCount: 8 * 13 },
 })
 
-const rgbd_hologram = RGBDPlaylistItem({
+const rgbd = new RGBDHologram({
 	uri: "https://dl-dev.blocks.glass/u/b528b9def6aa4986/rgbd.png",
-	depthiness: 1.0,
-	rows: 8,
-	columns: 6,
-	focus: 0,
-	aspect: 1,
-	viewCount: 48,
-	chroma_depth: 0,
-	depth_inversion: 0,
-	depth_loc: 2,
-	depth_cutoff: 1,
+	settings: {
+		depthiness: 2.0,
+		focus: 0,
+		aspect: 1,
+		chroma_depth: 0,
+		depth_inversion: 0,
+		depth_loc: 2,
+		depth_cutoff: 1,
+		zoom: 1,
+	},
 })
 ```
 
-### Playlists
-
-Looking Glass Bridge supports playing back Playlists of holograms. Like Orchestrations, Playlists are created by passing a keyword into the `createPlaylist` function. A Playlist isn't sent to Bridge itself until you play the playlist.
-
-You'll want to add items to your playlist, which you can do with the `addItem` function.
-
-```js
-const playlist = Bridge.createPlaylist("banana")
-
-const hologram = QuiltPlaylistItem({
-	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
-	rows: 13,
-	columns: 8,
-	aspect: 0.75,
-	viewCount: 8 * 13,
-})
-
-playlist.addItem = hologram
-await Bridge.play(playlist)
-```
+You can also dynamically create a hologram of either class by using the `hologramFactory` function. An example using this pattern can be found in the `src/react-app/components/HologramForm.tsx` component. In that component we utilize a form and allow the user to create a hologram from the UI.
 
 ### Casting a Hologram
 
@@ -72,33 +91,25 @@ To show a single hologram on the display, you can use the `cast` function like s
 await Bridge.cast(hologram)
 ```
 
-## Using the Library
+### Playlists
 
-> **Note**
-> For live examples, checkout [our demo site here](https://bridge-js.vercel.app/)
+Looking Glass Bridge supports playing back Playlists of holograms. Like Orchestrations, Playlists are created by passing a keyword into the `createPlaylist` function. A Playlist isn't sent to Bridge itself until you play the playlist.
 
-To get started, import the library, either via script tag or via npm. Then create a new Bridge object like so.
-
-```js
-import {Bridge} from @lookingglass/bridge
-```
-
-Bridge is a singleton class, meaning only one `Bridge` object can exist at a time.
-
-### Connecting to Bridge
-
-The Bridge object will automatically attempt to connect to Looking Glass Bridge.
-
-If it's unable to connect, for example if Bridge is not running when the object is initialized, you can manually try connecting by calling
+You'll want to add items to your playlist, which you can do with the `addItem` function.
 
 ```js
-await Bridge.createOrchestration()
-```
+// create a playlist
+const playlist = Bridge.createPlaylist("banana")
 
-You can also check to see if you can connect to Bridge by running
-
-```js
-await Bridge.status()
+// create a hologram to put in the playlist
+const quilt = new QuiltHologram({
+	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
+	settings: { rows: 13, columns: 8, aspect: 0.75, viewCount: 8 * 13 },
+})
+// add the item to the playlist
+playlist.addItem = hologram
+// play the playlist
+await Bridge.play(playlist)
 ```
 
 ### Checking if functions succeeded.
@@ -108,7 +119,7 @@ Given that most functions are asynchronous, you'll need to store the result as a
 
 For example:
 
-```javascript
+```js
 const cast = await Bridge.cast(hologram)
 if (cast.success) {
 	console.log("🥳 yay we did it!")
@@ -121,7 +132,9 @@ if (cast.success) {
 
 All files used in the library are in the `src/library` folder.
 
-Most core functionality is exported as part of the `Bridge` object, though there are some helper functions that assist in creating proper hologram and playlist objects.
+Most core functionality is exported as part of the `Bridge` object, though there are some helper functions that assist in creating hologram and playlist objects.
+
+Responses and Requests to Bridge are strongly typed with the [Zod](https://github.com/colinhacks/zod) library. These are defined in the schemas folder.
 
 **To ensure your file/functionality is exported from the library you must reference the file in index.ts**
 

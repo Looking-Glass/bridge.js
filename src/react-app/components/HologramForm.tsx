@@ -50,6 +50,8 @@ export default function HologramForm({
 							}}></input>
 					</label>
 				</div>
+
+				{/* Settings for RGBD holograms */}
 				{hologramType == "rgbd" && (
 					<div>
 						<h4>RGBD Settings</h4>
@@ -86,6 +88,8 @@ export default function HologramForm({
 						</label>
 					</div>
 				)}
+
+				{/* Settings for Quilt holograms */}
 				{hologramType == "quilt" && (
 					<div>
 						<h4>Quilt Settings</h4>
