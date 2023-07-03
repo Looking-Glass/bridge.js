@@ -75,7 +75,7 @@ ___
 | `message` | `Object` | `undefined` |
 | `message.name` | `string` | `schema.name` |
 | `message.orchestration` | { value: string; type: "WSTRING"; name: string; } | `undefined` |
-| `message.payload` | { value: { message: { value: string; type: "WSTRING"; name: string; }; name: { value: string; type: "WSTRING"; name: string; }; event: { value: "Monitor Connect" \| "Monitor Disconnect" \| "Progress Start" \| ... 7 more ... \| "Sync/Play Playlist Cancelled"; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name... | `undefined` |
+| `message.payload` | { value: { message: { value: string; type: "WSTRING"; name: string; }; name: { value: string; type: "WSTRING"; name: string; }; event: { value: "Monitor Connect" \| "Monitor Disconnect" \| "Progress Start" \| ... 8 more ... \| "Transport Control Pause"; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: str... | `undefined` |
 | `message.status` | { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } | `schema.status` |
 
 #### Returns

@@ -210,6 +210,8 @@ ___
 
 ▸ **deletePlaylist**(`playlist`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
+Delete the instance of the playlist from Bridge, this will stop the playlist from playing if it's active.
+
 #### Parameters
 
 | Name | Type |
