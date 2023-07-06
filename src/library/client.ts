@@ -21,7 +21,7 @@ export class BridgeClient {
 	/**An array containing the connected Looking Glass Displays */
 	private displays: Display[]
 	/**an Array containing Playlists, we store this to easily switch between multiple playlists */
-	public playlists: Playlist[] | undefined[]
+	public playlists: Playlist[] | undefined
 	/** The index of playlists that is currently active */
 	public currentPlaylistIndex: number
 	/** the instance of the client that we create, BridgeClient is a singleton, there can only be one */
@@ -348,7 +348,7 @@ export class BridgeClient {
 		this.isCastPending = true
 
 		let newPlaylistIndex = (this.currentPlaylistIndex + 1) % 2
-		let playlist = this.playlists[newPlaylistIndex]
+		let playlist = this.playlists?.[newPlaylistIndex]
 
 		// delete the playlist if it already exists
 		if (playlist != undefined) {
@@ -359,7 +359,7 @@ export class BridgeClient {
 			}
 			// clear the playlist in bridge.js
 			playlist.clearItems()
-			this.playlists[newPlaylistIndex] = undefined
+			playlist = undefined
 		}
 
 		playlist = new Playlist({
@@ -373,7 +373,9 @@ export class BridgeClient {
 		await playlist.play({ playlist })
 
 		this.currentPlaylistIndex = newPlaylistIndex
-		this.playlists[newPlaylistIndex] = playlist
+		if (this.playlists !== undefined && this.playlists[newPlaylistIndex] == undefined) {
+			this.playlists[newPlaylistIndex] = playlist
+		}
 
 		this.isCastPending = false
 		this.currentHologram = hologram

@@ -7,6 +7,7 @@ import {
 	PlaylistInsertMessageHandler,
 	PlaylistInstanceMessageHandler,
 	hologramTypes,
+	Playlist,
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
 
@@ -226,13 +227,20 @@ function App() {
 						</button>
 						<button
 							onClick={async () => {
-								let playlist = Bridge.playlists.find((playlist) => playlist?.name == autoStartPlaylistName)
-								if (!playlist) {
-									setResponse(`No Playlist with named ${autoStartPlaylistName} found`)
-									return
+								// Check to see if playlists exist
+								if (Bridge.playlists) {
+									// Find the playlist with the name that matches the one we want to auto start
+									let playlist = Bridge.playlists.find(
+										(playlist: Playlist | undefined) => playlist && playlist.name == autoStartPlaylistName
+									)
+									// Throw an error if no playlist with that name is found
+									if (!playlist) {
+										setResponse(`No Playlist with named ${autoStartPlaylistName} found`)
+										return
+									}
+									let call = await Bridge.createAutoStartPlaylist({ playlist })
+									setResponse(JSON.stringify(call.response))
 								}
-								let call = await Bridge.createAutoStartPlaylist({ playlist })
-								setResponse(JSON.stringify(call.response))
 							}}>
 							Create Auto Start Playlist
 						</button>
