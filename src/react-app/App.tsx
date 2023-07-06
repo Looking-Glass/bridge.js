@@ -32,8 +32,10 @@ const rgbd = new RGBDHologram({
 function App() {
 	// State for managing connection status
 	const [connected, setConnected] = useState<boolean>(false)
-	const [connectionStatus, setConnectionStatus] = useState<string>("🛑 Unable to Connect")
-	const [displays, setDisplays] = useState<string>("checking display status...")
+	const [connectionStatus, setConnectionStatus] = useState<string>(
+		"Not Connected. Click the Connect button below to connect to Bridge"
+	)
+	const [displays, setDisplays] = useState<string>("Connect to Bridge to detect displays")
 
 	//internal application state
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
@@ -41,6 +43,7 @@ function App() {
 	const [studioPlaylistPath, setStudioPlaylistPath] = useState<string>("")
 	const [index, setIndex] = useState<number>(0)
 	const [progress, setProgress] = useState(0)
+	const [autoStartPlaylistName, setAutoStartPlaylistName] = useState<string>("")
 
 	// Custom Hologram State
 	const [hologram, setHologram] = useState<QuiltHologram | RGBDHologram>(quilt)
@@ -55,6 +58,35 @@ function App() {
 
 	Bridge.setVerbosity(3)
 
+	const onConnectionFailed = () => {
+		setConnected(false)
+		setConnectionStatus("🚨 Connection Failed")
+	}
+
+	const onConnected = async () => {
+		setConnected(true)
+		setConnectionStatus("✅ Connected")
+		// add an event listener to handle a disconnect event from Bridge.
+		await Bridge.addEventListener("Bridge Disconnected", handleEventDisconnected)
+		// Manually call Bridge.displays to query for any connected Looking Glass,
+		await Bridge.getDisplays().then((call) => {
+			if (!call.response || call.response.length == 0) {
+				setDisplays("⚠️ No Displays Detected")
+			} else {
+				setDisplays(JSON.stringify(call.response))
+			}
+		})
+	}
+
+	const handleEventDisconnected = async () => {
+		setConnected(false)
+		setConnectionStatus("⚠️ Bridge Disconnected!")
+		setEventStatus("Subscribe to Events")
+		setDisplays("Connect to Bridge to detect displays")
+		setPlaylist("")
+		await Bridge.removeEventListener("Bridge Disconnected", handleEventDisconnected)
+	}
+
 	useEffect(() => {
 		if (hologramType == "quilt") {
 			setHologram(quilt)
@@ -62,46 +94,6 @@ function App() {
 			setHologram(rgbd)
 		}
 	}, [hologram])
-
-	useEffect(() => {
-		const handleEventConnected = async () => {
-			setConnected(true)
-			setConnectionStatus("✅ Connected")
-			// Manually call Bridge.displays to query for any connected Looking Glass,
-			// We need to be connected first in order for this to work.
-			await Bridge.displays().then((call) => {
-				if (!call.response || call.response.length == 0) {
-					setDisplays("⚠️ No Displays Detected")
-				} else {
-					setDisplays(JSON.stringify(call.response))
-				}
-			})
-		}
-
-		const handleEventDisconnected = () => {
-			setConnected(false)
-			setConnectionStatus("⚠️ Bridge Disconnected!")
-			setEventStatus("Subscribe to Events")
-
-			setPlaylist("")
-		}
-
-		const init = async () => {
-			await Bridge.addEventListener("Bridge Connected", handleEventConnected)
-			await Bridge.addEventListener("Bridge Disconnected", handleEventDisconnected)
-		}
-
-		init()
-
-		return () => {
-			const cleanup = async () => {
-				await Bridge.removeEventListener("Bridge Connected", handleEventConnected)
-				await Bridge.removeEventListener("Bridge Disconnected", handleEventDisconnected)
-			}
-
-			cleanup()
-		}
-	}, [Bridge])
 
 	return (
 		<>
@@ -118,9 +110,13 @@ function App() {
 							onClick={async () => {
 								let call = await Bridge.connect()
 								setResponse(JSON.stringify(call.response))
+								// if the call was successful
 								if (call.success) {
-									setConnected(true)
-									setConnectionStatus("✅ Connected to Bridge")
+									onConnected()
+								}
+								// if the call was not successful
+								else {
+									onConnectionFailed()
 								}
 							}}
 							disabled={connected}>
@@ -130,13 +126,18 @@ function App() {
 							onClick={async () => {
 								let call = await Bridge.disconnect()
 								setResponse(JSON.stringify(call.success))
+								setConnected(false)
+								setConnectionStatus("✂️ Manually Disconnected!")
+								setEventStatus("Subscribe to Events")
+								setDisplays("Connect to Bridge to detect displays")
+								setPlaylist("")
 							}}
 							disabled={!connected}>
 							Disconnect From Bridge
 						</button>
 						<button
 							onClick={async () => {
-								let call = await Bridge.displays()
+								let call = await Bridge.getDisplays()
 								setResponse(JSON.stringify(call.response))
 							}}
 							disabled={!connected}>
@@ -178,6 +179,16 @@ function App() {
 									}}></input>
 							</label>
 						</div>
+						<div>
+							<label>
+								Set Auto Start Playlist Name
+								<input
+									type="text"
+									onChange={(e) => {
+										setAutoStartPlaylistName(e.target.value)
+									}}></input>
+							</label>
+						</div>
 						<button
 							onClick={async () => {
 								let call = await Bridge.playStudioPlaylist(studioPlaylistPath)
@@ -193,6 +204,37 @@ function App() {
 							}}
 							disabled={!connected}>
 							Stop Studio Playlist
+						</button>
+						<button
+							onClick={async () => {
+								let call = await Bridge.getAutoStartPlaylist()
+								setResponse(JSON.stringify(call.response))
+							}}>
+							Get Auto Start Playlist
+						</button>
+						<button
+							onClick={async () => {
+								let call = await Bridge.setAutoStartPlaylist({
+									playlistName: "test",
+									playlistPath:
+										"C:\\Users\\Public\\Documents\\Looking Glass Factory\\HoloPlay Studio\\Playlists\\test.json",
+								})
+								setResponse(JSON.stringify(call.response))
+							}}
+							disabled={!connected}>
+							Set Auto Start Playlist
+						</button>
+						<button
+							onClick={async () => {
+								let playlist = Bridge.playlists.find((playlist) => playlist?.name == autoStartPlaylistName)
+								if (!playlist) {
+									setResponse(`No Playlist with named ${autoStartPlaylistName} found`)
+									return
+								}
+								let call = await Bridge.createAutoStartPlaylist({ playlist })
+								setResponse(JSON.stringify(call.response))
+							}}>
+							Create Auto Start Playlist
 						</button>
 					</div>
 					<h2>Controls</h2>
