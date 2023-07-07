@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { HologramParamMap } from "./schema.parameters"
 
 export const version = z.object({}).strict()
 
@@ -50,6 +51,21 @@ export const insert_playlist_entry = z.object({
 	depthiness: z.number().optional(),
 	zoom: z.number().optional(),
 })
+
+export type update_playlist_entry = {
+	orchestration: string
+	playlistName: string
+	playlistIndex: number
+} & {
+	[K in keyof HologramParamMap]?: `${K}: ${HologramParamMap[K]}`
+}
+
+export type update_current_entry = {
+	orchestration: string
+	name: string
+} & {
+	[K in keyof HologramParamMap]?: `${K}: ${HologramParamMap[K]}`
+}
 
 export const play_playlist = z.object({
 	orchestration: z.string(),

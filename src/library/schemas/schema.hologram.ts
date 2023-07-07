@@ -28,13 +28,13 @@ export const RGBDHologramArgs = z.object({
 	/**Is the depth map chroma or grayscale? 0 for false, 1 for true */
 	chroma_depth: z.union([z.literal(0), z.literal(1)]),
 	/**Depthiness can be a value between 0.1 and 2 */
-	depthiness: DEPTHINESS,
+	depthiness: DEPTHINESS.range,
 	/**Controls the Focus of the hologram */
 	focus: z.number().optional(),
 	/**Whether or not to cutoff depth beyond a certain point. 0 for false, 1 for true */
 	depth_cutoff: z.union([z.literal(1), z.literal(0)]).optional(),
 	/**Zoom can be between 0.1 and 2 */
-	zoom: ZOOM,
+	zoom: ZOOM.range,
 })
 
 export interface HologramClasses {

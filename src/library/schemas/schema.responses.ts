@@ -206,6 +206,48 @@ export const instance_studio_playlist = z.object({
 	status: schema.status,
 })
 
+export const update_playlist_entry = z.object({
+	name: schema.name,
+	orchestration: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	payload: z.object({
+		name: schema.name,
+		type: schema.variant_map,
+		value: z.object({
+			index: z.object({
+				name: schema.name,
+				type: schema.wstring,
+				value: z.string(),
+			}),
+		}),
+	}),
+	status: schema.status,
+})
+
+export const update_current_entry = z.object({
+	name: schema.name,
+	orchestration: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	payload: z.object({
+		name: schema.name,
+		type: schema.variant_map,
+		value: z.object({
+			index: z.object({
+				name: schema.name,
+				type: schema.wstring,
+				value: z.string(),
+			}),
+		}),
+	}),
+	status: schema.status,
+})
+
 export const transport_control_play = z.object({
 	name: schema.name,
 	orchestration: z.object({
