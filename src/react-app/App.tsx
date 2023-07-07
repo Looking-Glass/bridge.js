@@ -45,6 +45,7 @@ function App() {
 	const [index, setIndex] = useState<number>(0)
 	const [progress, setProgress] = useState(0)
 	const [autoStartPlaylistName, setAutoStartPlaylistName] = useState<string>("")
+	const [isCastPending, setIsCastPending] = useState(false)
 
 	// Custom Hologram State
 	const [hologram, setHologram] = useState<QuiltHologram | RGBDHologram>(quilt)
@@ -69,6 +70,8 @@ function App() {
 		setConnectionStatus("✅ Connected")
 		// add an event listener to handle a disconnect event from Bridge.
 		await Bridge.addEventListener("Bridge Disconnected", handleEventDisconnected)
+		// react-ify the bridge state for cast pending
+		await Bridge.addEventListener("New Item Playing", handleNewItemPlaying)
 		// Manually call Bridge.displays to query for any connected Looking Glass,
 		await Bridge.getDisplays().then((call) => {
 			if (!call.response || call.response.length == 0) {
@@ -77,6 +80,10 @@ function App() {
 				setDisplays(JSON.stringify(call.response))
 			}
 		})
+	}
+
+	const handleNewItemPlaying = async () => {
+		setIsCastPending(Bridge.isCastPending)
 	}
 
 	const handleEventDisconnected = async () => {
@@ -314,6 +321,8 @@ function App() {
 								hologramType={hologramType}
 								setHologramType={setHologramType}
 								setResponse={setResponse}
+								isCastPending={isCastPending}
+								setIsCastPending={setIsCastPending}
 							/>
 							<h3>Cast Predefined Holograms</h3>
 							<button
@@ -323,8 +332,9 @@ function App() {
 									let call = await Bridge.cast(quilt)
 									setHologram(quilt)
 									setResponse(JSON.stringify(call))
+									setIsCastPending(Bridge.isCastPending)
 								}}
-								disabled={!connected}>
+								disabled={!connected || isCastPending}>
 								Cast Quilt hologram
 							</button>
 							<button
@@ -333,8 +343,9 @@ function App() {
 									let call = await Bridge.cast(rgbd)
 									setHologram(rgbd)
 									setResponse(JSON.stringify(call))
+									setIsCastPending(Bridge.isCastPending)
 								}}
-								disabled={!connected}>
+								disabled={!connected || isCastPending}>
 								Cast RGBD hologram
 							</button>
 						</div>

@@ -35,4 +35,4 @@ ___
 
 ### type
 
-• **type**: `NumberType`
+• **type**: [`NumberType`](../modules/schemas_defaults.md#numbertype)

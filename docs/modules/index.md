@@ -14,6 +14,7 @@
 - [MessageHandler](index.md#messagehandler)
 - [MonitorConnectedMessageHandler](index.md#monitorconnectedmessagehandler)
 - [MonitorDisconnectedMessageHandler](index.md#monitordisconnectedmessagehandler)
+- [NewItemPlayingMessageHandler](index.md#newitemplayingmessagehandler)
 - [Playlist](index.md#playlist)
 - [PlaylistArgs](index.md#playlistargs)
 - [PlaylistDeleteMessageHandler](index.md#playlistdeletemessagehandler)
@@ -90,6 +91,12 @@ ___
 ### MonitorDisconnectedMessageHandler
 
 Re-exports [MonitorDisconnectedMessageHandler](../classes/components_messageHandler.MonitorDisconnectedMessageHandler.md)
+
+___
+
+### NewItemPlayingMessageHandler
+
+Re-exports [NewItemPlayingMessageHandler](../classes/components_messageHandler.NewItemPlayingMessageHandler.md)
 
 ___
 

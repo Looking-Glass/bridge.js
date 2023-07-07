@@ -123,3 +123,24 @@ export class SyncPlayPlaylistCancelledMessageHandler extends MessageHandler<"Syn
 		console.log(message)
 	}
 }
+
+export class NewItemPlayingMessageHandler extends MessageHandler<"New Item Playing"> {
+	constructor(args: { client: BridgeClient }) {
+		super({ bridgeEventName: "New Item Playing", client: args.client })
+	}
+
+	handle(message: BridgeEventMap["New Item Playing"]): void {
+		console.log("%c New Item Playing ", "color: aqua; font-weight: bold; border: solid;", message)
+
+		let index = this.client.currentPlaylistIndex
+		let playlistName = this.client.playlists?.[index]?.name
+		let playlistItemIndex = this.client.currentPlaylistItemIndex
+
+		if (
+			message.payload.value.playlist_name.value == playlistName &&
+			message.payload.value.index.value == playlistItemIndex
+		) {
+			this.client.isCastPending = false
+		}
+	}
+}

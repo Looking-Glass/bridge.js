@@ -9,6 +9,7 @@
 - [MessageHandler](../classes/components_messageHandler.MessageHandler.md)
 - [MonitorConnectedMessageHandler](../classes/components_messageHandler.MonitorConnectedMessageHandler.md)
 - [MonitorDisconnectedMessageHandler](../classes/components_messageHandler.MonitorDisconnectedMessageHandler.md)
+- [NewItemPlayingMessageHandler](../classes/components_messageHandler.NewItemPlayingMessageHandler.md)
 - [PlaylistDeleteMessageHandler](../classes/components_messageHandler.PlaylistDeleteMessageHandler.md)
 - [PlaylistInsertMessageHandler](../classes/components_messageHandler.PlaylistInsertMessageHandler.md)
 - [PlaylistInstanceMessageHandler](../classes/components_messageHandler.PlaylistInstanceMessageHandler.md)

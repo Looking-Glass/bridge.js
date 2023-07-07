@@ -180,6 +180,24 @@ const transportControlPause = z.object({
 	}),
 })
 
+const NewItemPlaying = z.object({
+	event: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: BridgeEvent,
+	}),
+	index: z.object({
+		name: schema.name,
+		type: schema.unsigned_int,
+		value: z.number(),
+	}),
+	playlist_name: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+})
+
 /**
  * events contain the same payload structure, up until the value of the payload
  * this is a helper type to make it easier to define the payload of each event
@@ -206,6 +224,7 @@ export const insertPlaylistResponse = PayloadResponse(insertPlaylist)
 export const instancePlaylistResponse = PayloadResponse(playlistInstance)
 export const deletePlaylistResponse = PayloadResponse(deletePlaylist)
 export const transportControlPauseResponse = PayloadResponse(transportControlPause)
+export const newItemPlayingResponse = PayloadResponse(NewItemPlaying)
 
 // export const all_events = z.union([monitorConnectResponse, progressUpdateResponse])
 
@@ -222,6 +241,7 @@ export type BridgeEventMap = {
 	"Sync/Play Playlist Complete": z.infer<typeof progressUpdateResponse>
 	"Sync/Play Playlist Cancelled": z.infer<typeof progressUpdateResponse>
 	"Transport Control Pause": z.infer<typeof transportControlPauseResponse>
+	"New Item Playing": z.infer<typeof newItemPlayingResponse>
 	// "All Events": all_events,
 	/**CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE */
 	"Bridge Connected": z.infer<typeof progressUpdateResponse>

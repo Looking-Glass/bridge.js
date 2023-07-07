@@ -36,6 +36,8 @@
 
   ↳ [`SyncPlayPlaylistCancelledMessageHandler`](components_messageHandler.SyncPlayPlaylistCancelledMessageHandler.md)
 
+  ↳ [`NewItemPlayingMessageHandler`](components_messageHandler.NewItemPlayingMessageHandler.md)
+
 ## Table of contents
 
 ### Constructors

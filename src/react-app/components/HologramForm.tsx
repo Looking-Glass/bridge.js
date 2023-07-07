@@ -8,6 +8,8 @@ export interface HologramFactoryArgs {
 	setResponse: (response: string | null) => void
 	hologramType: hologramTypes
 	setHologramType: (hologramType: hologramTypes) => void
+	isCastPending: boolean
+	setIsCastPending: (isCastPending: boolean) => void
 }
 export default function HologramForm({
 	connected,
@@ -16,6 +18,8 @@ export default function HologramForm({
 	setResponse,
 	hologramType,
 	setHologramType,
+	isCastPending,
+	setIsCastPending,
 }: HologramFactoryArgs) {
 	const [hologramUri, setHologramUri] = useState<string>(hologram.uri)
 	const [hologramSettings, setHologramSettings] = useState(hologram.settings)
@@ -144,8 +148,9 @@ export default function HologramForm({
 					setHologram(hologram)
 					let call = await Bridge.cast(hologram)
 					setResponse(JSON.stringify(call))
+					setIsCastPending(Bridge.isCastPending)
 				}}
-				disabled={!connected}>
+				disabled={!connected || isCastPending}>
 				Cast hologram
 			</button>
 		</>
