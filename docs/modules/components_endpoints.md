@@ -43,6 +43,8 @@
 | `transport_control_play` | `z.infer`<typeof [`transport_control_play`](schemas_schema_responses.md#transport_control_play)\> |
 | `transport_control_previous` | `z.infer`<typeof [`transport_control_previous`](schemas_schema_responses.md#transport_control_previous)\> |
 | `transport_control_seek_to_index` | `z.infer`<typeof [`transport_control_seek_to_index`](schemas_schema_responses.md#transport_control_seek_to_index)\> |
+| `update_current_entry` | `z.infer`<typeof [`update_current_entry`](schemas_schema_responses.md#update_current_entry)\> |
+| `update_playlist_entry` | `z.infer`<typeof [`update_playlist_entry`](schemas_schema_responses.md#update_playlist_entry)\> |
 
 ___
 
@@ -76,6 +78,8 @@ ___
 | `transport_control_play` | `z.infer`<typeof [`transport_control_play`](schemas_schema_requests.md#transport_control_play)\> |
 | `transport_control_previous` | `z.infer`<typeof [`transport_control_previous`](schemas_schema_requests.md#transport_control_previous)\> |
 | `transport_control_seek_to_index` | `z.infer`<typeof [`transport_control_seek_to_index`](schemas_schema_requests.md#transport_control_seek_to_index)\> |
+| `update_current_entry` | [`update_current_entry`](schemas_schema_requests.md#update_current_entry) |
+| `update_playlist_entry` | [`update_playlist_entry`](schemas_schema_requests.md#update_playlist_entry) |
 
 ___
 
@@ -131,7 +135,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends ``"show_window"`` \| ``"instance_playlist"`` \| ``"instance_studio_playlist"`` \| ``"bridge_version"`` \| ``"api_version"`` \| ``"available_output_devices"`` \| ``"enter_orchestration"`` \| ``"exit_orchestration"`` \| ``"delete_playlist"`` \| ``"insert_playlist_entry"`` \| ``"transport_control_play"`` \| ``"transport_control_pause"`` \| ``"transport_control_next"`` \| ``"transport_control_previous"`` \| ``"transport_control_seek_to_index"`` \| ``"play_playlist"`` |
+| `T` | extends ``"show_window"`` \| ``"instance_playlist"`` \| ``"instance_studio_playlist"`` \| ``"bridge_version"`` \| ``"api_version"`` \| ``"available_output_devices"`` \| ``"enter_orchestration"`` \| ``"exit_orchestration"`` \| ``"delete_playlist"`` \| ``"insert_playlist_entry"`` \| ``"update_playlist_entry"`` \| ``"update_current_entry"`` \| ``"transport_control_play"`` \| ``"transport_control_pause"`` \| ``"transport_control_next"`` \| ``"transport_control_previous"`` \| ``"transport_control_seek_to_index"`` \| ``"play_playlist"`` |
 
 #### Parameters
 

@@ -19,6 +19,8 @@
 - [transport\_control\_play](schemas_schema_responses.md#transport_control_play)
 - [transport\_control\_previous](schemas_schema_responses.md#transport_control_previous)
 - [transport\_control\_seek\_to\_index](schemas_schema_responses.md#transport_control_seek_to_index)
+- [update\_current\_entry](schemas_schema_responses.md#update_current_entry)
+- [update\_playlist\_entry](schemas_schema_responses.md#update_playlist_entry)
 - [version](schemas_schema_responses.md#version)
 
 ## Variables
@@ -98,6 +100,18 @@ ___
 ### transport\_control\_seek\_to\_index
 
 • `Const` **transport\_control\_seek\_to\_index**: `ZodObject`<{ `name`: `ZodString` = schema.name; `orchestration`: `ZodObject`<{ `name`: `ZodString` = schema.name; `type`: `ZodLiteral`<``"WSTRING"``\> = schema.wstring; `value`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = schema.name; `type`: ``"WSTRING"`` = schema.wstring; `value`: `string`  }, { `name`: `string` = schema.name; `type`: ``"WSTRING"`` = schema.wstring; `value`: `string`  }\> ; `status`: `ZodObject`<{ `name`: `ZodString` = name; `type`: `ZodLiteral`<``"WSTRING"``\> = wstring; `value`: `ZodUnion`<[`ZodLiteral`<``"Completion"``\>, `ZodLiteral`<``"Pending"``\>, `ZodLiteral`<``"Failure"``\>, `ZodLiteral`<``"UnknownOrchestration"``\>]\>  }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = name; `type`: ``"WSTRING"`` = wstring; `value`: ``"Completion"`` \| ``"Pending"`` \| ``"Failure"`` \| ``"UnknownOrchestration"``  }, { `name`: `string` = name; `type`: ``"WSTRING"`` = wstring; `value`: ``"Completion"`` \| ``"Pending"`` \| ``"Failure"`` \| ``"UnknownOrchestration"``  }\> = schema.status }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status }, { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status }\>
+
+___
+
+### update\_current\_entry
+
+• `Const` **update\_current\_entry**: `ZodObject`<{ `name`: `ZodString` = schema.name; `orchestration`: `ZodObject`<{ `name`: `ZodString` = schema.name; `type`: `ZodLiteral`<``"WSTRING"``\> = schema.wstring; `value`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = schema.name; `type`: ``"WSTRING"`` = schema.wstring; `value`: `string`  }, { `name`: `string` = schema.name; `type`: ``"WSTRING"`` = schema.wstring; `value`: `string`  }\> ; `status`: `ZodObject`<{ `name`: `ZodString` = name; `type`: `ZodLiteral`<``"WSTRING"``\> = wstring; `value`: `ZodUnion`<[`ZodLiteral`<``"Completion"``\>, `ZodLiteral`<``"Pending"``\>, `ZodLiteral`<``"Failure"``\>, `ZodLiteral`<``"UnknownOrchestration"``\>]\>  }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = name; `type`: ``"WSTRING"`` = wstring; `value`: ``"Completion"`` \| ``"Pending"`` \| ``"Failure"`` \| ``"UnknownOrchestration"``  }, { `name`: `string` = name; `type`: ``"WSTRING"`` = wstring; `value`: ``"Completion"`` \| ``"Pending"`` \| ``"Failure"`` \| ``"UnknownOrchestration"``  }\> = schema.status }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status }, { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status }\>
+
+___
+
+### update\_playlist\_entry
+
+• `Const` **update\_playlist\_entry**: `ZodObject`<{ `name`: `ZodString` = schema.name; `orchestration`: `ZodObject`<{ `name`: `ZodString` = schema.name; `type`: `ZodLiteral`<``"WSTRING"``\> = schema.wstring; `value`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = schema.name; `type`: ``"WSTRING"`` = schema.wstring; `value`: `string`  }, { `name`: `string` = schema.name; `type`: ``"WSTRING"`` = schema.wstring; `value`: `string`  }\> ; `status`: `ZodObject`<{ `name`: `ZodString` = name; `type`: `ZodLiteral`<``"WSTRING"``\> = wstring; `value`: `ZodUnion`<[`ZodLiteral`<``"Completion"``\>, `ZodLiteral`<``"Pending"``\>, `ZodLiteral`<``"Failure"``\>, `ZodLiteral`<``"UnknownOrchestration"``\>]\>  }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = name; `type`: ``"WSTRING"`` = wstring; `value`: ``"Completion"`` \| ``"Pending"`` \| ``"Failure"`` \| ``"UnknownOrchestration"``  }, { `name`: `string` = name; `type`: ``"WSTRING"`` = wstring; `value`: ``"Completion"`` \| ``"Pending"`` \| ``"Failure"`` \| ``"UnknownOrchestration"``  }\> = schema.status }, ``"strip"``, `ZodTypeAny`, { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status }, { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status }\>
 
 ___
 

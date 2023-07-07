@@ -35,9 +35,9 @@ Create a new RGBD Hologram
 | `args.settings.depth_cutoff?` | ``0`` \| ``1`` | `undefined` | Whether or not to cutoff depth beyond a certain point. 0 for false, 1 for true |
 | `args.settings.depth_inversion` | ``0`` \| ``1`` | `undefined` | Is the Depth inverted? 0 for false, 1 for true |
 | `args.settings.depth_loc` | ``0`` \| ``2`` \| ``1`` \| ``3`` | `undefined` | Where are the holograms located? 0 Top 1 Bottom 2 Right 3 Left |
-| `args.settings.depthiness` | `number` | `DEPTHINESS` | Depthiness can be a value between 0.1 and 2 |
+| `args.settings.depthiness` | `number` | `DEPTHINESS.range` | Depthiness can be a value between 0.1 and 2 |
 | `args.settings.focus?` | `number` | `undefined` | Controls the Focus of the hologram |
-| `args.settings.zoom` | `number` | `ZOOM` | Zoom can be between 0.1 and 2 |
+| `args.settings.zoom` | `number` | `ZOOM.range` | Zoom can be between 0.1 and 2 |
 | `args.uri` | `string` | `undefined` | - |
 
 ## Properties

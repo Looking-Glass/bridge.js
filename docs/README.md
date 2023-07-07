@@ -23,6 +23,7 @@
 - [schemas/schema.events](modules/schemas_schema_events.md)
 - [schemas/schema.failures](modules/schemas_schema_failures.md)
 - [schemas/schema.hologram](modules/schemas_schema_hologram.md)
+- [schemas/schema.parameters](modules/schemas_schema_parameters.md)
 - [schemas/schema.requests](modules/schemas_schema_requests.md)
 - [schemas/schema.responses](modules/schemas_schema_responses.md)
 - [schemas/schema.utils](modules/schemas_schema_utils.md)

@@ -45,6 +45,7 @@
 - [showWindow](client.BridgeClient.md#showwindow)
 - [status](client.BridgeClient.md#status)
 - [stopStudioPlaylist](client.BridgeClient.md#stopstudioplaylist)
+- [updateCurrentHologram](client.BridgeClient.md#updatecurrenthologram)
 - [getInstance](client.BridgeClient.md#getinstance)
 
 ## Constructors
@@ -451,6 +452,33 @@ stop playing the studio playlist
 #### Returns
 
 `Promise`<{ `success`: `boolean`  }\>
+
+___
+
+### updateCurrentHologram
+
+▸ **updateCurrentHologram**<`T`\>(`«destructured»`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+Update the parameters of the current hologram
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends ``"rows"`` \| ``"columns"`` \| ``"aspect"`` \| ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"focus"`` \| ``"depth_cutoff"`` \| ``"zoom"`` \| ``"view_count"`` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `name` | `string` |
+| › `parameter` | `T` |
+| › `value` | { `aspect`: `number` ; `chroma_depth`: ``0`` \| ``1`` ; `columns`: `number` = QUILT\_COLS.range; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` = DEPTHINESS.range; `focus?`: `number` ; `rows`: `number` = QUILT\_ROWS.range; `view_count`: `number` ; `zoom`: `number` = ZOOM.range }[`T`] |
+
+#### Returns
+
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 

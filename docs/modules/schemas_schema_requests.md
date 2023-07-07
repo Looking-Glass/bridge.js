@@ -4,6 +4,11 @@
 
 ## Table of contents
 
+### Type Aliases
+
+- [update\_current\_entry](schemas_schema_requests.md#update_current_entry)
+- [update\_playlist\_entry](schemas_schema_requests.md#update_playlist_entry)
+
 ### Variables
 
 - [available\_output\_devices](schemas_schema_requests.md#available_output_devices)
@@ -20,6 +25,18 @@
 - [transport\_control\_previous](schemas_schema_requests.md#transport_control_previous)
 - [transport\_control\_seek\_to\_index](schemas_schema_requests.md#transport_control_seek_to_index)
 - [version](schemas_schema_requests.md#version)
+
+## Type Aliases
+
+### update\_current\_entry
+
+Ƭ **update\_current\_entry**: { `name`: `string` ; `orchestration`: `string`  } & { [K in keyof HologramParamMap]?: \`${K}: ${HologramParamMap[K]}\` }
+
+___
+
+### update\_playlist\_entry
+
+Ƭ **update\_playlist\_entry**: { `orchestration`: `string` ; `playlistIndex`: `number` ; `playlistName`: `string`  } & { [K in keyof HologramParamMap]?: \`${K}: ${HologramParamMap[K]}\` }
 
 ## Variables
 
