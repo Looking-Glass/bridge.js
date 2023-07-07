@@ -54,11 +54,25 @@ export async function tryExitOrchestration(
 		orchestration: orchestration,
 	}
 
-	let message = await sendMessage({
-		endpoint: "exit_orchestration",
-		requestBody: body,
+	let timeout = new Promise<{
+		success: boolean
+		response: z.infer<typeof BridgeResponse.orchestration> | null
+	}>((reject) => {
+		let id = setTimeout(() => {
+			clearTimeout(id)
+			reject({ success: false, response: null })
+		}, 5000)
 	})
-	if (message.success == false) {
+
+	let message = await Promise.race([
+		sendMessage({
+			endpoint: "exit_orchestration",
+			requestBody: body,
+		}),
+		timeout,
+	])
+
+	if (!message || message.success == false) {
 		return { success: false, response: null }
 	}
 

@@ -15,20 +15,20 @@ export class BridgeClient {
 	/** A boolean that stores if the Bridge session is valid or not
 	 *  If the orchestration is not valid, some functions will not work
 	 */
-	private isConnected: boolean
+	static isConnected: boolean
 	/**A boolean for checking the status of the current disconnect event */
 	public isDisconnecting: boolean
 	/**An array containing the connected Looking Glass Displays */
-	private lkgDisplays: Display[]
+	private displays: Display[]
 	/**an Array containing Playlists, we store this to easily switch between multiple playlists */
-	public playlists: Playlist[] | undefined[]
+	public playlists: Playlist[] | undefined
 	/** The index of playlists that is currently active */
 	public currentPlaylistIndex: number
 	/** the instance of the client that we create, BridgeClient is a singleton, there can only be one */
 	static instance: BridgeClient
-	static fallback: Fallback
+	static fallback: Fallback | undefined
 	/** The websocket connection to Bridge's Event Source, this returns information from Bridge */
-	static eventsource: BridgeEventSource
+	static eventsource: BridgeEventSource | undefined
 	/**control how often we log to the console, 3 is everything, 0 is nothing */
 	static verbosity: 0 | 1 | 2 | 3 = 3
 	/**store if we're currently in the middle of a cast */
@@ -36,14 +36,16 @@ export class BridgeClient {
 	/**the version of the Looking Glass Driver that's running */
 	public version: number
 	private currentHologram: HologramType | undefined
+	/**a boolean for whether a disconnect was triggered automatically or manually */
+	public manualDisconnect = false
 
 	constructor() {
 		this.orchestration = ""
-		this.isConnected = false
+		BridgeClient.isConnected = false
 		this.isDisconnecting = false
-		this.lkgDisplays = []
-		BridgeClient.eventsource = new BridgeEventSource()
-		BridgeClient.fallback = new Fallback()
+		this.displays = []
+		BridgeClient.eventsource = undefined
+		BridgeClient.fallback = undefined
 		this.playlists = []
 
 		this.currentPlaylistIndex = 0
@@ -54,8 +56,6 @@ export class BridgeClient {
 		} else {
 			return BridgeClient.instance
 		}
-
-		this.connect()
 	}
 
 	static getInstance(): BridgeClient {
@@ -71,15 +71,27 @@ export class BridgeClient {
 	 */
 	public async status(): Promise<boolean> {
 		console.log("%c function call: status ", "color: magenta; font-weight: bold; border: solid")
+
+		const timeout = new Promise((reject) => {
+			let id = setTimeout(() => {
+				clearTimeout(id)
+				reject(new Error("Timed out"))
+			}, 5000)
+		})
+
 		try {
-			let response = await fetch("http://localhost:33334/")
+			const response = (await Promise.race([fetch("http://localhost:33334/"), timeout])) as Response
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
 			}
-			this.isConnected = true
 			return true
 		} catch (error) {
-			console.warn(`Looking Glass Bridge is not running, please start Bridge and try again.`)
+			const err = error as Error
+			if (err.message === "Timed out") {
+				console.warn("Request timed out")
+			} else {
+				console.warn(`Looking Glass Bridge is not running, please start Bridge and try again.`)
+			}
 			return false
 		}
 	}
@@ -93,18 +105,38 @@ export class BridgeClient {
 		response: { version: number; orchestration: string }
 	}> {
 		console.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid")
+
+		// check if we're already connected
+		if (BridgeClient.isConnected == true) {
+			console.warn(`Already connected to Looking Glass Bridge.`)
+			return { success: true, response: { version: this.version, orchestration: this.orchestration } }
+		}
+
+		// check that the websocket and the http server are running
+		let status = await this.status()
+		if (status == false)
+			return {
+				success: false,
+				response: { version: 0, orchestration: "" },
+			}
+		BridgeClient.isConnected = true
+
+		// create event source and fallback
+		BridgeClient.eventsource = new BridgeEventSource()
+		await this.subscribeToEvents()
+
+		// BridgeClient.fallback = new Fallback()
+
 		let call = await this.createOrchestration("")
 		if (call.success == false) {
 			let version = await this.getVersion()
 			if (version.success == false) {
 				return { success: false, response: { version: 0, orchestration: "" } }
-			} else if (version.response < 2) {
+			} else if (version.response < 2.2) {
 				return { success: false, response: { version: version.response, orchestration: "" } }
 			}
 		}
 
-		await this.subscribeToEvents()
-		BridgeClient.eventsource.connectEvent()
 		return { success: true, response: { version: this.version, orchestration: this.orchestration } }
 	}
 
@@ -128,7 +160,6 @@ export class BridgeClient {
 				this.orchestration = new_orchestration.response?.payload.value
 			}
 		}
-		this.isConnected = true
 		return { success: true, response: this.orchestration }
 	}
 
@@ -138,26 +169,32 @@ export class BridgeClient {
 
 	public async disconnect(): Promise<{ success: boolean }> {
 		console.log("%c function call: disconnect ", "color: magenta; font-weight: bold; border: solid")
-		if (this.isDisconnecting == true) {
+		// check that we're not already disconnecting
+		if (this.isDisconnecting == true || BridgeClient.isConnected == false) {
 			return { success: false }
-		} else {
-			this.isDisconnecting = true
-			let exit = await tryExitOrchestration(this.orchestration)
-			if (exit.success == false) {
-				console.error(` ⚠️ Unable to exit orchestration, Bridge is not reachable.`)
-			}
-
-			BridgeClient.fallback.ws.close()
-			BridgeClient.eventsource.ws?.close()
-			BridgeClient.eventsource.ws = undefined
-			this.playlists = []
-			this.currentHologram = undefined
-			this.orchestration = ""
-			BridgeClient.eventsource.disconnectEvent()
-			this.isDisconnecting = false
-
-			return { success: true }
 		}
+
+		this.isDisconnecting = true
+		this.manualDisconnect = true
+
+		let exit = await tryExitOrchestration(this.orchestration)
+		if (exit.success == false) {
+			console.warn(` ⚠️ Unable to exit orchestration, Bridge is not reachable.`)
+		}
+
+		// shutdown
+		BridgeClient.eventsource?.disconnectEvent()
+		BridgeClient.eventsource?.ws?.close()
+		BridgeClient.fallback?.ws.close()
+		BridgeClient.fallback = undefined
+		this.displays = []
+		this.playlists = []
+		this.currentHologram = undefined
+		this.orchestration = ""
+		this.isDisconnecting = false
+		BridgeClient.isConnected = false
+
+		return { success: true }
 	}
 
 	/**
@@ -168,7 +205,7 @@ export class BridgeClient {
 	public async showWindow(
 		showWindow: boolean
 	): Promise<{ success: boolean; response: z.infer<typeof schema.show_window> | null }> {
-		if (this.isConnected == false) return { success: false, response: null }
+		if (BridgeClient.isConnected == false) return { success: false, response: null }
 		console.log("%c function call: showWindow ", "color: magenta; font-weight: bold; border: solid")
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		if ((await this.isVersionCompatible()) == false) {
@@ -202,11 +239,12 @@ export class BridgeClient {
 		let message = await sendMessage({ endpoint: "bridge_version", requestBody: {} })
 		if (message.success == true) {
 			this.version = parseFloat(message.response.payload.value)
-			this.isConnected = true
 			return { success: true, response: this.version }
-		} else {
+		}
+		// if the bridge version fails, try the legacy version
+		else {
 			let version = await BridgeClient.fallback?.getLegacyVersion()
-			console.warn(version, "version")
+			if (version == undefined) return { success: false, response: 0 }
 			return { success: true, response: version }
 		}
 	}
@@ -217,7 +255,7 @@ export class BridgeClient {
 	 */
 	public async apiVersion(): Promise<{ success: boolean; response: number }> {
 		console.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid")
-		if (this.isConnected == false) {
+		if (BridgeClient.isConnected == false) {
 			return { success: false, response: 0 }
 		}
 		if ((await this.isVersionCompatible()) == false) return { success: false, response: 0 }
@@ -236,11 +274,11 @@ export class BridgeClient {
 	 * searches for Looking Glass displays, and returns them as an array of Display objects
 	 * @returns the display object
 	 */
-	public async displays(): Promise<{ success: boolean; response: Display[] | null }> {
+	public async getDisplays(): Promise<{ success: boolean; response: Display[] | null }> {
 		console.log("%c function call: displays ", "color: magenta; font-weight: bold; border: solid")
-		this.lkgDisplays = []
+		this.displays = []
 		// if there is no orchestration, attempt to create one, if that fails, return false
-		if (this.isConnected == false) return { success: false, response: null }
+		if (BridgeClient.isConnected == false) return { success: false, response: null }
 		const requestBody = {
 			orchestration: this.orchestration,
 		}
@@ -259,12 +297,12 @@ export class BridgeClient {
 			if (display.value.hwid.value.includes("LKG")) {
 				let lkg = tryParseDisplay(display.value)
 				if (lkg != undefined) {
-					this.lkgDisplays.push(lkg)
+					this.displays.push(lkg)
 				}
 			}
 		}
 
-		return { success: true, response: this.lkgDisplays }
+		return { success: true, response: this.displays }
 	}
 
 	/**Delete the instance of the playlist from Bridge, this will stop the playlist from playing if it's active. */
@@ -272,7 +310,7 @@ export class BridgeClient {
 		playlist: Playlist
 	): Promise<{ success: boolean; response: z.infer<typeof schema.delete_playlist> | null }> {
 		console.log("%c function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid")
-		if (this.isConnected == false) {
+		if (BridgeClient.isConnected == false) {
 			return { success: false, response: null }
 		}
 		const requestBody = playlist.getInstance(this.orchestration)
@@ -293,7 +331,7 @@ export class BridgeClient {
 	 * @param hologram
 	 */
 	public async cast(hologram: HologramType): Promise<{ success: boolean }> {
-		if (this.isConnected == false) return { success: false }
+		if (BridgeClient.isConnected == false) return { success: false }
 		console.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid")
 		if (hologram.uri == this.currentHologram?.uri && hologram.settings == this.currentHologram.settings) {
 			console.warn("already casting this hologram")
@@ -310,7 +348,7 @@ export class BridgeClient {
 		this.isCastPending = true
 
 		let newPlaylistIndex = (this.currentPlaylistIndex + 1) % 2
-		let playlist = this.playlists[newPlaylistIndex]
+		let playlist = this.playlists?.[newPlaylistIndex]
 
 		// delete the playlist if it already exists
 		if (playlist != undefined) {
@@ -321,7 +359,7 @@ export class BridgeClient {
 			}
 			// clear the playlist in bridge.js
 			playlist.clearItems()
-			this.playlists[newPlaylistIndex] = undefined
+			playlist = undefined
 		}
 
 		playlist = new Playlist({
@@ -335,7 +373,9 @@ export class BridgeClient {
 		await playlist.play({ playlist })
 
 		this.currentPlaylistIndex = newPlaylistIndex
-		this.playlists[newPlaylistIndex] = playlist
+		if (this.playlists !== undefined && this.playlists[newPlaylistIndex] == undefined) {
+			this.playlists[newPlaylistIndex] = playlist
+		}
 
 		this.isCastPending = false
 		this.currentHologram = hologram
@@ -347,7 +387,7 @@ export class BridgeClient {
 		playlistPath: string
 	): Promise<{ success: boolean; response: z.infer<typeof schema.play_playlist> | null }> {
 		console.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid")
-		if (this.isConnected == false) return { success: false, response: null }
+		if (BridgeClient.isConnected == false) return { success: false, response: null }
 
 		const requestBody = {
 			orchestration: this.orchestration,
@@ -378,7 +418,7 @@ export class BridgeClient {
 	/**stop playing the studio playlist */
 	public async stopStudioPlaylist(): Promise<{ success: boolean }> {
 		console.log("%c function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid")
-		if (this.isConnected == false) return { success: false }
+		if (BridgeClient.isConnected == false) return { success: false }
 
 		const requestBody = {
 			orchestration: this.orchestration,
@@ -397,6 +437,97 @@ export class BridgeClient {
 		await this.showWindow(false)
 
 		return { success: true }
+	}
+
+	/**Get the current playlist that is set to start automatically */
+
+	public async getAutoStartPlaylist(): Promise<{
+		success: boolean
+		response: z.infer<typeof schema.get_autostart_playlist> | null
+	}> {
+		console.log("%c function call: getAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid")
+		if (BridgeClient.isConnected == false) return { success: false, response: null }
+
+		let requestBody = {
+			orchestration: this.orchestration,
+			head_index: -1,
+		}
+
+		let message = await sendMessage({
+			endpoint: "get_autostart_playlist",
+			requestBody: requestBody,
+		})
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
+	}
+
+	/**Choose a Playlist that exists on the local file system to set as the start up playlist */
+	public async setAutoStartPlaylist(args: { playlistName: string; playlistPath: string }): Promise<{
+		success: boolean
+		response: z.infer<typeof schema.set_autostart_playlist> | null
+	}> {
+		console.log("%c function call: setAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid")
+		if (BridgeClient.isConnected == false) return { success: false, response: null }
+
+		let requestBody = {
+			orchestration: this.orchestration,
+			head_index: -1,
+			playlist_name: args.playlistName,
+			playlist_path: args.playlistPath,
+		}
+
+		let message = await sendMessage({
+			endpoint: "set_autostart_playlist",
+			requestBody: requestBody,
+		})
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
+	}
+
+	/**set a playlist to auto-start, requires that all files are local on the system */
+	public async createAutoStartPlaylist(args: { playlist: Playlist }): Promise<{
+		success: boolean
+		response: z.infer<typeof schema.set_named_autostart_playlist> | null
+	}> {
+		console.log(
+			"%c function call: createAutoStartPlaylist ",
+			"color: magenta; font-weight: bold; border: solid"
+		)
+		if (BridgeClient.isConnected == false) return { success: false, response: null }
+
+		// check that all holograms are local
+		for (let i = 0; i < args.playlist.items.length; i++) {
+			let item = args.playlist.items[i]
+			if (item.hologram.uri.includes("http")) {
+				console.warn("playlist contains a web uri, cannot create autostart playlist")
+				return { success: false, response: null }
+			}
+		}
+
+		let requestBody = {
+			orchestration: this.orchestration,
+			head_index: -1,
+			playlist_name: args.playlist.name,
+		}
+
+		let message = await sendMessage({
+			endpoint: "set_named_autostart_playlist",
+			requestBody: requestBody,
+		})
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
 	}
 
 	// TRANSPORT CONTROLS
@@ -513,9 +644,9 @@ export class BridgeClient {
 	private async subscribeToEvents(): Promise<{ success: boolean }> {
 		console.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid")
 
-		let events = await BridgeClient.eventsource.connectToBridgeEventSource(this.orchestration)
+		let events = await BridgeClient.eventsource?.connectToBridgeEventSource(this.orchestration)
 
-		if (events.success == true) return { success: true }
+		if (events?.success == true) return { success: true }
 		else return { success: false }
 	}
 	/**
@@ -566,14 +697,14 @@ export class BridgeClient {
 	 */
 	private async isVersionCompatible() {
 		if (this.version == 0) {
-			this.isConnected = false
-		} else if (this.version < 2.1) {
+			BridgeClient.isConnected = false
+		} else if (this.version < 2.2) {
 			console.warn("Please update to the latest version for the best experience")
-			this.isConnected = false
-		} else if (this.version >= 2.1) {
-			this.isConnected = true
+			BridgeClient.isConnected = false
+		} else if (this.version >= 2.2) {
+			BridgeClient.isConnected = true
 		}
 
-		return this.isConnected
+		return BridgeClient.isConnected
 	}
 }

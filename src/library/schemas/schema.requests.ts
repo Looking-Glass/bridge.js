@@ -17,6 +17,24 @@ export const instance_studio_playlist = z.object({
 	loop: z.boolean(),
 })
 
+export const get_autostart_playlist = z.object({
+	orchestration: z.string(),
+	head_index: z.number(),
+})
+
+export const set_autostart_playlist = z.object({
+	orchestration: z.string(),
+	head_index: z.number(),
+	playlist_name: z.string(),
+	playlist_path: z.string(),
+})
+
+export const set_named_autostart_playlist = z.object({
+	orchestration: z.string(),
+	head_index: z.number(),
+	playlist_name: z.string(),
+})
+
 export const available_output_devices = z.object({
 	orchestration: z.string(),
 })
