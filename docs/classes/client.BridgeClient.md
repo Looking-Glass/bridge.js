@@ -13,6 +13,8 @@
 ### Properties
 
 - [currentPlaylistIndex](client.BridgeClient.md#currentplaylistindex)
+- [currentPlaylistItemIndex](client.BridgeClient.md#currentplaylistitemindex)
+- [isCastPending](client.BridgeClient.md#iscastpending)
 - [isConnected](client.BridgeClient.md#isconnected)
 - [isDisconnecting](client.BridgeClient.md#isdisconnecting)
 - [manualDisconnect](client.BridgeClient.md#manualdisconnect)
@@ -66,6 +68,22 @@
 • **currentPlaylistIndex**: `number`
 
 The index of playlists that is currently active
+
+___
+
+### currentPlaylistItemIndex
+
+• **currentPlaylistItemIndex**: `number`
+
+The index of the playlist Item that is currently active
+
+___
+
+### isCastPending
+
+• **isCastPending**: `boolean` = `false`
+
+store if we're currently in the middle of a cast
 
 ___
 

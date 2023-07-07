@@ -8,6 +8,10 @@
 
 - [defaults](../interfaces/schemas_defaults.defaults.md)
 
+### Type Aliases
+
+- [NumberType](schemas_defaults.md#numbertype)
+
 ### Variables
 
 - [ASPECT](schemas_defaults.md#aspect)
@@ -19,6 +23,15 @@
 - [QUILT\_ROWS](schemas_defaults.md#quilt_rows)
 - [QUILT\_VIEW\_COUNT](schemas_defaults.md#quilt_view_count)
 - [ZOOM](schemas_defaults.md#zoom)
+
+## Type Aliases
+
+### NumberType
+
+Ƭ **NumberType**: ``"int"`` \| ``"float"``
+
+for certain values we need defaults in order to define our type schemas and also clamp values.
+This helps prevent sending bridge values that are out of range.
 
 ## Variables
 
