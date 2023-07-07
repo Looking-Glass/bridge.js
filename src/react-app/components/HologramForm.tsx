@@ -1,4 +1,11 @@
-import { BridgeClient, hologramFactory, QuiltHologram, RGBDHologram, hologramTypes } from "@library/index"
+import {
+	BridgeClient,
+	hologramFactory,
+	QuiltHologram,
+	RGBDHologram,
+	hologramTypes,
+	Playlist,
+} from "@library/index"
 import { useState } from "react"
 
 export interface HologramFactoryArgs {
@@ -8,7 +15,7 @@ export interface HologramFactoryArgs {
 	setResponse: (response: string | null) => void
 	hologramType: hologramTypes
 	setHologramType: (hologramType: hologramTypes) => void
-	setPlaylist: (playlist: string) => void
+	setPlaylist: (playlist: Playlist[] | undefined) => void
 }
 export default function HologramForm({
 	connected,
@@ -146,7 +153,7 @@ export default function HologramForm({
 					setHologram(hologram)
 					let call = await Bridge.cast(hologram)
 					setResponse(JSON.stringify(call))
-					setPlaylist(JSON.stringify(Bridge.playlists))
+					setPlaylist(Bridge.playlists)
 				}}
 				disabled={!connected}>
 				Cast hologram

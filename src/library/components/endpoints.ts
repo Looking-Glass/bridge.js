@@ -118,7 +118,11 @@ export async function sendMessage<
 		params.baseUrl = "http://localhost:33334/"
 	}
 
-	if (Bridge.getVerbosity() == 3) {
+	if (
+		Bridge.getVerbosity() == 3 ||
+		params.endpoint !== "update_current_entry" ||
+		params.endpoint !== "update_playlist_entry"
+	) {
 		console.group("Message:")
 		console.log(`${params.baseUrl + params.endpoint}`)
 		console.log("body:", params.requestBody)
@@ -148,6 +152,7 @@ export async function sendMessage<
 
 		if (parsedResponse.status.value !== "Completion" && parsedResponse.status.value !== "Pending") {
 			console.log("%c Bridge Failure:", "color: #ff0000", parsedResponse)
+
 			console.groupEnd()
 			// the call worked, but the response failed.
 			return { success: true, response: parsedResponse }

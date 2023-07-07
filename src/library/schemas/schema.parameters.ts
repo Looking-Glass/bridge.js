@@ -6,14 +6,16 @@ export const parameterNames = z.union([
 	z.literal("columns"),
 	z.literal("aspect"),
 	z.literal("view_count"),
+	z.literal("zoom"),
 	//rgbd specific
 	z.literal("depth_loc"),
 	z.literal("depth_inversion"),
 	z.literal("chroma_depth"),
 	z.literal("depthiness"),
+	z.literal("crop_pos_x"),
+	z.literal("crop_pos_y"),
 	z.literal("focus"),
 	z.literal("depth_cutoff"),
-	z.literal("zoom"),
 ])
 
 export const hologramParamMap = z.object({
@@ -25,6 +27,8 @@ export const hologramParamMap = z.object({
 	depth_inversion: z.union([z.literal(0), z.literal(1)]),
 	chroma_depth: z.union([z.literal(0), z.literal(1)]),
 	depthiness: DEPTHINESS.range,
+	crop_pos_x: z.number().optional(),
+	crop_pos_y: z.number().optional(),
 	focus: z.number().optional(),
 	depth_cutoff: z.union([z.literal(1), z.literal(0)]).optional(),
 	zoom: ZOOM.range,

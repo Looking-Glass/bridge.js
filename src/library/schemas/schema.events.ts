@@ -224,6 +224,7 @@ export type BridgeEventMap = {
 	"Transport Control Pause": z.infer<typeof transportControlPauseResponse>
 	// "All Events": all_events,
 	/**CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE */
+	"Bridge Connected": z.infer<typeof progressUpdateResponse>
 	"Bridge Disconnected": z.infer<typeof progressUpdateResponse>
 }
 

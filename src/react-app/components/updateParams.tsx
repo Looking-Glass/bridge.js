@@ -5,23 +5,31 @@ import { z } from "zod"
 export function UpdateParams({
 	playlistName,
 	parameter,
+	min,
+	max,
+	numberType,
 }: {
 	playlistName: string
 	parameter: z.infer<typeof parameterNames>
+	min: number
+	max: number
+	numberType: "float" | "int"
 }) {
 	const Bridge = BridgeClient.getInstance()
 	const [value, setValue] = useState(0)
 
+	const stepSize = numberType == "float" ? 0.001 : 1
+
 	return (
 		<>
-			<div>Parameter: {parameter}</div>
+			<div>{parameter}</div>
 			<div>Value: {value}</div>
 			<input
 				type="range"
 				defaultValue={1}
-				min={0}
-				max={8}
-				step={0.01}
+				min={min}
+				max={max}
+				step={stepSize}
 				onChange={async (e) => {
 					await Bridge.updateCurrentHologram({
 						name: playlistName,
