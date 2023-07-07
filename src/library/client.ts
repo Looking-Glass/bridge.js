@@ -9,6 +9,7 @@ import { HologramParamMap } from "./schemas/schema.parameters"
 import * as schema from "./schemas/schema.responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
+import { NewItemPlayingMessageHandler } from "./components/messageHandler"
 
 export class BridgeClient {
 	/** The name of the current orchestration */
@@ -25,6 +26,8 @@ export class BridgeClient {
 	public playlists: Playlist[] | undefined
 	/** The index of playlists that is currently active */
 	public currentPlaylistIndex: number
+	/**The index of the playlist Item that is currently active */
+	public currentPlaylistItemIndex: number
 	/** the instance of the client that we create, BridgeClient is a singleton, there can only be one */
 	static instance: BridgeClient
 	static fallback: Fallback | undefined
@@ -33,7 +36,7 @@ export class BridgeClient {
 	/**control how often we log to the console, 3 is everything, 0 is nothing */
 	static verbosity: 0 | 1 | 2 | 3 = 3
 	/**store if we're currently in the middle of a cast */
-	private isCastPending = false
+	public isCastPending = false
 	/**the version of the Looking Glass Driver that's running */
 	public version: number
 	private currentHologram: HologramType | undefined
@@ -50,6 +53,7 @@ export class BridgeClient {
 		this.playlists = []
 
 		this.currentPlaylistIndex = 0
+		this.currentPlaylistItemIndex = 0
 		this.version = 0
 
 		if (!BridgeClient.instance) {
@@ -137,6 +141,8 @@ export class BridgeClient {
 		// create event source and fallback
 		await this.subscribeToEvents()
 		BridgeClient.eventsource.connectEvent()
+
+		new NewItemPlayingMessageHandler({ client: this })
 
 		return { success: true, response: { version: this.version, orchestration: this.orchestration } }
 	}
@@ -370,14 +376,10 @@ export class BridgeClient {
 				}
 			})
 			this.currentPlaylistIndex = currentCastItem.index
-		}
-
-		// if we failed to add the hologram to the playlist, return false
-		else {
+		} else {
 			return { success: false }
 		}
 
-		this.isCastPending = false
 		this.currentHologram = hologram
 		return { success: true }
 	}
