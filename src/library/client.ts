@@ -375,7 +375,10 @@ export class BridgeClient {
 					this.playlists?.splice(this.playlists.indexOf(playlist), 1)
 				}
 			})
-			this.currentPlaylistIndex = currentCastItem.index
+			//update the current playlist index value.
+			this.currentPlaylistIndex = this.playlists?.indexOf(playlist) ?? 0
+			//update the current playlistItem Index value.
+			this.currentPlaylistItemIndex = currentCastItem.index
 		} else {
 			return { success: false }
 		}

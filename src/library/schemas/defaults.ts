@@ -22,8 +22,8 @@ export const ASPECT: defaults = {
 
 export const DEPTHINESS: defaults = {
 	min: 0.1,
-	max: 2,
-	range: numberRange(0.1, 2),
+	max: 4,
+	range: numberRange(0.1, 4),
 	type: "float",
 }
 
