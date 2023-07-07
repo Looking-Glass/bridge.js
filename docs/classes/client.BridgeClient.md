@@ -13,6 +13,7 @@
 ### Properties
 
 - [currentPlaylistIndex](client.BridgeClient.md#currentplaylistindex)
+- [isConnected](client.BridgeClient.md#isconnected)
 - [isDisconnecting](client.BridgeClient.md#isdisconnecting)
 - [manualDisconnect](client.BridgeClient.md#manualdisconnect)
 - [playlists](client.BridgeClient.md#playlists)
@@ -20,7 +21,6 @@
 - [eventsource](client.BridgeClient.md#eventsource)
 - [fallback](client.BridgeClient.md#fallback)
 - [instance](client.BridgeClient.md#instance)
-- [isConnected](client.BridgeClient.md#isconnected)
 - [verbosity](client.BridgeClient.md#verbosity)
 
 ### Methods
@@ -69,6 +69,15 @@ The index of playlists that is currently active
 
 ___
 
+### isConnected
+
+• **isConnected**: `boolean`
+
+A boolean that stores if the Bridge session is valid or not
+ If the orchestration is not valid, some functions will not work
+
+___
+
 ### isDisconnecting
 
 • **isDisconnecting**: `boolean`
@@ -103,7 +112,7 @@ ___
 
 ### eventsource
 
-▪ `Static` **eventsource**: `undefined` \| [`BridgeEventSource`](components_eventsource.BridgeEventSource.md)
+▪ `Static` **eventsource**: [`BridgeEventSource`](components_eventsource.BridgeEventSource.md)
 
 The websocket connection to Bridge's Event Source, this returns information from Bridge
 
@@ -120,15 +129,6 @@ ___
 ▪ `Static` **instance**: [`BridgeClient`](client.BridgeClient.md)
 
 the instance of the client that we create, BridgeClient is a singleton, there can only be one
-
-___
-
-### isConnected
-
-▪ `Static` **isConnected**: `boolean`
-
-A boolean that stores if the Bridge session is valid or not
- If the orchestration is not valid, some functions will not work
 
 ___
 
@@ -538,7 +538,7 @@ Update the parameters of the current hologram
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends ``"rows"`` \| ``"columns"`` \| ``"aspect"`` \| ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"focus"`` \| ``"depth_cutoff"`` \| ``"zoom"`` \| ``"view_count"`` |
+| `T` | extends ``"rows"`` \| ``"columns"`` \| ``"aspect"`` \| ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"focus"`` \| ``"depth_cutoff"`` \| ``"zoom"`` \| ``"view_count"`` \| ``"crop_pos_x"`` \| ``"crop_pos_y"`` |
 
 #### Parameters
 
@@ -547,7 +547,7 @@ Update the parameters of the current hologram
 | `«destructured»` | `Object` |
 | › `name` | `string` |
 | › `parameter` | `T` |
-| › `value` | { `aspect`: `number` ; `chroma_depth`: ``0`` \| ``1`` ; `columns`: `number` = QUILT\_COLS.range; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` = DEPTHINESS.range; `focus?`: `number` ; `rows`: `number` = QUILT\_ROWS.range; `view_count`: `number` ; `zoom`: `number` = ZOOM.range }[`T`] |
+| › `value` | { `aspect`: `number` ; `chroma_depth`: ``0`` \| ``1`` ; `columns`: `number` = QUILT\_COLS.range; `crop_pos_x?`: `number` ; `crop_pos_y?`: `number` ; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` = DEPTHINESS.range; `focus?`: `number` ; `rows`: `number` = QUILT\_ROWS.range; `view_count`: `number` ; `zoom`: `number` = ZOOM.range }[`T`] |
 
 #### Returns
 

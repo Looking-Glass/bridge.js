@@ -22,6 +22,7 @@ Playlist class
 ### Methods
 
 - [addItem](playlists_playlist.Playlist.md#additem)
+- [addPlaylistItemToBridge](playlists_playlist.Playlist.md#addplaylistitemtobridge)
 - [clearItems](playlists_playlist.Playlist.md#clearitems)
 - [getCurrent](playlists_playlist.Playlist.md#getcurrent)
 - [getInstance](playlists_playlist.Playlist.md#getinstance)
@@ -73,7 +74,7 @@ ___
 
 ### addItem
 
-▸ **addItem**(`hologram`): `void`
+▸ **addItem**(`hologram`): `undefined` \| [`PlaylistItemType`](../modules/playlists_playlist.md#playlistitemtype)
 
 #### Parameters
 
@@ -83,7 +84,23 @@ ___
 
 #### Returns
 
-`void`
+`undefined` \| [`PlaylistItemType`](../modules/playlists_playlist.md#playlistitemtype)
+
+___
+
+### addPlaylistItemToBridge
+
+▸ **addPlaylistItemToBridge**(`item`): `Promise`<`boolean`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `item` | [`PlaylistItemType`](../modules/playlists_playlist.md#playlistitemtype) |
+
+#### Returns
+
+`Promise`<`boolean`\>
 
 ___
 

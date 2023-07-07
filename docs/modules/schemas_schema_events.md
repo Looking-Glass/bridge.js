@@ -35,7 +35,8 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `Bridge Disconnected` | `z.infer`<typeof [`progressUpdateResponse`](schemas_schema_events.md#progressupdateresponse)\> | CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE |
+| `Bridge Connected` | `z.infer`<typeof [`progressUpdateResponse`](schemas_schema_events.md#progressupdateresponse)\> | CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE |
+| `Bridge Disconnected` | `z.infer`<typeof [`progressUpdateResponse`](schemas_schema_events.md#progressupdateresponse)\> | - |
 | `Monitor Connect` | `z.infer`<typeof [`monitorConnectResponse`](schemas_schema_events.md#monitorconnectresponse)\> | - |
 | `Monitor Disconnect` | `z.infer`<typeof [`progressUpdateResponse`](schemas_schema_events.md#progressupdateresponse)\> | - |
 | `Playlist Delete` | `z.infer`<typeof [`deletePlaylistResponse`](schemas_schema_events.md#deleteplaylistresponse)\> | - |

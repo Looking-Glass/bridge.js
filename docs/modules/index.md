@@ -34,6 +34,7 @@
 - [SyncPlayPlaylistCancelledMessageHandler](index.md#syncplayplaylistcancelledmessagehandler)
 - [SyncPlayPlaylistCompleteMessageHandler](index.md#syncplayplaylistcompletemessagehandler)
 - [SyncPlayPlaylistMessageHandler](index.md#syncplayplaylistmessagehandler)
+- [defaults](index.md#defaults)
 - [getPlayPlaylistJsonArgs](index.md#getplayplaylistjsonargs)
 - [hologramFactory](index.md#hologramfactory)
 - [hologramMap](index.md#hologrammap)
@@ -209,6 +210,12 @@ ___
 ### SyncPlayPlaylistMessageHandler
 
 Re-exports [SyncPlayPlaylistMessageHandler](../classes/components_messageHandler.SyncPlayPlaylistMessageHandler.md)
+
+___
+
+### defaults
+
+Renames and re-exports [schemas/defaults](schemas_defaults.md)
 
 ___
 
