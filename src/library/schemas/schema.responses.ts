@@ -252,7 +252,7 @@ export const get_autostart_playlist = z.object({
 	status: schema.status,
 })
 
-export const set_named_autostart_playlist = z.object({
+export const set_autostart_playlist = z.object({
 	name: schema.name,
 	orchestration: z.object({
 		name: schema.name,
