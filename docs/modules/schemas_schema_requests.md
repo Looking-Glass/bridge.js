@@ -4,15 +4,23 @@
 
 ## Table of contents
 
+### Type Aliases
+
+- [update\_current\_entry](schemas_schema_requests.md#update_current_entry)
+- [update\_playlist\_entry](schemas_schema_requests.md#update_playlist_entry)
+
 ### Variables
 
 - [available\_output\_devices](schemas_schema_requests.md#available_output_devices)
 - [delete\_playlist](schemas_schema_requests.md#delete_playlist)
+- [get\_autostart\_playlist](schemas_schema_requests.md#get_autostart_playlist)
 - [insert\_playlist\_entry](schemas_schema_requests.md#insert_playlist_entry)
 - [instance\_playlist](schemas_schema_requests.md#instance_playlist)
 - [instance\_studio\_playlist](schemas_schema_requests.md#instance_studio_playlist)
 - [orchestration](schemas_schema_requests.md#orchestration)
 - [play\_playlist](schemas_schema_requests.md#play_playlist)
+- [set\_autostart\_playlist](schemas_schema_requests.md#set_autostart_playlist)
+- [set\_named\_autostart\_playlist](schemas_schema_requests.md#set_named_autostart_playlist)
 - [show\_window](schemas_schema_requests.md#show_window)
 - [transport\_control\_next](schemas_schema_requests.md#transport_control_next)
 - [transport\_control\_pause](schemas_schema_requests.md#transport_control_pause)
@@ -20,6 +28,18 @@
 - [transport\_control\_previous](schemas_schema_requests.md#transport_control_previous)
 - [transport\_control\_seek\_to\_index](schemas_schema_requests.md#transport_control_seek_to_index)
 - [version](schemas_schema_requests.md#version)
+
+## Type Aliases
+
+### update\_current\_entry
+
+Ƭ **update\_current\_entry**: { `name`: `string` ; `orchestration`: `string`  } & { [K in keyof HologramParamMap]?: \`${K}: ${HologramParamMap[K]}\` }
+
+___
+
+### update\_playlist\_entry
+
+Ƭ **update\_playlist\_entry**: { `orchestration`: `string` ; `playlistIndex`: `number` ; `playlistName`: `string`  } & { [K in keyof HologramParamMap]?: \`${K}: ${HologramParamMap[K]}\` }
 
 ## Variables
 
@@ -32,6 +52,12 @@ ___
 ### delete\_playlist
 
 • `Const` **delete\_playlist**: `ZodObject`<{ `loop`: `ZodBoolean` ; `name`: `ZodString` ; `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `loop`: `boolean` ; `name`: `string` ; `orchestration`: `string`  }, { `loop`: `boolean` ; `name`: `string` ; `orchestration`: `string`  }\>
+
+___
+
+### get\_autostart\_playlist
+
+• `Const` **get\_autostart\_playlist**: `ZodObject`<{ `head_index`: `ZodNumber` ; `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `orchestration`: `string`  }, { `head_index`: `number` ; `orchestration`: `string`  }\>
 
 ___
 
@@ -62,6 +88,18 @@ ___
 ### play\_playlist
 
 • `Const` **play\_playlist**: `ZodObject`<{ `head_index`: `ZodNumber` ; `name`: `ZodString` ; `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `name`: `string` ; `orchestration`: `string`  }, { `head_index`: `number` ; `name`: `string` ; `orchestration`: `string`  }\>
+
+___
+
+### set\_autostart\_playlist
+
+• `Const` **set\_autostart\_playlist**: `ZodObject`<{ `head_index`: `ZodNumber` ; `orchestration`: `ZodString` ; `playlist_name`: `ZodString` ; `playlist_path`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `orchestration`: `string` ; `playlist_name`: `string` ; `playlist_path`: `string`  }, { `head_index`: `number` ; `orchestration`: `string` ; `playlist_name`: `string` ; `playlist_path`: `string`  }\>
+
+___
+
+### set\_named\_autostart\_playlist
+
+• `Const` **set\_named\_autostart\_playlist**: `ZodObject`<{ `head_index`: `ZodNumber` ; `orchestration`: `ZodString` ; `playlist_name`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `orchestration`: `string` ; `playlist_name`: `string`  }, { `head_index`: `number` ; `orchestration`: `string` ; `playlist_name`: `string`  }\>
 
 ___
 

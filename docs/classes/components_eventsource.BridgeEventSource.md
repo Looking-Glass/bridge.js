@@ -24,7 +24,6 @@ the websocket connection will send events from Bridge to the client.
 ### Methods
 
 - [addMessageHandler](components_eventsource.BridgeEventSource.md#addmessagehandler)
-- [connectEvent](components_eventsource.BridgeEventSource.md#connectevent)
 - [connectToBridgeEventSource](components_eventsource.BridgeEventSource.md#connecttobridgeeventsource)
 - [disconnectEvent](components_eventsource.BridgeEventSource.md#disconnectevent)
 - [removeMessageHandler](components_eventsource.BridgeEventSource.md#removemessagehandler)
@@ -74,16 +73,6 @@ adds a new message handler object to the BridgeEventSource class
 | `«destructured»` | `Object` |
 | › `MessageHandler` | (`payload`: [`BridgeEventMap`](../modules/schemas_schema_events.md#bridgeeventmap)[`K`]) => `void` |
 | › `event` | `K` |
-
-#### Returns
-
-`void`
-
-___
-
-### connectEvent
-
-▸ **connectEvent**(): `void`
 
 #### Returns
 

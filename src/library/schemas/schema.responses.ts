@@ -206,6 +206,26 @@ export const instance_studio_playlist = z.object({
 	status: schema.status,
 })
 
+export const update_playlist_entry = z.object({
+	name: schema.name,
+	orchestration: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	status: schema.status,
+})
+
+export const update_current_entry = z.object({
+	name: schema.name,
+	orchestration: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	status: schema.status,
+})
+
 export const get_autostart_playlist = z.object({
 	name: schema.name,
 	orchestration: z.object({

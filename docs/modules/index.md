@@ -8,6 +8,7 @@
 
 - [BridgeClient](index.md#bridgeclient)
 - [HologramClasses](index.md#hologramclasses)
+- [HologramParamMap](index.md#hologramparammap)
 - [HologramSettings](index.md#hologramsettings)
 - [HologramType](index.md#hologramtype)
 - [MessageHandler](index.md#messagehandler)
@@ -36,8 +37,10 @@
 - [getPlayPlaylistJsonArgs](index.md#getplayplaylistjsonargs)
 - [hologramFactory](index.md#hologramfactory)
 - [hologramMap](index.md#hologrammap)
+- [hologramParamMap](index.md#hologramparammap-1)
 - [hologramTypeSchema](index.md#hologramtypeschema)
 - [hologramTypes](index.md#hologramtypes)
+- [parameterNames](index.md#parameternames)
 
 ## References
 
@@ -50,6 +53,12 @@ ___
 ### HologramClasses
 
 Re-exports [HologramClasses](../interfaces/schemas_schema_hologram.HologramClasses.md)
+
+___
+
+### HologramParamMap
+
+Re-exports [HologramParamMap](schemas_schema_parameters.md#hologramparammap)
 
 ___
 
@@ -221,6 +230,12 @@ Re-exports [hologramMap](schemas_schema_hologram.md#hologrammap)
 
 ___
 
+### hologramParamMap
+
+Re-exports [hologramParamMap](schemas_schema_parameters.md#hologramparammap-1)
+
+___
+
 ### hologramTypeSchema
 
 Re-exports [hologramTypeSchema](schemas_schema_hologram.md#hologramtypeschema)
@@ -230,3 +245,9 @@ ___
 ### hologramTypes
 
 Re-exports [hologramTypes](schemas_schema_hologram.md#hologramtypes)
+
+___
+
+### parameterNames
+
+Re-exports [parameterNames](schemas_schema_parameters.md#parameternames)

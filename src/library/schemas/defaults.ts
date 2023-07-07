@@ -4,25 +4,43 @@ import { numberRange } from "./schema.utils"
  * This helps prevent sending bridge values that are out of range.
  */
 
-const ASPECT_MIN = 0.1
-const ASPECT_MAX = 10
-export const ASPECT = numberRange(ASPECT_MIN, ASPECT_MAX)
+export const ASPECT = {
+	min: 0.1,
+	max: 10,
+	range: numberRange(0.1, 10),
+}
 
-const DEPTHINESS_MIN = 0.1
-const DEPTHINESS_MAX = 2
-export const DEPTHINESS = numberRange(DEPTHINESS_MIN, DEPTHINESS_MAX)
+export const DEPTHINESS = {
+	min: 0.1,
+	max: 2,
+	range: numberRange(0.1, 2),
+}
 
-const ZOOM_MIN = 0.1
-const ZOOM_MAX = 2
-export const ZOOM = numberRange(ZOOM_MIN, ZOOM_MAX)
+export const ZOOM = {
+	min: 0.1,
+	max: 2,
+	range: numberRange(0.1, 2),
+}
 
-const QUILT_ROWS_MIN = 1
-const QUILT_ROWS_MAX = 50
-export const QUILT_ROWS = numberRange(QUILT_ROWS_MIN, QUILT_ROWS_MAX)
+export const FOCUS = {
+	min: 0.01,
+	max: 1,
+	range: numberRange(0.01, 1),
+}
 
-const QUILT_COLS_MIN = 1
-const QUILT_COLS_MAX = 50
-export const QUILT_COLS = numberRange(QUILT_COLS_MIN, QUILT_COLS_MAX)
+export const QUILT_ROWS = {
+	min: 1,
+	max: 50,
+	range: numberRange(1, 50),
+}
 
-export const QUILT_VIEW_COUNT_MIN = 1
-export const QUILT_VIEW_COUNT_MAX = 2500
+export const QUILT_COLS = {
+	min: 1,
+	max: 50,
+	range: numberRange(1, 50),
+}
+export const QUILT_VIEW_COUNT = {
+	min: 1,
+	max: 2500,
+	range: numberRange(1, 2500),
+}

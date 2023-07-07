@@ -5,6 +5,7 @@ import { BridgeEventSource } from "./components/eventsource"
 import { Playlist } from "./playlists/playlist"
 import { HologramType } from "./components/hologram"
 import { BridgeEventMap } from "./schemas/schema.events"
+import { HologramParamMap } from "./schemas/schema.parameters"
 import * as schema from "./schemas/schema.responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
@@ -674,6 +675,31 @@ export class BridgeClient {
 		} else {
 			BridgeClient.eventsource.removeMessageHandler({ event: event, MessageHandler: MessageHandler })
 		}
+	}
+
+	/**Update the parameters of the current hologram */
+	public async updateCurrentHologram<T extends keyof HologramParamMap>({
+		name,
+		parameter,
+		value,
+	}: {
+		name: string
+		parameter: T
+		value: HologramParamMap[T]
+	}): Promise<{ success: boolean; response: z.infer<typeof schema.update_current_entry> | null }> {
+		let requestBody = {
+			orchestration: this.orchestration,
+			name: name,
+			[parameter]: `${value}`,
+		}
+
+		let message = await sendMessage({ endpoint: "update_current_entry", requestBody: requestBody })
+
+		if (message.success == false) {
+			return { success: false, response: null }
+		}
+
+		return { success: true, response: message.response }
 	}
 
 	public getCurrentHologram(): HologramType | undefined {

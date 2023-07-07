@@ -10,6 +10,7 @@ import {
 	Playlist,
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
+import { UpdateParams } from "./components/updateParams"
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -298,6 +299,12 @@ function App() {
 							disabled={!connected}>
 							SEEK
 						</button>
+					</div>
+					<h2>Controls</h2>
+					<hr />
+					<div className="flex-container">
+						{playlist && <UpdateParams playlistName="cast0" parameter="depthiness" />}
+						{playlist && <UpdateParams playlistName="cast0" parameter="focus" />}
 					</div>
 					<br />
 					<div className="w3-light-grey">
