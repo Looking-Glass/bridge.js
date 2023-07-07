@@ -213,17 +213,6 @@ export const update_playlist_entry = z.object({
 		type: schema.wstring,
 		value: z.string(),
 	}),
-	payload: z.object({
-		name: schema.name,
-		type: schema.variant_map,
-		value: z.object({
-			index: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
-		}),
-	}),
 	status: schema.status,
 })
 
@@ -233,17 +222,6 @@ export const update_current_entry = z.object({
 		name: schema.name,
 		type: schema.wstring,
 		value: z.string(),
-	}),
-	payload: z.object({
-		name: schema.name,
-		type: schema.variant_map,
-		value: z.object({
-			index: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
-		}),
 	}),
 	status: schema.status,
 })
