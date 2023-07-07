@@ -226,6 +226,53 @@ export const update_current_entry = z.object({
 	status: schema.status,
 })
 
+export const get_autostart_playlist = z.object({
+	name: schema.name,
+	orchestration: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	payload: z.object({
+		name: schema.name,
+		type: schema.variant_map,
+		value: z.object({
+			playlist_name: z.object({
+				name: schema.name,
+				type: schema.wstring,
+				value: z.string(),
+			}),
+			playlist_path: z.object({
+				name: schema.name,
+				type: schema.wstring,
+				value: z.string(),
+			}),
+		}),
+	}),
+	status: schema.status,
+})
+
+export const set_named_autostart_playlist = z.object({
+	name: schema.name,
+	orchestration: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	payload: z.object({
+		name: schema.name,
+		type: schema.variant_map,
+		value: z.object({
+			playlist_name: z.object({
+				name: schema.name,
+				type: schema.wstring,
+				value: z.string(),
+			}),
+		}),
+	}),
+	status: schema.status,
+})
+
 export const transport_control_play = z.object({
 	name: schema.name,
 	orchestration: z.object({

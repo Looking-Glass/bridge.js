@@ -94,14 +94,6 @@ export class BridgeEventSource {
 		}
 	}
 
-	public connectEvent() {
-		const handlers = this.MessageHandler["Bridge Connected"]
-
-		if (handlers) {
-			handlers.forEach((handler: any) => handler(undefined))
-		}
-	}
-
 	public disconnectEvent() {
 		const handlers = this.MessageHandler["Bridge Disconnected"]
 
@@ -136,9 +128,14 @@ export class BridgeEventSource {
 
 				this.ws.onclose = function () {
 					const client = BridgeClient.getInstance()
-					client.disconnect()
+					if (!client.manualDisconnect) {
+						client.disconnect()
+					}
 
-					console.log("%c Disconnected from Websocket ", "color: red; font-weight: bold; border: solid")
+					console.log(
+						`%c Disconnected from Websocket, Manual Disconnect: ${client.manualDisconnect} `,
+						"color: red; font-weight: bold; border: solid"
+					)
 				}
 
 				this.ws.onerror = function (error) {

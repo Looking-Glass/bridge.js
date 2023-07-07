@@ -8,6 +8,7 @@ export type BridgeEndpointType =
 	| "bridge_version"
 	| "api_version"
 	| "set_named_autostart_playlist"
+	| "get_autostart_playlist"
 	| "set_autostart_playlist"
 	| "available_output_devices"
 	| "enter_orchestration"
@@ -32,8 +33,9 @@ export type BridgeEndpointSchemaMap = {
 	instance_studio_playlist: z.infer<typeof BridgeResponse.instance_studio_playlist>
 	bridge_version: z.infer<typeof BridgeResponse.version>
 	api_version: z.infer<typeof BridgeResponse.version>
-	// set_named_autostart_playlist: z.infer<typeof BridgeResponse.set_named_autostart_playlist>
-	// set_autostart_playlist: z.infer<typeof BridgeResponse.set_autostart_playlist>
+	get_autostart_playlist: z.infer<typeof BridgeResponse.get_autostart_playlist>
+	set_named_autostart_playlist: z.infer<typeof BridgeResponse.set_named_autostart_playlist>
+	set_autostart_playlist: z.infer<typeof BridgeResponse.set_autostart_playlist>
 	available_output_devices: z.infer<typeof BridgeResponse.available_output_devices>
 	enter_orchestration: z.infer<typeof BridgeResponse.orchestration>
 	exit_orchestration: z.infer<typeof BridgeResponse.orchestration>
@@ -58,8 +60,9 @@ export type BridgeRequestBodyMap = {
 	instance_studio_playlist: z.infer<typeof BridgeRequest.instance_studio_playlist>
 	bridge_version: z.infer<typeof BridgeRequest.version>
 	api_version: z.infer<typeof BridgeRequest.version>
-	// set_named_autostart_playlist: z.infer<typeof BridgeRequest.set_named_autostart_playlist>
-	// set_autostart_playlist: z.infer<typeof BridgeRequest.set_autostart_playlist>
+	get_autostart_playlist: z.infer<typeof BridgeRequest.get_autostart_playlist>
+	set_named_autostart_playlist: z.infer<typeof BridgeRequest.set_named_autostart_playlist>
+	set_autostart_playlist: z.infer<typeof BridgeRequest.set_autostart_playlist>
 	available_output_devices: z.infer<typeof BridgeRequest.available_output_devices>
 	enter_orchestration: z.infer<typeof BridgeRequest.orchestration>
 	exit_orchestration: z.infer<typeof BridgeRequest.orchestration>
@@ -133,6 +136,12 @@ export async function sendMessage<
 
 		if (!bridgeResponse.ok) {
 			return { success: false, response: null }
+		}
+
+		//if response timed out, exit
+		if (bridgeResponse.status == 408) {
+			console.log("%c Bridge Timeout:", "color: #ff0000", bridgeResponse)
+			console.groupEnd()
 		}
 
 		parsedResponse = await bridgeResponse.json()
