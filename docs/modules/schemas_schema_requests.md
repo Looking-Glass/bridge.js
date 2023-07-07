@@ -13,11 +13,14 @@
 
 - [available\_output\_devices](schemas_schema_requests.md#available_output_devices)
 - [delete\_playlist](schemas_schema_requests.md#delete_playlist)
+- [get\_autostart\_playlist](schemas_schema_requests.md#get_autostart_playlist)
 - [insert\_playlist\_entry](schemas_schema_requests.md#insert_playlist_entry)
 - [instance\_playlist](schemas_schema_requests.md#instance_playlist)
 - [instance\_studio\_playlist](schemas_schema_requests.md#instance_studio_playlist)
 - [orchestration](schemas_schema_requests.md#orchestration)
 - [play\_playlist](schemas_schema_requests.md#play_playlist)
+- [set\_autostart\_playlist](schemas_schema_requests.md#set_autostart_playlist)
+- [set\_named\_autostart\_playlist](schemas_schema_requests.md#set_named_autostart_playlist)
 - [show\_window](schemas_schema_requests.md#show_window)
 - [transport\_control\_next](schemas_schema_requests.md#transport_control_next)
 - [transport\_control\_pause](schemas_schema_requests.md#transport_control_pause)
@@ -52,6 +55,12 @@ ___
 
 ___
 
+### get\_autostart\_playlist
+
+• `Const` **get\_autostart\_playlist**: `ZodObject`<{ `head_index`: `ZodNumber` ; `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `orchestration`: `string`  }, { `head_index`: `number` ; `orchestration`: `string`  }\>
+
+___
+
 ### insert\_playlist\_entry
 
 • `Const` **insert\_playlist\_entry**: `ZodObject`<{ `aspect`: `ZodNumber` ; `chroma_depth`: `ZodOptional`<`ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\>\> ; `cols`: `ZodNumber` ; `depth_inversion`: `ZodOptional`<`ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\>\> ; `depth_loc`: `ZodOptional`<`ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>, `ZodLiteral`<``2``\>, `ZodLiteral`<``3``\>]\>\> ; `depthiness`: `ZodOptional`<`ZodNumber`\> ; `id`: `ZodNumber` ; `index`: `ZodNumber` ; `isRGBD`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `name`: `ZodString` ; `orchestration`: `ZodString` ; `rows`: `ZodNumber` ; `uri`: `ZodString` ; `view_count`: `ZodNumber` ; `zoom`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `aspect`: `number` ; `chroma_depth?`: ``0`` \| ``1`` ; `cols`: `number` ; `depth_inversion?`: ``0`` \| ``1`` ; `depth_loc?`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness?`: `number` ; `id`: `number` ; `index`: `number` ; `isRGBD`: ``0`` \| ``1`` ; `name`: `string` ; `orchestration`: `string` ; `rows`: `number` ; `uri`: `string` ; `view_count`: `number` ; `zoom?`: `number`  }, { `aspect`: `number` ; `chroma_depth?`: ``0`` \| ``1`` ; `cols`: `number` ; `depth_inversion?`: ``0`` \| ``1`` ; `depth_loc?`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness?`: `number` ; `id`: `number` ; `index`: `number` ; `isRGBD`: ``0`` \| ``1`` ; `name`: `string` ; `orchestration`: `string` ; `rows`: `number` ; `uri`: `string` ; `view_count`: `number` ; `zoom?`: `number`  }\>
@@ -79,6 +88,18 @@ ___
 ### play\_playlist
 
 • `Const` **play\_playlist**: `ZodObject`<{ `head_index`: `ZodNumber` ; `name`: `ZodString` ; `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `name`: `string` ; `orchestration`: `string`  }, { `head_index`: `number` ; `name`: `string` ; `orchestration`: `string`  }\>
+
+___
+
+### set\_autostart\_playlist
+
+• `Const` **set\_autostart\_playlist**: `ZodObject`<{ `head_index`: `ZodNumber` ; `orchestration`: `ZodString` ; `playlist_name`: `ZodString` ; `playlist_path`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `orchestration`: `string` ; `playlist_name`: `string` ; `playlist_path`: `string`  }, { `head_index`: `number` ; `orchestration`: `string` ; `playlist_name`: `string` ; `playlist_path`: `string`  }\>
+
+___
+
+### set\_named\_autostart\_playlist
+
+• `Const` **set\_named\_autostart\_playlist**: `ZodObject`<{ `head_index`: `ZodNumber` ; `orchestration`: `ZodString` ; `playlist_name`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `head_index`: `number` ; `orchestration`: `string` ; `playlist_name`: `string`  }, { `head_index`: `number` ; `orchestration`: `string` ; `playlist_name`: `string`  }\>
 
 ___
 

@@ -33,10 +33,13 @@
 | `delete_playlist` | `z.infer`<typeof [`delete_playlist`](schemas_schema_responses.md#delete_playlist)\> |
 | `enter_orchestration` | `z.infer`<typeof [`orchestration`](schemas_schema_responses.md#orchestration)\> |
 | `exit_orchestration` | `z.infer`<typeof [`orchestration`](schemas_schema_responses.md#orchestration)\> |
+| `get_autostart_playlist` | `z.infer`<typeof [`get_autostart_playlist`](schemas_schema_responses.md#get_autostart_playlist)\> |
 | `insert_playlist_entry` | `z.infer`<typeof [`insert_playlist_entry`](schemas_schema_responses.md#insert_playlist_entry)\> |
 | `instance_playlist` | `z.infer`<typeof [`instance_playlist`](schemas_schema_responses.md#instance_playlist)\> |
 | `instance_studio_playlist` | `z.infer`<typeof [`instance_studio_playlist`](schemas_schema_responses.md#instance_studio_playlist)\> |
 | `play_playlist` | `z.infer`<typeof [`play_playlist`](schemas_schema_responses.md#play_playlist)\> |
+| `set_autostart_playlist` | `z.infer`<typeof [`set_autostart_playlist`](schemas_schema_responses.md#set_autostart_playlist)\> |
+| `set_named_autostart_playlist` | `z.infer`<typeof [`set_named_autostart_playlist`](schemas_schema_responses.md#set_named_autostart_playlist)\> |
 | `show_window` | `z.infer`<typeof [`show_window`](schemas_schema_responses.md#show_window)\> |
 | `transport_control_next` | `z.infer`<typeof [`transport_control_next`](schemas_schema_responses.md#transport_control_next)\> |
 | `transport_control_pause` | `z.infer`<typeof [`transport_control_pause`](schemas_schema_responses.md#transport_control_pause)\> |
@@ -50,7 +53,7 @@ ___
 
 ### BridgeEndpointType
 
-Ƭ **BridgeEndpointType**: ``"instance_studio_playlist"`` \| ``"bridge_version"`` \| ``"api_version"`` \| ``"set_named_autostart_playlist"`` \| ``"set_autostart_playlist"`` \| ``"available_output_devices"`` \| ``"enter_orchestration"`` \| ``"exit_orchestration"`` \| ``"instance_playlist"`` \| ``"delete_playlist"`` \| ``"insert_playlist_entry"`` \| ``"update_playlist_entry"`` \| ``"update_current_entry"`` \| ``"sync_overwrite_playlist"`` \| ``"cancel_pending"`` \| ``"synced_file_hash"`` \| ``"transport_control_play"`` \| ``"transport_control_pause"`` \| ``"transport_control_next"`` \| ``"transport_control_previous"`` \| ``"transport_control_seek_to_index"`` \| ``"play_playlist"`` \| ``"show_window"``
+Ƭ **BridgeEndpointType**: ``"instance_studio_playlist"`` \| ``"bridge_version"`` \| ``"api_version"`` \| ``"set_named_autostart_playlist"`` \| ``"get_autostart_playlist"`` \| ``"set_autostart_playlist"`` \| ``"available_output_devices"`` \| ``"enter_orchestration"`` \| ``"exit_orchestration"`` \| ``"instance_playlist"`` \| ``"delete_playlist"`` \| ``"insert_playlist_entry"`` \| ``"update_playlist_entry"`` \| ``"update_current_entry"`` \| ``"sync_overwrite_playlist"`` \| ``"cancel_pending"`` \| ``"synced_file_hash"`` \| ``"transport_control_play"`` \| ``"transport_control_pause"`` \| ``"transport_control_next"`` \| ``"transport_control_previous"`` \| ``"transport_control_seek_to_index"`` \| ``"play_playlist"`` \| ``"show_window"``
 
 ___
 
@@ -68,10 +71,13 @@ ___
 | `delete_playlist` | `z.infer`<typeof [`delete_playlist`](schemas_schema_requests.md#delete_playlist)\> |
 | `enter_orchestration` | `z.infer`<typeof [`orchestration`](schemas_schema_requests.md#orchestration)\> |
 | `exit_orchestration` | `z.infer`<typeof [`orchestration`](schemas_schema_requests.md#orchestration)\> |
+| `get_autostart_playlist` | `z.infer`<typeof [`get_autostart_playlist`](schemas_schema_requests.md#get_autostart_playlist)\> |
 | `insert_playlist_entry` | `z.infer`<typeof [`insert_playlist_entry`](schemas_schema_requests.md#insert_playlist_entry)\> |
 | `instance_playlist` | `z.infer`<typeof [`instance_playlist`](schemas_schema_requests.md#instance_playlist)\> |
 | `instance_studio_playlist` | `z.infer`<typeof [`instance_studio_playlist`](schemas_schema_requests.md#instance_studio_playlist)\> |
 | `play_playlist` | `z.infer`<typeof [`play_playlist`](schemas_schema_requests.md#play_playlist)\> |
+| `set_autostart_playlist` | `z.infer`<typeof [`set_autostart_playlist`](schemas_schema_requests.md#set_autostart_playlist)\> |
+| `set_named_autostart_playlist` | `z.infer`<typeof [`set_named_autostart_playlist`](schemas_schema_requests.md#set_named_autostart_playlist)\> |
 | `show_window` | `z.infer`<typeof [`show_window`](schemas_schema_requests.md#show_window)\> |
 | `transport_control_next` | `z.infer`<typeof [`transport_control_next`](schemas_schema_requests.md#transport_control_next)\> |
 | `transport_control_pause` | `z.infer`<typeof [`transport_control_pause`](schemas_schema_requests.md#transport_control_pause)\> |
@@ -135,7 +141,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends ``"show_window"`` \| ``"instance_playlist"`` \| ``"instance_studio_playlist"`` \| ``"bridge_version"`` \| ``"api_version"`` \| ``"available_output_devices"`` \| ``"enter_orchestration"`` \| ``"exit_orchestration"`` \| ``"delete_playlist"`` \| ``"insert_playlist_entry"`` \| ``"update_playlist_entry"`` \| ``"update_current_entry"`` \| ``"transport_control_play"`` \| ``"transport_control_pause"`` \| ``"transport_control_next"`` \| ``"transport_control_previous"`` \| ``"transport_control_seek_to_index"`` \| ``"play_playlist"`` |
+| `T` | extends ``"show_window"`` \| ``"instance_playlist"`` \| ``"instance_studio_playlist"`` \| ``"bridge_version"`` \| ``"api_version"`` \| ``"get_autostart_playlist"`` \| ``"set_named_autostart_playlist"`` \| ``"set_autostart_playlist"`` \| ``"available_output_devices"`` \| ``"enter_orchestration"`` \| ``"exit_orchestration"`` \| ``"delete_playlist"`` \| ``"insert_playlist_entry"`` \| ``"update_playlist_entry"`` \| ``"update_current_entry"`` \| ``"transport_control_play"`` \| ``"transport_control_pause"`` \| ``"transport_control_next"`` \| ``"transport_control_previous"`` \| ``"transport_control_seek_to_index"`` \| ``"play_playlist"`` |
 
 #### Parameters
 

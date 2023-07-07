@@ -34,7 +34,7 @@ This class uses HoloPlay Core to see if the older API endpoint used in HoloPlay 
 
 ### versionPromise
 
-• **versionPromise**: `Promise`<`number`\>
+• **versionPromise**: `number` \| `Promise`<`number`\>
 
 ___
 

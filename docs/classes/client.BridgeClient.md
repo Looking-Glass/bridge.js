@@ -14,11 +14,13 @@
 
 - [currentPlaylistIndex](client.BridgeClient.md#currentplaylistindex)
 - [isDisconnecting](client.BridgeClient.md#isdisconnecting)
+- [manualDisconnect](client.BridgeClient.md#manualdisconnect)
 - [playlists](client.BridgeClient.md#playlists)
 - [version](client.BridgeClient.md#version)
 - [eventsource](client.BridgeClient.md#eventsource)
 - [fallback](client.BridgeClient.md#fallback)
 - [instance](client.BridgeClient.md#instance)
+- [isConnected](client.BridgeClient.md#isconnected)
 - [verbosity](client.BridgeClient.md#verbosity)
 
 ### Methods
@@ -27,11 +29,13 @@
 - [apiVersion](client.BridgeClient.md#apiversion)
 - [cast](client.BridgeClient.md#cast)
 - [connect](client.BridgeClient.md#connect)
+- [createAutoStartPlaylist](client.BridgeClient.md#createautostartplaylist)
 - [createOrchestration](client.BridgeClient.md#createorchestration)
 - [deletePlaylist](client.BridgeClient.md#deleteplaylist)
 - [disconnect](client.BridgeClient.md#disconnect)
-- [displays](client.BridgeClient.md#displays)
+- [getAutoStartPlaylist](client.BridgeClient.md#getautostartplaylist)
 - [getCurrentHologram](client.BridgeClient.md#getcurrenthologram)
+- [getDisplays](client.BridgeClient.md#getdisplays)
 - [getVerbosity](client.BridgeClient.md#getverbosity)
 - [getVersion](client.BridgeClient.md#getversion)
 - [next](client.BridgeClient.md#next)
@@ -41,6 +45,7 @@
 - [previous](client.BridgeClient.md#previous)
 - [removeEventListener](client.BridgeClient.md#removeeventlistener)
 - [seek](client.BridgeClient.md#seek)
+- [setAutoStartPlaylist](client.BridgeClient.md#setautostartplaylist)
 - [setVerbosity](client.BridgeClient.md#setverbosity)
 - [showWindow](client.BridgeClient.md#showwindow)
 - [status](client.BridgeClient.md#status)
@@ -72,9 +77,17 @@ A boolean for checking the status of the current disconnect event
 
 ___
 
+### manualDisconnect
+
+• **manualDisconnect**: `boolean` = `false`
+
+a boolean for whether a disconnect was triggered automatically or manually
+
+___
+
 ### playlists
 
-• **playlists**: `undefined`[] \| [`Playlist`](playlists_playlist.Playlist.md)[]
+• **playlists**: `undefined` \| [`Playlist`](playlists_playlist.Playlist.md)[]
 
 an Array containing Playlists, we store this to easily switch between multiple playlists
 
@@ -90,7 +103,7 @@ ___
 
 ### eventsource
 
-▪ `Static` **eventsource**: [`BridgeEventSource`](components_eventsource.BridgeEventSource.md)
+▪ `Static` **eventsource**: `undefined` \| [`BridgeEventSource`](components_eventsource.BridgeEventSource.md)
 
 The websocket connection to Bridge's Event Source, this returns information from Bridge
 
@@ -98,7 +111,7 @@ ___
 
 ### fallback
 
-▪ `Static` **fallback**: [`Fallback`](components_fallback.Fallback.md)
+▪ `Static` **fallback**: `undefined` \| [`Fallback`](components_fallback.Fallback.md)
 
 ___
 
@@ -107,6 +120,15 @@ ___
 ▪ `Static` **instance**: [`BridgeClient`](client.BridgeClient.md)
 
 the instance of the client that we create, BridgeClient is a singleton, there can only be one
+
+___
+
+### isConnected
+
+▪ `Static` **isConnected**: `boolean`
+
+A boolean that stores if the Bridge session is valid or not
+ If the orchestration is not valid, some functions will not work
 
 ___
 
@@ -187,6 +209,25 @@ Attempt to connect to Looking Glass Bridge.
 
 ___
 
+### createAutoStartPlaylist
+
+▸ **createAutoStartPlaylist**(`args`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { playlist\_name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+set a playlist to auto-start, requires that all files are local on the system
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `args` | `Object` |
+| `args.playlist` | [`Playlist`](playlists_playlist.Playlist.md) |
+
+#### Returns
+
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { playlist\_name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+___
+
 ### createOrchestration
 
 ▸ **createOrchestration**(`name`): `Promise`<{ `response`: ``null`` \| `string` ; `success`: `boolean`  }\>
@@ -237,18 +278,15 @@ Disconnect from Looking Glass Bridge, free up resources.
 
 ___
 
-### displays
+### getAutoStartPlaylist
 
-▸ **displays**(): `Promise`<{ `response`: ``null`` \| [`Display`](../interfaces/components_displays.Display.md)[] ; `success`: `boolean`  }\>
+▸ **getAutoStartPlaylist**(): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { playlist\_path: { value: string; type: "WSTRING"; name: string; }; playlist\_name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
-QueryDisplays finds all displays that are connected to the computer,
-searches for Looking Glass displays, and returns them as an array of Display objects
+Get the current playlist that is set to start automatically
 
 #### Returns
 
-`Promise`<{ `response`: ``null`` \| [`Display`](../interfaces/components_displays.Display.md)[] ; `success`: `boolean`  }\>
-
-the display object
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { playlist\_path: { value: string; type: "WSTRING"; name: string; }; playlist\_name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
@@ -259,6 +297,21 @@ ___
 #### Returns
 
 `undefined` \| [`HologramType`](../modules/components_hologram.md#hologramtype)
+
+___
+
+### getDisplays
+
+▸ **getDisplays**(): `Promise`<{ `response`: ``null`` \| [`Display`](../interfaces/components_displays.Display.md)[] ; `success`: `boolean`  }\>
+
+QueryDisplays finds all displays that are connected to the computer,
+searches for Looking Glass displays, and returns them as an array of Display objects
+
+#### Returns
+
+`Promise`<{ `response`: ``null`` \| [`Display`](../interfaces/components_displays.Display.md)[] ; `success`: `boolean`  }\>
+
+the display object
 
 ___
 
@@ -390,6 +443,26 @@ Seek to a specific item in a playlist
 #### Returns
 
 `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+___
+
+### setAutoStartPlaylist
+
+▸ **setAutoStartPlaylist**(`args`): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { playlist\_name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+Choose a Playlist that exists on the local file system to set as the start up playlist
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `args` | `Object` |
+| `args.playlistName` | `string` |
+| `args.playlistPath` | `string` |
+
+#### Returns
+
+`Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { playlist\_name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
 
 ___
 
