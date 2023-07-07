@@ -10,7 +10,6 @@ import {
 	Playlist,
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
-import { UpdateParams } from "./components/updateParams"
 import { PlaylistUI } from "./components/Playlist"
 
 const quilt = new QuiltHologram({
@@ -42,7 +41,6 @@ function App() {
 
 	//internal application state
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
-	const [playlist, setPlaylist] = useState<Playlist[] | undefined>()
 	const [studioPlaylistPath, setStudioPlaylistPath] = useState<string>("")
 	const [index, setIndex] = useState<number>(0)
 	const [progress, setProgress] = useState(0)
@@ -86,7 +84,6 @@ function App() {
 		setConnectionStatus("⚠️ Bridge Disconnected!")
 		setEventStatus("Subscribe to Events")
 		setDisplays("Connect to Bridge to detect displays")
-		setPlaylist(undefined)
 		await Bridge.removeEventListener("Bridge Disconnected", handleEventDisconnected)
 	}
 
@@ -134,7 +131,6 @@ function App() {
 								setConnectionStatus("✂️ Manually Disconnected!")
 								setEventStatus("Subscribe to Events")
 								setDisplays("Connect to Bridge to detect displays")
-								setPlaylist(undefined)
 							}}
 							disabled={!connected}>
 							Disconnect From Bridge
@@ -318,7 +314,6 @@ function App() {
 								hologramType={hologramType}
 								setHologramType={setHologramType}
 								setResponse={setResponse}
-								setPlaylist={setPlaylist}
 							/>
 							<h3>Cast Predefined Holograms</h3>
 							<button
@@ -328,7 +323,6 @@ function App() {
 									let call = await Bridge.cast(quilt)
 									setHologram(quilt)
 									setResponse(JSON.stringify(call))
-									setPlaylist(Bridge.playlists)
 								}}
 								disabled={!connected}>
 								Cast Quilt hologram
@@ -339,7 +333,6 @@ function App() {
 									let call = await Bridge.cast(rgbd)
 									setHologram(rgbd)
 									setResponse(JSON.stringify(call))
-									setPlaylist(Bridge.playlists)
 								}}
 								disabled={!connected}>
 								Cast RGBD hologram

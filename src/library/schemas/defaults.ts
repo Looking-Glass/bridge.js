@@ -4,7 +4,7 @@ import { numberRange } from "./schema.utils"
  * This helps prevent sending bridge values that are out of range.
  */
 
-type NumberType = "int" | "float"
+export type NumberType = "int" | "float"
 
 export interface defaults {
 	min: number
