@@ -45,6 +45,7 @@ export class Playlist {
 
 	public addItem(hologram: HologramType) {
 		let item: PlaylistItemType
+
 		if (hologram.type == "quilt") {
 			item = new QuiltPlaylistItem({
 				hologram: hologram as QuiltHologram,
@@ -55,6 +56,7 @@ export class Playlist {
 			})
 
 			this.items.push(item)
+			return item
 		} else if (hologram.type == "rgbd") {
 			item = new RGBDPlaylistItem({
 				hologram: hologram as RGBDHologram,
@@ -64,6 +66,21 @@ export class Playlist {
 				orchestration: this.orchestration,
 			})
 			this.items.push(item)
+			return item
+		} else {
+			return undefined
+		}
+	}
+
+	public async addPlaylistItemToBridge(item: PlaylistItemType) {
+		const pRequestBody = item.toBridge()
+
+		let message = await sendMessage({ endpoint: "insert_playlist_entry", requestBody: pRequestBody })
+		if (message.success == false) {
+			console.error("failed to insert playlist entry")
+			return false
+		} else {
+			return true
 		}
 	}
 

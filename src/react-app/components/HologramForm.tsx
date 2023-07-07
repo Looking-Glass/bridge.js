@@ -8,7 +8,6 @@ export interface HologramFactoryArgs {
 	setResponse: (response: string | null) => void
 	hologramType: hologramTypes
 	setHologramType: (hologramType: hologramTypes) => void
-	setPlaylist: (playlist: string) => void
 }
 export default function HologramForm({
 	connected,
@@ -17,7 +16,6 @@ export default function HologramForm({
 	setResponse,
 	hologramType,
 	setHologramType,
-	setPlaylist,
 }: HologramFactoryArgs) {
 	const [hologramUri, setHologramUri] = useState<string>(hologram.uri)
 	const [hologramSettings, setHologramSettings] = useState(hologram.settings)
@@ -146,7 +144,6 @@ export default function HologramForm({
 					setHologram(hologram)
 					let call = await Bridge.cast(hologram)
 					setResponse(JSON.stringify(call))
-					setPlaylist(JSON.stringify(Bridge.playlists))
 				}}
 				disabled={!connected}>
 				Cast hologram

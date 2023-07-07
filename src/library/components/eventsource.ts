@@ -94,6 +94,14 @@ export class BridgeEventSource {
 		}
 	}
 
+	public connectEvent() {
+		const handlers = this.MessageHandler["Bridge Connected"]
+
+		if (handlers) {
+			handlers.forEach((handler: any) => handler(undefined))
+		}
+	}
+
 	public disconnectEvent() {
 		const handlers = this.MessageHandler["Bridge Disconnected"]
 

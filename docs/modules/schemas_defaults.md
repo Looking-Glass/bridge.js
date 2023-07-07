@@ -4,9 +4,15 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [defaults](../interfaces/schemas_defaults.defaults.md)
+
 ### Variables
 
 - [ASPECT](schemas_defaults.md#aspect)
+- [CROP\_POS\_X](schemas_defaults.md#crop_pos_x)
+- [CROP\_POS\_Y](schemas_defaults.md#crop_pos_y)
 - [DEPTHINESS](schemas_defaults.md#depthiness)
 - [FOCUS](schemas_defaults.md#focus)
 - [QUILT\_COLS](schemas_defaults.md#quilt_cols)
@@ -18,99 +24,52 @@
 
 ### ASPECT
 
-• `Const` **ASPECT**: `Object`
+• `Const` **ASPECT**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
-for certain values we need defaults in order to define our type schemas and also clamp values.
-This helps prevent sending bridge values that are out of range.
+___
 
-#### Type declaration
+### CROP\_POS\_X
 
-| Name | Type |
-| :------ | :------ |
-| `max` | `number` |
-| `min` | `number` |
-| `range` | `ZodEffects`<`ZodNumber`, `number`, `number`\> |
+• `Const` **CROP\_POS\_X**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
+
+___
+
+### CROP\_POS\_Y
+
+• `Const` **CROP\_POS\_Y**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 
 ### DEPTHINESS
 
-• `Const` **DEPTHINESS**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `max` | `number` |
-| `min` | `number` |
-| `range` | `ZodEffects`<`ZodNumber`, `number`, `number`\> |
+• `Const` **DEPTHINESS**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 
 ### FOCUS
 
-• `Const` **FOCUS**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `max` | `number` |
-| `min` | `number` |
-| `range` | `ZodEffects`<`ZodNumber`, `number`, `number`\> |
+• `Const` **FOCUS**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 
 ### QUILT\_COLS
 
-• `Const` **QUILT\_COLS**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `max` | `number` |
-| `min` | `number` |
-| `range` | `ZodEffects`<`ZodNumber`, `number`, `number`\> |
+• `Const` **QUILT\_COLS**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 
 ### QUILT\_ROWS
 
-• `Const` **QUILT\_ROWS**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `max` | `number` |
-| `min` | `number` |
-| `range` | `ZodEffects`<`ZodNumber`, `number`, `number`\> |
+• `Const` **QUILT\_ROWS**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 
 ### QUILT\_VIEW\_COUNT
 
-• `Const` **QUILT\_VIEW\_COUNT**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `max` | `number` |
-| `min` | `number` |
-| `range` | `ZodEffects`<`ZodNumber`, `number`, `number`\> |
+• `Const` **QUILT\_VIEW\_COUNT**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 
 ### ZOOM
 
-• `Const` **ZOOM**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `max` | `number` |
-| `min` | `number` |
-| `range` | `ZodEffects`<`ZodNumber`, `number`, `number`\> |
+• `Const` **ZOOM**: [`defaults`](../interfaces/schemas_defaults.defaults.md)

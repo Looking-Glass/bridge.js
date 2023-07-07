@@ -10,7 +10,7 @@ import {
 	Playlist,
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
-import { UpdateParams } from "./components/updateParams"
+import { PlaylistUI } from "./components/Playlist"
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -41,7 +41,6 @@ function App() {
 
 	//internal application state
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
-	const [playlist, setPlaylist] = useState<string>()
 	const [studioPlaylistPath, setStudioPlaylistPath] = useState<string>("")
 	const [index, setIndex] = useState<number>(0)
 	const [progress, setProgress] = useState(0)
@@ -85,7 +84,6 @@ function App() {
 		setConnectionStatus("⚠️ Bridge Disconnected!")
 		setEventStatus("Subscribe to Events")
 		setDisplays("Connect to Bridge to detect displays")
-		setPlaylist("")
 		await Bridge.removeEventListener("Bridge Disconnected", handleEventDisconnected)
 	}
 
@@ -110,6 +108,7 @@ function App() {
 					<div className="flex-container">
 						<button
 							onClick={async () => {
+								setConnectionStatus("Connecting to Bridge...")
 								let call = await Bridge.connect()
 								setResponse(JSON.stringify(call.response))
 								// if the call was successful
@@ -132,7 +131,6 @@ function App() {
 								setConnectionStatus("✂️ Manually Disconnected!")
 								setEventStatus("Subscribe to Events")
 								setDisplays("Connect to Bridge to detect displays")
-								setPlaylist("")
 							}}
 							disabled={!connected}>
 							Disconnect From Bridge
@@ -300,12 +298,6 @@ function App() {
 							SEEK
 						</button>
 					</div>
-					<h2>Controls</h2>
-					<hr />
-					<div className="flex-container">
-						{playlist && <UpdateParams playlistName="cast0" parameter="depthiness" />}
-						{playlist && <UpdateParams playlistName="cast0" parameter="focus" />}
-					</div>
 					<br />
 					<div className="w3-light-grey">
 						<div className="w3-container w3-green w3-center" style={{ width: `${progress}%` }}></div>
@@ -322,7 +314,6 @@ function App() {
 								hologramType={hologramType}
 								setHologramType={setHologramType}
 								setResponse={setResponse}
-								setPlaylist={setPlaylist}
 							/>
 							<h3>Cast Predefined Holograms</h3>
 							<button
@@ -332,7 +323,6 @@ function App() {
 									let call = await Bridge.cast(quilt)
 									setHologram(quilt)
 									setResponse(JSON.stringify(call))
-									setPlaylist(JSON.stringify(Bridge.playlists))
 								}}
 								disabled={!connected}>
 								Cast Quilt hologram
@@ -343,7 +333,6 @@ function App() {
 									let call = await Bridge.cast(rgbd)
 									setHologram(rgbd)
 									setResponse(JSON.stringify(call))
-									setPlaylist(JSON.stringify(Bridge.playlists))
 								}}
 								disabled={!connected}>
 								Cast RGBD hologram
@@ -356,7 +345,12 @@ function App() {
 							<h3>Current Hologram:</h3>
 							<p>{JSON.stringify(hologram)}</p>
 							<h3>Playlists:</h3>
-							<p>{playlist}</p>
+							{Bridge.playlists?.map((item, index) => (
+								<div key={index} className={"playlist-border"}>
+									<h3>Playlist {item.name}</h3>
+									<PlaylistUI playlist={item} />
+								</div>
+							))}
 						</div>
 					</div>
 				</div>

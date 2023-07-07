@@ -147,3 +147,10 @@ select {
 	line-height: 20px;
 	color: black;
 }
+
+.playlist-border {
+	border: 1px solid white;
+	border-radius: 3px;
+	padding: 8px;
+	margin-bottom: 8px;
+}
