@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { DEPTHINESS, QUILT_COLS, QUILT_ROWS, ZOOM } from "./defaults"
+import { DEPTHINESS, ZOOM } from "./defaults"
 
 export const parameterNames = z.union([
 	z.literal("focus"),
