@@ -199,6 +199,7 @@ export class BridgeClient {
 		this.currentHologram = undefined
 		this.orchestration = ""
 		this.isDisconnecting = false
+		this.isCastPending = false
 		this.isConnected = false
 
 		return { success: true }
