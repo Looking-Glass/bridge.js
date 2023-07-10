@@ -25,12 +25,15 @@ export default function HologramForm({
 	const [hologramSettings, setHologramSettings] = useState(hologram.settings)
 	const Bridge = BridgeClient.getInstance()
 	return (
-		<>
+		<div className="max-w-md">
 			<h3>Create a Hologram</h3>
 			<form>
 				<label>
 					Hologram Type:
 					<select
+						className={
+							"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						}
 						name="hologramType"
 						id="hologramType"
 						onChange={(e) => {
@@ -44,7 +47,11 @@ export default function HologramForm({
 					<label>
 						uri:
 						<input
+							className={
+								"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							}
 							type="text"
+							placeholder="https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg"
 							onChange={(e) => {
 								// remove "" from the uri, quotes are auto-added by windows' copy as path option.
 								let cleaned = e.target.value.replace(/"/g, "")
@@ -60,6 +67,9 @@ export default function HologramForm({
 						<label>
 							Depthiness:
 							<input
+								className={
+									"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+								}
 								type="number"
 								onChange={(e) => {
 									setHologramSettings({ ...hologramSettings, depthiness: parseFloat(e.target.value) })
@@ -68,6 +78,9 @@ export default function HologramForm({
 						<label>
 							Depth Location:
 							<select
+								className={
+									"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+								}
 								onChange={(e) => {
 									setHologramSettings({
 										...hologramSettings,
@@ -83,6 +96,9 @@ export default function HologramForm({
 						<label>
 							Zoom:
 							<input
+								className={
+									"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+								}
 								type="number"
 								onChange={(e) => {
 									setHologramSettings({ ...hologramSettings, zoom: parseFloat(e.target.value) })
@@ -99,7 +115,11 @@ export default function HologramForm({
 							<label>
 								Columns:
 								<input
+									className={
+										"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+									}
 									type="number"
+									placeholder="8"
 									onChange={(e) => {
 										setHologramSettings({ ...hologramSettings, columns: parseInt(e.target.value) })
 									}}></input>
@@ -109,7 +129,11 @@ export default function HologramForm({
 							<label>
 								Rows:
 								<input
+									className={
+										"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+									}
 									type="number"
+									placeholder="13"
 									onChange={(e) => {
 										setHologramSettings({ ...hologramSettings, rows: parseInt(e.target.value) })
 									}}></input>
@@ -119,7 +143,11 @@ export default function HologramForm({
 							<label>
 								ViewCount:
 								<input
+									className={
+										"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+									}
 									type="number"
+									placeholder={`${8 * 13}`}
 									onChange={(e) => {
 										setHologramSettings({ ...hologramSettings, viewCount: parseInt(e.target.value) })
 									}}></input>
@@ -130,7 +158,11 @@ export default function HologramForm({
 				<label>
 					Aspect Ratio:
 					<input
+						className={
+							"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+						}
 						type="number"
+						placeholder="0.75"
 						onChange={(e) => {
 							setHologramSettings({ ...hologramSettings, aspect: parseFloat(e.target.value) })
 						}}></input>
@@ -138,6 +170,7 @@ export default function HologramForm({
 			</form>
 
 			<button
+				className={"primaryButton text-sm"}
 				onClick={async () => {
 					setResponse("Casting Hologram")
 					let hologram = hologramFactory({
@@ -153,6 +186,6 @@ export default function HologramForm({
 				disabled={!connected || isCastPending}>
 				Cast hologram
 			</button>
-		</>
+		</div>
 	)
 }

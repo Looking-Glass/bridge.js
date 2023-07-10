@@ -1,156 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-	font-family: Haasgrotdisp, sans-serif;
+	font-family: Poppins, sans-serif;
+	font-weight: 500;
 	color: white;
+	background-color: #28273f;
 	margin: 20px;
 }
 
-button {
-	position: relative;
-	display: block;
-	width: 200px;
-	min-height: 50px;
-	font-family: "Poppins", sans-serif;
-	font-weight: 700;
-	background-image: linear-gradient(to left, rgb(89, 1, 251), rgb(158, 83, 251));
-	background-size: 200% 100%;
-	background-position: 100%;
-	border-radius: 8px;
-	color: white;
-	margin-top: 20px;
-	overflow: visible;
-	border-radius: 10px;
-	transition: box-shadow 0.2s;
-	transition-duration: 0.2s;
-	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-	transition-delay: 0s;
-	transition-property: background-position;
-	border: none;
+/** This layer automatically converts into proper Tailwind components */
+@layer components {
+	.home-widget {
+		animation: MoveUpDown 7.8s ease-in-out infinite;
+	}
+
+	.floating-widget {
+		@apply home-widget pointer-events-none z-50 select-none;
+	}
+
+	.lkg-black {
+		color: #1f1e37;
+	}
+
+	.bg-holo-light {
+		background: linear-gradient(58deg, #4ac7fa 0%, #e649f5 100%);
+	}
+
+	.holo-light {
+		@apply bg-gradient-to-r from-[#4AC7FA] to-[#E649F5];
+		/* background: linear-gradient(58deg, #4AC7FA 0%, #E649F5 30%); */
+		@apply bg-clip-text text-transparent;
+	}
+
+	.bg-holo5-opaque-dark {
+		background: linear-gradient(
+			30deg,
+			#f1dfc680 1.77%,
+			#c1a4e890 16.58%,
+			#b8e2fb70 49.82%,
+			#f2efe860 67.95%,
+			#f9dcdd80 86.08%,
+			#e1c1e580 98.47%
+		);
+	}
+
+	.bg-holo5-opaque {
+		background: linear-gradient(
+			30deg,
+			#f1dfc610 1.77%,
+			#c1a4e830 16.58%,
+			#b8e2fb20 49.82%,
+			#f2efe830 67.95%,
+			#f9dcdd40 86.08%,
+			#e1c1e580 98.47%
+		);
+	}
+
+	.bg-holo5 {
+		background: linear-gradient(
+			61deg,
+			#f1dfc6 1.77%,
+			#c1a4e8 16.58%,
+			#b8e2fb 49.82%,
+			#f2efe8 67.95%,
+			#f9dcdd 86.08%,
+			#e1c1e5 98.47%
+		);
+	}
+
+	.holo5 {
+		/* please update the gradient in HomeBanner.tsx to match this if you change it. */
+		background: linear-gradient(
+			61deg,
+			#f1dfc6 1.77%,
+			#c1a4e8 16.58%,
+			#b8e2fb 49.82%,
+			#f2efe8 67.95%,
+			#f9dcdd 86.08%,
+			#e1c1e5 98.47%
+		);
+		/* @apply bg-clip-text text-transparent; */
+		background-clip: text;
+		-webkit-background-clip: text;
+		-webkit-box-decoration-break: clone;
+		-webkit-text-fill-color: transparent;
+		box-decoration-break: clone;
+		text-shadow: none;
+	}
+
+	span.emoji {
+		-webkit-text-fill-color: initial;
+	}
+
+	.bg-purple-fade {
+		@apply bg-gradient-to-r from-[#5901FB] to-[#9E53FB];
+	}
+
+	.container-button {
+		/* light mode */
+		@apply border-gray-200;
+		@apply hover:bg-holo5 hover:border-[#E649F5] hover:border-opacity-40 hover:drop-shadow-lg;
+
+		/* dark mode */
+		@apply dark:border-[#60547E] dark:from-[#38295E] dark:to-[#38295E] dark:hover:border-[#ffffff30] dark:hover:from-[#4816A9] dark:hover:to-[#6639A9];
+		@apply dark:!bg-gradient-to-r;
+
+		/* global */
+		@apply cursor-pointer place-items-center rounded-xl border-2 transition-all duration-100;
+		@apply hover:scale-[1.02] active:translate-y-1;
+	}
+
+	.bg-purple-gradient {
+		@apply bg-gradient-to-l from-[#5901FB] to-[#9E53FB];
+	}
+
+	.primaryButton {
+		@apply rounded-md bg-gradient-to-l from-[#5901FB] to-[#9E53FB] bg-[length:200%_100%] bg-[position:100%_0] p-3 font-bold text-white transition-all duration-300 md:py-3 md:px-5;
+		@apply hover:bg-[position:0_0] group-hover:bg-[position:0_0];
+		@apply active:from-[#9E53FB] active:to-[#5901FB];
+	}
+
+	.primaryButtonAlt {
+		@apply rounded-md bg-gradient-to-l from-slate-500 to-slate-300 bg-[length:200%_100%] bg-[position:100%_0] p-3 font-bold transition-all duration-300 hover:bg-[position:0_0] md:py-3 md:px-5;
+		@apply text-white;
+	}
+
+	.slider-range {
+		-webkit-appearance: none;
+		width: 100%;
+		height: 8px;
+		background: linear-gradient(90deg, white 50%, grey 50%);
+		outline: none;
+		opacity: 1;
+		border-radius: 8px;
+		-webkit-transition: 0.2s;
+		transition: opacity 0.2s;
+	}
+
+	.slider-range::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 24px;
+		height: 24px;
+		border: 2px solid white;
+		background: radial-gradient(76.09% 1304.32% at 87.24% 100%, #a055fa 0%, #5f15e8 100%);
+		cursor: pointer;
+		border-radius: 100%;
+		box-shadow: -6px 8px 8px -4.5px rgba(0, 0, 0, 0.16), 0px 0px 12px 1px rgba(0, 0, 0, 0.14);
+	}
+
+	.slider-range::-moz-range-thumb {
+		appearance: none;
+		width: 24px;
+		height: 24px;
+		border: 2px solid white;
+		background: radial-gradient(76.09% 1304.32% at 87.24% 100%, #a055fa 0%, #5f15e8 100%);
+		cursor: pointer;
+		border-radius: 100%;
+		box-shadow: -6px 8px 8px -4.5px rgba(0, 0, 0, 0.16), 0px 0px 12px 1px rgba(0, 0, 0, 0.14);
+	}
+
+	.lkg-container {
+		@apply rounded-lg border border-[#ffffff10] bg-white !bg-opacity-60 p-5 text-gray-700 shadow-md dark:bg-dark-purple-100 dark:text-white md:p-6;
+	}
+
+	.lkg-container-modal {
+		@apply lkg-container !bg-opacity-100;
+	}
+
+	.link {
+		@apply cursor-pointer text-light-purple transition-colors hover:text-fuchsia-600;
+	}
+
+	.link .icon {
+		@apply ml-1 transition-all;
+	}
+
+	.scrollbox-light {
+		background:
+			/* Shadow covers */ linear-gradient(rgb(255 255 255) 30%, rgba(255, 255, 255, 0)),
+			linear-gradient(rgba(255, 255, 255, 0), rgb(255 255 255) 70%) 0 100%,
+			/* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
+			radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
+
+		background-repeat: no-repeat;
+		background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+
+		/* Opera doesn't support this in the shorthand */
+		background-attachment: local, local, scroll, scroll;
+	}
+
+	.scrollbox-dark {
+		background:
+      /* Shadow covers */ linear-gradient(rgb(31 30 55) 30%, rgba(255, 255, 255, 0)),
+			linear-gradient(rgba(255, 255, 255, 0), rgb(31 30 55) 70%) 0 100%,
+			/* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
+			radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)) 0 100%;
+
+		background-repeat: no-repeat;
+		background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+
+		/* Opera doesn't support this in the shorthand */
+		background-attachment: local, local, scroll, scroll;
+	}
 }
 
-button:hover {
-	width: 200px;
-	height: 50px;
-	background-image: linear-gradient(to left, rgb(89, 1, 251), rgb(158, 83, 251));
-	background-position: 0%;
-	background-size: 200% 100%;
-	overflow: visible;
-	font-family: "Poppins", sans-serif;
-	color: white;
-	border: none;
-	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+h1,
+h2,
+h3,
+h4,
+h5 {
+	@apply holo-light dark:holo5 font-rubik;
 }
 
 button:disabled {
 	background-image: linear-gradient(to left, rgb(20, 20, 20), rgb(200, 200, 200));
-}
-
-.center-ish {
-	margin-top: 8em;
-}
-
-#testStatus {
-	font-family: Poppins;
-	font-weight: 700;
-	margin-top: 15px;
-	display: block;
-	text-align: center;
-	max-width: 500px;
-	min-height: 60px;
-}
-
-.device-info {
-	font-family: Poppins;
-	color: white;
-	display: block;
-	text-align: center;
-	max-width: 500px;
-	min-height: 60px;
-}
-
-.left-text {
-	text-align: left;
-}
-
-.warning {
-	color: orange;
-}
-
-a {
-	color: white;
-}
-
-strong {
-	font-family: Poppins;
-	font-weight: 700;
-}
-
-body {
-	background-color: #28273f;
-}
-
-.flex-container {
-	display: flex;
-	gap: 16px;
-	flex-direction: row;
-	justify-content: start; /* align item horizontally */
-	align-items: start; /* align item vertically */
-}
-
-.flex-between {
-	display: flex;
-	gap: 16px;
-	flex-direction: row;
-	justify-content: space-between; /* align item horizontally */
-	align-items: start; /* align item vertically */
-}
-
-input {
-	display: block;
-	width: 100%;
-}
-
-select {
-	display: block;
-	width: 100%;
-	margin-top: 8px;
-	margin-bottom: 8px;
-}
-
-.w3-light-grey {
-	background-color: #f1f1f1;
-	width: 100%;
-	position: relative;
-	height: 20px;
-	border-radius: 3px;
-}
-
-.w3-container {
-	text-align: center;
-	line-height: 20px;
-	color: white;
-}
-
-.w3-green {
-	background-color: #4caf50;
-	height: 100%;
-	transition: width 0.05s ease-in-out;
-	border-radius: 3px;
-}
-
-.w3-center {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	line-height: 20px;
-	color: black;
-}
-
-.playlist-border {
-	border: 1px solid white;
-	border-radius: 3px;
-	padding: 8px;
-	margin-bottom: 8px;
 }

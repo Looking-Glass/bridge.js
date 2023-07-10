@@ -11,6 +11,8 @@ import {
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
 import { PlaylistUI } from "./components/Playlist"
+import { PauseIcon, PlayIcon, BackwardIcon, ForwardIcon } from "@heroicons/react/24/solid"
+import { set } from "zod"
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -46,6 +48,7 @@ function App() {
 	const [progress, setProgress] = useState(0)
 	const [autoStartPlaylistName, setAutoStartPlaylistName] = useState<string>("")
 	const [isCastPending, setIsCastPending] = useState(false)
+	const [isPlaying, setIsPlaying] = useState(false)
 
 	// Custom Hologram State
 	const [hologram, setHologram] = useState<QuiltHologram | RGBDHologram>(quilt)
@@ -72,6 +75,17 @@ function App() {
 		await Bridge.addEventListener("Bridge Disconnected", handleEventDisconnected)
 		// react-ify the bridge state for cast pending
 		await Bridge.addEventListener("New Item Playing", handleNewItemPlaying)
+		// Setup Progress Update Events
+		await Bridge.addEventListener("Progress Update", (event) => {
+			setProgress(event.payload.value.progress.value)
+			if (eventsink.current) {
+				if (event.payload.value.progress_type.value === "Playlist Progress") {
+					eventsink.current.value =
+						JSON.stringify(event.payload.value.progress_type.value) +
+						JSON.stringify(event.payload.value.progress.value)
+				}
+			}
+		})
 		// Manually call Bridge.displays to query for any connected Looking Glass,
 		await Bridge.getDisplays().then((call) => {
 			if (!call.response || call.response.length == 0) {
@@ -103,17 +117,19 @@ function App() {
 	}, [hologram])
 
 	return (
-		<>
-			<h1>Looking Glass Bridge API Library</h1>
-			<h2>Status: {`${connectionStatus}`}</h2>
-			<h2>Displays: {`${displays}`}</h2>
-
+		<div className={"text-4xl"}>
+			<h1 className="bg-text holo5 relative mx-auto max-w-3xl pb-20 text-center font-rubik text-4xl font-black md:text-5xl">
+				Looking Glass Bridge API Library
+			</h1>
+			<h2>Status:</h2> <p> {`${connectionStatus}`}</p>
+			<h2>Displays:</h2> <p>{`${displays}`}</p>
 			<div>
 				<div>
 					<h2>Methods</h2>
 					<hr />
-					<div className="flex-container">
+					<div className={"flex items-center justify-between gap-12"}>
 						<button
+							className={"primaryButton text-sm"}
 							onClick={async () => {
 								setConnectionStatus("Connecting to Bridge...")
 								let call = await Bridge.connect()
@@ -128,9 +144,10 @@ function App() {
 								}
 							}}
 							disabled={connected}>
-							Connect to Bridge
+							Connect
 						</button>
 						<button
+							className={"primaryButton text-sm"}
 							onClick={async () => {
 								let call = await Bridge.disconnect()
 								setResponse(JSON.stringify(call.success))
@@ -140,17 +157,19 @@ function App() {
 								setDisplays("Connect to Bridge to detect displays")
 							}}
 							disabled={!connected}>
-							Disconnect From Bridge
+							Disconnect
 						</button>
 						<button
+							className={"primaryButton text-sm"}
 							onClick={async () => {
 								let call = await Bridge.getDisplays()
 								setResponse(JSON.stringify(call.response))
 							}}
 							disabled={!connected}>
-							Get connected displays
+							Get Displays
 						</button>
 						<button
+							className={"primaryButton text-sm"}
 							onClick={async () => {
 								let call = await Bridge.getVersion()
 								setResponse(`Looking Glass Bridge Version: ${JSON.stringify(call.response)}`)
@@ -158,6 +177,7 @@ function App() {
 							Get Bridge version
 						</button>
 						<button
+							className={"primaryButton text-sm"}
 							onClick={async () => {
 								let call = await Bridge.apiVersion()
 								setResponse(`Looking Glass Bridge API Version: ${JSON.stringify(call.response)}`)
@@ -166,6 +186,7 @@ function App() {
 							Get API version
 						</button>
 						<button
+							className={"primaryButton text-sm"}
 							onClick={async () => {
 								setIsWindowVisible(!isWindowVisible)
 								let call = await Bridge.showWindow(isWindowVisible)
@@ -174,142 +195,82 @@ function App() {
 							disabled={!connected}>
 							Toggle Window
 						</button>
-						<div>
-							<label>
-								Full Path to Playlist.json
-								<input
-									type="text"
-									onChange={(e) => {
-										// remove "" from the uri, quotes are auto-added by windows' copy as path option.
-										let cleaned = e.target.value.replace(/"/g, "")
-										setStudioPlaylistPath(cleaned)
-									}}></input>
-							</label>
-						</div>
-						<div>
-							<label>
-								Set Auto Start Playlist Name
-								<input
-									type="text"
-									onChange={(e) => {
-										setAutoStartPlaylistName(e.target.value)
-									}}></input>
-							</label>
-						</div>
-						<button
-							onClick={async () => {
-								let call = await Bridge.playStudioPlaylist(studioPlaylistPath)
-								setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							Play Studio Playlist
-						</button>
-						<button
-							onClick={async () => {
-								await Bridge.stopStudioPlaylist()
-								// setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							Stop Studio Playlist
-						</button>
-						<button
-							onClick={async () => {
-								let call = await Bridge.getAutoStartPlaylist()
-								setResponse(JSON.stringify(call.response))
-							}}>
-							Get Auto Start Playlist
-						</button>
-						<button
-							onClick={async () => {
-								let call = await Bridge.setAutoStartPlaylist({
-									playlistName: "test",
-									playlistPath:
-										"C:\\Users\\Public\\Documents\\Looking Glass Factory\\HoloPlay Studio\\Playlists\\test.json",
-								})
-								setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							Set Auto Start Playlist
-						</button>
-						<button
-							onClick={async () => {
-								// Check to see if playlists exist
-								if (Bridge.playlists) {
-									// Find the playlist with the name that matches the one we want to auto start
-									let playlist = Bridge.playlists.find(
-										(playlist: Playlist | undefined) => playlist && playlist.name == autoStartPlaylistName
-									)
-									// Throw an error if no playlist with that name is found
-									if (!playlist) {
-										setResponse(`No Playlist with named ${autoStartPlaylistName} found`)
-										return
-									}
-									let call = await Bridge.createAutoStartPlaylist({ playlist })
-									setResponse(JSON.stringify(call.response))
-								}
-							}}>
-							Create Auto Start Playlist
-						</button>
 					</div>
+
 					<h2>Controls</h2>
 					<hr />
-					<div className="flex-container">
+					<div className={"flex items-center justify-start gap-12"}>
 						<button
-							onClick={async () => {
-								await Bridge.play()
-								// setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							PLAY
-						</button>
-						<button
-							onClick={async () => {
-								await Bridge.pause()
-								// setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							PAUSE
-						</button>
-						<button
+							className={"primaryButton text-sm"}
+							title={"Previous"}
 							onClick={async () => {
 								await Bridge.previous()
 								// setResponse(JSON.stringify(call.response))
 							}}
 							disabled={!connected}>
-							PREVIOUS
+							<BackwardIcon className={"w-6 h-6"} />
 						</button>
 						<button
+							title={isPlaying ? "Pause" : "Play"}
+							className={"primaryButton text-sm"}
+							onClick={async () => {
+								if (isPlaying) {
+									await Bridge.pause()
+									setIsPlaying(false)
+								} else {
+									await Bridge.play()
+									setIsPlaying(true)
+								}
+							}}
+							disabled={!connected}>
+							{!isPlaying && <PlayIcon className={"w-6 h-6"} />}
+							{isPlaying && <PauseIcon className={"w-6 h-6"} />}
+						</button>
+						<button
+							title={"Next"}
+							className={"primaryButton text-sm"}
 							onClick={async () => {
 								await Bridge.next()
 								// setResponse(JSON.stringify(call.response))
 							}}
 							disabled={!connected}>
-							NEXT
+							<ForwardIcon className={"w-6 h-6"} />
 						</button>
-						<div>
-							<label>
-								Index to seek to
-								<input
-									type="number"
-									onChange={(e) => {
-										// remove "" from the uri, quotes are auto-added by windows' copy as path option.
-										setIndex(parseInt(e.target.value))
-									}}></input>
-							</label>
+						<h2 className={"text-4xl"}>Progress</h2>
+
+						<div className={" bg-gray-200 rounded-full w-40 h-2.5 dark:bg-gray-700"}>
+							<div
+								className={"bg-purple-gradient h-2.5 rounded-full"}
+								style={{ width: progress + "%" }}></div>
 						</div>
-						<button
-							onClick={async () => {
-								await Bridge.seek(index)
-							}}
-							disabled={!connected}>
-							SEEK
-						</button>
+						<div className="w-24">
+							<h3 className={"text-2xl"}>{Math.round(progress)}%</h3>
+						</div>
 					</div>
+
+					<div>
+						<label>
+							Index to seek to
+							<input
+								className={
+									"block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+								}
+								type="number"
+								onChange={(e) => {
+									// remove "" from the uri, quotes are auto-added by windows' copy as path option.
+									setIndex(parseInt(e.target.value))
+								}}></input>
+						</label>
+					</div>
+					<button
+						className={"primaryButton text-sm"}
+						onClick={async () => {
+							await Bridge.seek(index)
+						}}
+						disabled={!connected}>
+						SEEK
+					</button>
 					<br />
-					<div className="w3-light-grey">
-						<div className="w3-container w3-green w3-center" style={{ width: `${progress}%` }}></div>
-						<div className="w3-center">{Math.round(progress)}%</div>
-					</div>
 					<div className="flex-container">
 						<div>
 							<h2>Casting</h2>
@@ -326,6 +287,7 @@ function App() {
 							/>
 							<h3>Cast Predefined Holograms</h3>
 							<button
+								className={"primaryButton text-sm"}
 								title={"Cast a prebuilt quilt hologram"}
 								onClick={async () => {
 									setResponse("Casting Hologram")
@@ -338,6 +300,7 @@ function App() {
 								Cast Quilt hologram
 							</button>
 							<button
+								className={"primaryButton text-sm"}
 								onClick={async () => {
 									setResponse("Casting Hologram")
 									let call = await Bridge.cast(rgbd)
@@ -366,11 +329,106 @@ function App() {
 					</div>
 				</div>
 			</div>
+			{/* AUTO START PLAYLIST CONTROLS */}
+			<div className={"flex items-center justify-between gap-12"}>
+				<div>
+					<label>
+						Set Auto Start Playlist Name
+						<input
+							className={
+								"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							}
+							type="text"
+							onChange={(e) => {
+								setAutoStartPlaylistName(e.target.value)
+							}}></input>
+					</label>
+				</div>
+				<button
+					className={"primaryButton text-sm"}
+					onClick={async () => {
+						let call = await Bridge.getAutoStartPlaylist()
+						setResponse(JSON.stringify(call.response))
+					}}>
+					Get Auto Start Playlist
+				</button>
+				<button
+					className={"primaryButton text-sm"}
+					onClick={async () => {
+						let call = await Bridge.setAutoStartPlaylist({
+							playlistName: "test",
+							playlistPath:
+								"C:\\Users\\Public\\Documents\\Looking Glass Factory\\HoloPlay Studio\\Playlists\\test.json",
+						})
+						setResponse(JSON.stringify(call.response))
+					}}
+					disabled={!connected}>
+					Set Auto Start Playlist
+				</button>
+				<button
+					className={"primaryButton text-sm"}
+					onClick={async () => {
+						// Check to see if playlists exist
+						if (Bridge.playlists) {
+							// Find the playlist with the name that matches the one we want to auto start
+							let playlist = Bridge.playlists.find(
+								(playlist: Playlist | undefined) => playlist && playlist.name == autoStartPlaylistName
+							)
+							// Throw an error if no playlist with that name is found
+							if (!playlist) {
+								setResponse(`No Playlist with named ${autoStartPlaylistName} found`)
+								return
+							}
+							let call = await Bridge.createAutoStartPlaylist({ playlist })
+							setResponse(JSON.stringify(call.response))
+						}
+					}}>
+					Create Auto Start Playlist
+				</button>
+			</div>
+			{/* STUDIO PLAYLIST CONTROLS */}
+			<div className={"flex items-center justify-between gap-12"}>
+				<div>
+					<label>
+						Full Path to Playlist.json
+						<input
+							className={
+								"bg-gray-50 border border-gray-300 text-gray-900 text-4xl rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+							}
+							type="text"
+							onChange={(e) => {
+								// remove "" from the uri, quotes are auto-added by windows' "copy as path" option.
+								let cleaned = e.target.value.replace(/"/g, "")
+								setStudioPlaylistPath(cleaned)
+							}}></input>
+					</label>
+				</div>
+				<button
+					className={"primaryButton text-sm"}
+					onClick={async () => {
+						let call = await Bridge.playStudioPlaylist(studioPlaylistPath)
+						setResponse(JSON.stringify(call.response))
+					}}
+					disabled={!connected}>
+					Play Studio Playlist
+				</button>
+				<button
+					className={"primaryButton text-sm"}
+					onClick={async () => {
+						await Bridge.stopStudioPlaylist()
+						// setResponse(JSON.stringify(call.response))
+					}}
+					disabled={!connected}>
+					Stop Studio Playlist
+				</button>
+			</div>
+			{/* EVENT LISTENERS */}
 			<h2>Response</h2>
 			<hr />
 			<p>{bridgeResponse}</p>
 			<h2>Bridge Events</h2>
 			<button
+				className={"primaryButton text-sm"}
 				onClick={() => {
 					console.log("%c REACT: Listening to Events", "color: #00ff00")
 					// There are two ways to add events.
@@ -387,24 +445,8 @@ function App() {
 				disabled={!connected}>
 				{eventStatus}
 			</button>
-			<button
-				onClick={() => {
-					Bridge.addEventListener("Progress Update", (event) => {
-						setProgress(event.payload.value.progress.value)
-						if (eventsink.current) {
-							if (event.payload.value.progress_type.value === "Playlist Progress") {
-								eventsink.current.value =
-									JSON.stringify(event.payload.value.progress_type.value) +
-									JSON.stringify(event.payload.value.progress.value)
-							}
-						}
-					})
-				}}
-				disabled={!connected}>
-				Subscribe to Progress Updates
-			</button>
 			<textarea ref={eventsink}></textarea>
-		</>
+		</div>
 	)
 }
 
