@@ -35,11 +35,13 @@
 - [createOrchestration](client.BridgeClient.md#createorchestration)
 - [deletePlaylist](client.BridgeClient.md#deleteplaylist)
 - [disconnect](client.BridgeClient.md#disconnect)
+- [error](client.BridgeClient.md#error)
 - [getAutoStartPlaylist](client.BridgeClient.md#getautostartplaylist)
 - [getCurrentHologram](client.BridgeClient.md#getcurrenthologram)
 - [getDisplays](client.BridgeClient.md#getdisplays)
 - [getVerbosity](client.BridgeClient.md#getverbosity)
 - [getVersion](client.BridgeClient.md#getversion)
+- [log](client.BridgeClient.md#log)
 - [next](client.BridgeClient.md#next)
 - [pause](client.BridgeClient.md#pause)
 - [play](client.BridgeClient.md#play)
@@ -53,6 +55,7 @@
 - [status](client.BridgeClient.md#status)
 - [stopStudioPlaylist](client.BridgeClient.md#stopstudioplaylist)
 - [updateCurrentHologram](client.BridgeClient.md#updatecurrenthologram)
+- [warn](client.BridgeClient.md#warn)
 - [getInstance](client.BridgeClient.md#getinstance)
 
 ## Constructors
@@ -152,7 +155,7 @@ ___
 
 ### verbosity
 
-▪ `Static` **verbosity**: ``0`` \| ``2`` \| ``1`` \| ``3`` = `3`
+▪ `Static` **verbosity**: ``0`` \| ``2`` \| ``1`` \| ``3``
 
 control how often we log to the console, 3 is everything, 0 is nothing
 
@@ -296,6 +299,24 @@ Disconnect from Looking Glass Bridge, free up resources.
 
 ___
 
+### error
+
+▸ **error**(`...messages`): `void`
+
+Asbtraction for logging with verbosity setting
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...messages` | `unknown`[] |
+
+#### Returns
+
+`void`
+
+___
+
 ### getAutoStartPlaylist
 
 ▸ **getAutoStartPlaylist**(): `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `payload`: { value: { playlist\_path: { value: string; type: "WSTRING"; name: string; }; playlist\_name: { value: string; type: "WSTRING"; name: string; }; }; type: "VARIANT\_MAP"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
@@ -354,6 +375,24 @@ A helper function to get the version of Looking Glass Bridge that is running.
 `Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
 
 string of the version of Looking Glass Bridge that is running
+
+___
+
+### log
+
+▸ **log**(`...messages`): `void`
+
+Asbtraction for logging with verbosity setting
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...messages` | `unknown`[] |
+
+#### Returns
+
+`void`
 
 ___
 
@@ -556,7 +595,7 @@ Update the parameters of the current hologram
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends ``"rows"`` \| ``"columns"`` \| ``"aspect"`` \| ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"focus"`` \| ``"depth_cutoff"`` \| ``"zoom"`` \| ``"view_count"`` \| ``"crop_pos_x"`` \| ``"crop_pos_y"`` |
+| `T` | extends ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"focus"`` \| ``"depth_cutoff"`` \| ``"zoom"`` \| ``"crop_pos_x"`` \| ``"crop_pos_y"`` |
 
 #### Parameters
 
@@ -565,11 +604,29 @@ Update the parameters of the current hologram
 | `«destructured»` | `Object` |
 | › `name` | `string` |
 | › `parameter` | `T` |
-| › `value` | { `aspect`: `number` ; `chroma_depth`: ``0`` \| ``1`` ; `columns`: `number` = QUILT\_COLS.range; `crop_pos_x?`: `number` ; `crop_pos_y?`: `number` ; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` = DEPTHINESS.range; `focus?`: `number` ; `rows`: `number` = QUILT\_ROWS.range; `view_count`: `number` ; `zoom`: `number` = ZOOM.range }[`T`] |
+| › `value` | { `chroma_depth`: ``0`` \| ``1`` ; `crop_pos_x?`: `number` ; `crop_pos_y?`: `number` ; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` = DEPTHINESS.range; `focus?`: `number` ; `zoom`: `number` = ZOOM.range }[`T`] |
 
 #### Returns
 
 `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; type: "WSTRING"; name: string; } ; `status`: { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } = schema.status } ; `success`: `boolean`  }\>
+
+___
+
+### warn
+
+▸ **warn**(`...messages`): `void`
+
+Asbtraction for logging with verbosity setting
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...messages` | `unknown`[] |
+
+#### Returns
+
+`void`
 
 ___
 

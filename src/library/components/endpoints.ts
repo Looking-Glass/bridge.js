@@ -109,7 +109,9 @@ export async function sendMessage<
 }): Promise<Response<BridgeEndpointSchemaMap[T]>> {
 	let parsedResponse: BridgeEndpointSchemaMap[T]
 	let Bridge = BridgeClient.getInstance()
-	if (Bridge.getVerbosity() != 0) console.group("Endpoint:", params.endpoint)
+	if (Bridge.getVerbosity() >= 3 && Bridge.getVerbosity() !== undefined) {
+		console.group("Endpoint:", params.endpoint)
+	}
 
 	// TEMPORARY: delay to give bridge a chance to handle events
 	await new Promise((resolve) => setTimeout(resolve, 10))
@@ -118,14 +120,10 @@ export async function sendMessage<
 		params.baseUrl = "http://localhost:33334/"
 	}
 
-	if (
-		Bridge.getVerbosity() == 3 ||
-		params.endpoint !== "update_current_entry" ||
-		params.endpoint !== "update_playlist_entry"
-	) {
+	if (Bridge.getVerbosity() == 3) {
 		console.group("Message:")
-		console.log(`${params.baseUrl + params.endpoint}`)
-		console.log("body:", params.requestBody)
+		Bridge.log(`${params.baseUrl + params.endpoint}`)
+		Bridge.log("body:", params.requestBody)
 		console.groupEnd()
 	}
 
@@ -144,24 +142,23 @@ export async function sendMessage<
 
 		//if response timed out, exit
 		if (bridgeResponse.status == 408) {
-			console.log("%c Bridge Timeout:", "color: #ff0000", bridgeResponse)
+			Bridge.warn("%c Bridge Timeout:", "color: #ff0000", bridgeResponse)
 			console.groupEnd()
 		}
 
 		parsedResponse = await bridgeResponse.json()
 
 		if (parsedResponse.status.value !== "Completion" && parsedResponse.status.value !== "Pending") {
-			console.log("%c Bridge Failure:", "color: #ff0000", parsedResponse)
+			console.warn("%c Bridge Failure:", "color: #ff0000", parsedResponse)
 
 			console.groupEnd()
 			// the call worked, but the response failed.
 			return { success: true, response: parsedResponse }
 		}
 
-		if (Bridge.getVerbosity() != 0) {
-			console.log("%c Response:", "color: #00aa00", parsedResponse)
-			console.groupEnd()
-		}
+		Bridge.log("%c Response:", "color: #00aa00", parsedResponse)
+		console.groupEnd()
+
 		return { success: true, response: parsedResponse }
 	} catch (error) {
 		console.group("%c Bridge Error:", "color: #ff0000")

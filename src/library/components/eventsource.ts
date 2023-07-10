@@ -51,12 +51,13 @@ export class BridgeEventSource {
 		event: K
 		MessageHandler: (payload: BridgeEventMap[K]) => void
 	}) {
+		const client = BridgeClient.getInstance()
 		// The WebSocket is connected, we can add the event handler directly
 		if (!(event in this.MessageHandler)) {
 			this.MessageHandler[event] = []
 		}
 		this.MessageHandler[event]?.push(MessageHandler)
-		console.log(`%c Add Message Handler: ${event} `, "color: YellowGreen; font-weight: bold; border: solid;")
+		client.log(`%c Add Message Handler: ${event} `, "color: YellowGreen; font-weight: bold; border: solid;")
 	}
 
 	public removeMessageHandler<K extends keyof BridgeEventMap>({
@@ -66,7 +67,8 @@ export class BridgeEventSource {
 		event: K
 		MessageHandler: (payload: BridgeEventMap[K]) => void
 	}) {
-		console.log(`%c Message Handler Removed: ${event} `, "color: Tomato; font-weight: bold; border: solid;")
+		const client = BridgeClient.getInstance()
+		client.log(`%c Message Handler Removed: ${event} `, "color: Tomato; font-weight: bold; border: solid;")
 		if (event in this.MessageHandler) {
 			const handlerIndex = this.MessageHandler[event]?.findIndex((handler) => handler === MessageHandler)
 			if (handlerIndex !== -1 && handlerIndex !== undefined) {
@@ -80,12 +82,12 @@ export class BridgeEventSource {
 		try {
 			parsedResponse = JSON.parse(response)
 		} catch (error) {
-			console.error("Failed to parse JSON", error)
+			const client = BridgeClient.getInstance()
+			client.error("Failed to parse JSON", error)
 			return
 		}
 
 		if (parsedResponse.payload.value.event.value in this.MessageHandler) {
-			// console.log(parsedResponse.payload.value.event.value)
 			const handlers = this.MessageHandler[parsedResponse.payload.value.event.value]
 
 			if (handlers) {
@@ -111,7 +113,8 @@ export class BridgeEventSource {
 	}
 
 	public async connectToBridgeEventSource(orchestration: string): Promise<{ success: boolean }> {
-		console.log("%c Connect to Bridge Events Source ", "color: chartreuse; font-weight: bold; border: solid")
+		const client = BridgeClient.getInstance()
+		client.log("%c Connect to Bridge Events Source ", "color: chartreuse; font-weight: bold; border: solid")
 		if (!isWindowAvailable()) return { success: false }
 		if (!isWebSocketAvailable()) return { success: false }
 		let bridgeEventSource = this
@@ -121,7 +124,8 @@ export class BridgeEventSource {
 		return new Promise((resolve) => {
 			if (this.ws !== undefined) {
 				this.ws.onopen = () => {
-					console.log("%c Connected to Websocket ", "color: chartreuse; font-weight: bold; border: solid")
+					const client = BridgeClient.getInstance()
+					client.log("%c Connected to Websocket ", "color: chartreuse; font-weight: bold; border: solid")
 					const params = {
 						subscribe_orchestration_events: orchestration,
 					}
@@ -140,14 +144,14 @@ export class BridgeEventSource {
 						client.disconnect()
 					}
 
-					console.log(
+					client.log(
 						`%c Disconnected from Websocket, Manual Disconnect: ${client.manualDisconnect} `,
 						"color: red; font-weight: bold; border: solid"
 					)
 				}
 
 				this.ws.onerror = function (error) {
-					console.warn("Unable to connect to WebSocket, is Bridge Running?", error)
+					client.warn("Unable to connect to WebSocket, is Bridge Running?", error)
 					resolve({ success: false })
 				}
 			}
