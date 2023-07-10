@@ -19,31 +19,17 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									<>
 										<UpdateParams
 											playlistName={playlist.name}
-											parameter="rows"
-											min={defaults.QUILT_ROWS.min}
-											max={defaults.QUILT_ROWS.max}
-											numberType={defaults.QUILT_ROWS.type}
+											parameter="focus"
+											min={defaults.FOCUS.min}
+											max={defaults.FOCUS.max}
+											numberType={defaults.FOCUS.type}
 										/>
 										<UpdateParams
 											playlistName={playlist.name}
-											parameter="columns"
-											min={defaults.QUILT_COLS.min}
-											max={defaults.QUILT_ROWS.max}
-											numberType="int"
-										/>
-										<UpdateParams
-											playlistName={playlist.name}
-											parameter="aspect"
-											min={defaults.ASPECT.min}
-											max={defaults.ASPECT.max}
-											numberType="float"
-										/>
-										<UpdateParams
-											playlistName={playlist.name}
-											parameter="view_count"
-											min={defaults.QUILT_VIEW_COUNT.min}
-											max={defaults.QUILT_VIEW_COUNT.max}
-											numberType="int"
+											parameter="zoom"
+											min={defaults.ZOOM.min}
+											max={defaults.ZOOM.max}
+											numberType={defaults.ZOOM.type}
 										/>
 									</>
 								)}
@@ -54,14 +40,21 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 											parameter="depthiness"
 											min={defaults.DEPTHINESS.min}
 											max={defaults.DEPTHINESS.max}
-											numberType="float"
+											numberType={defaults.DEPTHINESS.type}
 										/>
 										<UpdateParams
 											playlistName={playlist.name}
 											parameter="focus"
 											min={defaults.FOCUS.min}
 											max={defaults.FOCUS.max}
-											numberType="float"
+											numberType={defaults.FOCUS.type}
+										/>
+										<UpdateParams
+											playlistName={playlist.name}
+											parameter="zoom"
+											min={defaults.ZOOM.min}
+											max={defaults.ZOOM.max}
+											numberType={defaults.ZOOM.type}
 										/>
 									</>
 								)}

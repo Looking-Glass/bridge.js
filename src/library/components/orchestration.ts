@@ -18,11 +18,8 @@ export async function tryEnterOrchestration({ name, orchestration }: Orchestrati
 	response: z.infer<typeof BridgeResponse.orchestration> | null
 }> {
 	let Bridge = BridgeClient.getInstance()
-	if (Bridge.getVerbosity() != 0)
-		console.log(
-			"%c function call: tryEnterOrchestration ",
-			"color: magenta; font-weight: bold; border: solid"
-		)
+
+	Bridge.log("%c function call: tryEnterOrchestration ", "color: magenta; font-weight: bold; border: solid")
 	if (name == undefined || name == "") {
 		name = "default"
 	}
