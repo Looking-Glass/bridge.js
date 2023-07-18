@@ -5,6 +5,9 @@
 
 The Bridge.JS library provides an easy way to connect to and leverage all the awesome functionality in [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge).
 
+## Requirements
+[Bridge 2.2](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge) or newer.
+
 > **Note**
 > For live examples, checkout [our demo site here](https://bridge-js.vercel.app/)
 
