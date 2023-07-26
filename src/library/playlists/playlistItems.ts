@@ -20,7 +20,7 @@ export interface PlaylistItemArgs {
 	zoom: number
 }
 
-/**Playist items are what we actually end up sending to Bridge. 
+/**Playist items are what we actually end up sending to Bridge.
  * These are managed by the Playlist class, and should not be called externally.
  * We take the hologram object the user creates and prepare it to be added to a playlist with the toBridge function. */
 class PlaylistItem {
@@ -56,6 +56,7 @@ class PlaylistItem {
 				uri: this.hologram.uri,
 				rows: settings.rows,
 				cols: settings.columns,
+				focus: settings.focus ? settings.focus : 0,
 				aspect: settings.aspect,
 				view_count: settings.viewCount,
 				isRGBD: 0,
@@ -71,6 +72,7 @@ class PlaylistItem {
 				uri: this.hologram.uri,
 				rows: 8,
 				cols: 13,
+				focus: settings.focus ? settings.focus : 0,
 				aspect: settings.aspect,
 				view_count: 8 * 13,
 				isRGBD: 1,

@@ -11,6 +11,7 @@ export const QuiltHologramArgs = z.object({
 	columns: z.number(),
 	aspect: z.number(),
 	viewCount: z.number(),
+	focus: z.number().optional(),
 })
 
 export const RGBDHologramArgs = z.object({
