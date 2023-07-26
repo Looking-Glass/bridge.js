@@ -58,6 +58,7 @@ export const insert_playlist_entry = z.object({
 	id: z.number(),
 	index: z.number(),
 	uri: z.string(),
+	focus: z.number(),
 	rows: z.number(),
 	cols: z.number(),
 	aspect: z.number(),
