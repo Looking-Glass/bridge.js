@@ -1,5 +1,5 @@
 > **Warning**
-> Under heavy development, names may and will change abruptly
+> Under active development, function signatures and API endpoints may be changed abruptly
 
 # 🌉 bridge.js <!-- omit in toc -->
 
