@@ -43,7 +43,7 @@ ___
 
 ### QuiltHologramArgs
 
-• `Const` **QuiltHologramArgs**: `ZodObject`<{ `aspect`: `ZodNumber` ; `columns`: `ZodNumber` ; `rows`: `ZodNumber` ; `viewCount`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `aspect`: `number` ; `columns`: `number` ; `rows`: `number` ; `viewCount`: `number`  }, { `aspect`: `number` ; `columns`: `number` ; `rows`: `number` ; `viewCount`: `number`  }\>
+• `Const` **QuiltHologramArgs**: `ZodObject`<{ `aspect`: `ZodNumber` ; `columns`: `ZodNumber` ; `focus`: `ZodOptional`<`ZodNumber`\> ; `rows`: `ZodNumber` ; `viewCount`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `aspect`: `number` ; `columns`: `number` ; `focus?`: `number` ; `rows`: `number` ; `viewCount`: `number`  }, { `aspect`: `number` ; `columns`: `number` ; `focus?`: `number` ; `rows`: `number` ; `viewCount`: `number`  }\>
 
 ___
 

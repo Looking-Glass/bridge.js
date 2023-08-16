@@ -32,6 +32,7 @@ Create a new Quilt Hologram
 | `args.settings` | `Object` |
 | `args.settings.aspect` | `number` |
 | `args.settings.columns` | `number` |
+| `args.settings.focus?` | `number` |
 | `args.settings.rows` | `number` |
 | `args.settings.viewCount` | `number` |
 | `args.uri` | `string` |
@@ -48,6 +49,7 @@ Create a new Quilt Hologram
 | :------ | :------ |
 | `aspect` | `number` |
 | `columns` | `number` |
+| `focus?` | `number` |
 | `rows` | `number` |
 | `viewCount` | `number` |
 

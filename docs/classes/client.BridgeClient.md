@@ -125,7 +125,7 @@ ___
 
 ### version
 
-• **version**: `number`
+• **version**: [`BridgeVersion`](../modules/components.md#bridgeversion)
 
 the version of the Looking Glass Driver that's running
 
@@ -188,13 +188,13 @@ ___
 
 ### apiVersion
 
-▸ **apiVersion**(): `Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
+▸ **apiVersion**(): `Promise`<{ `response`: [`BridgeVersion`](../modules/components.md#bridgeversion) ; `success`: `boolean`  }\>
 
 A helper function to get the version of the Looking Glass Bridge API
 
 #### Returns
 
-`Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
+`Promise`<{ `response`: [`BridgeVersion`](../modules/components.md#bridgeversion) ; `success`: `boolean`  }\>
 
 the current version of the Looking Glass API
 
@@ -220,13 +220,13 @@ ___
 
 ### connect
 
-▸ **connect**(): `Promise`<{ `response`: { `orchestration`: `string` ; `version`: `number`  } ; `success`: `boolean`  }\>
+▸ **connect**(): `Promise`<{ `response`: { `orchestration`: `string` ; `version`: [`BridgeVersion`](../modules/components.md#bridgeversion)  } ; `success`: `boolean`  }\>
 
 Attempt to connect to Looking Glass Bridge.
 
 #### Returns
 
-`Promise`<{ `response`: { `orchestration`: `string` ; `version`: `number`  } ; `success`: `boolean`  }\>
+`Promise`<{ `response`: { `orchestration`: `string` ; `version`: [`BridgeVersion`](../modules/components.md#bridgeversion)  } ; `success`: `boolean`  }\>
 
 ___
 
@@ -366,13 +366,13 @@ ___
 
 ### getVersion
 
-▸ **getVersion**(): `Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
+▸ **getVersion**(): `Promise`<{ `response`: [`BridgeVersion`](../modules/components.md#bridgeversion) ; `success`: `boolean`  }\>
 
 A helper function to get the version of Looking Glass Bridge that is running.
 
 #### Returns
 
-`Promise`<{ `response`: `number` ; `success`: `boolean`  }\>
+`Promise`<{ `response`: [`BridgeVersion`](../modules/components.md#bridgeversion) ; `success`: `boolean`  }\>
 
 string of the version of Looking Glass Bridge that is running
 
@@ -595,7 +595,7 @@ Update the parameters of the current hologram
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"focus"`` \| ``"depth_cutoff"`` \| ``"zoom"`` \| ``"crop_pos_x"`` \| ``"crop_pos_y"`` |
+| `T` | extends ``"focus"`` \| ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"depth_cutoff"`` \| ``"zoom"`` \| ``"crop_pos_x"`` \| ``"crop_pos_y"`` |
 
 #### Parameters
 

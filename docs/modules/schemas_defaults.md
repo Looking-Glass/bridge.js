@@ -18,6 +18,7 @@
 - [CROP\_POS\_X](schemas_defaults.md#crop_pos_x)
 - [CROP\_POS\_Y](schemas_defaults.md#crop_pos_y)
 - [DEPTHINESS](schemas_defaults.md#depthiness)
+- [DEPTH\_CUTOFF](schemas_defaults.md#depth_cutoff)
 - [FOCUS](schemas_defaults.md#focus)
 - [QUILT\_COLS](schemas_defaults.md#quilt_cols)
 - [QUILT\_ROWS](schemas_defaults.md#quilt_rows)
@@ -56,6 +57,12 @@ ___
 ### DEPTHINESS
 
 • `Const` **DEPTHINESS**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
+
+___
+
+### DEPTH\_CUTOFF
+
+• `Const` **DEPTH\_CUTOFF**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 

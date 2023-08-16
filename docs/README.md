@@ -27,3 +27,4 @@
 - [schemas/schema.requests](modules/schemas_schema_requests.md)
 - [schemas/schema.responses](modules/schemas_schema_responses.md)
 - [schemas/schema.utils](modules/schemas_schema_utils.md)
+- [utilities/general.utils](modules/utilities_general_utils.md)
