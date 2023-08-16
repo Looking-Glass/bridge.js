@@ -53,6 +53,6 @@ interface ClientResponse {
 export type BridgeVersion = {
 	major: number
 	minor: number
-	patch: number
-	hotfix: number
+	patch?: number
+	hotfix?: number
 }
