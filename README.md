@@ -1,23 +1,51 @@
 > **Warning**
-> Under heavy development, names may and will change abruptly
+> Under active development, function signatures and API endpoints may be changed abruptly
 
-# 🌉 bridge.js
+# 🌉 bridge.js <!-- omit in toc -->
 
-The Bridge.JS library provides an easy way to connect to and leverage all the awesome functionality in [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge).
+The Bridge.JS library provides an easy way to connect to and leverage all the awesome functionality in [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge). There are a few key features, including:
+
+* Casting a hologram to Bridge
+* Casting a Playlist to Bridge
+* Controlling Playback of Holograms & Playlists
+* Editing Parameters of Holograms that are displayed in Bridge
+
+## Table of contents <!-- omit in toc -->
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Get Started](#get-started)
+- [Key Concepts](#-key-concepts)
+  - [Orchestrations](#orchestrations)
+  - [Holograms](#holograms)
+  - [Casting a Hologram](#casting-a-hologram)
+  - [Playlists](#playlists)
+  - [Checking if Functions Succeeded](#checking-if-functions-succeeded)
+- [Organization](#organization)
+- [Developing](#developing)
+
+## Requirements
+[Bridge 2.2](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge) or newer.
 
 > **Note**
 > For live examples, checkout [our demo site here](https://bridge-js.vercel.app/)
+
+## Installation
+You can import the library via a script tag or via npm.
+The Bridge.JS library is published to npm [here](https://www.npmjs.com/package/@lookingglass/bridge)
+
+```sh
+npm install @lookingglass/bridge
+
+# or install with yarn
+yarn add @lookingglass/bridge
+```
 
 ## Get Started
 
 To get started, Make sure you have [Looking Glass Bridge](https://docs.lookingglassfactory.com/getting-started/looking-glass-bridge) running along with a [Looking Glass Display](https://lookingglassfactory.com/product-overview)
 
-You can import the library via a script tag or via npm.
-
 **We strongly recommend using [Typescript](https://www.typescriptlang.org/)**
-
-> **Note**
-> The Bridge.JS library is published to npm [here](https://www.npmjs.com/package/@lookingglass/bridge)
 
 ```js
 import {BridgeClient} from @lookingglass/bridge
