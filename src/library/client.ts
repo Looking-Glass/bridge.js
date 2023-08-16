@@ -264,19 +264,20 @@ export class BridgeClient {
 	 * A helper function to get the version of the Looking Glass Bridge API
 	 * @returns the current version of the Looking Glass API
 	 */
-	public async apiVersion(): Promise<{ success: boolean; response: number }> {
+	public async apiVersion(): Promise<{ success: boolean; response: BridgeVersion }> {
 		this.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) {
-			return { success: false, response: 0 }
+			return { success: false, response: parseBridgeVersion("0") }
 		}
-		if ((await this.isVersionCompatible()) == false) return { success: false, response: 0 }
+		if ((await this.isVersionCompatible()) == false)
+			return { success: false, response: parseBridgeVersion("0") }
 		let response = await sendMessage({ endpoint: "api_version", requestBody: {} })
 		if (response.success == false) {
 			console.warn(`this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`)
-			return { success: false, response: 0 }
+			return { success: false, response: parseBridgeVersion("0") }
 		}
 
-		let APIVersion = parseFloat(response.response.payload.value)
+		let APIVersion = parseBridgeVersion(response.response.payload.value)
 		return { success: true, response: APIVersion }
 	}
 
