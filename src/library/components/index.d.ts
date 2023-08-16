@@ -49,3 +49,10 @@ declare module "holoplay-core"
 interface ClientResponse {
 	success: boolean
 }
+
+export type BridgeVersion = {
+	major: number
+	minor: number
+	patch: number
+	hotfix: number
+}
