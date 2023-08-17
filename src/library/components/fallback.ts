@@ -8,10 +8,10 @@ import { Client as HoloPlayClient, InfoMessage } from "holoplay-core"
 export class Fallback {
 	private holoPlayClient: HoloPlayClient
 	public ws: WebSocket
-	public versionPromise: Promise<number> | number
+	public versionPromise: Promise<string> | string
 
 	constructor() {
-		this.versionPromise = 0
+		this.versionPromise = "0"
 		this.holoPlayClient = new HoloPlayClient(this.messageCallback.bind(this), this.errorCallback.bind(this))
 		this.ws = this.holoPlayClient.ws
 
@@ -21,10 +21,10 @@ export class Fallback {
 	}
 
 	public async messageCallback(message: any) {
-		this.versionPromise = parseFloat(message.version)
+		this.versionPromise = message.version
 	}
 
-	public async getLegacyVersion(): Promise<number> {
+	public async getLegacyVersion(): Promise<string> {
 		console.log("trying to connect to Legacy API")
 		let infoMsg = new InfoMessage()
 		try {
@@ -32,7 +32,7 @@ export class Fallback {
 			return this.versionPromise
 		} catch (e) {
 			console.warn(e, "unable to connect to Legacy API")
-			return 0
+			return "0"
 		}
 	}
 

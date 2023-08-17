@@ -117,6 +117,7 @@ PlaylistItem.playlistName
 | `depth_inversion?` | ``0`` \| ``1`` |
 | `depth_loc?` | ``0`` \| ``2`` \| ``1`` \| ``3`` |
 | `depthiness?` | `number` |
+| `focus` | `number` |
 | `id` | `number` |
 | `index` | `number` |
 | `isRGBD` | ``0`` \| ``1`` |

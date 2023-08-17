@@ -10,6 +10,8 @@ import * as schema from "./schemas/schema.responses"
 import { z } from "zod"
 import { Fallback } from "./components/fallback"
 import { NewItemPlayingMessageHandler } from "./components/messageHandler"
+import { BridgeVersion } from "./components"
+import { parseBridgeVersion } from "./utilities/general.utils"
 
 export class BridgeClient {
 	/** The name of the current orchestration */
@@ -38,7 +40,7 @@ export class BridgeClient {
 	/**store if we're currently in the middle of a cast */
 	public isCastPending = false
 	/**the version of the Looking Glass Driver that's running */
-	public version: number
+	public version: BridgeVersion
 	private currentHologram: HologramType | undefined
 	/**a boolean for whether a disconnect was triggered automatically or manually */
 	public manualDisconnect = false
@@ -54,7 +56,7 @@ export class BridgeClient {
 
 		this.currentPlaylistIndex = 0
 		this.currentPlaylistItemIndex = 0
-		this.version = 0
+		this.version = { major: 0, minor: 0, patch: 0, hotfix: 0 }
 
 		if (!BridgeClient.instance) {
 			BridgeClient.instance = this
@@ -107,7 +109,7 @@ export class BridgeClient {
 	 */
 	public async connect(): Promise<{
 		success: boolean
-		response: { version: number; orchestration: string }
+		response: { version: BridgeVersion; orchestration: string }
 	}> {
 		this.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid")
 
@@ -122,7 +124,7 @@ export class BridgeClient {
 		if (status == false)
 			return {
 				success: false,
-				response: { version: 0, orchestration: "" },
+				response: { version: { major: 0, minor: 0, patch: 0, hotfix: 0 }, orchestration: "" },
 			}
 		this.isConnected = true
 
@@ -132,8 +134,8 @@ export class BridgeClient {
 		if (call.success == false) {
 			let version = await this.getVersion()
 			if (version.success == false) {
-				return { success: false, response: { version: 0, orchestration: "" } }
-			} else if (version.response < 2.2) {
+				return { success: false, response: { version: parseBridgeVersion("0"), orchestration: "" } }
+			} else if (version.response.major < 2 && version.response.minor < 1) {
 				return { success: false, response: { version: version.response, orchestration: "" } }
 			}
 		}
@@ -157,7 +159,7 @@ export class BridgeClient {
 			return { success: false, response: null }
 		}
 		const version = await this.getVersion()
-		if (version.response < 2.1) {
+		if (version.response.major < 2 && version.response.minor < 1) {
 			console.error(`Unable to get Looking Glass Bridge version, please upgrade Looking Glass Bridge.`)
 			return { success: false, response: null }
 		}
@@ -241,19 +243,20 @@ export class BridgeClient {
 	 * A helper function to get the version of Looking Glass Bridge that is running.
 	 * @returns string of the version of Looking Glass Bridge that is running
 	 */
-	public async getVersion(): Promise<{ success: boolean; response: number }> {
+	public async getVersion(): Promise<{ success: boolean; response: BridgeVersion }> {
 		this.log("%c function call: getVersion ", "color: magenta; font-weight: bold; border: solid")
 
 		let message = await sendMessage({ endpoint: "bridge_version", requestBody: {} })
 		if (message.success == true) {
-			this.version = parseFloat(message.response.payload.value)
+			let response = parseBridgeVersion(message.response.payload.value)
+			this.version = response
 			return { success: true, response: this.version }
 		}
 		// if the bridge version fails, try the legacy version
 		else {
 			let version = await BridgeClient.fallback?.getLegacyVersion()
-			if (version == undefined) return { success: false, response: 0 }
-			return { success: true, response: version }
+			if (version == undefined) return { success: false, response: parseBridgeVersion("0") }
+			return { success: true, response: parseBridgeVersion(version) }
 		}
 	}
 
@@ -261,19 +264,20 @@ export class BridgeClient {
 	 * A helper function to get the version of the Looking Glass Bridge API
 	 * @returns the current version of the Looking Glass API
 	 */
-	public async apiVersion(): Promise<{ success: boolean; response: number }> {
+	public async apiVersion(): Promise<{ success: boolean; response: BridgeVersion }> {
 		this.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) {
-			return { success: false, response: 0 }
+			return { success: false, response: parseBridgeVersion("0") }
 		}
-		if ((await this.isVersionCompatible()) == false) return { success: false, response: 0 }
+		if ((await this.isVersionCompatible()) == false)
+			return { success: false, response: parseBridgeVersion("0") }
 		let response = await sendMessage({ endpoint: "api_version", requestBody: {} })
 		if (response.success == false) {
 			console.warn(`this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`)
-			return { success: false, response: 0 }
+			return { success: false, response: parseBridgeVersion("0") }
 		}
 
-		let APIVersion = parseFloat(response.response.payload.value)
+		let APIVersion = parseBridgeVersion(response.response.payload.value)
 		return { success: true, response: APIVersion }
 	}
 
@@ -385,6 +389,7 @@ export class BridgeClient {
 		}
 
 		this.currentHologram = hologram
+		this.isCastPending = false
 		return { success: true }
 	}
 
@@ -743,12 +748,12 @@ export class BridgeClient {
 	 * @returns boolean, true if the version is compatible, false if not
 	 */
 	private async isVersionCompatible() {
-		if (this.version == 0) {
+		if (this.version.major == 0) {
 			this.isConnected = false
-		} else if (this.version < 2.2) {
+		} else if (this.version.major < 2 && this.version.minor < 1) {
 			this.warn("Please update to the latest version for the best experience")
 			this.isConnected = false
-		} else if (this.version >= 2.2) {
+		} else if (this.version.major >= 2 && this.version.minor >= 2) {
 			this.isConnected = true
 		}
 

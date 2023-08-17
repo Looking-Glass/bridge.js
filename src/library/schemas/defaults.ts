@@ -27,6 +27,13 @@ export const DEPTHINESS: defaults = {
 	type: "float",
 }
 
+export const DEPTH_CUTOFF: defaults = {
+	min: 0,
+	max: 1,
+	range: numberRange(0, 1),
+	type: "float",
+}
+
 export const CROP_POS_X: defaults = {
 	min: -1,
 	max: 1,
