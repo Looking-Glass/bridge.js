@@ -32,6 +32,9 @@ const rgbd = new RGBDHologram({
 })
 
 function App() {
+	// link setup for hash commit link
+	const githubRepo = "https://github.com/Looking-Glass/Bridge.js"
+	const commitUrl = `${githubRepo}/commit/${__COMMIT_HASH__}`
 	// State for managing connection status
 	const [connected, setConnected] = useState(false)
 	const [connectionStatus, setConnectionStatus] = useState<string>(
@@ -119,6 +122,19 @@ function App() {
 	return (
 		<>
 			<h1>Looking Glass Bridge API Library</h1>
+			<h2>
+				bridge.js is open source on{" "}
+				<a href={githubRepo} target="_blank" rel="noopener noreferrer">
+					Github
+				</a>
+				! 🥳
+			</h2>
+			<p>
+				Current Commit Hash:
+				<a href={commitUrl} target="_blank" rel="noopener noreferrer">
+					{__COMMIT_HASH__}
+				</a>
+			</p>
 			<h2>Status: {`${connectionStatus}`}</h2>
 			<h2>Displays: {`${displays}`}</h2>
 

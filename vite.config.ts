@@ -47,6 +47,9 @@ export default defineConfig(({ mode }) => {
 			},
 		}
 	} else if (mode === "react") {
+		// get the current git commit so we can view/link to the source code
+		const commitHash = require("child_process").execSync("git rev-parse --short HEAD").toString()
+		console.log("commit hash:", commitHash)
 		return {
 			build: {
 				outDir: "app",
@@ -56,6 +59,9 @@ export default defineConfig(({ mode }) => {
 				alias: {
 					"@library": path.resolve(__dirname, "./src/library"),
 				},
+			},
+			define: {
+				__COMMIT_HASH__: JSON.stringify(commitHash),
 			},
 			rollupOptions: {
 				external: [],
