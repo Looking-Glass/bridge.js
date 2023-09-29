@@ -80,6 +80,69 @@ const monitorConnected = z.object({
 	}),
 })
 
+const monitorDisconnected = z.object({
+	event: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: BridgeEvent,
+	}),
+	head_index: z.object({
+		name: schema.name,
+		type: schema.unsigned_int,
+		value: z.number(),
+	}),
+	height: z.object({
+		name: schema.name,
+		type: schema.unsigned_int,
+		value: z.number(),
+	}),
+	hw: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	hw_long_name: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	hw_short_name: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	made_by_looking_glass: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	message: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	name: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+	width: z.object({
+		name: schema.name,
+		type: schema.unsigned_int,
+		value: z.number(),
+	}),
+	x: z.object({
+		name: schema.name,
+		type: schema.int,
+		value: z.number(),
+	}),
+	y: z.object({
+		name: schema.name,
+		type: schema.int,
+		value: z.number(),
+	}),
+})
+
 const progressUpdate = z.object({
 	event: z.object({
 		name: schema.name,
@@ -219,6 +282,7 @@ const PayloadResponse = <T extends z.ZodType<any, any>>(valueSchema: T) =>
 	})
 
 export const monitorConnectResponse = PayloadResponse(monitorConnected)
+export const monitorDisconnectResponse = PayloadResponse(monitorDisconnected)
 export const progressUpdateResponse = PayloadResponse(progressUpdate)
 export const insertPlaylistResponse = PayloadResponse(insertPlaylist)
 export const instancePlaylistResponse = PayloadResponse(playlistInstance)
@@ -230,7 +294,7 @@ export const newItemPlayingResponse = PayloadResponse(NewItemPlaying)
 
 export type BridgeEventMap = {
 	"Monitor Connect": z.infer<typeof monitorConnectResponse>
-	"Monitor Disconnect": z.infer<typeof progressUpdateResponse>
+	"Monitor Disconnect": z.infer<typeof monitorDisconnectResponse>
 	"Progress Start": z.infer<typeof progressUpdateResponse>
 	"Progress Completion": z.infer<typeof progressUpdateResponse>
 	"Progress Update": z.infer<typeof progressUpdateResponse>
