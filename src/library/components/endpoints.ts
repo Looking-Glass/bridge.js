@@ -134,6 +134,7 @@ export async function sendMessage<
 	}
 
 	try {
+		Bridge.time(params.endpoint)
 		let bridgeResponse = await fetch(`${params.baseUrl + params.endpoint}`, request)
 
 		if (!bridgeResponse.ok) {
@@ -157,6 +158,7 @@ export async function sendMessage<
 		}
 
 		Bridge.log("%c Response:", "color: #00aa00", parsedResponse)
+		Bridge.timeEnd(params.endpoint)
 		console.groupEnd()
 
 		return { success: true, response: parsedResponse }
