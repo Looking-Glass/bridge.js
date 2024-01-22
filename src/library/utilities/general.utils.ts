@@ -1,4 +1,4 @@
-import { BridgeVersion } from "@library/components"
+import { BridgeVersion } from "@library/components/types"
 
 /**
  * Parse the version from Bridge's version string

@@ -44,12 +44,6 @@ export interface BridgeValueMap {
 	[key: string]: BridgeValue
 }
 
-declare module "holoplay-core"
-
-interface ClientResponse {
-	success: boolean
-}
-
 export type BridgeVersion = {
 	major: number
 	minor: number

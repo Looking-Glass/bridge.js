@@ -6,8 +6,7 @@
 
 ### Modules
 
-- [client](modules/client.md)
-- [components](modules/components.md)
+- [client/BridgeClient](modules/client_BridgeClient.md)
 - [components/displays](modules/components_displays.md)
 - [components/endpoints](modules/components_endpoints.md)
 - [components/eventsource](modules/components_eventsource.md)
@@ -15,7 +14,7 @@
 - [components/hologram](modules/components_hologram.md)
 - [components/messageHandler](modules/components_messageHandler.md)
 - [components/orchestration](modules/components_orchestration.md)
-- [index](modules/index.md)
+- [components/types](modules/components_types.md)
 - [playlists/playlist](modules/playlists_playlist.md)
 - [playlists/playlistItems](modules/playlists_playlistItems.md)
 - [schemas/defaults](modules/schemas_defaults.md)
