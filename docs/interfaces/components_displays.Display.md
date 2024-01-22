@@ -31,22 +31,22 @@ ___
 
 ### hardwareVersion
 
-• **hardwareVersion**: [`BridgeValue`](components.BridgeValue.md)
+• **hardwareVersion**: [`BridgeValue`](components_types.BridgeValue.md)
 
 ___
 
 ### index
 
-• **index**: [`BridgeValue`](components.BridgeValue.md)
+• **index**: [`BridgeValue`](components_types.BridgeValue.md)
 
 ___
 
 ### state
 
-• **state**: [`BridgeValue`](components.BridgeValue.md)
+• **state**: [`BridgeValue`](components_types.BridgeValue.md)
 
 ___
 
 ### windowCoords
 
-• **windowCoords**: [`BridgeValue`](components.BridgeValue.md)
+• **windowCoords**: [`BridgeValue`](components_types.BridgeValue.md)

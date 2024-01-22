@@ -71,7 +71,7 @@
 | :------ | :------ |
 | `args` | `Object` |
 | `args.bridgeEventName` | `E` |
-| `args.client` | [`BridgeClient`](client.BridgeClient.md) |
+| `args.client` | [`BridgeClient`](client_BridgeClient.BridgeClient.md) |
 
 ## Properties
 
@@ -83,7 +83,7 @@ ___
 
 ### client
 
-• **client**: [`BridgeClient`](client.BridgeClient.md)
+• **client**: [`BridgeClient`](client_BridgeClient.BridgeClient.md)
 
 ## Methods
 

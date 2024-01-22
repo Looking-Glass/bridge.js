@@ -36,7 +36,7 @@
 | Name | Type |
 | :------ | :------ |
 | `args` | `Object` |
-| `args.client` | [`BridgeClient`](client.BridgeClient.md) |
+| `args.client` | [`BridgeClient`](client_BridgeClient.BridgeClient.md) |
 
 #### Overrides
 
@@ -56,7 +56,7 @@ ___
 
 ### client
 
-• **client**: [`BridgeClient`](client.BridgeClient.md)
+• **client**: [`BridgeClient`](client_BridgeClient.BridgeClient.md)
 
 #### Inherited from
 
@@ -74,9 +74,9 @@ ___
 | :------ | :------ | :------ |
 | `message` | `Object` | `undefined` |
 | `message.name` | `string` | `schema.name` |
-| `message.orchestration` | { value: string; type: "WSTRING"; name: string; } | `undefined` |
-| `message.payload` | { value: { message: { value: string; type: "WSTRING"; name: string; }; event: { value: "Monitor Connect" \| "Monitor Disconnect" \| "Progress Start" \| "Progress Completion" \| "Progress Update" \| ... 6 more ... \| "Transport Control Pause"; type: "WSTRING"; name: string; }; progress: { ...; }; progress\_type: { ...; }; }... | `undefined` |
-| `message.status` | { value: "Completion" \| "Pending" \| "Failure" \| "UnknownOrchestration"; type: "WSTRING"; name: string; } | `schema.status` |
+| `message.orchestration` | { value: string; name: string; type: "WSTRING"; } | `undefined` |
+| `message.payload` | { value: { message: { value: string; name: string; type: "WSTRING"; }; event: { value: "Monitor Connect" \| "Monitor Disconnect" \| "Progress Start" \| "Progress Completion" \| "Progress Update" \| ... 6 more ... \| "Transport Control Pause"; name: string; type: "WSTRING"; }; progress: { ...; }; progress\_type: { ...; }; }... | `undefined` |
+| `message.status` | { value: "Completion" \| "UnknownOrchestration" \| "Pending" \| "Failure"; name: string; type: "WSTRING"; } | `schema.status` |
 
 #### Returns
 
