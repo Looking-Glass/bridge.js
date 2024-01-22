@@ -5,5 +5,5 @@
 		"declaration": true,
 		"outDir": "../../dist"
 	},
-	"include": ["**/*.ts", "**/*.d.ts"]
+	"include": ["**/*.ts"]
 }
