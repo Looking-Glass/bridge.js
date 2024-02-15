@@ -3526,7 +3526,7 @@ const T = class {
    * @returns
    */
   async connect() {
-    if (console.log("test change"), this.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !0)
+    if (this.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !0)
       return console.warn("Already connected to Looking Glass Bridge."), { success: !0, response: { version: this.version, orchestration: this.orchestration } };
     if (await this.status() == !1)
       return {
