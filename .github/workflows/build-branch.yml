@@ -1,7 +1,8 @@
 name: Build Library
 
 on:
-  pull_request: 
+    push: 
+        branches: '*' 
 
 
 jobs:
@@ -27,7 +28,6 @@ jobs:
       run: |
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-        git pull
         git add -f dist/
         git commit -m "Automated build by ${{github.sha}}"
-        git push origin HEAD:${{github.head_ref}}
+        git push
