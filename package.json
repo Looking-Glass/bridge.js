@@ -26,7 +26,7 @@
 		"library": "vite build --mode library --sourcemap true && yarn typedoc && node ./post-build.js",
 		"dev": "vite --mode react",
 		"typedoc": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources",
-		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources --watch", 
+		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources --watch"
 	},
 	"dependencies": {
 		"utf-8-validate": "6.0.3",
