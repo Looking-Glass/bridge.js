@@ -18,6 +18,7 @@
 - [isConnected](client_BridgeClient.BridgeClient.md#isconnected)
 - [isDisconnecting](client_BridgeClient.BridgeClient.md#isdisconnecting)
 - [manualDisconnect](client_BridgeClient.BridgeClient.md#manualdisconnect)
+- [playState](client_BridgeClient.BridgeClient.md#playstate)
 - [playlists](client_BridgeClient.BridgeClient.md#playlists)
 - [version](client_BridgeClient.BridgeClient.md#version)
 - [eventsource](client_BridgeClient.BridgeClient.md#eventsource)
@@ -38,6 +39,7 @@
 - [error](client_BridgeClient.BridgeClient.md#error)
 - [getAutoStartPlaylist](client_BridgeClient.BridgeClient.md#getautostartplaylist)
 - [getCurrentHologram](client_BridgeClient.BridgeClient.md#getcurrenthologram)
+- [getCurrentPlaylist](client_BridgeClient.BridgeClient.md#getcurrentplaylist)
 - [getDisplays](client_BridgeClient.BridgeClient.md#getdisplays)
 - [getVerbosity](client_BridgeClient.BridgeClient.md#getverbosity)
 - [getVersion](client_BridgeClient.BridgeClient.md#getversion)
@@ -45,6 +47,7 @@
 - [next](client_BridgeClient.BridgeClient.md#next)
 - [pause](client_BridgeClient.BridgeClient.md#pause)
 - [play](client_BridgeClient.BridgeClient.md#play)
+- [playRemotePlaylist](client_BridgeClient.BridgeClient.md#playremoteplaylist)
 - [playStudioPlaylist](client_BridgeClient.BridgeClient.md#playstudioplaylist)
 - [previous](client_BridgeClient.BridgeClient.md#previous)
 - [removeEventListener](client_BridgeClient.BridgeClient.md#removeeventlistener)
@@ -112,6 +115,12 @@ ___
 • **manualDisconnect**: `boolean` = `false`
 
 a boolean for whether a disconnect was triggered automatically or manually
+
+___
+
+### playState
+
+• **playState**: ``"PLAYING"`` \| ``"PAUSED"`` \| ``"STOPPED"`` = `'STOPPED'`
 
 ___
 
@@ -339,6 +348,16 @@ ___
 
 ___
 
+### getCurrentPlaylist
+
+▸ **getCurrentPlaylist**(): `undefined` \| [`Playlist`](playlists_playlist.Playlist.md)
+
+#### Returns
+
+`undefined` \| [`Playlist`](playlists_playlist.Playlist.md)
+
+___
+
 ### getDisplays
 
 ▸ **getDisplays**(): `Promise`<{ `response`: ``null`` \| [`Display`](../interfaces/components_displays.Display.md)[] ; `success`: `boolean`  }\>
@@ -429,6 +448,23 @@ Play the currently instanced playlist
 #### Returns
 
 `Promise`<{ `response`: ``null`` \| { `name`: `string` = schema.name; `orchestration`: { value: string; name: string; type: "WSTRING"; } ; `status`: { value: "Completion" \| "UnknownOrchestration" \| "Pending" \| "Failure"; name: string; type: "WSTRING"; } = schema.status } ; `success`: `boolean`  }\>
+
+___
+
+### playRemotePlaylist
+
+▸ **playRemotePlaylist**(`holograms`, `index?`): `Promise`<{ `success`: `boolean` = false }\>
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `holograms` | [`HologramType`](../modules/components_hologram.md#hologramtype)[] | `undefined` |
+| `index` | `number` | `0` |
+
+#### Returns
+
+`Promise`<{ `success`: `boolean` = false }\>
 
 ___
 

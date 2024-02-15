@@ -16,8 +16,6 @@ export interface getPlayPlaylistJsonArgs {
 }
 
 export interface PlaylistArgs {
-	/** the playlist class */
-	playlist: Playlist
 	/** display */
 	head?: number
 }
@@ -32,11 +30,33 @@ export class Playlist {
 	public items: PlaylistItemType[]
 	public orchestration: string
 
-	constructor(args: { name: string; loop: boolean; items: PlaylistItemType[]; orchestration: string }) {
+	constructor(args: { name: string; loop: boolean; items?: HologramType[]; orchestration: string }) {
 		this.name = args.name
 		this.loop = args.loop
-		this.items = args.items
 		this.orchestration = args.orchestration
+
+		if (args.items) {
+			this.items = args.items?.map((item, index) => {
+				if (item.type == "quilt") {
+					return new QuiltPlaylistItem({
+						hologram: item as QuiltHologram,
+						id: index,
+						index: index,
+						playlistName: this.name,
+						orchestration: this.orchestration,
+					})
+		
+				} else if (item.type == "rgbd") {
+					return new RGBDPlaylistItem({
+						hologram: item as RGBDHologram,
+						id: index,
+						index: index,
+						playlistName: this.name,
+						orchestration: this.orchestration,
+					}) }
+			}).filter((item): item is PlaylistItemType => !!item)
+		}
+		 else this.items = []
 	}
 
 	public setName(name: string) {
@@ -131,9 +151,9 @@ export class Playlist {
 	 * @param head
 	 * @returns
 	 */
-	public async play({ playlist, head }: PlaylistArgs): Promise<boolean> {
+	public async play({  head }: PlaylistArgs = {}): Promise<boolean> {
 		let orchestration = this.orchestration
-		const requestBody = playlist.getInstance(this.orchestration)
+		const requestBody = this.getInstance(this.orchestration)
 
 		if (!head) {
 			head = -1
@@ -145,7 +165,7 @@ export class Playlist {
 			return false
 		}
 
-		const PlaylistItems: PlaylistItemType[] = playlist.items
+		const PlaylistItems: PlaylistItemType[] = this.items
 		if (instancePlaylist.success == true) {
 			if (orchestration !== undefined) {
 				for (let i = 0; i < PlaylistItems.length; i++) {
@@ -161,7 +181,7 @@ export class Playlist {
 			}
 		}
 
-		const playRequestBody = playlist.getCurrent({ orchestration, head })
+		const playRequestBody = this.getCurrent({ orchestration, head })
 		let play_playlist = await sendMessage({
 			endpoint: "play_playlist",
 			requestBody: playRequestBody,

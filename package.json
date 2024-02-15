@@ -23,7 +23,7 @@
 	"scripts": {
 		"build": "tsc && vite build --mode react",
 		"build:watch": "tsc && vite build --watch",
-		"library": "vite build --mode library && yarn typedoc && node ./post-build.js",
+		"library": "vite build --mode library --sourcemap true && yarn typedoc && node ./post-build.js",
 		"dev": "vite --mode react",
 		"typedoc": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources",
 		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources --watch"

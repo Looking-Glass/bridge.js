@@ -41,7 +41,7 @@ Playlist class
 | Name | Type |
 | :------ | :------ |
 | `args` | `Object` |
-| `args.items` | [`PlaylistItemType`](../modules/playlists_playlist.md#playlistitemtype)[] |
+| `args.items?` | [`HologramType`](../modules/components_hologram.md#hologramtype)[] |
 | `args.loop` | `boolean` |
 | `args.name` | `string` |
 | `args.orchestration` | `string` |
@@ -164,7 +164,7 @@ ___
 
 ### play
 
-▸ **play**(`«destructured»`): `Promise`<`boolean`\>
+▸ **play**(`«destructured»?`): `Promise`<`boolean`\>
 
 this function will play a playlist on a Looking Glass display
 the playlist must be created and populated with content before calling this function
