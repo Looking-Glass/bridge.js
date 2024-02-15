@@ -27,7 +27,7 @@
 		"dev": "vite --mode react",
 		"typedoc": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources",
 		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources --watch", 
-		"postinstall": "if [ \"$NODE_ENV\" = \"development\" ]; then yarn library; fi"
+		"postinstall": "if [ \"$NODE_ENV\" != \"production\" ]; then yarn library; fi"
 	},
 	"dependencies": {
 		"utf-8-validate": "6.0.3",
