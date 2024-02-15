@@ -1,0 +1,32 @@
+name: Generate API Staging
+
+on:
+  pull_request: 
+
+
+jobs:
+  generate-staging:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Node.js and Yarn
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Run yarn generate
+      run: yarn library
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        git add dist/
+        git commit -m "Automated build by ${{github.sha}}"
+        git push
