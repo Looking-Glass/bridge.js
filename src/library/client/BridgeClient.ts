@@ -113,7 +113,6 @@ export class BridgeClient {
 		success: boolean
 		response: { version: BridgeVersion; orchestration: string }
 	}> {
-		console.log("test change")
 		this.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid")
 
 		// check if we're already connected
