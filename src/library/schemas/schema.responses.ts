@@ -6,11 +6,7 @@ import * as schema from "./schema"
 export const version = z.object({
 	name: schema.name,
 	// the payload value is unique to each bridge response.
-	payload: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	payload: schema.wstring,
 	status: schema.status,
 })
 
@@ -26,27 +22,13 @@ export const orchestration = z.object({
 
 export const play_playlist = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
 		value: z.object({
-			id: z
-				.object({
-					name: schema.name,
-					type: schema.wstring,
-					value: z.string(),
-				})
-				.optional(),
-			message: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
+			id: schema.wstring.optional(),
+			message: schema.wstring,
 		}),
 	}),
 	status: schema.status,
@@ -54,20 +36,12 @@ export const play_playlist = z.object({
 
 export const instance_playlist = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
 		value: z.object({
-			name: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
+			name: schema.wstring,
 		}),
 	}),
 	status: schema.status,
@@ -75,20 +49,12 @@ export const instance_playlist = z.object({
 
 export const insert_playlist_entry = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
 		value: z.object({
-			index: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
+			index: schema.wstring,
 		}),
 	}),
 	status: schema.status,
@@ -96,20 +62,12 @@ export const insert_playlist_entry = z.object({
 
 export const delete_playlist = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
 		value: z.object({
-			name: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
+			name: schema.wstring,
 		}),
 	}),
 	status: schema.status,
@@ -117,11 +75,7 @@ export const delete_playlist = z.object({
 
 export const show_window = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	status: schema.status,
 })
 
@@ -129,36 +83,12 @@ const displayItem = z.object({
 	name: schema.name,
 	type: schema.variant_map,
 	value: z.object({
-		calibration: z.object({
-			name: schema.name,
-			type: schema.wstring,
-			value: z.string(),
-		}),
-		defaultQuilt: z.object({
-			name: schema.name,
-			type: schema.wstring,
-			value: z.string(),
-		}),
-		hardwareVersion: z.object({
-			name: schema.name,
-			type: schema.wstring,
-			value: z.string(),
-		}),
-		hwid: z.object({
-			name: schema.name,
-			type: schema.wstring,
-			value: z.string(),
-		}),
-		index: z.object({
-			name: schema.name,
-			type: schema.unsigned_int,
-			value: z.number(),
-		}),
-		state: z.object({
-			name: schema.name,
-			type: schema.wstring,
-			value: z.string(),
-		}),
+		calibration: schema.wstring,
+		defaultQuilt: schema.wstring,
+		hardwareVersion: schema.wstring,
+		hwid: schema.wstring,
+		index: schema.unsigned_int,
+		state: schema.wstring,
 		windowCoords: z.object({
 			name: schema.name,
 			type: schema.int2,
@@ -172,11 +102,7 @@ const displayItem = z.object({
 
 export const available_output_devices = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
@@ -187,20 +113,12 @@ export const available_output_devices = z.object({
 
 export const instance_studio_playlist = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
 		value: z.object({
-			name: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
+			name: schema.wstring,
 		}),
 	}),
 	status: schema.status,
@@ -208,45 +126,25 @@ export const instance_studio_playlist = z.object({
 
 export const update_playlist_entry = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	status: schema.status,
 })
 
 export const update_current_entry = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	status: schema.status,
 })
 
 export const get_autostart_playlist = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
 		value: z.object({
-			playlist_name: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
-			playlist_path: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
+			playlist_name: schema.wstring,
+			playlist_path: schema.wstring,
 		}),
 	}),
 	status: schema.status,
@@ -254,20 +152,12 @@ export const get_autostart_playlist = z.object({
 
 export const set_autostart_playlist = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
 		value: z.object({
-			playlist_name: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
+			playlist_name: schema.wstring,
 		}),
 	}),
 	status: schema.status,
@@ -275,20 +165,12 @@ export const set_autostart_playlist = z.object({
 
 export const set_named_autostart_playlist = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	payload: z.object({
 		name: schema.name,
 		type: schema.variant_map,
 		value: z.object({
-			playlist_name: z.object({
-				name: schema.name,
-				type: schema.wstring,
-				value: z.string(),
-			}),
+			playlist_name: schema.wstring,
 		}),
 	}),
 	status: schema.status,
@@ -296,50 +178,30 @@ export const set_named_autostart_playlist = z.object({
 
 export const transport_control_play = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	status: schema.status,
 })
 
 export const transport_control_pause = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	status: schema.status,
 })
 
 export const transport_control_next = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	status: schema.status,
 })
 
 export const transport_control_previous = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	status: schema.status,
 })
 
 export const transport_control_seek_to_index = z.object({
 	name: schema.name,
-	orchestration: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	orchestration: orchestration,
 	status: schema.status,
 })

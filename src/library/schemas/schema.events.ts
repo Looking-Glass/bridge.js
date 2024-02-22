@@ -1,94 +1,66 @@
 import { z } from "zod"
 import * as schema from "./schema"
+import { orchestration } from "./schema.responses"
 
-export const BridgeEvent = z.union([
-	z.literal("Monitor Connect"),
-	z.literal("Monitor Disconnect"),
-	z.literal("Progress Start"),
-	z.literal("Progress Completion"),
-	z.literal("Progress Update"),
-	z.literal("Playlist Instance"),
-	z.literal("Playlist Insert"),
-	z.literal("Playlist Delete"),
-	z.literal("Sync/Play Playlist"),
-	z.literal("Sync/Play Playlist Complete"),
-	z.literal("Sync/Play Playlist Cancelled"),
-	z.literal("Transport Control Pause"),
-	z.literal("Transport Control Play"),
-	z.literal("Transport Control Next"),
-	z.literal("Transport Control Previous"),
-	// z.literal("All Events"),
-])
+const MonitorConnect = "Monitor Connect"
+const MonitorDisconnect = "Monitor Disconnect"
+const ProgressStart = "Progress Start"
+const ProgressCompletion = "Progress Completion"
+const ProgressUpdate = "Progress Update"
+const PlaylistInstance = "Playlist Instance"
+const PlaylistInsert = "Playlist Insert"
+const PlaylistDelete = "Playlist Delete"
+const SyncPlayPlaylist = "Sync/Play Playlist"
+const SyncPlayPlaylistComplete = "Sync/Play Playlist Complete"
+const SyncPlayPlaylistCancelled = "Sync/Play Playlist Cancelled"
+const TransportControlPause = "Transport Control Pause"
+const TransportControlPlay = "Transport Control Play"
+const TransportControlNext = "Transport Control Next"
+const TransportControlPrevious = "Transport Control Previous"
+const NewItemPlaying = "New Item Playing"
+
+type EventType =
+	| "Monitor Connect"
+	| "Monitor Disconnect"
+	| "Progress Start"
+	| "Progress Completion"
+	| "Progress Update"
+	| "Playlist Instance"
+	| "Playlist Insert"
+	| "Playlist Delete"
+	| "Sync/Play Playlist"
+	| "Sync/Play Playlist Complete"
+	| "Sync/Play Playlist Cancelled"
+	| "Transport Control Pause"
+	| "Transport Control Play"
+	| "Transport Control Next"
+	| "Transport Control Previous"
+	| "New Item Playing"
+
+const event = (e: EventType) =>
+	z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.literal(e),
+	})
 
 const monitorConnected = z.object({
-	event: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: BridgeEvent,
-	}),
-	head_index: z.object({
-		name: schema.name,
-		type: schema.unsigned_int,
-		value: z.number(),
-	}),
-	height: z.object({
-		name: schema.name,
-		type: schema.unsigned_int,
-		value: z.number(),
-	}),
-	hw: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	hw_long_name: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	hw_short_name: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	made_by_looking_glass: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	message: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	name: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	width: z.object({
-		name: schema.name,
-		type: schema.unsigned_int,
-		value: z.number(),
-	}),
-	x: z.object({
-		name: schema.name,
-		type: schema.int,
-		value: z.number(),
-	}),
-	y: z.object({
-		name: schema.name,
-		type: schema.int,
-		value: z.number(),
-	}),
+	event: event(MonitorConnect),
+	head_index: schema.unsigned_int,
+	height: schema.unsigned_int,
+	hw: schema.wstring,
+	hw_long_name: schema.wstring,
+	hw_short_name: schema.wstring,
+	made_by_looking_glass: schema.wstring,
+	message: schema.wstring,
+	name: schema.wstring,
+	width: schema.unsigned_int,
+	x: schema.int,
+	y: schema.int,
 })
 
 const monitorDisconnected = z.object({
-	event: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: BridgeEvent,
-	}),
+	event: event(MonitorDisconnect),
 	head_index: z.object({
 		name: schema.name,
 		type: schema.unsigned_int,
@@ -147,121 +119,46 @@ const monitorDisconnected = z.object({
 })
 
 const progressUpdate = z.object({
-	event: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: BridgeEvent,
-	}),
-	message: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	progress: z.object({
-		name: schema.name,
-		type: schema.float,
-		value: z.number(),
-	}),
-	progress_type: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	event: event(ProgressUpdate),
+	message: schema.wstring,
+	progress: schema.float,
+	progress_type: schema.wstring,
 })
 
 const insertPlaylist = z.object({
-	event: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: BridgeEvent,
-	}),
-	index: z.object({
-		name: schema.name,
-		type: schema.unsigned_int,
-		value: z.number(),
-	}),
-	message: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	uri: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	event: event(PlaylistInsert),
+	index: schema.unsigned_int,
+	message: schema.wstring,
+	uri: schema.wstring,
 })
 
 const playlistInstance = z.object({
-	event: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: BridgeEvent,
-	}),
-	message: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	name: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	event: event(PlaylistInstance),
+	message: schema.wstring,
+	name: schema.wstring,
 })
 
 const deletePlaylist = z.object({
-	event: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: BridgeEvent,
-	}),
-	message: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	name: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	event: event(PlaylistDelete),
+	message: schema.wstring,
+	name: schema.wstring,
 })
 
 const transportControlEvent = z.object({
-	event: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: BridgeEvent,
-	}),
-	message: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
-	name: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+	event: z.union([
+		event(TransportControlPause),
+		event(TransportControlPlay),
+		event(TransportControlNext),
+		event(TransportControlPrevious),
+	]),
+	message: schema.wstring,
+	name: schema.wstring,
 })
 
-const NewItemPlaying = z.object({
-	event: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: BridgeEvent,
-	}),
-	index: z.object({
-		name: schema.name,
-		type: schema.unsigned_int,
-		value: z.number(),
-	}),
-	playlist_name: z.object({
-		name: schema.name,
-		type: schema.wstring,
-		value: z.string(),
-	}),
+const newItemPlaying = z.object({
+	event: event(NewItemPlaying),
+	index: schema.unsigned_int,
+	playlist_name: schema.wstring,
 })
 
 /**
@@ -271,11 +168,7 @@ const NewItemPlaying = z.object({
 const PayloadResponse = <T extends z.ZodType<any, any>>(valueSchema: T) =>
 	z.object({
 		name: schema.name,
-		orchestration: z.object({
-			name: schema.name,
-			type: schema.wstring,
-			value: z.string(),
-		}),
+		orchestration: orchestration,
 		payload: z.object({
 			name: schema.name,
 			type: schema.variant_map,
@@ -291,7 +184,7 @@ export const insertPlaylistResponse = PayloadResponse(insertPlaylist)
 export const instancePlaylistResponse = PayloadResponse(playlistInstance)
 export const deletePlaylistResponse = PayloadResponse(deletePlaylist)
 export const transportControlResponse = PayloadResponse(transportControlEvent)
-export const newItemPlayingResponse = PayloadResponse(NewItemPlaying)
+export const newItemPlayingResponse = PayloadResponse(newItemPlaying)
 
 // export const all_events = z.union([monitorConnectResponse, progressUpdateResponse])
 
