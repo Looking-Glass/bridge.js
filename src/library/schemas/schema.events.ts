@@ -14,6 +14,9 @@ export const BridgeEvent = z.union([
 	z.literal("Sync/Play Playlist Complete"),
 	z.literal("Sync/Play Playlist Cancelled"),
 	z.literal("Transport Control Pause"),
+	z.literal("Transport Control Play"),
+	z.literal("Transport Control Next"),
+	z.literal("Transport Control Previous"),
 	// z.literal("All Events"),
 ])
 
@@ -162,7 +165,7 @@ const deletePlaylist = z.object({
 	}),
 })
 
-const transportControlPause = z.object({
+const transportControlEvent = z.object({
 	event: z.object({
 		name: schema.name,
 		type: schema.wstring,
@@ -223,7 +226,7 @@ export const progressUpdateResponse = PayloadResponse(progressUpdate)
 export const insertPlaylistResponse = PayloadResponse(insertPlaylist)
 export const instancePlaylistResponse = PayloadResponse(playlistInstance)
 export const deletePlaylistResponse = PayloadResponse(deletePlaylist)
-export const transportControlPauseResponse = PayloadResponse(transportControlPause)
+export const transportControlResponse = PayloadResponse(transportControlEvent)
 export const newItemPlayingResponse = PayloadResponse(NewItemPlaying)
 
 // export const all_events = z.union([monitorConnectResponse, progressUpdateResponse])
@@ -240,7 +243,10 @@ export type BridgeEventMap = {
 	"Sync/Play Playlist": z.infer<typeof progressUpdateResponse>
 	"Sync/Play Playlist Complete": z.infer<typeof progressUpdateResponse>
 	"Sync/Play Playlist Cancelled": z.infer<typeof progressUpdateResponse>
-	"Transport Control Pause": z.infer<typeof transportControlPauseResponse>
+	"Transport Control Pause": z.infer<typeof transportControlResponse>
+	"Transport Control Play": z.infer<typeof transportControlResponse>
+	"Transport Control Next": z.infer<typeof transportControlResponse>
+	"Transport Control Previous": z.infer<typeof transportControlResponse>
 	"New Item Playing": z.infer<typeof newItemPlayingResponse>
 	// "All Events": all_events,
 	/**CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE */

@@ -34,6 +34,50 @@ export class MonitorDisconnectedMessageHandler extends MessageHandler<"Monitor D
 	}
 }
 
+export class TransportControlPauseMessageHandler extends MessageHandler<"Transport Control Pause"> {
+	constructor(args: { client: BridgeClient }) {
+		super({ bridgeEventName: "Transport Control Pause", client: args.client })
+	}
+
+	handle(message: BridgeEventMap["Transport Control Pause"]): void {
+		this.client.log("%c Transport Control Pause ", "color: aqua; font-weight: bold; border: solid;", message)
+	}
+}
+
+export class TransportControlPlayMessageHandler extends MessageHandler<"Transport Control Play"> {
+	constructor(args: { client: BridgeClient }) {
+		super({ bridgeEventName: "Transport Control Play", client: args.client })
+	}
+
+	handle(message: BridgeEventMap["Transport Control Play"]): void {
+		this.client.log("%c Transport Control Play ", "color: aqua; font-weight: bold; border: solid;", message)
+	}
+}
+
+export class TransportControlNextMessageHandler extends MessageHandler<"Transport Control Next"> {
+	constructor(args: { client: BridgeClient }) {
+		super({ bridgeEventName: "Transport Control Next", client: args.client })
+	}
+
+	handle(message: BridgeEventMap["Transport Control Next"]): void {
+		this.client.log("%c Transport Control Next ", "color: aqua; font-weight: bold; border: solid;", message)
+	}
+}
+
+export class TransportControlPreviousMessageHandler extends MessageHandler<"Transport Control Previous"> {
+	constructor(args: { client: BridgeClient }) {
+		super({ bridgeEventName: "Transport Control Previous", client: args.client })
+	}
+
+	handle(message: BridgeEventMap["Transport Control Previous"]): void {
+		this.client.log(
+			"%c Transport Control Previous ",
+			"color: aqua; font-weight: bold; border: solid;",
+			message
+		)
+	}
+}
+
 export class ProgressStartMessageHandler extends MessageHandler<"Progress Start"> {
 	constructor(args: { client: BridgeClient }) {
 		super({ bridgeEventName: "Progress Start", client: args.client })
@@ -60,7 +104,12 @@ export class ProgressUpdateMessageHandler extends MessageHandler<"Progress Updat
 	}
 
 	handle(message: BridgeEventMap["Progress Update"]): void {
-		this.client.log(message)
+		this.client.log(
+			"%c Progress Update ",
+			"color: aqua; font-weight: bold; border: solid;",
+			message.payload.value.progress_type,
+			message.payload.value.progress.value
+		)
 	}
 }
 
