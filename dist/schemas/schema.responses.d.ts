@@ -16,16 +16,36 @@ export declare const version: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     payload: {
@@ -37,7 +57,11 @@ export declare const version: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     payload: {
@@ -49,76 +73,232 @@ export declare const version: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const orchestration: z.ZodObject<{
     name: z.ZodString;
     payload: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         value: string;
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: string;
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     payload: {
         value: string;
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     payload: {
         value: string;
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const play_playlist: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -206,22 +386,58 @@ export declare const play_playlist: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -243,13 +459,33 @@ export declare const play_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -271,23 +507,123 @@ export declare const play_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const instance_playlist: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -342,22 +678,58 @@ export declare const instance_playlist: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -374,13 +746,33 @@ export declare const instance_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -397,23 +789,123 @@ export declare const instance_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const insert_playlist_entry: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -468,22 +960,58 @@ export declare const insert_playlist_entry: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -500,13 +1028,33 @@ export declare const insert_playlist_entry: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -523,23 +1071,123 @@ export declare const insert_playlist_entry: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const delete_playlist: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -594,22 +1242,58 @@ export declare const delete_playlist: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -626,13 +1310,33 @@ export declare const delete_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -649,76 +1353,332 @@ export declare const delete_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const show_window: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const available_output_devices: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -1096,22 +2056,58 @@ export declare const available_output_devices: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         name: string;
@@ -1165,13 +2161,33 @@ export declare const available_output_devices: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         name: string;
@@ -1225,23 +2241,123 @@ export declare const available_output_devices: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const instance_studio_playlist: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -1296,22 +2412,58 @@ export declare const instance_studio_playlist: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -1328,13 +2480,33 @@ export declare const instance_studio_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -1351,129 +2523,541 @@ export declare const instance_studio_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const update_playlist_entry: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const update_current_entry: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const get_autostart_playlist: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -1561,22 +3145,58 @@ export declare const get_autostart_playlist: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -1598,13 +3218,33 @@ export declare const get_autostart_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -1626,23 +3266,123 @@ export declare const get_autostart_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const set_autostart_playlist: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -1697,22 +3437,58 @@ export declare const set_autostart_playlist: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -1729,13 +3505,33 @@ export declare const set_autostart_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -1752,23 +3548,123 @@ export declare const set_autostart_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const set_named_autostart_playlist: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     payload: z.ZodObject<{
         name: z.ZodString;
@@ -1823,22 +3719,58 @@ export declare const set_named_autostart_playlist: z.ZodObject<{
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -1855,13 +3787,33 @@ export declare const set_named_autostart_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     payload: {
         value: {
@@ -1878,271 +3830,1055 @@ export declare const set_named_autostart_playlist: z.ZodObject<{
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const transport_control_play: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const transport_control_pause: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const transport_control_next: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const transport_control_previous: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;
 export declare const transport_control_seek_to_index: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
-        value: z.ZodString;
+        payload: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
+        status: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
+            value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
+        }, "strip", z.ZodTypeAny, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }, {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        }>;
     }, "strip", z.ZodTypeAny, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }, {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     }>;
     status: z.ZodObject<{
         name: z.ZodString;
-        type: z.ZodLiteral<"WSTRING">;
+        type: z.ZodObject<{
+            name: z.ZodString;
+            type: z.ZodLiteral<"WSTRING">;
+            value: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }, {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        }>;
         value: z.ZodUnion<[z.ZodLiteral<"Completion">, z.ZodLiteral<"Pending">, z.ZodLiteral<"Failure">, z.ZodLiteral<"UnknownOrchestration">]>;
     }, "strip", z.ZodTypeAny, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }, {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     }>;
 }, "strip", z.ZodTypeAny, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }, {
     orchestration: {
-        value: string;
+        payload: {
+            value: string;
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
         name: string;
-        type: "WSTRING";
+        status: {
+            value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
+            name: string;
+            type: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
+        };
     };
     name: string;
     status: {
         value: "Completion" | "UnknownOrchestration" | "Pending" | "Failure";
         name: string;
-        type: "WSTRING";
+        type: {
+            value: string;
+            name: string;
+            type: "WSTRING";
+        };
     };
 }>;

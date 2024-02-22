@@ -8,6 +8,8 @@ import {
 	PlaylistInstanceMessageHandler,
 	hologramTypes,
 	Playlist,
+	MonitorConnectedMessageHandler,
+	MonitorDisconnectedMessageHandler,
 	TransportControlPauseMessageHandler,
 	TransportControlPlayMessageHandler,
 	TransportControlNextMessageHandler,
@@ -445,6 +447,8 @@ function App() {
 					new PlaylistInsertMessageHandler({ client: Bridge })
 					new PlaylistInstanceMessageHandler({ client: Bridge })
 					new PlaylistDeleteMessageHandler({ client: Bridge })
+					new MonitorConnectedMessageHandler({ client: Bridge })
+					new MonitorDisconnectedMessageHandler({ client: Bridge })
 					new TransportControlPauseMessageHandler({ client: Bridge })
 					new TransportControlPlayMessageHandler({ client: Bridge })
 					new TransportControlNextMessageHandler({ client: Bridge })

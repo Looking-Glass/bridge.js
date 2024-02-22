@@ -1,13 +1,30 @@
 import * as z from "zod"
 
+export const name = z.string()
+
 // const boolean = z.literal("BOOLEAN")
 // const char = z.literal("CHAR")
 // const short = z.literal("SHORT")
 // const unsigned_short = z.literal("UNSIGNED_SHORT")
-export const unsigned_int = z.literal("UNSIGNED_INT")
-export const int = z.literal("INT")
+export const unsigned_int = z.object({
+	name: name,
+	type: z.literal("UNSIGNED_INT"),
+	value: z.number(),
+})
+
+export const int = z.object({
+	name: name,
+	type: z.literal("INT"),
+	value: z.number(),
+})
+
 // const long = z.literal("LONG")
-export const float = z.literal("FLOAT")
+export const float = z.object({
+	name: name,
+	type: z.literal("FLOAT"),
+	value: z.number(),
+})
+
 // const double = z.literal("DOUBLE")
 export const int2 = z.literal("INT2")
 // const int3 = z.literal("INT3")
@@ -17,7 +34,12 @@ export const int2 = z.literal("INT2")
 // const float4 = z.literal("FLOAT4")
 // const float4x4 = z.literal("FLOAT4X4")
 // const string = z.literal("STRING")
-export const wstring = z.literal("WSTRING")
+export const wstring = z.object({
+	name: name,
+	type: z.literal("WSTRING"),
+	value: z.string(),
+})
+
 export const variant_map = z.literal("VARIANT_MAP")
 
 // possible types that can be returned by bridge' status object.
@@ -39,8 +61,6 @@ export const failure = z.literal("Failure")
 // export const unknownPlaylist = z.literal("UnknownPlaylist")
 // export const objectDelted = z.literal("ObjectDeleted")
 // export const framesExhausted = z.literal("FramesExhausted")
-
-export const name = z.string()
 
 export const status = z.object({
 	name: name,
