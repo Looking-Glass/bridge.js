@@ -1,19 +1,21 @@
 import { BridgeEventMap } from "../schemas/schema.events"
 import { BridgeClient } from ".."
 
-function isWindowAvailable() {
-	if (window !== undefined) {
-		return true
-	} else {
-		console.error("Window is unavailable!")
-		return false
-	}
+let WebSocketImplementation: any
+
+if (typeof window !== "undefined") {
+	// Browser environment
+	WebSocketImplementation = window.WebSocket
+} else {
+	// Node.js environment
+	WebSocketImplementation = require("ws")
 }
+
 function isWebSocketAvailable() {
-	if ("WebSocket" in window) {
+	if (WebSocketImplementation) {
 		return true
 	} else {
-		console.error("WebSocket NOT supported by your Browser!")
+		console.error("WebSocket is not supported in your environment!")
 		return false
 	}
 }
@@ -115,11 +117,10 @@ export class BridgeEventSource {
 	public async connectToBridgeEventSource(orchestration: string): Promise<{ success: boolean }> {
 		const client = BridgeClient.getInstance()
 		client.log("%c Connect to Bridge Events Source ", "color: chartreuse; font-weight: bold; border: solid")
-		if (!isWindowAvailable()) return { success: false }
 		if (!isWebSocketAvailable()) return { success: false }
 		let bridgeEventSource = this
 		// provided we have web socket support, we can proceed to query Bridge
-		this.ws = new WebSocket("ws://localhost:9724/event_source")
+		this.ws = new WebSocketImplementation("ws://localhost:9724/event_source")
 
 		return new Promise((resolve) => {
 			if (this.ws !== undefined) {
