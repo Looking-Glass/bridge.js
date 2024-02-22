@@ -1,21 +1,20 @@
-[@lookingglass/bridge](../README.md) / components
+[@lookingglass/bridge](../README.md) / components/types
 
-# Module: components
+# Module: components/types
 
 ## Table of contents
 
 ### Interfaces
 
-- [BridgeOrchestration](../interfaces/components.BridgeOrchestration.md)
-- [BridgePayload](../interfaces/components.BridgePayload.md)
-- [BridgeValue](../interfaces/components.BridgeValue.md)
-- [BridgeValueMap](../interfaces/components.BridgeValueMap.md)
-- [ClientResponse](../interfaces/components.ClientResponse.md)
+- [BridgeOrchestration](../interfaces/components_types.BridgeOrchestration.md)
+- [BridgePayload](../interfaces/components_types.BridgePayload.md)
+- [BridgeValue](../interfaces/components_types.BridgeValue.md)
+- [BridgeValueMap](../interfaces/components_types.BridgeValueMap.md)
 
 ### Type Aliases
 
-- [BridgeType](components.md#bridgetype)
-- [BridgeVersion](components.md#bridgeversion)
+- [BridgeType](components_types.md#bridgetype)
+- [BridgeVersion](components_types.md#bridgeversion)
 
 ## Type Aliases
 

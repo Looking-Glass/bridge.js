@@ -9,7 +9,6 @@
 ### Properties
 
 - [head](playlists_playlist.PlaylistArgs.md#head)
-- [playlist](playlists_playlist.PlaylistArgs.md#playlist)
 
 ## Properties
 
@@ -18,11 +17,3 @@
 • `Optional` **head**: `number`
 
 display
-
-___
-
-### playlist
-
-• **playlist**: [`Playlist`](../classes/playlists_playlist.Playlist.md)
-
-the playlist class

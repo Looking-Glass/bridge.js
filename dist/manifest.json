@@ -1,0 +1,7 @@
+{
+  "src/library/index.ts": {
+    "file": "looking-glass-bridge.js",
+    "isEntry": true,
+    "src": "src/library/index.ts"
+  }
+}

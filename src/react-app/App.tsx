@@ -10,6 +10,10 @@ import {
 	Playlist,
 	MonitorConnectedMessageHandler,
 	MonitorDisconnectedMessageHandler,
+	TransportControlPauseMessageHandler,
+	TransportControlPlayMessageHandler,
+	TransportControlNextMessageHandler,
+	TransportControlPreviousMessageHandler,
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
 import { PlaylistUI } from "./components/Playlist"
@@ -445,6 +449,10 @@ function App() {
 					new PlaylistDeleteMessageHandler({ client: Bridge })
 					new MonitorConnectedMessageHandler({ client: Bridge })
 					new MonitorDisconnectedMessageHandler({ client: Bridge })
+					new TransportControlPauseMessageHandler({ client: Bridge })
+					new TransportControlPlayMessageHandler({ client: Bridge })
+					new TransportControlNextMessageHandler({ client: Bridge })
+					new TransportControlPreviousMessageHandler({ client: Bridge })
 					setEventStatus("Listening to Events")
 				}}
 				disabled={!connected}>

@@ -1,0 +1,34 @@
+name: Build Library
+
+on:
+   pull_request: 
+
+
+jobs:
+  build-library:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{github.head_ref}}
+
+    - name: Install Node.js and Yarn
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Run yarn generate
+      run: yarn library
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        git add -f dist/
+        git diff-index --quiet HEAD || git commit -m "Automated build by ${{github.sha}}"
+        git push origin ${{github.head_ref}}

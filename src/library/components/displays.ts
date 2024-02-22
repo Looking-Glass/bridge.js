@@ -1,4 +1,4 @@
-import { BridgeValue } from "."
+import { BridgeValue } from "./types"
 
 export interface Display {
 	calibration: CalibrationType | null

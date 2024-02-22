@@ -141,7 +141,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends ``"show_window"`` \| ``"insert_playlist_entry"`` \| ``"instance_studio_playlist"`` \| ``"bridge_version"`` \| ``"api_version"`` \| ``"get_autostart_playlist"`` \| ``"set_named_autostart_playlist"`` \| ``"set_autostart_playlist"`` \| ``"available_output_devices"`` \| ``"enter_orchestration"`` \| ``"exit_orchestration"`` \| ``"instance_playlist"`` \| ``"delete_playlist"`` \| ``"update_playlist_entry"`` \| ``"update_current_entry"`` \| ``"transport_control_play"`` \| ``"transport_control_pause"`` \| ``"transport_control_next"`` \| ``"transport_control_previous"`` \| ``"transport_control_seek_to_index"`` \| ``"play_playlist"`` |
+| `T` | extends ``"show_window"`` \| ``"instance_studio_playlist"`` \| ``"bridge_version"`` \| ``"api_version"`` \| ``"set_named_autostart_playlist"`` \| ``"get_autostart_playlist"`` \| ``"set_autostart_playlist"`` \| ``"available_output_devices"`` \| ``"enter_orchestration"`` \| ``"exit_orchestration"`` \| ``"instance_playlist"`` \| ``"delete_playlist"`` \| ``"insert_playlist_entry"`` \| ``"update_playlist_entry"`` \| ``"update_current_entry"`` \| ``"transport_control_play"`` \| ``"transport_control_pause"`` \| ``"transport_control_next"`` \| ``"transport_control_previous"`` \| ``"transport_control_seek_to_index"`` \| ``"play_playlist"`` |
 
 #### Parameters
 
