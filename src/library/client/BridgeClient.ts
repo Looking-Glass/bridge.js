@@ -813,6 +813,17 @@ export class BridgeClient {
 			console.log.apply(console, messages)
 		}
 	}
+	public time(label: string) {
+		if (BridgeClient.verbosity >= 2) {
+			console.time(label)
+		}
+	}
+
+	public timeEnd(label: string) {
+		if (BridgeClient.verbosity >= 2) {
+			console.timeEnd(label)
+		}
+	}
 	/**Asbtraction for logging with verbosity setting */
 	public warn(...messages: unknown[]) {
 		if (BridgeClient.verbosity >= 1) {
