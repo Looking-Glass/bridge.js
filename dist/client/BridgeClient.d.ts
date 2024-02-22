@@ -207,6 +207,8 @@ export declare class BridgeClient {
     setVerbosity(verbosity: 0 | 1 | 2 | 3): void;
     /**Asbtraction for logging with verbosity setting */
     log(...messages: unknown[]): void;
+    time(label: string): void;
+    timeEnd(label: string): void;
     /**Asbtraction for logging with verbosity setting */
     warn(...messages: unknown[]): void;
     /**Asbtraction for logging with verbosity setting */
