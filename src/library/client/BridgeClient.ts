@@ -1,17 +1,17 @@
-import { Display, tryParseDisplay } from "./components/displays"
-import { sendMessage } from "./components/endpoints"
-import { tryEnterOrchestration, tryExitOrchestration } from "./components/orchestration"
-import { BridgeEventSource } from "./components/eventsource"
-import { Playlist } from "./playlists/playlist"
-import { HologramType } from "./components/hologram"
-import { BridgeEventMap } from "./schemas/schema.events"
-import { HologramParamMap } from "./schemas/schema.parameters"
-import * as schema from "./schemas/schema.responses"
+import { Display, tryParseDisplay } from "../components/displays"
+import { sendMessage } from "../components/endpoints"
+import { tryEnterOrchestration, tryExitOrchestration } from "../components/orchestration"
+import { BridgeEventSource } from "../components/eventsource"
+import { Playlist } from "../playlists/playlist"
+import { HologramType } from "../components/hologram"
+import { BridgeEventMap } from "../schemas/schema.events"
+import { HologramParamMap } from "../schemas/schema.parameters"
+import * as schema from "../schemas/schema.responses"
 import { z } from "zod"
-import { Fallback } from "./components/fallback"
-import { NewItemPlayingMessageHandler } from "./components/messageHandler"
-import { BridgeVersion } from "./components"
-import { parseBridgeVersion } from "./utilities/general.utils"
+import { Fallback } from "../components/fallback"
+import { NewItemPlayingMessageHandler } from "../components/messageHandler"
+import { BridgeVersion } from "../components/types"
+import { parseBridgeVersion } from "../utilities/general.utils"
 
 export class BridgeClient {
 	/** The name of the current orchestration */
@@ -44,6 +44,8 @@ export class BridgeClient {
 	private currentHologram: HologramType | undefined
 	/**a boolean for whether a disconnect was triggered automatically or manually */
 	public manualDisconnect = false
+
+	public playState: "PLAYING" | "PAUSED" | "STOPPED" = "STOPPED"
 
 	constructor() {
 		this.orchestration = ""
@@ -372,7 +374,7 @@ export class BridgeClient {
 		// add the hologram to the playlist, and seek to it
 		let currentCastItem = playlist.addItem(hologram)
 		if (currentCastItem !== undefined) {
-			await playlist.play({ playlist })
+			await playlist.play()
 			// delete old playlists
 			this.playlists?.forEach((playlist) => {
 				if (playlist.name != randomName) {
@@ -390,6 +392,54 @@ export class BridgeClient {
 
 		this.currentHologram = hologram
 		this.isCastPending = false
+		return { success: true }
+	}
+
+	getCurrentPlaylist() {
+		return this.playlists?.[this.currentPlaylistIndex]
+	}
+
+	public async playRemotePlaylist(holograms: HologramType[], index: number = 0) {
+		if (!this.isConnected && !(await this.connect()).success) {
+			return { success: false }
+		}
+
+		console.log("%c function call: playRemotePlaylist ", "color: magenta; font-weight: bold; border: solid")
+
+		if (this.isCastPending == true) {
+			return { success: false }
+		}
+
+		this.isCastPending = true
+
+		// try to find an existing cast playlist
+		let randomName = "Cast_" + Math.random().toString(36).substring(7)
+
+		const playlist = new Playlist({
+			name: randomName,
+			loop: true,
+			items: holograms,
+			orchestration: this.orchestration,
+		})
+		this.playlists?.push(playlist)
+
+		// delete old playlists
+		this.playlists?.forEach((playlist) => {
+			if (playlist.name != randomName) {
+				this.deletePlaylist(playlist)
+				this.playlists?.splice(this.playlists.indexOf(playlist), 1)
+			}
+		})
+		//update the current playlist index value.
+		this.currentPlaylistIndex = this.playlists?.indexOf(playlist) ?? 0
+		//update the current playlistItem Index value.
+		this.currentPlaylistItemIndex = index
+
+		this.currentHologram = holograms[index]
+		this.isCastPending = false
+
+		await playlist.play()
+
 		return { success: true }
 	}
 
@@ -558,6 +608,8 @@ export class BridgeClient {
 			return { success: false, response: null }
 		}
 
+		this.playState = "PLAYING"
+
 		return { success: true, response: message.response }
 	}
 
@@ -578,6 +630,8 @@ export class BridgeClient {
 		if (message.success == false) {
 			return { success: false, response: null }
 		}
+
+		this.playState = "PAUSED"
 
 		return { success: true, response: message.response }
 	}
@@ -600,6 +654,20 @@ export class BridgeClient {
 			return { success: false, response: null }
 		}
 
+		const playlist = this.getCurrentPlaylist()
+		const loop = playlist?.loop
+		const length = playlist?.items.length
+		const index = this.currentPlaylistItemIndex
+
+		if (index + 1 === length) {
+			if (loop) {
+				this.currentPlaylistItemIndex = 0
+			}
+			//TODO: Handle case where we've reached end of playlist
+		} else {
+			this.currentPlaylistItemIndex++
+		}
+
 		return { success: true, response: message.response }
 	}
 
@@ -619,6 +687,21 @@ export class BridgeClient {
 
 		if (message.success == false) {
 			return { success: false, response: null }
+		}
+
+		const playlist = this.getCurrentPlaylist()
+		const loop = playlist?.loop
+		const length = playlist?.items.length
+		const index = this.currentPlaylistIndex
+
+		if (index === 0) {
+			if (loop && length) {
+				this.currentPlaylistItemIndex = length
+			} else {
+				//TODO: Repeat first track
+			}
+		} else {
+			this.currentPlaylistItemIndex--
 		}
 
 		return { success: true, response: message.response }
