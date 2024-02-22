@@ -21,6 +21,30 @@ export declare class MonitorDisconnectedMessageHandler extends MessageHandler<"M
     });
     handle(message: BridgeEventMap["Monitor Disconnect"]): void;
 }
+export declare class TransportControlPauseMessageHandler extends MessageHandler<"Transport Control Pause"> {
+    constructor(args: {
+        client: BridgeClient;
+    });
+    handle(message: BridgeEventMap["Transport Control Pause"]): void;
+}
+export declare class TransportControlPlayMessageHandler extends MessageHandler<"Transport Control Play"> {
+    constructor(args: {
+        client: BridgeClient;
+    });
+    handle(message: BridgeEventMap["Transport Control Play"]): void;
+}
+export declare class TransportControlNextMessageHandler extends MessageHandler<"Transport Control Next"> {
+    constructor(args: {
+        client: BridgeClient;
+    });
+    handle(message: BridgeEventMap["Transport Control Next"]): void;
+}
+export declare class TransportControlPreviousMessageHandler extends MessageHandler<"Transport Control Previous"> {
+    constructor(args: {
+        client: BridgeClient;
+    });
+    handle(message: BridgeEventMap["Transport Control Previous"]): void;
+}
 export declare class ProgressStartMessageHandler extends MessageHandler<"Progress Start"> {
     constructor(args: {
         client: BridgeClient;
