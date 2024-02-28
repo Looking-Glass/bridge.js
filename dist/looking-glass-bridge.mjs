@@ -42,7 +42,7 @@ function Fe(n) {
   };
 }
 async function C(n) {
-  let e, t = N.getInstance();
+  let e, t = j.getInstance();
   t.getVerbosity() >= 3 && t.getVerbosity() !== void 0 && console.group("Endpoint:", n.endpoint), await new Promise((r) => setTimeout(r, 10)), n.baseUrl == null && (n.baseUrl = "http://localhost:33334/"), t.getVerbosity() == 3 && (console.group("Message:"), t.log(`${n.baseUrl + n.endpoint}`), t.log("body:", n.requestBody), console.groupEnd());
   const s = {
     method: "PUT",
@@ -58,7 +58,7 @@ async function C(n) {
   }
 }
 async function et({ name: n, orchestration: e }) {
-  if (N.getInstance().log("%c function call: tryEnterOrchestration ", "color: magenta; font-weight: bold; border: solid"), (n == null || n == "") && (n = "default"), e !== "" && e !== void 0)
+  if (j.getInstance().log("%c function call: tryEnterOrchestration ", "color: magenta; font-weight: bold; border: solid"), (n == null || n == "") && (n = "default"), e !== "" && e !== void 0)
     return { success: !1, response: null };
   let r = await C({
     endpoint: "enter_orchestration",
@@ -104,22 +104,26 @@ class rt {
    */
   addMessageHandler({ event: e, MessageHandler: t }) {
     var r;
-    const s = N.getInstance();
+    const s = j.getInstance();
     e in this.MessageHandler || (this.MessageHandler[e] = []), (r = this.MessageHandler[e]) == null || r.push(t), s.log(`%c Add Message Handler: ${e} `, "color: YellowGreen; font-weight: bold; border: solid;");
   }
   removeMessageHandler({ event: e, MessageHandler: t }) {
     var r, a;
-    if (N.getInstance().log(`%c Message Handler Removed: ${e} `, "color: Tomato; font-weight: bold; border: solid;"), e in this.MessageHandler) {
+    if (j.getInstance().log(`%c Message Handler Removed: ${e} `, "color: Tomato; font-weight: bold; border: solid;"), e in this.MessageHandler) {
       const o = (r = this.MessageHandler[e]) == null ? void 0 : r.findIndex((l) => l === t);
       o !== -1 && o !== void 0 && ((a = this.MessageHandler[e]) == null || a.splice(o, 1));
     }
   }
   callMessageHandler(e) {
     let t;
+    if ("All Events" in this.MessageHandler) {
+      const s = JSON.parse(e), r = this.MessageHandler["All Events"];
+      r && r.forEach((a) => a(s));
+    }
     try {
       t = JSON.parse(e);
     } catch (s) {
-      N.getInstance().error("Failed to parse JSON", s);
+      j.getInstance().error("Failed to parse JSON", s);
       return;
     }
     if (t.payload.value.event.value in this.MessageHandler) {
@@ -127,16 +131,17 @@ class rt {
       s && s.forEach((r) => r(t));
     }
   }
+  // custom internal event handlers for connect and disconnect, we get those internally not from bridge
   connectEvent() {
     const e = this.MessageHandler["Bridge Connected"];
     e && e.forEach((t) => t(void 0));
   }
   disconnectEvent() {
     const e = this.MessageHandler["Bridge Disconnected"];
-    e && e.forEach((t) => t(void 0));
+    e && e.forEach((t) => t(void 0)), this.MessageHandler = {};
   }
   async connectToBridgeEventSource(e) {
-    const t = N.getInstance();
+    const t = j.getInstance();
     if (t.log("%c Connect to Bridge Events Source ", "color: chartreuse; font-weight: bold; border: solid"), !st())
       return { success: !1 };
     if (!nt())
@@ -145,7 +150,7 @@ class rt {
     return this.ws = new WebSocket("ws://localhost:9724/event_source"), new Promise((r) => {
       this.ws !== void 0 && (this.ws.onopen = () => {
         var l;
-        N.getInstance().log("%c Connected to Websocket ", "color: chartreuse; font-weight: bold; border: solid");
+        j.getInstance().log("%c Connected to Websocket ", "color: chartreuse; font-weight: bold; border: solid");
         const o = {
           subscribe_orchestration_events: e
         };
@@ -153,7 +158,7 @@ class rt {
       }, this.ws.onmessage = function(a) {
         s.callMessageHandler(a.data);
       }, this.ws.onclose = function() {
-        const a = N.getInstance();
+        const a = j.getInstance();
         a.manualDisconnect || a.disconnect(), a.log(`%c Disconnected from Websocket, Manual Disconnect: ${a.manualDisconnect} `, "color: red; font-weight: bold; border: solid");
       }, this.ws.onerror = function(a) {
         t.warn("Unable to connect to WebSocket, is Bridge Running?", a), r({ success: !1 });
@@ -366,14 +371,14 @@ var k;
   }
   n.joinValues = s, n.jsonStringifyReplacer = (r, a) => typeof a == "bigint" ? a.toString() : a;
 })(k || (k = {}));
-var Ie;
+var Ee;
 (function(n) {
   n.mergeShapes = (e, t) => ({
     ...e,
     ...t
     // second overwrites first
   });
-})(Ie || (Ie = {}));
+})(Ee || (Ee = {}));
 const h = k.arrayToEnum([
   "string",
   "nan",
@@ -395,7 +400,7 @@ const h = k.arrayToEnum([
   "never",
   "map",
   "set"
-]), H = (n) => {
+]), U = (n) => {
   switch (typeof n) {
     case "undefined":
       return h.undefined;
@@ -624,7 +629,7 @@ class S {
 }
 const g = Object.freeze({
   status: "aborted"
-}), Le = (n) => ({ status: "dirty", value: n }), j = (n) => ({ status: "valid", value: n }), Se = (n) => n.status === "aborted", Ee = (n) => n.status === "dirty", ve = (n) => n.status === "valid", _e = (n) => typeof Promise < "u" && n instanceof Promise;
+}), Le = (n) => ({ status: "dirty", value: n }), N = (n) => ({ status: "valid", value: n }), Ie = (n) => n.status === "aborted", Se = (n) => n.status === "dirty", ve = (n) => n.status === "valid", _e = (n) => typeof Promise < "u" && n instanceof Promise;
 var m;
 (function(n) {
   n.errToObj = (e) => typeof e == "string" ? { message: e } : e || {}, n.toString = (e) => typeof e == "string" ? e : e == null ? void 0 : e.message;
@@ -668,13 +673,13 @@ class b {
     return this._def.description;
   }
   _getType(e) {
-    return H(e.data);
+    return U(e.data);
   }
   _getOrReturnCtx(e, t) {
     return t || {
       common: e.parent.common,
       data: e.data,
-      parsedType: H(e.data),
+      parsedType: U(e.data),
       schemaErrorMap: this._def.errorMap,
       path: e.path,
       parent: e.parent
@@ -686,7 +691,7 @@ class b {
       ctx: {
         common: e.parent.common,
         data: e.data,
-        parsedType: H(e.data),
+        parsedType: U(e.data),
         schemaErrorMap: this._def.errorMap,
         path: e.path,
         parent: e.parent
@@ -721,7 +726,7 @@ class b {
       schemaErrorMap: this._def.errorMap,
       parent: null,
       data: e,
-      parsedType: H(e)
+      parsedType: U(e)
     }, a = this._parseSync({ data: e, path: r.path, parent: r });
     return Be(r, a);
   }
@@ -742,7 +747,7 @@ class b {
       schemaErrorMap: this._def.errorMap,
       parent: null,
       data: e,
-      parsedType: H(e)
+      parsedType: U(e)
     }, r = this._parse({ data: e, path: s.path, parent: s }), a = await (_e(r) ? r : Promise.resolve(r));
     return Be(s, a);
   }
@@ -808,7 +813,7 @@ class b {
     });
   }
   brand() {
-    return new Ue({
+    return new He({
       typeName: y.ZodBranded,
       type: this,
       ...v(this._def)
@@ -1443,7 +1448,7 @@ class re extends b {
         received: s.parsedType
       }), g;
     }
-    return j(e.data);
+    return N(e.data);
   }
 }
 re.create = (n) => new re({
@@ -1539,7 +1544,7 @@ class be extends b {
         received: s.parsedType
       }), g;
     }
-    return j(e.data);
+    return N(e.data);
   }
 }
 be.create = (n) => new be({
@@ -1556,7 +1561,7 @@ class ae extends b {
         received: s.parsedType
       }), g;
     }
-    return j(e.data);
+    return N(e.data);
   }
 }
 ae.create = (n) => new ae({
@@ -1573,7 +1578,7 @@ class ie extends b {
         received: s.parsedType
       }), g;
     }
-    return j(e.data);
+    return N(e.data);
   }
 }
 ie.create = (n) => new ie({
@@ -1585,7 +1590,7 @@ class te extends b {
     super(...arguments), this._any = !0;
   }
   _parse(e) {
-    return j(e.data);
+    return N(e.data);
   }
 }
 te.create = (n) => new te({
@@ -1597,7 +1602,7 @@ class J extends b {
     super(...arguments), this._unknown = !0;
   }
   _parse(e) {
-    return j(e.data);
+    return N(e.data);
   }
 }
 J.create = (n) => new J({
@@ -1628,7 +1633,7 @@ class xe extends b {
         received: s.parsedType
       }), g;
     }
-    return j(e.data);
+    return N(e.data);
   }
 }
 xe.create = (n) => new xe({
@@ -2149,14 +2154,14 @@ class Ce extends b {
     });
   }
 }
-function je(n, e) {
-  const t = H(n), s = H(e);
+function Ne(n, e) {
+  const t = U(n), s = U(e);
   if (n === e)
     return { valid: !0, data: n };
   if (t === h.object && s === h.object) {
     const r = k.objectKeys(e), a = k.objectKeys(n).filter((l) => r.indexOf(l) !== -1), o = { ...n, ...e };
     for (const l of a) {
-      const u = je(n[l], e[l]);
+      const u = Ne(n[l], e[l]);
       if (!u.valid)
         return { valid: !1 };
       o[l] = u.data;
@@ -2167,7 +2172,7 @@ function je(n, e) {
       return { valid: !1 };
     const r = [];
     for (let a = 0; a < n.length; a++) {
-      const o = n[a], l = e[a], u = je(o, l);
+      const o = n[a], l = e[a], u = Ne(o, l);
       if (!u.valid)
         return { valid: !1 };
       r.push(u.data);
@@ -2179,10 +2184,10 @@ function je(n, e) {
 class le extends b {
   _parse(e) {
     const { status: t, ctx: s } = this._processInputParams(e), r = (a, o) => {
-      if (Se(a) || Se(o))
+      if (Ie(a) || Ie(o))
         return g;
-      const l = je(a.value, o.value);
-      return l.valid ? ((Ee(a) || Ee(o)) && t.dirty(), { status: t.value, value: l.data }) : (p(s, {
+      const l = Ne(a.value, o.value);
+      return l.valid ? ((Se(a) || Se(o)) && t.dirty(), { status: t.value, value: l.data }) : (p(s, {
         code: c.invalid_intersection_types
       }), g);
     };
@@ -2455,14 +2460,14 @@ class ee extends b {
       });
     }
     const a = { errorMap: t.common.contextualErrorMap }, o = t.data;
-    return this._def.returns instanceof se ? j(async (...l) => {
+    return this._def.returns instanceof se ? N(async (...l) => {
       const u = new Z([]), d = await this._def.args.parseAsync(l, a).catch((Pe) => {
         throw u.addIssue(s(l, Pe)), u;
       }), _ = await o(...d);
       return await this._def.returns._def.type.parseAsync(_, a).catch((Pe) => {
         throw u.addIssue(r(_, Pe)), u;
       });
-    }) : j((...l) => {
+    }) : N((...l) => {
       const u = this._def.args.safeParse(l, a);
       if (!u.success)
         throw new Z([s(l, u.error)]);
@@ -2565,7 +2570,7 @@ class G extends b {
         options: s
       }), g;
     }
-    return j(e.data);
+    return N(e.data);
   }
   get options() {
     return this._def.values;
@@ -2615,7 +2620,7 @@ class he extends b {
         options: r
       }), g;
     }
-    return j(e.data);
+    return N(e.data);
   }
   get enum() {
     return this._def.values;
@@ -2639,7 +2644,7 @@ class se extends b {
         received: t.parsedType
       }), g;
     const s = t.parsedType === h.promise ? t.data : Promise.resolve(t.data);
-    return j(s.then((r) => this._def.type.parseAsync(r, {
+    return N(s.then((r) => this._def.type.parseAsync(r, {
       path: t.path,
       errorMap: t.common.contextualErrorMap
     })));
@@ -2730,7 +2735,7 @@ R.createWithPreprocess = (n, e, t) => new R({
 });
 class L extends b {
   _parse(e) {
-    return this._getType(e) === h.undefined ? j(void 0) : this._def.innerType._parse(e);
+    return this._getType(e) === h.undefined ? N(void 0) : this._def.innerType._parse(e);
   }
   unwrap() {
     return this._def.innerType;
@@ -2743,7 +2748,7 @@ L.create = (n, e) => new L({
 });
 class X extends b {
   _parse(e) {
-    return this._getType(e) === h.null ? j(null) : this._def.innerType._parse(e);
+    return this._getType(e) === h.null ? N(null) : this._def.innerType._parse(e);
   }
   unwrap() {
     return this._def.innerType;
@@ -2835,7 +2840,7 @@ Te.create = (n) => new Te({
   ...v(n)
 });
 const _t = Symbol("zod_brand");
-class Ue extends b {
+class He extends b {
   _parse(e) {
     const { ctx: t } = this._processInputParams(e), s = t.data;
     return this._def.type._parse({
@@ -2888,7 +2893,7 @@ class fe extends b {
     });
   }
 }
-const He = (n, e = {}, t) => n ? te.create().superRefine((s, r) => {
+const Ue = (n, e = {}, t) => n ? te.create().superRefine((s, r) => {
   var a, o;
   if (!n(s)) {
     const l = typeof e == "function" ? e(s) : typeof e == "string" ? { message: e } : e, u = (o = (a = l.fatal) !== null && a !== void 0 ? a : t) !== null && o !== void 0 ? o : !0, d = typeof l == "string" ? { message: l } : l;
@@ -2903,7 +2908,7 @@ var y;
 })(y || (y = {}));
 const xt = (n, e = {
   message: `Input not instance of ${n.name}`
-}) => He((t) => t instanceof n, e), Ne = O.create, ze = z.create, wt = Te.create, kt = W.create, We = re.create, Tt = Y.create, Ct = be.create, Pt = ae.create, It = ie.create, St = te.create, Et = J.create, jt = $.create, Nt = xe.create, Ot = M.create, Ge = P.create, Zt = P.strictCreate, Je = oe.create, Mt = Ce.create, Rt = le.create, At = V.create, Bt = ce.create, Vt = we.create, Dt = Q.create, qt = ee.create, Lt = ue.create, A = de.create, $t = G.create, Ut = he.create, Ht = se.create, Ve = R.create, zt = L.create, Wt = X.create, Gt = R.createWithPreprocess, Jt = fe.create, Yt = () => Ne().optional(), Qt = () => ze().optional(), Xt = () => We().optional(), Kt = {
+}) => Ue((t) => t instanceof n, e), je = O.create, ze = z.create, wt = Te.create, kt = W.create, We = re.create, Tt = Y.create, Ct = be.create, Pt = ae.create, Et = ie.create, It = te.create, St = J.create, Nt = $.create, jt = xe.create, Ot = M.create, Ge = P.create, Zt = P.strictCreate, Je = oe.create, Mt = Ce.create, Rt = le.create, At = V.create, Bt = ce.create, Vt = we.create, Dt = Q.create, qt = ee.create, Lt = ue.create, A = de.create, $t = G.create, Ht = he.create, Ut = se.create, Ve = R.create, zt = L.create, Wt = X.create, Gt = R.createWithPreprocess, Jt = fe.create, Yt = () => je().optional(), Qt = () => ze().optional(), Xt = () => We().optional(), Kt = {
   string: (n) => O.create({ ...n, coerce: !0 }),
   number: (n) => z.create({ ...n, coerce: !0 }),
   boolean: (n) => re.create({
@@ -2924,19 +2929,19 @@ var i = /* @__PURE__ */ Object.freeze({
   ParseStatus: S,
   INVALID: g,
   DIRTY: Le,
-  OK: j,
-  isAborted: Se,
-  isDirty: Ee,
+  OK: N,
+  isAborted: Ie,
+  isDirty: Se,
   isValid: ve,
   isAsync: _e,
   get util() {
     return k;
   },
   get objectUtil() {
-    return Ie;
+    return Ee;
   },
   ZodParsedType: h,
-  getParsedType: H,
+  getParsedType: U,
   ZodType: b,
   ZodString: O,
   ZodNumber: z,
@@ -2973,9 +2978,9 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodCatch: ke,
   ZodNaN: Te,
   BRAND: _t,
-  ZodBranded: Ue,
+  ZodBranded: He,
   ZodPipeline: fe,
-  custom: He,
+  custom: Ue,
   Schema: b,
   ZodSchema: b,
   late: bt,
@@ -2983,7 +2988,7 @@ var i = /* @__PURE__ */ Object.freeze({
     return y;
   },
   coerce: Kt,
-  any: St,
+  any: It,
   array: Ot,
   bigint: kt,
   boolean: We,
@@ -2998,9 +3003,9 @@ var i = /* @__PURE__ */ Object.freeze({
   literal: A,
   map: Vt,
   nan: wt,
-  nativeEnum: Ut,
-  never: jt,
-  null: It,
+  nativeEnum: Ht,
+  never: Nt,
+  null: Et,
   nullable: Wt,
   number: ze,
   object: Ge,
@@ -3010,18 +3015,18 @@ var i = /* @__PURE__ */ Object.freeze({
   ostring: Yt,
   pipeline: Jt,
   preprocess: Gt,
-  promise: Ht,
+  promise: Ut,
   record: Bt,
   set: Dt,
   strictObject: Zt,
-  string: Ne,
+  string: je,
   symbol: Ct,
   transformer: Ve,
   tuple: At,
   undefined: Pt,
   union: Je,
-  unknown: Et,
-  void: Nt,
+  unknown: St,
+  void: jt,
   NEVER: Ft,
   ZodIssueCode: c,
   quotelessJson: at,
@@ -3030,7 +3035,7 @@ var i = /* @__PURE__ */ Object.freeze({
 const es = A("UNSIGNED_INT");
 A("INT");
 A("FLOAT");
-const ts = A("INT2"), w = A("WSTRING"), D = A("VARIANT_MAP"), ss = A("Completion"), ns = A("UnknownOrchestration"), rs = A("Pending"), as = A("Failure"), f = Ne(), I = Ge({
+const ts = A("INT2"), w = A("WSTRING"), D = A("VARIANT_MAP"), ss = A("Completion"), ns = A("UnknownOrchestration"), rs = A("Pending"), as = A("Failure"), f = je(), E = Ge({
   name: f,
   type: w,
   value: Je([ss, rs, as, ns])
@@ -3043,7 +3048,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3052,7 +3057,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3077,7 +3082,7 @@ i.object({
       })
     })
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3097,7 +3102,7 @@ i.object({
       })
     })
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3117,7 +3122,7 @@ i.object({
       })
     })
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3137,7 +3142,7 @@ i.object({
       })
     })
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3146,7 +3151,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 const is = i.object({
   name: f,
@@ -3203,7 +3208,7 @@ const is = i.object({
     type: D,
     value: i.record(is).optional()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3223,7 +3228,7 @@ i.object({
       })
     })
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3232,7 +3237,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3241,7 +3246,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3266,7 +3271,7 @@ i.object({
       })
     })
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3286,7 +3291,7 @@ i.object({
       })
     })
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3306,7 +3311,7 @@ i.object({
       })
     })
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3315,7 +3320,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3324,7 +3329,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3333,7 +3338,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3342,7 +3347,7 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
 i.object({
   name: f,
@@ -3351,16 +3356,16 @@ i.object({
     type: w,
     value: i.string()
   }),
-  status: I
+  status: E
 });
-class E {
+class I {
   constructor(e) {
     x(this, "bridgeEventName");
     x(this, "client");
     this.bridgeEventName = e.bridgeEventName, this.client = e.client, this.client.addEventListener(this.bridgeEventName, this.handle.bind(this));
   }
 }
-class ks extends E {
+class Ts extends I {
   constructor(e) {
     super({ bridgeEventName: "Monitor Connect", client: e.client });
   }
@@ -3368,7 +3373,7 @@ class ks extends E {
     this.client.log("%c Monitor Connect ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Ts extends E {
+class Cs extends I {
   constructor(e) {
     super({ bridgeEventName: "Monitor Disconnect", client: e.client });
   }
@@ -3376,7 +3381,7 @@ class Ts extends E {
     this.client.log("%c Monitor Disconnect ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Cs extends E {
+class Ps extends I {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Pause", client: e.client });
   }
@@ -3384,7 +3389,7 @@ class Cs extends E {
     this.client.log("%c Transport Control Pause ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Ps extends E {
+class Es extends I {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Play", client: e.client });
   }
@@ -3392,7 +3397,7 @@ class Ps extends E {
     this.client.log("%c Transport Control Play ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Is extends E {
+class Is extends I {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Next", client: e.client });
   }
@@ -3400,7 +3405,7 @@ class Is extends E {
     this.client.log("%c Transport Control Next ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Ss extends E {
+class Ss extends I {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Previous", client: e.client });
   }
@@ -3408,7 +3413,7 @@ class Ss extends E {
     this.client.log("%c Transport Control Previous ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Es extends E {
+class Ns extends I {
   constructor(e) {
     super({ bridgeEventName: "Progress Start", client: e.client });
   }
@@ -3416,7 +3421,7 @@ class Es extends E {
     this.client.log("%c Progress Start ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class js extends E {
+class js extends I {
   constructor(e) {
     super({ bridgeEventName: "Progress Completion", client: e.client });
   }
@@ -3424,7 +3429,7 @@ class js extends E {
     this.client.log(e);
   }
 }
-class Ns extends E {
+class Os extends I {
   constructor(e) {
     super({ bridgeEventName: "Progress Update", client: e.client });
   }
@@ -3432,7 +3437,7 @@ class Ns extends E {
     this.client.log("%c Progress Update ", "color: aqua; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
   }
 }
-class Os extends E {
+class Zs extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Instance", client: e.client });
   }
@@ -3440,7 +3445,7 @@ class Os extends E {
     this.client.log("%c Playlist Instance ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Zs extends E {
+class Ms extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Insert", client: e.client });
   }
@@ -3448,7 +3453,7 @@ class Zs extends E {
     this.client.log("%c Playlist Insert ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Ms extends E {
+class Rs extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Delete", client: e.client });
   }
@@ -3456,7 +3461,7 @@ class Ms extends E {
     this.client.log("%c Playlist Delete ", "color: aqua; font-weight: bold; border: solid;", e);
   }
 }
-class Rs extends E {
+class As extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist", client: e.client });
   }
@@ -3464,7 +3469,7 @@ class Rs extends E {
     this.client.log(e);
   }
 }
-class As extends E {
+class Bs extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist Complete", client: e.client });
   }
@@ -3472,7 +3477,7 @@ class As extends E {
     this.client.log(e);
   }
 }
-class Bs extends E {
+class Vs extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist Cancelled", client: e.client });
   }
@@ -3480,7 +3485,7 @@ class Bs extends E {
     this.client.log(e);
   }
 }
-class ls extends E {
+class ls extends I {
   constructor(e) {
     super({ bridgeEventName: "New Item Playing", client: e.client });
   }
@@ -3491,7 +3496,15 @@ class ls extends E {
     e.payload.value.playlist_name.value == s && e.payload.value.index.value == r && (this.client.isCastPending = !1);
   }
 }
-function U(n) {
+class cs extends I {
+  constructor(e) {
+    super({ bridgeEventName: "All Events", client: e.client });
+  }
+  handle(e) {
+    e.payload.value.event.value !== "Progress Update" && this.client.log(`%c ${e.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", e);
+  }
+}
+function H(n) {
   const [e, t, s, r] = n.split(".").map(Number);
   return {
     major: e,
@@ -3569,11 +3582,11 @@ const T = class {
     if (this.isConnected = !0, (await this.createOrchestration("")).success == !1) {
       let s = await this.getVersion();
       if (s.success == !1)
-        return { success: !1, response: { version: U("0"), orchestration: "" } };
+        return { success: !1, response: { version: H("0"), orchestration: "" } };
       if (s.response.major < 2 && s.response.minor < 1)
         return { success: !1, response: { version: s.response, orchestration: "" } };
     }
-    return await this.subscribeToEvents(), T.eventsource.connectEvent(), new ls({ client: this }), { success: !0, response: { version: this.version, orchestration: this.orchestration } };
+    return await this.subscribeToEvents(), T.eventsource.connectEvent(), new ls({ client: this }), new cs({ client: this }), { success: !0, response: { version: this.version, orchestration: this.orchestration } };
   }
   /**
    * Creates an orchestration called "default" if one does not already exist.
@@ -3628,11 +3641,11 @@ const T = class {
     this.log("%c function call: getVersion ", "color: magenta; font-weight: bold; border: solid");
     let e = await C({ endpoint: "bridge_version", requestBody: {} });
     if (e.success == !0) {
-      let s = U(e.response.payload.value);
+      let s = H(e.response.payload.value);
       return this.version = s, { success: !0, response: this.version };
     } else {
       let s = await ((t = T.fallback) == null ? void 0 : t.getLegacyVersion());
-      return s == null ? { success: !1, response: U("0") } : { success: !0, response: U(s) };
+      return s == null ? { success: !1, response: H("0") } : { success: !0, response: H(s) };
     }
   }
   /**
@@ -3641,11 +3654,11 @@ const T = class {
    */
   async apiVersion() {
     if (this.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
-      return { success: !1, response: U("0") };
+      return { success: !1, response: H("0") };
     if (await this.isVersionCompatible() == !1)
-      return { success: !1, response: U("0") };
+      return { success: !1, response: H("0") };
     let e = await C({ endpoint: "api_version", requestBody: {} });
-    return e.success == !1 ? (console.warn("this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge."), { success: !1, response: U("0") }) : { success: !0, response: U(e.response.payload.value) };
+    return e.success == !1 ? (console.warn("this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge."), { success: !1, response: H("0") }) : { success: !0, response: H(e.response.payload.value) };
   }
   /**
    * QueryDisplays finds all displays that are connected to the computer,
@@ -3947,14 +3960,14 @@ const T = class {
     return this.version.major == 0 ? this.isConnected = !1 : this.version.major < 2 && this.version.minor < 1 ? (this.warn("Please update to the latest version for the best experience"), this.isConnected = !1) : this.version.major >= 2 && this.version.minor >= 2 && (this.isConnected = !0), this.isConnected;
   }
 };
-let N = T;
+let j = T;
 /** the instance of the client that we create, BridgeClient is a singleton, there can only be one */
-x(N, "instance"), x(N, "fallback"), /** The websocket connection to Bridge's Event Source, this returns information from Bridge */
-x(N, "eventsource"), /**control how often we log to the console, 3 is everything, 0 is nothing */
-x(N, "verbosity");
+x(j, "instance"), x(j, "fallback"), /** The websocket connection to Bridge's Event Source, this returns information from Bridge */
+x(j, "eventsource"), /**control how often we log to the console, 3 is everything, 0 is nothing */
+x(j, "verbosity");
 const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   message: `The value should be between ${n} and ${e}`
-}), cs = {
+}), us = {
   min: 0.1,
   max: 10,
   range: q(0.1, 10),
@@ -3964,17 +3977,17 @@ const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   max: 4,
   range: q(0.1, 4),
   type: "float"
-}, us = {
+}, ds = {
   min: 0,
   max: 1,
   range: q(0, 1),
   type: "float"
-}, ds = {
+}, hs = {
   min: -1,
   max: 1,
   range: q(-1, 1),
   type: "float"
-}, hs = {
+}, ps = {
   min: -1,
   max: 1,
   range: q(-1, 1),
@@ -3984,16 +3997,11 @@ const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   max: 2,
   range: q(0.1, 2),
   type: "float"
-}, ps = {
+}, fs = {
   min: -0.05,
   max: 0.05,
   range: q(-0.05, 0.05),
   type: "float"
-}, fs = {
-  min: 1,
-  max: 50,
-  range: q(1, 50),
-  type: "int"
 }, ms = {
   min: 1,
   max: 50,
@@ -4001,28 +4009,33 @@ const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   type: "int"
 }, ys = {
   min: 1,
+  max: 50,
+  range: q(1, 50),
+  type: "int"
+}, gs = {
+  min: 1,
   max: 2500,
   range: q(1, 2500),
   type: "int"
-}, Vs = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}, Ds = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  ASPECT: cs,
-  CROP_POS_X: ds,
-  CROP_POS_Y: hs,
+  ASPECT: us,
+  CROP_POS_X: hs,
+  CROP_POS_Y: ps,
   DEPTHINESS: Oe,
-  DEPTH_CUTOFF: us,
-  FOCUS: ps,
-  QUILT_COLS: ms,
-  QUILT_ROWS: fs,
-  QUILT_VIEW_COUNT: ys,
+  DEPTH_CUTOFF: ds,
+  FOCUS: fs,
+  QUILT_COLS: ys,
+  QUILT_ROWS: ms,
+  QUILT_VIEW_COUNT: gs,
   ZOOM: Ze
-}, Symbol.toStringTag, { value: "Module" })), Ds = i.union([i.literal("quilt"), i.literal("rgbd")]), gs = i.object({
+}, Symbol.toStringTag, { value: "Module" })), qs = i.union([i.literal("quilt"), i.literal("rgbd")]), vs = i.object({
   rows: i.number(),
   columns: i.number(),
   aspect: i.number(),
   viewCount: i.number(),
   focus: i.number().optional()
-}), vs = i.object({
+}), _s = i.object({
   /**Aspect Ratio of the hologram,
    * this should match the source image you provide, not the RGBD Pair */
   aspect: i.number(),
@@ -4044,11 +4057,11 @@ const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   depth_cutoff: i.union([i.literal(1), i.literal(0)]).optional(),
   /**Zoom can be between 0.1 and 2 */
   zoom: Ze.range
-}), _s = {
-  quilt: gs,
-  rgbd: vs
+}), bs = {
+  quilt: vs,
+  rgbd: _s
 };
-class bs {
+class xs {
   constructor(e) {
     x(this, "uri");
     x(this, "type");
@@ -4056,7 +4069,7 @@ class bs {
     this.uri = e.uri, this.type = "quilt", this.settings = e.settings;
   }
 }
-class xs {
+class ws {
   constructor(e) {
     x(this, "uri");
     x(this, "type");
@@ -4064,17 +4077,17 @@ class xs {
     this.uri = e.uri, this.type = "rgbd", this.settings = e.settings;
   }
 }
-function qs({ uri: n, type: e, settings: t }) {
-  switch (_s[e].safeParse(t), e) {
+function Ls({ uri: n, type: e, settings: t }) {
+  switch (bs[e].safeParse(t), e) {
     case "quilt":
-      return new bs({ uri: n, settings: t });
-    case "rgbd":
       return new xs({ uri: n, settings: t });
+    case "rgbd":
+      return new ws({ uri: n, settings: t });
     default:
       throw new Error(`Invalid type: ${e}`);
   }
 }
-const Ls = i.union([
+const $s = i.union([
   i.literal("focus"),
   i.literal("crop_pos_x"),
   i.literal("crop_pos_y"),
@@ -4085,7 +4098,7 @@ const Ls = i.union([
   i.literal("chroma_depth"),
   i.literal("depthiness"),
   i.literal("depth_cutoff")
-]), $s = i.object({
+]), Hs = i.object({
   focus: i.number().optional(),
   crop_pos_x: i.number().optional(),
   crop_pos_y: i.number().optional(),
@@ -4098,36 +4111,37 @@ const Ls = i.union([
   depth_cutoff: i.union([i.literal(1), i.literal(0)]).optional()
 });
 export {
-  N as BridgeClient,
-  E as MessageHandler,
-  ks as MonitorConnectedMessageHandler,
-  Ts as MonitorDisconnectedMessageHandler,
+  cs as AllEventsMessageHandler,
+  j as BridgeClient,
+  I as MessageHandler,
+  Ts as MonitorConnectedMessageHandler,
+  Cs as MonitorDisconnectedMessageHandler,
   ls as NewItemPlayingMessageHandler,
   Ae as Playlist,
-  Ms as PlaylistDeleteMessageHandler,
-  Zs as PlaylistInsertMessageHandler,
-  Os as PlaylistInstanceMessageHandler,
+  Rs as PlaylistDeleteMessageHandler,
+  Ms as PlaylistInsertMessageHandler,
+  Zs as PlaylistInstanceMessageHandler,
   js as ProgressCompletionMessageHandler,
-  Es as ProgressStartMessageHandler,
-  Ns as ProgressUpdateMessageHandler,
-  bs as QuiltHologram,
-  gs as QuiltHologramArgs,
+  Ns as ProgressStartMessageHandler,
+  Os as ProgressUpdateMessageHandler,
+  xs as QuiltHologram,
+  vs as QuiltHologramArgs,
   Me as QuiltPlaylistItem,
-  xs as RGBDHologram,
-  vs as RGBDHologramArgs,
+  ws as RGBDHologram,
+  _s as RGBDHologramArgs,
   Re as RGBDPlaylistItem,
-  Bs as SyncPlayPlaylistCancelledMessageHandler,
-  As as SyncPlayPlaylistCompleteMessageHandler,
-  Rs as SyncPlayPlaylistMessageHandler,
+  Vs as SyncPlayPlaylistCancelledMessageHandler,
+  Bs as SyncPlayPlaylistCompleteMessageHandler,
+  As as SyncPlayPlaylistMessageHandler,
   Is as TransportControlNextMessageHandler,
-  Cs as TransportControlPauseMessageHandler,
-  Ps as TransportControlPlayMessageHandler,
+  Ps as TransportControlPauseMessageHandler,
+  Es as TransportControlPlayMessageHandler,
   Ss as TransportControlPreviousMessageHandler,
-  Vs as defaults,
-  qs as hologramFactory,
-  _s as hologramMap,
-  $s as hologramParamMap,
-  Ds as hologramTypeSchema,
-  Ls as parameterNames
+  Ds as defaults,
+  Ls as hologramFactory,
+  bs as hologramMap,
+  Hs as hologramParamMap,
+  qs as hologramTypeSchema,
+  $s as parameterNames
 };
 //# sourceMappingURL=looking-glass-bridge.mjs.map
