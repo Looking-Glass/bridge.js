@@ -193,3 +193,16 @@ export class NewItemPlayingMessageHandler extends MessageHandler<"New Item Playi
 		}
 	}
 }
+
+export class AllEventsMessageHandler extends MessageHandler<keyof BridgeEventMap> {
+	constructor(args: { client: BridgeClient }) {
+		super({ bridgeEventName: "All Events", client: args.client })
+	}
+
+	handle(message: BridgeEventMap["All Events"]): void {
+		
+		if (message.payload.value.event.value ==="Progress Update") return
+
+		this.client.log(`%c ${message.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", message)
+	}
+}

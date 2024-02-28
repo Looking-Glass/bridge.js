@@ -73,7 +73,7 @@ function App() {
 	const onConnected = async () => {
 		setConnected(true)
 		setConnectionStatus("✅ Connected")
-		Bridge.setVerbosity(0)
+		Bridge.setVerbosity(3)
 		// add an event listener to handle a disconnect event from Bridge.
 		await Bridge.addEventListener("Bridge Disconnected", handleEventDisconnected)
 		// react-ify the bridge state for cast pending
@@ -110,9 +110,6 @@ function App() {
 		setConnectionStatus("⚠️ Bridge Disconnected!")
 		setEventStatus("Subscribe to Events")
 		setDisplays("Connect to Bridge to detect displays")
-		await Bridge.removeEventListener("Bridge Disconnected", handleEventDisconnected)
-		await Bridge.removeEventListener("New Item Playing", handleNewItemPlaying)
-		await Bridge.removeEventListener("Progress Update", handleProgressUpdate)
 	}
 
 	useEffect(() => {
@@ -218,10 +215,10 @@ function App() {
 										onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
 											Bridge.setVerbosity(parseInt(e.target.value) as 0 | 1 | 2 | 3)
 										}}>
-										<option value="0">No Logging</option>
-										<option value="1">Only Warnings</option>
-										<option value="2">Only Responses</option>
-										<option value="3">All</option>
+											<option value="3">All</option>
+											<option value="2">Only Responses</option>
+											<option value="1">Only Warnings</option>
+											<option value="0">No Logging</option>
 									</select>
 								</div>
 							</div>
