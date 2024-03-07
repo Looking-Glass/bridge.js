@@ -6,6 +6,7 @@ export interface PlaylistItemArgs {
 	orchestration: string
 	name: string
 	index: number
+	tag: string | undefined
 	id: string
 	uri: string
 	rows: number
@@ -29,6 +30,7 @@ class PlaylistItem {
 	public id: number
 	public index: number
 	public playlistName: string
+	public tag: string | undefined
 
 	constructor(args: {
 		hologram: HologramType
@@ -60,6 +62,7 @@ class PlaylistItem {
 				aspect: settings.aspect,
 				view_count: settings.viewCount,
 				isRGBD: 0,
+				tag: settings.tag ? settings.tag : "",
 			}
 			return playlistItem
 		} else if (this.hologram.type == "rgbd") {
@@ -81,6 +84,7 @@ class PlaylistItem {
 				chroma_depth: settings.chroma_depth,
 				depthiness: settings.depthiness,
 				zoom: settings.zoom,
+				tag: settings.tag ? settings.tag : "",
 			}
 			return playlistItem
 		}
