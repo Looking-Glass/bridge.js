@@ -150,7 +150,7 @@ export async function sendMessage<
 		parsedResponse = await bridgeResponse.json()
 
 		if (parsedResponse.status.value !== "Completion" && parsedResponse.status.value !== "Pending") {
-			console.warn("%c Bridge Failure:", "color: #ff0000", parsedResponse)
+			Bridge.warn("%c Bridge Failure:", "color: #ff0000", parsedResponse)
 
 			console.groupEnd()
 			// the call worked, but the response failed.
