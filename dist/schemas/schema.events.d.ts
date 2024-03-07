@@ -1803,6 +1803,19 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 name: string;
                 type: "WSTRING";
             }>;
+            tag: z.ZodObject<{
+                name: z.ZodString;
+                type: z.ZodLiteral<"WSTRING">;
+                value: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }, {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            }>;
         }, "strip", z.ZodTypeAny, {
             index: {
                 value: number;
@@ -1819,6 +1832,11 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 name: string;
                 type: "WSTRING";
             };
+            tag: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
         }, {
             index: {
                 value: number;
@@ -1832,6 +1850,11 @@ export declare const newItemPlayingResponse: z.ZodObject<{
             };
             event: {
                 value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                name: string;
+                type: "WSTRING";
+            };
+            tag: {
+                value: string;
                 name: string;
                 type: "WSTRING";
             };
@@ -1853,6 +1876,11 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 name: string;
                 type: "WSTRING";
             };
+            tag: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
         };
         name: string;
         type: "VARIANT_MAP";
@@ -1870,6 +1898,11 @@ export declare const newItemPlayingResponse: z.ZodObject<{
             };
             event: {
                 value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                name: string;
+                type: "WSTRING";
+            };
+            tag: {
+                value: string;
                 name: string;
                 type: "WSTRING";
             };
@@ -1913,6 +1946,11 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 name: string;
                 type: "WSTRING";
             };
+            tag: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
         };
         name: string;
         type: "VARIANT_MAP";
@@ -1946,6 +1984,11 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 name: string;
                 type: "WSTRING";
             };
+            tag: {
+                value: string;
+                name: string;
+                type: "WSTRING";
+            };
         };
         name: string;
         type: "VARIANT_MAP";
@@ -1957,7 +2000,7 @@ export declare const newItemPlayingResponse: z.ZodObject<{
         type: "WSTRING";
     };
 }>;
-export declare const AllEventsResponse: z.ZodObject<{
+export declare const allEventsResponse: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
         name: z.ZodString;
@@ -2143,7 +2186,7 @@ export type BridgeEventMap = {
     "Transport Control Next": z.infer<typeof transportControlResponse>;
     "Transport Control Previous": z.infer<typeof transportControlResponse>;
     "New Item Playing": z.infer<typeof newItemPlayingResponse>;
-    "All Events": z.infer<typeof AllEventsResponse>;
+    "All Events": z.infer<typeof allEventsResponse>;
     /**CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE */
     "Bridge Connected": z.infer<typeof progressUpdateResponse>;
     "Bridge Disconnected": z.infer<typeof progressUpdateResponse>;
