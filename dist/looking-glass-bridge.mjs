@@ -173,6 +173,7 @@ class De {
     x(this, "id");
     x(this, "index");
     x(this, "playlistName");
+    x(this, "tag");
     this.hologram = e.hologram, this.id = e.id, this.index = e.index, this.playlistName = e.playlistName, this.orchestration = e.orchestration;
   }
   toBridge() {
@@ -190,7 +191,8 @@ class De {
         focus: t.focus ? t.focus : 0,
         aspect: t.aspect,
         view_count: t.viewCount,
-        isRGBD: 0
+        isRGBD: 0,
+        tag: t.tag ? t.tag : ""
       }, e;
     } else if (this.hologram.type == "rgbd") {
       const t = this.hologram.settings;
@@ -210,7 +212,8 @@ class De {
         depth_inversion: t.depth_inversion,
         chroma_depth: t.chroma_depth,
         depthiness: t.depthiness,
-        zoom: t.zoom
+        zoom: t.zoom,
+        tag: t.tag ? t.tag : ""
       }, e;
     }
     throw new Error("Invalid hologram type");
@@ -4034,7 +4037,8 @@ const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   columns: i.number(),
   aspect: i.number(),
   viewCount: i.number(),
-  focus: i.number().optional()
+  focus: i.number().optional(),
+  tag: i.string().optional()
 }), _s = i.object({
   /**Aspect Ratio of the hologram,
    * this should match the source image you provide, not the RGBD Pair */
@@ -4056,7 +4060,8 @@ const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   /**Whether or not to cutoff depth beyond a certain point. 0 for false, 1 for true */
   depth_cutoff: i.union([i.literal(1), i.literal(0)]).optional(),
   /**Zoom can be between 0.1 and 2 */
-  zoom: Ze.range
+  zoom: Ze.range,
+  tag: i.string().optional()
 }), bs = {
   quilt: vs,
   rgbd: _s

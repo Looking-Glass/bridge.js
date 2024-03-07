@@ -8,18 +8,21 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     aspect: z.ZodNumber;
     viewCount: z.ZodNumber;
     focus: z.ZodOptional<z.ZodNumber>;
+    tag: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     rows: number;
     aspect: number;
     columns: number;
     viewCount: number;
     focus?: number | undefined;
+    tag?: string | undefined;
 }, {
     rows: number;
     aspect: number;
     columns: number;
     viewCount: number;
     focus?: number | undefined;
+    tag?: string | undefined;
 }>;
 export declare const RGBDHologramArgs: z.ZodObject<{
     /**Aspect Ratio of the hologram,
@@ -43,6 +46,7 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     depth_cutoff: z.ZodOptional<z.ZodUnion<[z.ZodLiteral<1>, z.ZodLiteral<0>]>>;
     /**Zoom can be between 0.1 and 2 */
     zoom: z.ZodEffects<z.ZodNumber, number, number>;
+    tag: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     zoom: number;
     depth_loc: 0 | 2 | 1 | 3;
@@ -52,6 +56,7 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     aspect: number;
     focus?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
+    tag?: string | undefined;
 }, {
     zoom: number;
     depth_loc: 0 | 2 | 1 | 3;
@@ -61,6 +66,7 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     aspect: number;
     focus?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
+    tag?: string | undefined;
 }>;
 export interface HologramClasses {
     quilt: QuiltHologram;
