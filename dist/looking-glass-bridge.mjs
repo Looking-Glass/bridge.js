@@ -3711,6 +3711,8 @@ const T = class {
       return { success: !1 };
     if (this.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
       return this.warn("already casting please wait"), { success: !1 };
+    if (this.displays.length == 0)
+      return this.warn("no displays found"), { success: !1 };
     this.isCastPending = !0;
     let t = "Cast_" + Math.random().toString(36).substring(7), s;
     s == null && (s = new Ae({
