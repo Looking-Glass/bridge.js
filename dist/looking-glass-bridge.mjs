@@ -554,12 +554,12 @@ const ne = (n, e) => {
   }
   return { message: t };
 };
-let qe = ne;
+let Le = ne;
 function it(n) {
-  qe = n;
+  Le = n;
 }
 function ye() {
-  return qe;
+  return Le;
 }
 const ge = (n) => {
   const { data: e, path: t, errorMaps: s, issueData: r } = n, a = [...t, ...r.path || []], o = {
@@ -632,7 +632,7 @@ class S {
 }
 const g = Object.freeze({
   status: "aborted"
-}), Le = (n) => ({ status: "dirty", value: n }), N = (n) => ({ status: "valid", value: n }), Ie = (n) => n.status === "aborted", Se = (n) => n.status === "dirty", ve = (n) => n.status === "valid", _e = (n) => typeof Promise < "u" && n instanceof Promise;
+}), $e = (n) => ({ status: "dirty", value: n }), N = (n) => ({ status: "valid", value: n }), Ie = (n) => n.status === "aborted", Se = (n) => n.status === "dirty", ve = (n) => n.status === "valid", _e = (n) => typeof Promise < "u" && n instanceof Promise;
 var m;
 (function(n) {
   n.errToObj = (e) => typeof e == "string" ? { message: e } : e || {}, n.toString = (e) => typeof e == "string" ? e : e == null ? void 0 : e.message;
@@ -778,7 +778,7 @@ class b {
     return this._refinement(e);
   }
   optional() {
-    return L.create(this, this._def);
+    return $.create(this, this._def);
   }
   nullable() {
     return X.create(this, this._def);
@@ -1612,7 +1612,7 @@ J.create = (n) => new J({
   typeName: y.ZodUnknown,
   ...v(n)
 });
-class $ extends b {
+class q extends b {
   _parse(e) {
     const t = this._getOrReturnCtx(e);
     return p(t, {
@@ -1622,7 +1622,7 @@ class $ extends b {
     }), g;
   }
 }
-$.create = (n) => new $({
+q.create = (n) => new q({
   typeName: y.ZodNever,
   ...v(n)
 });
@@ -1721,7 +1721,7 @@ function F(n) {
     const e = {};
     for (const t in n.shape) {
       const s = n.shape[t];
-      e[t] = L.create(F(s));
+      e[t] = $.create(F(s));
     }
     return new P({
       ...n._def,
@@ -1731,7 +1731,7 @@ function F(n) {
     return n instanceof M ? new M({
       ...n._def,
       type: F(n.element)
-    }) : n instanceof L ? L.create(F(n.unwrap())) : n instanceof X ? X.create(F(n.unwrap())) : n instanceof V ? V.create(n.items.map((e) => F(e))) : n;
+    }) : n instanceof $ ? $.create(F(n.unwrap())) : n instanceof X ? X.create(F(n.unwrap())) : n instanceof V ? V.create(n.items.map((e) => F(e))) : n;
 }
 class P extends b {
   constructor() {
@@ -1753,7 +1753,7 @@ class P extends b {
       }), g;
     }
     const { status: s, ctx: r } = this._processInputParams(e), { shape: a, keys: o } = this._getCached(), l = [];
-    if (!(this._def.catchall instanceof $ && this._def.unknownKeys === "strip"))
+    if (!(this._def.catchall instanceof q && this._def.unknownKeys === "strip"))
       for (const d in r.data)
         o.includes(d) || l.push(d);
     const u = [];
@@ -1765,7 +1765,7 @@ class P extends b {
         alwaysSet: d in r.data
       });
     }
-    if (this._def.catchall instanceof $) {
+    if (this._def.catchall instanceof q) {
       const d = this._def.unknownKeys;
       if (d === "passthrough")
         for (const _ of l)
@@ -1987,7 +1987,7 @@ class P extends b {
         t[s] = this.shape[s];
       else {
         let a = this.shape[s];
-        for (; a instanceof L; )
+        for (; a instanceof $; )
           a = a._def.innerType;
         t[s] = a;
       }
@@ -1997,27 +1997,27 @@ class P extends b {
     });
   }
   keyof() {
-    return $e(k.objectKeys(this.shape));
+    return qe(k.objectKeys(this.shape));
   }
 }
 P.create = (n, e) => new P({
   shape: () => n,
   unknownKeys: "strip",
-  catchall: $.create(),
+  catchall: q.create(),
   typeName: y.ZodObject,
   ...v(e)
 });
 P.strictCreate = (n, e) => new P({
   shape: () => n,
   unknownKeys: "strict",
-  catchall: $.create(),
+  catchall: q.create(),
   typeName: y.ZodObject,
   ...v(e)
 });
 P.lazycreate = (n, e) => new P({
   shape: n,
   unknownKeys: "strip",
-  catchall: $.create(),
+  catchall: q.create(),
   typeName: y.ZodObject,
   ...v(e)
 });
@@ -2548,7 +2548,7 @@ de.create = (n, e) => new de({
   typeName: y.ZodLiteral,
   ...v(e)
 });
-function $e(n, e) {
+function qe(n, e) {
   return new G({
     values: n,
     typeName: y.ZodEnum,
@@ -2603,7 +2603,7 @@ class G extends b {
     return G.create(this.options.filter((t) => !e.includes(t)));
   }
 }
-G.create = $e;
+G.create = qe;
 class he extends b {
   _parse(e) {
     const t = k.getValidEnumValues(this._def.values), s = this._getOrReturnCtx(e);
@@ -2736,7 +2736,7 @@ R.createWithPreprocess = (n, e, t) => new R({
   typeName: y.ZodEffects,
   ...v(t)
 });
-class L extends b {
+class $ extends b {
   _parse(e) {
     return this._getType(e) === h.undefined ? N(void 0) : this._def.innerType._parse(e);
   }
@@ -2744,7 +2744,7 @@ class L extends b {
     return this._def.innerType;
   }
 }
-L.create = (n, e) => new L({
+$.create = (n, e) => new $({
   innerType: n,
   typeName: y.ZodOptional,
   ...v(e)
@@ -2866,7 +2866,7 @@ class fe extends b {
           path: s.path,
           parent: s
         });
-        return a.status === "aborted" ? g : a.status === "dirty" ? (t.dirty(), Le(a.value)) : this._def.out._parseAsync({
+        return a.status === "aborted" ? g : a.status === "dirty" ? (t.dirty(), $e(a.value)) : this._def.out._parseAsync({
           data: a.value,
           path: s.path,
           parent: s
@@ -2911,7 +2911,7 @@ var y;
 })(y || (y = {}));
 const xt = (n, e = {
   message: `Input not instance of ${n.name}`
-}) => Ue((t) => t instanceof n, e), je = O.create, ze = z.create, wt = Te.create, kt = W.create, We = re.create, Tt = Y.create, Ct = be.create, Pt = ae.create, Et = ie.create, It = te.create, St = J.create, Nt = $.create, jt = xe.create, Ot = M.create, Ge = P.create, Zt = P.strictCreate, Je = oe.create, Mt = Ce.create, Rt = le.create, At = V.create, Bt = ce.create, Vt = we.create, Dt = Q.create, qt = ee.create, Lt = ue.create, A = de.create, $t = G.create, Ht = he.create, Ut = se.create, Ve = R.create, zt = L.create, Wt = X.create, Gt = R.createWithPreprocess, Jt = fe.create, Yt = () => je().optional(), Qt = () => ze().optional(), Xt = () => We().optional(), Kt = {
+}) => Ue((t) => t instanceof n, e), je = O.create, ze = z.create, wt = Te.create, kt = W.create, We = re.create, Tt = Y.create, Ct = be.create, Pt = ae.create, Et = ie.create, It = te.create, St = J.create, Nt = q.create, jt = xe.create, Ot = M.create, Ge = P.create, Zt = P.strictCreate, Je = oe.create, Mt = Ce.create, Rt = le.create, At = V.create, Bt = ce.create, Vt = we.create, Dt = Q.create, Lt = ee.create, $t = ue.create, A = de.create, qt = G.create, Ht = he.create, Ut = se.create, Ve = R.create, zt = $.create, Wt = X.create, Gt = R.createWithPreprocess, Jt = fe.create, Yt = () => je().optional(), Qt = () => ze().optional(), Xt = () => We().optional(), Kt = {
   string: (n) => O.create({ ...n, coerce: !0 }),
   number: (n) => z.create({ ...n, coerce: !0 }),
   boolean: (n) => re.create({
@@ -2931,7 +2931,7 @@ var i = /* @__PURE__ */ Object.freeze({
   addIssueToContext: p,
   ParseStatus: S,
   INVALID: g,
-  DIRTY: Le,
+  DIRTY: $e,
   OK: N,
   isAborted: Ie,
   isDirty: Se,
@@ -2956,7 +2956,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodNull: ie,
   ZodAny: te,
   ZodUnknown: J,
-  ZodNever: $,
+  ZodNever: q,
   ZodVoid: xe,
   ZodArray: M,
   ZodObject: P,
@@ -2975,7 +2975,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodPromise: se,
   ZodEffects: R,
   ZodTransformer: R,
-  ZodOptional: L,
+  ZodOptional: $,
   ZodNullable: X,
   ZodDefault: pe,
   ZodCatch: ke,
@@ -2998,11 +2998,11 @@ var i = /* @__PURE__ */ Object.freeze({
   date: Tt,
   discriminatedUnion: Mt,
   effect: Ve,
-  enum: $t,
-  function: qt,
+  enum: qt,
+  function: Lt,
   instanceof: xt,
   intersection: Rt,
-  lazy: Lt,
+  lazy: $t,
   literal: A,
   map: Vt,
   nan: wt,
@@ -3373,7 +3373,7 @@ class Ts extends I {
     super({ bridgeEventName: "Monitor Connect", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Monitor Connect ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Cs extends I {
@@ -3381,7 +3381,7 @@ class Cs extends I {
     super({ bridgeEventName: "Monitor Disconnect", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Monitor Disconnect ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Ps extends I {
@@ -3389,7 +3389,7 @@ class Ps extends I {
     super({ bridgeEventName: "Transport Control Pause", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Pause ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Es extends I {
@@ -3397,7 +3397,7 @@ class Es extends I {
     super({ bridgeEventName: "Transport Control Play", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Play ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Is extends I {
@@ -3405,7 +3405,7 @@ class Is extends I {
     super({ bridgeEventName: "Transport Control Next", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Next ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Ss extends I {
@@ -3413,7 +3413,7 @@ class Ss extends I {
     super({ bridgeEventName: "Transport Control Previous", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Previous ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Transport Control Previous ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Ns extends I {
@@ -3421,7 +3421,7 @@ class Ns extends I {
     super({ bridgeEventName: "Progress Start", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Progress Start ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class js extends I {
@@ -3437,7 +3437,7 @@ class Os extends I {
     super({ bridgeEventName: "Progress Update", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Progress Update ", "color: aqua; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
+    this.client.log("%c Progress Update ", "color: BlueViolet; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
   }
 }
 class Zs extends I {
@@ -3445,7 +3445,7 @@ class Zs extends I {
     super({ bridgeEventName: "Playlist Instance", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Instance ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Ms extends I {
@@ -3453,7 +3453,7 @@ class Ms extends I {
     super({ bridgeEventName: "Playlist Insert", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Insert ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Rs extends I {
@@ -3461,7 +3461,7 @@ class Rs extends I {
     super({ bridgeEventName: "Playlist Delete", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Delete ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class As extends I {
@@ -3494,7 +3494,7 @@ class ls extends I {
   }
   handle(e) {
     var a, o;
-    this.client.log("%c New Item Playing ", "color: aqua; font-weight: bold; border: solid;", e);
+    this.client.log("%c New Item Playing ", "color: BlueViolet; font-weight: bold; border: solid;", e);
     let t = this.client.currentPlaylistIndex, s = (o = (a = this.client.playlists) == null ? void 0 : a[t]) == null ? void 0 : o.name, r = this.client.currentPlaylistItemIndex;
     e.payload.value.playlist_name.value == s && e.payload.value.index.value == r && (this.client.isCastPending = !1);
   }
@@ -3970,57 +3970,57 @@ let j = T;
 x(j, "instance"), x(j, "fallback"), /** The websocket connection to Bridge's Event Source, this returns information from Bridge */
 x(j, "eventsource"), /**control how often we log to the console, 3 is everything, 0 is nothing */
 x(j, "verbosity");
-const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
+const L = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   message: `The value should be between ${n} and ${e}`
 }), us = {
   min: 0.1,
   max: 10,
-  range: q(0.1, 10),
+  range: L(0.1, 10),
   type: "float"
 }, Oe = {
   min: 0.1,
   max: 4,
-  range: q(0.1, 4),
+  range: L(0.1, 4),
   type: "float"
 }, ds = {
   min: 0,
   max: 1,
-  range: q(0, 1),
+  range: L(0, 1),
   type: "float"
 }, hs = {
   min: -1,
   max: 1,
-  range: q(-1, 1),
+  range: L(-1, 1),
   type: "float"
 }, ps = {
   min: -1,
   max: 1,
-  range: q(-1, 1),
+  range: L(-1, 1),
   type: "float"
 }, Ze = {
   min: 0.1,
   max: 2,
-  range: q(0.1, 2),
+  range: L(0.1, 2),
   type: "float"
 }, fs = {
   min: -0.05,
   max: 0.05,
-  range: q(-0.05, 0.05),
+  range: L(-0.05, 0.05),
   type: "float"
 }, ms = {
   min: 1,
   max: 50,
-  range: q(1, 50),
+  range: L(1, 50),
   type: "int"
 }, ys = {
   min: 1,
   max: 50,
-  range: q(1, 50),
+  range: L(1, 50),
   type: "int"
 }, gs = {
   min: 1,
   max: 2500,
-  range: q(1, 2500),
+  range: L(1, 2500),
   type: "int"
 }, Ds = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
@@ -4034,7 +4034,7 @@ const q = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   QUILT_ROWS: ms,
   QUILT_VIEW_COUNT: gs,
   ZOOM: Ze
-}, Symbol.toStringTag, { value: "Module" })), qs = i.union([i.literal("quilt"), i.literal("rgbd")]), vs = i.object({
+}, Symbol.toStringTag, { value: "Module" })), Ls = i.union([i.literal("quilt"), i.literal("rgbd")]), vs = i.object({
   rows: i.number(),
   columns: i.number(),
   aspect: i.number(),
@@ -4084,7 +4084,7 @@ class ws {
     this.uri = e.uri, this.type = "rgbd", this.settings = e.settings;
   }
 }
-function Ls({ uri: n, type: e, settings: t }) {
+function $s({ uri: n, type: e, settings: t }) {
   switch (bs[e].safeParse(t), e) {
     case "quilt":
       return new xs({ uri: n, settings: t });
@@ -4094,7 +4094,7 @@ function Ls({ uri: n, type: e, settings: t }) {
       throw new Error(`Invalid type: ${e}`);
   }
 }
-const $s = i.union([
+const qs = i.union([
   i.literal("focus"),
   i.literal("crop_pos_x"),
   i.literal("crop_pos_y"),
@@ -4145,10 +4145,10 @@ export {
   Es as TransportControlPlayMessageHandler,
   Ss as TransportControlPreviousMessageHandler,
   Ds as defaults,
-  Ls as hologramFactory,
+  $s as hologramFactory,
   bs as hologramMap,
   Hs as hologramParamMap,
-  qs as hologramTypeSchema,
-  $s as parameterNames
+  Ls as hologramTypeSchema,
+  qs as parameterNames
 };
 //# sourceMappingURL=looking-glass-bridge.mjs.map
