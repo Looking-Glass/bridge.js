@@ -120,6 +120,7 @@ export declare const insert_playlist_entry: z.ZodObject<{
     chroma_depth: z.ZodOptional<z.ZodUnion<[z.ZodLiteral<0>, z.ZodLiteral<1>]>>;
     depthiness: z.ZodOptional<z.ZodNumber>;
     zoom: z.ZodOptional<z.ZodNumber>;
+    tag: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     orchestration: string;
     name: string;
@@ -137,6 +138,7 @@ export declare const insert_playlist_entry: z.ZodObject<{
     chroma_depth?: 0 | 1 | undefined;
     depthiness?: number | undefined;
     zoom?: number | undefined;
+    tag?: string | undefined;
 }, {
     orchestration: string;
     name: string;
@@ -154,6 +156,7 @@ export declare const insert_playlist_entry: z.ZodObject<{
     chroma_depth?: 0 | 1 | undefined;
     depthiness?: number | undefined;
     zoom?: number | undefined;
+    tag?: string | undefined;
 }>;
 export type update_playlist_entry = {
     orchestration: string;
