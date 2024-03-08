@@ -356,6 +356,11 @@ export class BridgeClient {
 			return { success: false }
 		}
 
+		if (this.displays.length == 0) {
+			this.warn("no displays found")
+			return { success: false }
+		}
+
 		this.isCastPending = true
 
 		// try to find an existing cast playlist
