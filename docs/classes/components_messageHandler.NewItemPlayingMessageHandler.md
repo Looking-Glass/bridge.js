@@ -75,7 +75,7 @@ ___
 | `message` | `Object` | `undefined` |
 | `message.name` | `string` | `schema.name` |
 | `message.orchestration` | { value: string; name: string; type: "WSTRING"; } | `undefined` |
-| `message.payload` | { value: { index: { value: number; name: string; type: "UNSIGNED\_INT"; }; playlist\_name: { value: string; name: string; type: "WSTRING"; }; tag: { value: string; name: string; type: "WSTRING"; }; event: { value: "Monitor Connect" \| ... 14 more ... \| "All Events"; name: string; type: "WSTRING"; }; }; name: string; ty... | `undefined` |
+| `message.payload` | { value: { index: { value: number; name: string; type: "UNSIGNED\_INT"; }; playlist\_name: { value: string; name: string; type: "WSTRING"; }; tag: { value: string; name: string; type: "WSTRING"; }; event: { value: "Monitor Connect" \| ... 15 more ... \| "All Events"; name: string; type: "WSTRING"; }; }; name: string; ty... | `undefined` |
 | `message.status` | { value: "Completion" \| "UnknownOrchestration" \| "Pending" \| "Failure"; name: string; type: "WSTRING"; } | `schema.status` |
 
 #### Returns

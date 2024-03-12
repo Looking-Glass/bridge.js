@@ -4,6 +4,7 @@ import * as schema from "./schema"
 export const BridgeEvent = z.union([
 	z.literal("Monitor Connect"),
 	z.literal("Monitor Disconnect"),
+	z.literal("New Item Playing"),
 	z.literal("Progress Start"),
 	z.literal("Progress Completion"),
 	z.literal("Progress Update"),

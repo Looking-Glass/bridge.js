@@ -1,5 +1,5 @@
 import { z } from "zod";
-export declare const BridgeEvent: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+export declare const BridgeEvent: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
 export declare const monitorConnectResponse: z.ZodObject<{
     name: z.ZodString;
     orchestration: z.ZodObject<{
@@ -22,13 +22,13 @@ export declare const monitorConnectResponse: z.ZodObject<{
             event: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
             }, "strip", z.ZodTypeAny, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }>;
@@ -202,7 +202,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "UNSIGNED_INT";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -263,7 +263,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "UNSIGNED_INT";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -326,7 +326,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "UNSIGNED_INT";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -391,7 +391,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "UNSIGNED_INT";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -476,7 +476,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "UNSIGNED_INT";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -554,7 +554,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "UNSIGNED_INT";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -621,13 +621,13 @@ export declare const progressUpdateResponse: z.ZodObject<{
             event: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
             }, "strip", z.ZodTypeAny, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }>;
@@ -677,7 +677,7 @@ export declare const progressUpdateResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -698,7 +698,7 @@ export declare const progressUpdateResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -721,7 +721,7 @@ export declare const progressUpdateResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -746,7 +746,7 @@ export declare const progressUpdateResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -791,7 +791,7 @@ export declare const progressUpdateResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -829,7 +829,7 @@ export declare const progressUpdateResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -876,13 +876,13 @@ export declare const insertPlaylistResponse: z.ZodObject<{
             event: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
             }, "strip", z.ZodTypeAny, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }>;
@@ -942,7 +942,7 @@ export declare const insertPlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -963,7 +963,7 @@ export declare const insertPlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -986,7 +986,7 @@ export declare const insertPlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1011,7 +1011,7 @@ export declare const insertPlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1056,7 +1056,7 @@ export declare const insertPlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1094,7 +1094,7 @@ export declare const insertPlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1131,13 +1131,13 @@ export declare const instancePlaylistResponse: z.ZodObject<{
             event: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
             }, "strip", z.ZodTypeAny, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }>;
@@ -1179,7 +1179,7 @@ export declare const instancePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1195,7 +1195,7 @@ export declare const instancePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1213,7 +1213,7 @@ export declare const instancePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1233,7 +1233,7 @@ export declare const instancePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1273,7 +1273,7 @@ export declare const instancePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1306,7 +1306,7 @@ export declare const instancePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1343,13 +1343,13 @@ export declare const deletePlaylistResponse: z.ZodObject<{
             event: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
             }, "strip", z.ZodTypeAny, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }>;
@@ -1391,7 +1391,7 @@ export declare const deletePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1407,7 +1407,7 @@ export declare const deletePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1425,7 +1425,7 @@ export declare const deletePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1445,7 +1445,7 @@ export declare const deletePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1485,7 +1485,7 @@ export declare const deletePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1518,7 +1518,7 @@ export declare const deletePlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1555,13 +1555,13 @@ export declare const transportControlResponse: z.ZodObject<{
             event: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
             }, "strip", z.ZodTypeAny, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }>;
@@ -1603,7 +1603,7 @@ export declare const transportControlResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1619,7 +1619,7 @@ export declare const transportControlResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1637,7 +1637,7 @@ export declare const transportControlResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1657,7 +1657,7 @@ export declare const transportControlResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1697,7 +1697,7 @@ export declare const transportControlResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1730,7 +1730,7 @@ export declare const transportControlResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1767,13 +1767,13 @@ export declare const newItemPlayingResponse: z.ZodObject<{
             event: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
             }, "strip", z.ZodTypeAny, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }>;
@@ -1833,7 +1833,7 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1854,7 +1854,7 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1877,7 +1877,7 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1902,7 +1902,7 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1947,7 +1947,7 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -1985,7 +1985,7 @@ export declare const newItemPlayingResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -2022,13 +2022,13 @@ export declare const allEventsResponse: z.ZodObject<{
             event: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
+                value: z.ZodUnion<[z.ZodLiteral<"Monitor Connect">, z.ZodLiteral<"Monitor Disconnect">, z.ZodLiteral<"New Item Playing">, z.ZodLiteral<"Progress Start">, z.ZodLiteral<"Progress Completion">, z.ZodLiteral<"Progress Update">, z.ZodLiteral<"Playlist Instance">, z.ZodLiteral<"Playlist Insert">, z.ZodLiteral<"Playlist Delete">, z.ZodLiteral<"Sync/Play Playlist">, z.ZodLiteral<"Sync/Play Playlist Complete">, z.ZodLiteral<"Sync/Play Playlist Cancelled">, z.ZodLiteral<"Transport Control Pause">, z.ZodLiteral<"Transport Control Play">, z.ZodLiteral<"Transport Control Next">, z.ZodLiteral<"Transport Control Previous">, z.ZodLiteral<"All Events">]>;
             }, "strip", z.ZodTypeAny, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }, {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             }>;
@@ -2052,7 +2052,7 @@ export declare const allEventsResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -2063,7 +2063,7 @@ export declare const allEventsResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -2076,7 +2076,7 @@ export declare const allEventsResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -2091,7 +2091,7 @@ export declare const allEventsResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -2126,7 +2126,7 @@ export declare const allEventsResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
@@ -2154,7 +2154,7 @@ export declare const allEventsResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             event: {
-                value: "Monitor Connect" | "Monitor Disconnect" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
+                value: "Monitor Connect" | "Monitor Disconnect" | "New Item Playing" | "Progress Start" | "Progress Completion" | "Progress Update" | "Playlist Instance" | "Playlist Insert" | "Playlist Delete" | "Sync/Play Playlist" | "Sync/Play Playlist Complete" | "Sync/Play Playlist Cancelled" | "Transport Control Pause" | "Transport Control Play" | "Transport Control Next" | "Transport Control Previous" | "All Events";
                 name: string;
                 type: "WSTRING";
             };
