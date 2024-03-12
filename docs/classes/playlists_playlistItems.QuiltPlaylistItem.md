@@ -23,6 +23,7 @@
 - [index](playlists_playlistItems.QuiltPlaylistItem.md#index)
 - [orchestration](playlists_playlistItems.QuiltPlaylistItem.md#orchestration)
 - [playlistName](playlists_playlistItems.QuiltPlaylistItem.md#playlistname)
+- [tag](playlists_playlistItems.QuiltPlaylistItem.md#tag)
 
 ### Methods
 
@@ -99,6 +100,16 @@ ___
 
 PlaylistItem.playlistName
 
+___
+
+### tag
+
+• **tag**: `undefined` \| `string`
+
+#### Inherited from
+
+PlaylistItem.tag
+
 ## Methods
 
 ### toBridge
@@ -124,6 +135,7 @@ PlaylistItem.playlistName
 | `name` | `string` |
 | `orchestration` | `string` |
 | `rows` | `number` |
+| `tag?` | `string` |
 | `uri` | `string` |
 | `view_count` | `number` |
 | `zoom?` | `number` |

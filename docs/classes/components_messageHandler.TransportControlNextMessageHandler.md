@@ -1,35 +1,35 @@
-[@lookingglass/bridge](../README.md) / [components/messageHandler](../modules/components_messageHandler.md) / ProgressUpdateMessageHandler
+[@lookingglass/bridge](../README.md) / [components/messageHandler](../modules/components_messageHandler.md) / TransportControlNextMessageHandler
 
-# Class: ProgressUpdateMessageHandler
+# Class: TransportControlNextMessageHandler
 
-[components/messageHandler](../modules/components_messageHandler.md).ProgressUpdateMessageHandler
+[components/messageHandler](../modules/components_messageHandler.md).TransportControlNextMessageHandler
 
 ## Hierarchy
 
-- [`MessageHandler`](components_messageHandler.MessageHandler.md)<``"Progress Update"``\>
+- [`MessageHandler`](components_messageHandler.MessageHandler.md)<``"Transport Control Next"``\>
 
-  ↳ **`ProgressUpdateMessageHandler`**
+  ↳ **`TransportControlNextMessageHandler`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](components_messageHandler.ProgressUpdateMessageHandler.md#constructor)
+- [constructor](components_messageHandler.TransportControlNextMessageHandler.md#constructor)
 
 ### Properties
 
-- [bridgeEventName](components_messageHandler.ProgressUpdateMessageHandler.md#bridgeeventname)
-- [client](components_messageHandler.ProgressUpdateMessageHandler.md#client)
+- [bridgeEventName](components_messageHandler.TransportControlNextMessageHandler.md#bridgeeventname)
+- [client](components_messageHandler.TransportControlNextMessageHandler.md#client)
 
 ### Methods
 
-- [handle](components_messageHandler.ProgressUpdateMessageHandler.md#handle)
+- [handle](components_messageHandler.TransportControlNextMessageHandler.md#handle)
 
 ## Constructors
 
 ### constructor
 
-• **new ProgressUpdateMessageHandler**(`args`)
+• **new TransportControlNextMessageHandler**(`args`)
 
 #### Parameters
 
@@ -46,7 +46,7 @@
 
 ### bridgeEventName
 
-• **bridgeEventName**: ``"Progress Update"``
+• **bridgeEventName**: ``"Transport Control Next"``
 
 #### Inherited from
 
@@ -75,7 +75,7 @@ ___
 | `message` | `Object` | `undefined` |
 | `message.name` | `string` | `schema.name` |
 | `message.orchestration` | { value: string; name: string; type: "WSTRING"; } | `undefined` |
-| `message.payload` | { value: { message: { value: string; name: string; type: "WSTRING"; }; event: { value: "Monitor Connect" \| "Monitor Disconnect" \| "Progress Start" \| "Progress Completion" \| "Progress Update" \| ... 10 more ... \| "All Events"; name: string; type: "WSTRING"; }; progress: { ...; }; progress\_type: { ...; }; }; name: stri... | `undefined` |
+| `message.payload` | { value: { name: { value: string; name: string; type: "WSTRING"; }; message: { value: string; name: string; type: "WSTRING"; }; event: { value: "Monitor Connect" \| "Monitor Disconnect" \| "Progress Start" \| ... 12 more ... \| "All Events"; name: string; type: "WSTRING"; }; }; name: string; type: "VARIANT\_MAP"; } | `undefined` |
 | `message.status` | { value: "Completion" \| "UnknownOrchestration" \| "Pending" \| "Failure"; name: string; type: "WSTRING"; } | `schema.status` |
 
 #### Returns
