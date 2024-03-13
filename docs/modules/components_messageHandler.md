@@ -6,6 +6,7 @@
 
 ### Classes
 
+- [AllEventsMessageHandler](../classes/components_messageHandler.AllEventsMessageHandler.md)
 - [MessageHandler](../classes/components_messageHandler.MessageHandler.md)
 - [MonitorConnectedMessageHandler](../classes/components_messageHandler.MonitorConnectedMessageHandler.md)
 - [MonitorDisconnectedMessageHandler](../classes/components_messageHandler.MonitorDisconnectedMessageHandler.md)
@@ -19,3 +20,7 @@
 - [SyncPlayPlaylistCancelledMessageHandler](../classes/components_messageHandler.SyncPlayPlaylistCancelledMessageHandler.md)
 - [SyncPlayPlaylistCompleteMessageHandler](../classes/components_messageHandler.SyncPlayPlaylistCompleteMessageHandler.md)
 - [SyncPlayPlaylistMessageHandler](../classes/components_messageHandler.SyncPlayPlaylistMessageHandler.md)
+- [TransportControlNextMessageHandler](../classes/components_messageHandler.TransportControlNextMessageHandler.md)
+- [TransportControlPauseMessageHandler](../classes/components_messageHandler.TransportControlPauseMessageHandler.md)
+- [TransportControlPlayMessageHandler](../classes/components_messageHandler.TransportControlPlayMessageHandler.md)
+- [TransportControlPreviousMessageHandler](../classes/components_messageHandler.TransportControlPreviousMessageHandler.md)

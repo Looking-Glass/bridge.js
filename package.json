@@ -1,6 +1,6 @@
 {
 	"name": "@lookingglass/bridge",
-	"version": "0.0.8-alpha.1",
+	"version": "0.0.8-alpha.4",
 	"license": "MIT",
 	"description": "Official Looking Glass Library for interacting with Looking Glass holographic displays.",
 	"types": "./dist/index.d.ts",

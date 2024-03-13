@@ -34,6 +34,7 @@ Create a new Quilt Hologram
 | `args.settings.columns` | `number` |
 | `args.settings.focus?` | `number` |
 | `args.settings.rows` | `number` |
+| `args.settings.tag?` | `string` |
 | `args.settings.viewCount` | `number` |
 | `args.uri` | `string` |
 
@@ -51,6 +52,7 @@ Create a new Quilt Hologram
 | `columns` | `number` |
 | `focus?` | `number` |
 | `rows` | `number` |
+| `tag?` | `string` |
 | `viewCount` | `number` |
 
 ___

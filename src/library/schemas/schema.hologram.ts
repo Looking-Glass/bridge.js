@@ -12,6 +12,7 @@ export const QuiltHologramArgs = z.object({
 	aspect: z.number(),
 	viewCount: z.number(),
 	focus: z.number().optional(),
+	tag: z.string().optional(),
 })
 
 export const RGBDHologramArgs = z.object({
@@ -36,6 +37,7 @@ export const RGBDHologramArgs = z.object({
 	depth_cutoff: z.union([z.literal(1), z.literal(0)]).optional(),
 	/**Zoom can be between 0.1 and 2 */
 	zoom: ZOOM.range,
+	tag: z.string().optional(),
 })
 
 export interface HologramClasses {

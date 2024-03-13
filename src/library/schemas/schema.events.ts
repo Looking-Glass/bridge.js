@@ -4,6 +4,7 @@ import * as schema from "./schema"
 export const BridgeEvent = z.union([
 	z.literal("Monitor Connect"),
 	z.literal("Monitor Disconnect"),
+	z.literal("New Item Playing"),
 	z.literal("Progress Start"),
 	z.literal("Progress Completion"),
 	z.literal("Progress Update"),
@@ -17,8 +18,22 @@ export const BridgeEvent = z.union([
 	z.literal("Transport Control Play"),
 	z.literal("Transport Control Next"),
 	z.literal("Transport Control Previous"),
-	// z.literal("All Events"),
+	z.literal("All Events"),
 ])
+
+const allevents = z.object({
+	event: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: BridgeEvent,
+	}),
+	message: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
+
+})
 
 const monitorConnected = z.object({
 	event: z.object({
@@ -199,6 +214,11 @@ const NewItemPlaying = z.object({
 		type: schema.wstring,
 		value: z.string(),
 	}),
+	tag: z.object({
+		name: schema.name,
+		type: schema.wstring,
+		value: z.string(),
+	}),
 })
 
 /**
@@ -228,6 +248,7 @@ export const instancePlaylistResponse = PayloadResponse(playlistInstance)
 export const deletePlaylistResponse = PayloadResponse(deletePlaylist)
 export const transportControlResponse = PayloadResponse(transportControlEvent)
 export const newItemPlayingResponse = PayloadResponse(NewItemPlaying)
+export const allEventsResponse = PayloadResponse(allevents)
 
 // export const all_events = z.union([monitorConnectResponse, progressUpdateResponse])
 
@@ -248,7 +269,7 @@ export type BridgeEventMap = {
 	"Transport Control Next": z.infer<typeof transportControlResponse>
 	"Transport Control Previous": z.infer<typeof transportControlResponse>
 	"New Item Playing": z.infer<typeof newItemPlayingResponse>
-	// "All Events": all_events,
+	"All Events": z.infer<typeof allEventsResponse>
 	/**CUSTOM CLIENT EVENTS BELOW THESE ARE NOT PART OF BRIDGE */
 	"Bridge Connected": z.infer<typeof progressUpdateResponse>
 	"Bridge Disconnected": z.infer<typeof progressUpdateResponse>

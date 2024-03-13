@@ -20,6 +20,7 @@
 - [name](playlists_playlistItems.PlaylistItemArgs.md#name)
 - [orchestration](playlists_playlistItems.PlaylistItemArgs.md#orchestration)
 - [rows](playlists_playlistItems.PlaylistItemArgs.md#rows)
+- [tag](playlists_playlistItems.PlaylistItemArgs.md#tag)
 - [uri](playlists_playlistItems.PlaylistItemArgs.md#uri)
 - [view\_count](playlists_playlistItems.PlaylistItemArgs.md#view_count)
 - [zoom](playlists_playlistItems.PlaylistItemArgs.md#zoom)
@@ -95,6 +96,12 @@ ___
 ### rows
 
 • **rows**: `number`
+
+___
+
+### tag
+
+• **tag**: `undefined` \| `string`
 
 ___
 

@@ -9,7 +9,7 @@ import { HologramParamMap } from "../schemas/schema.parameters"
 import * as schema from "../schemas/schema.responses"
 import { z } from "zod"
 import { Fallback } from "../components/fallback"
-import { NewItemPlayingMessageHandler } from "../components/messageHandler"
+import { AllEventsMessageHandler, NewItemPlayingMessageHandler } from "../components/messageHandler"
 import { BridgeVersion } from "../components/types"
 import { parseBridgeVersion } from "../utilities/general.utils"
 
@@ -147,6 +147,8 @@ export class BridgeClient {
 		BridgeClient.eventsource.connectEvent()
 
 		new NewItemPlayingMessageHandler({ client: this })
+
+		new AllEventsMessageHandler({ client: this })
 
 		return { success: true, response: { version: this.version, orchestration: this.orchestration } }
 	}
@@ -351,6 +353,11 @@ export class BridgeClient {
 		if (this.isCastPending == true) {
 			this.warn("already casting please wait")
 
+			return { success: false }
+		}
+
+		if (this.displays.length == 0) {
+			this.warn("no displays found")
 			return { success: false }
 		}
 

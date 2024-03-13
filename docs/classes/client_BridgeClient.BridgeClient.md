@@ -57,6 +57,8 @@
 - [showWindow](client_BridgeClient.BridgeClient.md#showwindow)
 - [status](client_BridgeClient.BridgeClient.md#status)
 - [stopStudioPlaylist](client_BridgeClient.BridgeClient.md#stopstudioplaylist)
+- [time](client_BridgeClient.BridgeClient.md#time)
+- [timeEnd](client_BridgeClient.BridgeClient.md#timeend)
 - [updateCurrentHologram](client_BridgeClient.BridgeClient.md#updatecurrenthologram)
 - [warn](client_BridgeClient.BridgeClient.md#warn)
 - [getInstance](client_BridgeClient.BridgeClient.md#getinstance)
@@ -120,7 +122,7 @@ ___
 
 ### playState
 
-• **playState**: ``"PLAYING"`` \| ``"PAUSED"`` \| ``"STOPPED"`` = `'STOPPED'`
+• **playState**: ``"PLAYING"`` \| ``"PAUSED"`` \| ``"STOPPED"`` = `"STOPPED"`
 
 ___
 
@@ -618,6 +620,38 @@ stop playing the studio playlist
 #### Returns
 
 `Promise`<{ `success`: `boolean`  }\>
+
+___
+
+### time
+
+▸ **time**(`label`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `label` | `string` |
+
+#### Returns
+
+`void`
+
+___
+
+### timeEnd
+
+▸ **timeEnd**(`label`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `label` | `string` |
+
+#### Returns
+
+`void`
 
 ___
 

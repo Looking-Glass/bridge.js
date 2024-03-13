@@ -5,6 +5,7 @@ export interface PlaylistItemArgs {
     orchestration: string;
     name: string;
     index: number;
+    tag: string | undefined;
     id: string;
     uri: string;
     rows: number;
@@ -27,6 +28,7 @@ declare class PlaylistItem {
     id: number;
     index: number;
     playlistName: string;
+    tag: string | undefined;
     constructor(args: {
         hologram: HologramType;
         id: number;

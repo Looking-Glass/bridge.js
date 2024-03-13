@@ -105,3 +105,9 @@ export declare class NewItemPlayingMessageHandler extends MessageHandler<"New It
     });
     handle(message: BridgeEventMap["New Item Playing"]): void;
 }
+export declare class AllEventsMessageHandler extends MessageHandler<keyof BridgeEventMap> {
+    constructor(args: {
+        client: BridgeClient;
+    });
+    handle(message: BridgeEventMap["All Events"]): void;
+}

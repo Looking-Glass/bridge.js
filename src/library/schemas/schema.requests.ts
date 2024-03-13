@@ -69,6 +69,7 @@ export const insert_playlist_entry = z.object({
 	chroma_depth: z.union([z.literal(0), z.literal(1)]).optional(),
 	depthiness: z.number().optional(),
 	zoom: z.number().optional(),
+	tag: z.string().optional(),
 })
 
 export type update_playlist_entry = {

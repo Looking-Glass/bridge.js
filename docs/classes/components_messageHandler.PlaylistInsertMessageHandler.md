@@ -75,7 +75,7 @@ ___
 | `message` | `Object` | `undefined` |
 | `message.name` | `string` | `schema.name` |
 | `message.orchestration` | { value: string; name: string; type: "WSTRING"; } | `undefined` |
-| `message.payload` | { value: { message: { value: string; name: string; type: "WSTRING"; }; index: { value: number; name: string; type: "UNSIGNED\_INT"; }; uri: { value: string; name: string; type: "WSTRING"; }; event: { value: "Monitor Connect" \| ... 10 more ... \| "Transport Control Pause"; name: string; type: "WSTRING"; }; }; name: str... | `undefined` |
+| `message.payload` | { value: { message: { value: string; name: string; type: "WSTRING"; }; index: { value: number; name: string; type: "UNSIGNED\_INT"; }; uri: { value: string; name: string; type: "WSTRING"; }; event: { value: "Monitor Connect" \| ... 15 more ... \| "All Events"; name: string; type: "WSTRING"; }; }; name: string; type: "V... | `undefined` |
 | `message.status` | { value: "Completion" \| "UnknownOrchestration" \| "Pending" \| "Failure"; name: string; type: "WSTRING"; } | `schema.status` |
 
 #### Returns

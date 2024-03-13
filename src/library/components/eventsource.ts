@@ -79,6 +79,16 @@ export class BridgeEventSource {
 
 	private callMessageHandler<K extends keyof BridgeEventMap>(response: string) {
 		let parsedResponse: BridgeEventMap[K]
+
+		if ("All Events" in this.MessageHandler) {
+			const event = JSON.parse(response)
+			const handlers = this.MessageHandler["All Events"]
+
+			if (handlers) {
+				handlers.forEach((handler: any) => handler(event))
+			}
+		}
+
 		try {
 			parsedResponse = JSON.parse(response)
 		} catch (error) {
@@ -96,6 +106,7 @@ export class BridgeEventSource {
 		}
 	}
 
+	// custom internal event handlers for connect and disconnect, we get those internally not from bridge
 	public connectEvent() {
 		const handlers = this.MessageHandler["Bridge Connected"]
 
@@ -105,12 +116,17 @@ export class BridgeEventSource {
 	}
 
 	public disconnectEvent() {
-		const handlers = this.MessageHandler["Bridge Disconnected"]
-
+		const handlers = this.MessageHandler["Bridge Disconnected"];
+	
 		if (handlers) {
-			handlers.forEach((handler: any) => handler(undefined))
+			// Call each handler
+			handlers.forEach((handler: any) => handler(undefined));
 		}
+
+		// Clear all handlers
+		this.MessageHandler = {};
 	}
+	
 
 	public async connectToBridgeEventSource(orchestration: string): Promise<{ success: boolean }> {
 		const client = BridgeClient.getInstance()

@@ -18,6 +18,14 @@
 
   ↳ [`MonitorDisconnectedMessageHandler`](components_messageHandler.MonitorDisconnectedMessageHandler.md)
 
+  ↳ [`TransportControlPauseMessageHandler`](components_messageHandler.TransportControlPauseMessageHandler.md)
+
+  ↳ [`TransportControlPlayMessageHandler`](components_messageHandler.TransportControlPlayMessageHandler.md)
+
+  ↳ [`TransportControlNextMessageHandler`](components_messageHandler.TransportControlNextMessageHandler.md)
+
+  ↳ [`TransportControlPreviousMessageHandler`](components_messageHandler.TransportControlPreviousMessageHandler.md)
+
   ↳ [`ProgressStartMessageHandler`](components_messageHandler.ProgressStartMessageHandler.md)
 
   ↳ [`ProgressCompletionMessageHandler`](components_messageHandler.ProgressCompletionMessageHandler.md)
@@ -37,6 +45,8 @@
   ↳ [`SyncPlayPlaylistCancelledMessageHandler`](components_messageHandler.SyncPlayPlaylistCancelledMessageHandler.md)
 
   ↳ [`NewItemPlayingMessageHandler`](components_messageHandler.NewItemPlayingMessageHandler.md)
+
+  ↳ [`AllEventsMessageHandler`](components_messageHandler.AllEventsMessageHandler.md)
 
 ## Table of contents
 
