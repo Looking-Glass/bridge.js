@@ -6,4 +6,5 @@ export * from "./components/hologram";
 export * from "./components/types";
 export * from "./schemas/schema.hologram";
 export * from "./schemas/schema.parameters";
+export * from "./schemas/schema.events";
 export * as defaults from "./schemas/defaults";
