@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="Content-Security-Policy" content="
-			default-src 'self';
-			connect-src 'self' http://localhost:33334/ ws://localhost:9724/event_source;
-			script-src 'self' 'unsafe-inline' 'unsafe-eval';
-			style-src 'self' 'unsafe-inline';
-			img-src 'self' data:;
-			font-src 'self' https://fonts.gstatic.com;
-		">
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;700&family=Rubik:wght@900&display=swap"
-			rel="stylesheet" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            // Create WebSocket connection.
+            const ws = new WebSocket('wss://localhost:8080/echo');
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Looking Glass Bridge API Library</title>
-	</head>
-	<body>
-		<div id="root"></div>
-		<script type="module" src="/src/react-app/main.tsx"></script>
-	</body>
+            // Connection opened
+            ws.addEventListener('open', function (event) {
+                console.log('Connection opened');
+                // Send a message to the server
+                ws.send('hello');
+            });
+
+            // Listen for messages
+            ws.addEventListener('message', function (event) {
+                console.log('Message from server:', event.data);
+            });
+
+            // Listen for possible errors
+            ws.addEventListener('error', function (event) {
+                console.error('WebSocket error:', event);
+            });
+
+            // Listen for when the connection is closed
+            ws.addEventListener('close', function (event) {
+                console.log('Connection closed');
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>WebSocket Test Page</h2>
+    <p>Open the console to see the messages.</p>
+</body>
 </html>
