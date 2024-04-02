@@ -147,7 +147,7 @@ class lt {
     if (!ot())
       return { success: !1 };
     let s = this;
-    return this.ws = new WebSocket("ws://localhost:9724/event_source"), new Promise((r) => {
+    return this.ws = new WebSocket("ws://127.0.0.1:9724/event_source"), new Promise((r) => {
       this.ws !== void 0 && (this.ws.onopen = () => {
         var l;
         N.getInstance().log("%c Connected to Websocket ", "color: chartreuse; font-weight: bold; border: solid");
@@ -3556,10 +3556,10 @@ const T = class {
     const e = new Promise((t) => {
       let s = setTimeout(() => {
         clearTimeout(s), t(new Error("Timed out"));
-      }, 5e3);
+      }, 1e3);
     });
     try {
-      const t = await Promise.race([fetch("http://localhost:33334/"), e]);
+      const t = await Promise.race([fetch("http://127.0.0.1:33334/"), e]);
       if (!t.ok)
         throw new Error(`HTTP error! status: ${t.status}`);
       return !0;
