@@ -85,11 +85,11 @@ export class BridgeClient {
 			let id = setTimeout(() => {
 				clearTimeout(id)
 				reject(new Error("Timed out"))
-			}, 5000)
+			}, 1000)
 		})
 
 		try {
-			const response = (await Promise.race([fetch("http://localhost:33334/"), timeout])) as Response
+			const response = (await Promise.race([fetch("http://127.0.0.1:33334/"), timeout])) as Response
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`)
 			}

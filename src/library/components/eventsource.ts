@@ -135,7 +135,7 @@ export class BridgeEventSource {
 		if (!isWebSocketAvailable()) return { success: false }
 		let bridgeEventSource = this
 		// provided we have web socket support, we can proceed to query Bridge
-		this.ws = new WebSocket("ws://localhost:9724/event_source")
+		this.ws = new WebSocket("ws://127.0.0.1:9724/event_source")
 
 		return new Promise((resolve) => {
 			if (this.ws !== undefined) {
