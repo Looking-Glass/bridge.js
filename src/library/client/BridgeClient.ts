@@ -80,14 +80,14 @@ export class BridgeClient {
 	 */
 	public async status(): Promise<boolean> {
 		this.log("%c function call: status ", "color: magenta; font-weight: bold; border: solid")
-
-		const timeout = new Promise((reject) => {
+	
+		const timeout = new Promise<never>((_, reject) => {
 			let id = setTimeout(() => {
 				clearTimeout(id)
 				reject(new Error("Timed out"))
-			}, 5000)
+			}, 500)
 		})
-
+	
 		try {
 			const response = (await Promise.race([fetch("http://localhost:33334/"), timeout])) as Response
 			if (!response.ok) {
