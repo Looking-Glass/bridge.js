@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import {
+	Display,
 	BridgeClient,
 	QuiltHologram,
 	RGBDHologram,
@@ -15,6 +16,7 @@ import {
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
 import { PlaylistUI } from "./components/Playlist"
+import { DisplayUI } from "./components/Display"
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -45,7 +47,9 @@ function App() {
 	const [connectionStatus, setConnectionStatus] = useState<string>(
 		"Not Connected. Click the Connect button below to connect to Bridge"
 	)
-	const [displays, setDisplays] = useState<string>("Connect to Bridge to detect displays")
+	const [displayMessage, setDisplayMessage] = useState<string>("Connect to Bridge to detect displays")
+	
+	const [displays, setDisplays] = useState<Display[]>([])
 
 	//internal application state
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
@@ -84,9 +88,10 @@ function App() {
 		// Manually call Bridge.displays to query for any connected Looking Glass,
 		await Bridge.getDisplays().then((call) => {
 			if (!call.response || call.response.length == 0) {
-				setDisplays("⚠️ No Displays Detected")
+				setDisplayMessage("⚠️ No Displays Detected")
 			} else {
-				setDisplays(JSON.stringify(call.response))
+				setDisplayMessage("👍 Displays Detected")
+				setDisplays(call.response)
 			}
 		})
 	}
@@ -110,7 +115,7 @@ function App() {
 		setConnected(false)
 		setConnectionStatus("⚠️ Bridge Disconnected!")
 		setEventStatus("Subscribe to Events")
-		setDisplays("Connect to Bridge to detect displays")
+		setDisplayMessage("Connect to Bridge to detect displays")
 	}
 
 	useEffect(() => {
@@ -138,7 +143,8 @@ function App() {
 				</a>
 			</p>
 			<h2>Status: {`${connectionStatus}`}</h2>
-			<h2>Displays: {`${displays}`}</h2>
+			<h2>Displays: {displayMessage}</h2>
+			<DisplayUI displays={displays}/>
 
 			<div>
 				<div>
@@ -171,7 +177,7 @@ function App() {
 										setConnected(false)
 										setConnectionStatus("✂️ Manually Disconnected!")
 										setEventStatus("Subscribe to Events")
-										setDisplays("Connect to Bridge to detect displays")
+										setDisplayMessage("Connect to Bridge to detect displays")
 									}}
 									disabled={!connected}>
 									Disconnect From Bridge
@@ -180,6 +186,9 @@ function App() {
 									onClick={async () => {
 										let call = await Bridge.getDisplays()
 										setResponse(JSON.stringify(call.response))
+
+										if (!call.response) return
+										setDisplays(call.response)
 									}}
 									disabled={!connected}>
 									Get connected displays
@@ -437,7 +446,7 @@ function App() {
 					// There are two ways to add events.
 					// 1. You can add an event listener to the BridgeClient instance.
 					Bridge.addEventListener("Monitor Connect", (event) => {
-						setDisplays(JSON.stringify(event.payload.value))
+						// setDisplays(event.payload.value..value)
 					})
 					// 2. You can create a prebuilt MessageHandler Class.
 					new PlaylistInsertMessageHandler({ client: Bridge })

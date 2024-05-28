@@ -310,7 +310,7 @@ export class BridgeClient {
 
 		for (let key in data.response.payload.value) {
 			let display = data.response.payload.value[`${key}`]
-			if (display.value.hwid.value.includes("LKG")) {
+			if (display.value.hardwareVersion.value !== ("thirdparty")) {
 				let lkg = tryParseDisplay(display.value)
 				if (lkg != undefined) {
 					this.displays.push(lkg)
