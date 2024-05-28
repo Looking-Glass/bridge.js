@@ -23,7 +23,7 @@ export function UpdateParams({
 	return (
 		<>
 			<div>{parameter}</div>
-			<div>Value: {value}</div>
+			<div style={{width: "30px"}}>Value: {value.toFixed(2)}</div>
 			<input
 				type="range"
 				defaultValue={1}

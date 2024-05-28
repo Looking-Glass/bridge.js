@@ -35,23 +35,23 @@ export const DEPTH_CUTOFF: defaults = {
 }
 
 export const CROP_POS_X: defaults = {
-	min: -1,
-	max: 1,
-	range: numberRange(-1, 1),
+	min: -2,
+	max: 2,
+	range: numberRange(-2, 2),
 	type: "float",
 }
 
 export const CROP_POS_Y: defaults = {
-	min: -1,
-	max: 1,
-	range: numberRange(-1, 1),
+	min: -2,
+	max: 2,
+	range: numberRange(-2, 2),
 	type: "float",
 }
 
 export const ZOOM: defaults = {
 	min: 0.1,
-	max: 2,
-	range: numberRange(0.1, 2),
+	max: 4,
+	range: numberRange(0.1, 4),
 	type: "float",
 }
 

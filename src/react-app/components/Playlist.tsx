@@ -15,26 +15,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 						<div>
 							<h3>Controls</h3>
 							<div className="flex-container">
-								{item.hologram.type == "quilt" && (
-									<>
-										<UpdateParams
-											playlistName={playlist.name}
-											parameter="focus"
-											min={defaults.FOCUS.min}
-											max={defaults.FOCUS.max}
-											numberType={defaults.FOCUS.type}
-										/>
-										<UpdateParams
-											playlistName={playlist.name}
-											parameter="zoom"
-											min={defaults.ZOOM.min}
-											max={defaults.ZOOM.max}
-											numberType={defaults.ZOOM.type}
-										/>
-									</>
-								)}
 								{item.hologram.type == "rgbd" && (
-									<>
 										<UpdateParams
 											playlistName={playlist.name}
 											parameter="depthiness"
@@ -42,22 +23,36 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 											max={defaults.DEPTHINESS.max}
 											numberType={defaults.DEPTHINESS.type}
 										/>
-										<UpdateParams
-											playlistName={playlist.name}
-											parameter="focus"
-											min={defaults.FOCUS.min}
-											max={defaults.FOCUS.max}
-											numberType={defaults.FOCUS.type}
-										/>
-										<UpdateParams
-											playlistName={playlist.name}
-											parameter="zoom"
-											min={defaults.ZOOM.min}
-											max={defaults.ZOOM.max}
-											numberType={defaults.ZOOM.type}
-										/>
-									</>
 								)}
+								{/* SHARED SETTINGS */}
+								<UpdateParams
+									playlistName={playlist.name}
+									parameter="focus"
+									min={defaults.FOCUS.min}
+									max={defaults.FOCUS.max}
+									numberType={defaults.FOCUS.type}
+								/>
+								<UpdateParams
+									playlistName={playlist.name}
+									parameter="zoom"
+									min={defaults.ZOOM.min}
+									max={defaults.ZOOM.max}
+									numberType={defaults.ZOOM.type}
+								/>
+								<UpdateParams 
+									playlistName={playlist.name}
+									parameter="crop_pos_x"
+									min={defaults.CROP_POS_X.min}
+									max={defaults.CROP_POS_X.max}
+									numberType={defaults.CROP_POS_X.type}
+									/>
+								<UpdateParams 
+									playlistName={playlist.name}
+									parameter="crop_pos_y"
+									min={defaults.CROP_POS_Y.min}
+									max={defaults.CROP_POS_Y.max}
+									numberType={defaults.CROP_POS_Y.type}
+								/>
 							</div>
 						</div>
 					</div>
