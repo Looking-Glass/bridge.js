@@ -90,7 +90,7 @@ function App() {
 			if (!call.response || call.response.length == 0) {
 				setDisplayMessage("⚠️ No Displays Detected")
 			} else {
-				setDisplayMessage("👍 Displays Detected")
+				setDisplayMessage(`👍 Display${call.response.length > 1 ? "s" : ""} Detected`)
 				setDisplays(call.response)
 			}
 		})
