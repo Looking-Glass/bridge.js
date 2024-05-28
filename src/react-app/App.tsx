@@ -445,7 +445,7 @@ function App() {
 					console.log("%c REACT: Listening to Events", "color: #00ff00")
 					// There are two ways to add events.
 					// 1. You can add an event listener to the BridgeClient instance.
-					Bridge.addEventListener("Monitor Connect", (event) => {
+					Bridge.addEventListener("Monitor Connect", () => {
 						// setDisplays(event.payload.value..value)
 					})
 					// 2. You can create a prebuilt MessageHandler Class.
