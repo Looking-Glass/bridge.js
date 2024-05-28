@@ -286,7 +286,7 @@ export class BridgeClient {
 	}
 
 	/**
-	 * QueryDisplays finds all displays that are connected to the computer,
+	 * getDisplays finds all displays that are connected to the computer,
 	 * searches for Looking Glass displays, and returns them as an array of Display objects
 	 * @returns the display object
 	 */
