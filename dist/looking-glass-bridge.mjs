@@ -35,6 +35,7 @@ function nt(n) {
   return {
     calibration: tt(n.calibration.value),
     defaultQuilt: st(n.defaultQuilt.value),
+    hwid: n.hwid.value,
     hardwareVersion: n.hardwareVersion.value,
     index: n.index.value,
     state: n.state.value,
@@ -3661,7 +3662,7 @@ const T = class {
     return e.success == !1 ? (console.warn("this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge."), { success: !1, response: U("0") }) : { success: !0, response: U(e.response.payload.value) };
   }
   /**
-   * QueryDisplays finds all displays that are connected to the computer,
+   * getDisplays finds all displays that are connected to the computer,
    * searches for Looking Glass displays, and returns them as an array of Display objects
    * @returns the display object
    */
@@ -3680,7 +3681,7 @@ const T = class {
     ds.safeParse(t.response);
     for (let s in t.response.payload.value) {
       let r = t.response.payload.value[`${s}`];
-      if (r.value.hwid.value.includes("LKG")) {
+      if (r.value.hardwareVersion.value !== "thirdparty") {
         let a = nt(r.value);
         a != null && this.displays.push(a);
       }
@@ -3985,19 +3986,19 @@ const L = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   range: L(0, 1),
   type: "float"
 }, ys = {
-  min: -1,
-  max: 1,
-  range: L(-1, 1),
+  min: -2,
+  max: 2,
+  range: L(-2, 2),
   type: "float"
 }, gs = {
-  min: -1,
-  max: 1,
-  range: L(-1, 1),
+  min: -2,
+  max: 2,
+  range: L(-2, 2),
   type: "float"
 }, Ae = {
   min: 0.1,
-  max: 2,
-  range: L(0.1, 2),
+  max: 4,
+  range: L(0.1, 4),
   type: "float"
 }, vs = {
   min: -0.05,
@@ -4369,6 +4370,9 @@ export {
   cn as newItemPlayingResponse,
   en as parameterNames,
   nn as progressUpdateResponse,
-  ln as transportControlResponse
+  ln as transportControlResponse,
+  tt as tryParseCalibration,
+  nt as tryParseDisplay,
+  st as tryParseQuilt
 };
 //# sourceMappingURL=looking-glass-bridge.mjs.map
