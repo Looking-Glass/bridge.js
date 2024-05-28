@@ -2,7 +2,8 @@ import { BridgeValue } from "./types";
 export interface Display {
     calibration: CalibrationType | null;
     defaultQuilt: QuiltType | null;
-    hardwareVersion: BridgeValue;
+    hardwareVersion: string;
+    hwid: string;
     index: BridgeValue;
     state: BridgeValue;
     windowCoords: BridgeValue;
