@@ -3554,10 +3554,10 @@ const T = class {
    */
   async status() {
     this.log("%c function call: status ", "color: magenta; font-weight: bold; border: solid");
-    const e = new Promise((t) => {
-      let s = setTimeout(() => {
-        clearTimeout(s), t(new Error("Timed out"));
-      }, 5e3);
+    const e = new Promise((t, s) => {
+      let r = setTimeout(() => {
+        clearTimeout(r), s(new Error("Timed out"));
+      }, 500);
     });
     try {
       const t = await Promise.race([fetch("http://localhost:33334/"), e]);
