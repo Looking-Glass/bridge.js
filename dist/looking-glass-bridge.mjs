@@ -220,12 +220,12 @@ class qe {
     throw new Error("Invalid hologram type");
   }
 }
-class Be extends qe {
+class Ae extends qe {
   constructor(e) {
     super(e);
   }
 }
-class Ve extends qe {
+class Be extends qe {
   constructor(e) {
     super(e);
   }
@@ -239,7 +239,7 @@ class De {
     var t;
     this.name = e.name, this.loop = e.loop, this.orchestration = e.orchestration, e.items ? this.items = (t = e.items) == null ? void 0 : t.map((s, r) => {
       if (s.type == "quilt")
-        return new Be({
+        return new Ae({
           hologram: s,
           id: r,
           index: r,
@@ -247,7 +247,7 @@ class De {
           orchestration: this.orchestration
         });
       if (s.type == "rgbd")
-        return new Ve({
+        return new Be({
           hologram: s,
           id: r,
           index: r,
@@ -261,13 +261,13 @@ class De {
   }
   addItem(e) {
     let t;
-    return e.type == "quilt" ? (t = new Be({
+    return e.type == "quilt" ? (t = new Ae({
       hologram: e,
       id: this.items.length,
       index: this.items.length,
       playlistName: this.name,
       orchestration: this.orchestration
-    }), this.items.push(t), t) : e.type == "rgbd" ? (t = new Ve({
+    }), this.items.push(t), t) : e.type == "rgbd" ? (t = new Be({
       hologram: e,
       id: this.items.length,
       index: this.items.length,
@@ -769,7 +769,7 @@ class w {
     return this._refinement((s, r) => e(s) ? !0 : (r.addIssue(typeof t == "function" ? t(s, r) : t), !1));
   }
   _refinement(e) {
-    return new A({
+    return new V({
       schema: this,
       typeName: g.ZodEffects,
       effect: { type: "refinement", refinement: e }
@@ -800,7 +800,7 @@ class w {
     return de.create(this, e, this._def);
   }
   transform(e) {
-    return new A({
+    return new V({
       ..._(this._def),
       schema: this,
       typeName: g.ZodEffects,
@@ -2095,7 +2095,7 @@ ue.create = (n, e) => new ue({
   typeName: g.ZodUnion,
   ..._(e)
 });
-const ve = (n) => n instanceof pe ? ve(n.schema) : n instanceof A ? ve(n.innerType()) : n instanceof fe ? [n.value] : n instanceof G ? n.options : n instanceof me ? Object.keys(n.enum) : n instanceof ye ? ve(n._def.innerType) : n instanceof le ? [void 0] : n instanceof ce ? [null] : null;
+const ve = (n) => n instanceof pe ? ve(n.schema) : n instanceof V ? ve(n.innerType()) : n instanceof fe ? [n.value] : n instanceof G ? n.options : n instanceof me ? Object.keys(n.enum) : n instanceof ye ? ve(n._def.innerType) : n instanceof le ? [void 0] : n instanceof ce ? [null] : null;
 class Ie extends w {
   _parse(e) {
     const { ctx: t } = this._processInputParams(e);
@@ -2659,7 +2659,7 @@ ae.create = (n, e) => new ae({
   typeName: g.ZodPromise,
   ..._(e)
 });
-class A extends w {
+class V extends w {
   innerType() {
     return this._def.schema;
   }
@@ -2725,13 +2725,13 @@ class A extends w {
     k.assertNever(r);
   }
 }
-A.create = (n, e, t) => new A({
+V.create = (n, e, t) => new V({
   schema: n,
   typeName: g.ZodEffects,
   effect: e,
   ..._(t)
 });
-A.createWithPreprocess = (n, e, t) => new A({
+V.createWithPreprocess = (n, e, t) => new V({
   schema: e,
   effect: { type: "preprocess", transform: n },
   typeName: g.ZodEffects,
@@ -2912,7 +2912,7 @@ var g;
 })(g || (g = {}));
 const Ct = (n, e = {
   message: `Input not instance of ${n.name}`
-}) => Je((t) => t instanceof n, e), Me = Z.create, Ye = z.create, It = Ce.create, Et = W.create, Qe = oe.create, St = X.create, Nt = ke.create, Ot = le.create, Zt = ce.create, Mt = re.create, Rt = Q.create, At = U.create, Bt = Te.create, Vt = R.create, Xe = P.create, Dt = P.strictCreate, Ke = ue.create, Lt = Ie.create, $t = de.create, Ut = L.create, qt = he.create, Ht = je.create, zt = K.create, Wt = se.create, Gt = pe.create, B = fe.create, Jt = G.create, Yt = me.create, Qt = ae.create, $e = A.create, Xt = $.create, Kt = F.create, Ft = A.createWithPreprocess, es = ge.create, ts = () => Me().optional(), ss = () => Ye().optional(), ns = () => Qe().optional(), rs = {
+}) => Je((t) => t instanceof n, e), Me = Z.create, Ye = z.create, It = Ce.create, Et = W.create, Qe = oe.create, St = X.create, Nt = ke.create, Ot = le.create, Zt = ce.create, Mt = re.create, Rt = Q.create, Vt = U.create, At = Te.create, Bt = R.create, Xe = P.create, Dt = P.strictCreate, Ke = ue.create, Lt = Ie.create, $t = de.create, Ut = L.create, qt = he.create, Ht = je.create, zt = K.create, Wt = se.create, Gt = pe.create, A = fe.create, Jt = G.create, Yt = me.create, Qt = ae.create, $e = V.create, Xt = $.create, Kt = F.create, Ft = V.createWithPreprocess, es = ge.create, ts = () => Me().optional(), ss = () => Ye().optional(), ns = () => Qe().optional(), rs = {
   string: (n) => Z.create({ ...n, coerce: !0 }),
   number: (n) => z.create({ ...n, coerce: !0 }),
   boolean: (n) => oe.create({
@@ -2974,8 +2974,8 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodEnum: G,
   ZodNativeEnum: me,
   ZodPromise: ae,
-  ZodEffects: A,
-  ZodTransformer: A,
+  ZodEffects: V,
+  ZodTransformer: V,
   ZodOptional: $,
   ZodNullable: F,
   ZodDefault: ye,
@@ -2993,7 +2993,7 @@ var i = /* @__PURE__ */ Object.freeze({
   },
   coerce: rs,
   any: Mt,
-  array: Vt,
+  array: Bt,
   bigint: Et,
   boolean: Qe,
   date: St,
@@ -3004,11 +3004,11 @@ var i = /* @__PURE__ */ Object.freeze({
   instanceof: Ct,
   intersection: $t,
   lazy: Gt,
-  literal: B,
+  literal: A,
   map: Ht,
   nan: It,
   nativeEnum: Yt,
-  never: At,
+  never: Vt,
   null: Zt,
   nullable: Kt,
   number: Ye,
@@ -3030,13 +3030,13 @@ var i = /* @__PURE__ */ Object.freeze({
   undefined: Ot,
   union: Ke,
   unknown: Rt,
-  void: Bt,
+  void: At,
   NEVER: as,
   ZodIssueCode: u,
   quotelessJson: dt,
   ZodError: M
 });
-const ne = B("UNSIGNED_INT"), Ue = B("INT"), is = B("FLOAT"), os = B("INT2"), m = B("WSTRING"), V = B("VARIANT_MAP"), ls = B("Completion"), cs = B("UnknownOrchestration"), us = B("Pending"), ds = B("Failure"), c = Me(), C = Xe({
+const ne = A("UNSIGNED_INT"), Ue = A("INT"), is = A("FLOAT"), os = A("INT2"), m = A("WSTRING"), B = A("VARIANT_MAP"), ls = A("Completion"), cs = A("UnknownOrchestration"), us = A("Pending"), ds = A("Failure"), c = Me(), C = Xe({
   name: c,
   type: m,
   value: Ke([ls, us, ds, cs])
@@ -3069,7 +3069,7 @@ i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.object({
       id: i.object({
         name: c,
@@ -3094,7 +3094,7 @@ i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.object({
       name: i.object({
         name: c,
@@ -3114,7 +3114,7 @@ i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.object({
       index: i.object({
         name: c,
@@ -3134,7 +3134,7 @@ i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.object({
       name: i.object({
         name: c,
@@ -3156,7 +3156,7 @@ i.object({
 });
 const hs = i.object({
   name: c,
-  type: V,
+  type: B,
   value: i.object({
     calibration: i.object({
       name: c,
@@ -3206,7 +3206,7 @@ const hs = i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.record(hs).optional()
   }),
   status: C
@@ -3220,7 +3220,7 @@ i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.object({
       name: i.object({
         name: c,
@@ -3258,7 +3258,7 @@ i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.object({
       playlist_name: i.object({
         name: c,
@@ -3283,7 +3283,7 @@ i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.object({
       playlist_name: i.object({
         name: c,
@@ -3303,7 +3303,7 @@ i.object({
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: i.object({
       playlist_name: i.object({
         name: c,
@@ -3366,7 +3366,7 @@ class I {
     this.bridgeEventName = e.bridgeEventName, this.client = e.client, this.client.addEventListener(this.bridgeEventName, this.handle.bind(this));
   }
 }
-class Vs extends I {
+class Bs extends I {
   constructor(e) {
     super({ bridgeEventName: "Monitor Connect", client: e.client });
   }
@@ -3974,62 +3974,74 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   min: 0.1,
   max: 10,
   range: O(0.1, 10),
-  type: "float"
+  type: "float",
+  defaultValue: 1
 }, Re = {
   min: 0.1,
   max: 4,
   range: O(0.1, 4),
-  type: "float"
+  type: "float",
+  defaultValue: 1.5
 }, gs = {
   min: 0,
   max: 1,
   range: O(0, 1),
-  type: "float"
+  type: "float",
+  defaultValue: 0
 }, vs = {
   min: -2,
   max: 2,
   range: O(-2, 2),
-  type: "float"
+  type: "float",
+  defaultValue: 0
 }, _s = {
   min: -2,
   max: 2,
   range: O(-2, 2),
-  type: "float"
-}, Ae = {
+  type: "float",
+  defaultValue: 0
+}, Ve = {
   min: 0.1,
   max: 4,
   range: O(0.1, 4),
-  type: "float"
+  type: "float",
+  defaultValue: 0
 }, bs = {
   min: -0.05,
   max: 0.05,
   range: O(-0.05, 0.05),
-  type: "float"
+  type: "float",
+  defaultValue: 0
 }, ws = {
   min: 1,
   max: 50,
   range: O(1, 50),
-  type: "int"
+  type: "int",
+  defaultValue: 5
 }, xs = {
   min: 1,
   max: 50,
   range: O(1, 50),
-  type: "int"
+  type: "int",
+  defaultValue: 9
 }, ks = {
   min: 1,
   max: 2500,
   range: O(1, 2500),
-  type: "int"
+  type: "int",
+  defaultValue: 45
 }, Fe = {
-  min: 0,
-  max: 0.2,
-  range: O(0, 0.2),
-  type: "float"
+  min: -0.5,
+  max: 0.5,
+  range: O(-0.5, 0.5),
+  type: "float",
+  defaultValue: 0.01
 }, et = {
   min: 0,
-  max: 2,
-  range: O(0, 2),
-  type: "int"
+  max: 3,
+  range: O(0, 3),
+  type: "int",
+  defaultValue: 2
 }, Fs = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   ASPECT: ys,
@@ -4043,7 +4055,7 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   QUILT_COLS: xs,
   QUILT_ROWS: ws,
   QUILT_VIEW_COUNT: ks,
-  ZOOM: Ae
+  ZOOM: Ve
 }, Symbol.toStringTag, { value: "Module" })), en = i.union([i.literal("quilt"), i.literal("rgbd")]), Ts = i.object({
   rows: i.number(),
   columns: i.number(),
@@ -4072,7 +4084,7 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   /**Whether or not to cutoff depth beyond a certain point. 0 for false, 1 for true */
   depth_cutoff: i.union([i.literal(1), i.literal(0)]).optional(),
   /**Zoom can be between 0.1 and 2 */
-  zoom: Ae.range,
+  zoom: Ve.range,
   tag: i.string().optional()
 }), Ps = {
   quilt: Ts,
@@ -4121,7 +4133,7 @@ const sn = i.union([
   focus: i.number().optional(),
   crop_pos_x: i.number().optional(),
   crop_pos_y: i.number().optional(),
-  zoom: Ae.range,
+  zoom: Ve.range,
   filter_mode: et.range,
   gaussian_sigma: Fe.range,
   //rgbd specific
@@ -4310,7 +4322,7 @@ const sn = i.union([
     type: m,
     value: i.string()
   })
-}), As = i.object({
+}), Vs = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4340,17 +4352,17 @@ const sn = i.union([
   }),
   payload: i.object({
     name: c,
-    type: V,
+    type: B,
     value: n
   }),
   status: C
-}), rn = Y(Ss), an = Y(Ns), on = Y(Os), ln = Y(Zs), cn = Y(Ms), un = Y(Rs), dn = Y(As), hn = Y(Es);
+}), rn = Y(Ss), an = Y(Ns), on = Y(Os), ln = Y(Zs), cn = Y(Ms), un = Y(Rs), dn = Y(Vs), hn = Y(Es);
 export {
   ms as AllEventsMessageHandler,
   N as BridgeClient,
   J as BridgeEvent,
   I as MessageHandler,
-  Vs as MonitorConnectedMessageHandler,
+  Bs as MonitorConnectedMessageHandler,
   Ds as MonitorDisconnectedMessageHandler,
   fs as NewItemPlayingMessageHandler,
   De as Playlist,
@@ -4362,10 +4374,10 @@ export {
   Ws as ProgressUpdateMessageHandler,
   Cs as QuiltHologram,
   Ts as QuiltHologramArgs,
-  Be as QuiltPlaylistItem,
+  Ae as QuiltPlaylistItem,
   Is as RGBDHologram,
   js as RGBDHologramArgs,
-  Ve as RGBDPlaylistItem,
+  Be as RGBDPlaylistItem,
   Ks as SyncPlayPlaylistCancelledMessageHandler,
   Xs as SyncPlayPlaylistCompleteMessageHandler,
   Qs as SyncPlayPlaylistMessageHandler,
