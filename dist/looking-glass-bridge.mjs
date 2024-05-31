@@ -4031,9 +4031,9 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   type: "int",
   defaultValue: 45
 }, Fe = {
-  min: -0.5,
-  max: 0.5,
-  range: O(-0.5, 0.5),
+  min: -1,
+  max: 1,
+  range: O(-1, 1),
   type: "float",
   defaultValue: 0.01
 }, et = {
