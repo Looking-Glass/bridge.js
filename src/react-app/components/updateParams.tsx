@@ -20,6 +20,15 @@ export function UpdateParams({
 
 	const stepSize = numberType == "float" ? 0.001 : 1
 
+	const handleChange = async (newValue: number) => {
+		await Bridge.updateCurrentHologram({
+			name: playlistName,
+			parameter: parameter,
+			value: newValue,
+		})
+		setValue(newValue)
+	}
+
 	return (
 		<>
 			<div>{parameter}</div>
@@ -27,17 +36,15 @@ export function UpdateParams({
 			<input
 				type="range"
 				defaultValue={1}
+				value={value}
 				min={min}
 				max={max}
 				step={stepSize}
-				onChange={async (e) => {
-					await Bridge.updateCurrentHologram({
-						name: playlistName,
-						parameter: parameter,
-						value: parseFloat(e.target.value),
-					})
-					setValue(parseFloat(e.target.value))
-				}}></input>
+				onChange={(e) => handleChange(parseFloat(e.target.value))}></input>
+				<input type="number" defaultValue={1} value={value}
+				min={min} max={max} step={stepSize} onChange={(e) => handleChange(parseFloat(e.target.value))}>
+				
+				</input>
 		</>
 	)
 }

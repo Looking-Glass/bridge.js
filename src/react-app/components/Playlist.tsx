@@ -14,7 +14,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 						</h3>
 						<div>
 							<h3>Controls</h3>
-							<div className="flex-container">
+							<div className="flex-container-vertical">
 								{item.hologram.type == "rgbd" && (
 										<UpdateParams
 											playlistName={playlist.name}
@@ -49,6 +49,20 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 								<UpdateParams 
 									playlistName={playlist.name}
 									parameter="crop_pos_y"
+									min={defaults.CROP_POS_Y.min}
+									max={defaults.CROP_POS_Y.max}
+									numberType={defaults.CROP_POS_Y.type}
+								/>
+								<UpdateParams 
+									playlistName={playlist.name}
+									parameter="gaussian_sigma"
+									min={defaults.CROP_POS_Y.min}
+									max={defaults.CROP_POS_Y.max}
+									numberType={defaults.CROP_POS_Y.type}
+								/>
+								<UpdateParams 
+									playlistName={playlist.name}
+									parameter="filter_mode"
 									min={defaults.CROP_POS_Y.min}
 									max={defaults.CROP_POS_Y.max}
 									numberType={defaults.CROP_POS_Y.type}

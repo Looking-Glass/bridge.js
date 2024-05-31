@@ -96,6 +96,14 @@ body {
 	align-items: start; /* align item vertically */
 }
 
+.flex-container-vertical {
+	display: flex;
+	gap: 16px;
+	flex-direction: column;
+	justify-content: start; /* align item horizontally */
+	align-items: start; /* align item vertically */
+}
+
 .flex-between {
 	display: flex;
 	gap: 16px;

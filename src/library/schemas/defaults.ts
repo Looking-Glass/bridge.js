@@ -81,3 +81,17 @@ export const QUILT_VIEW_COUNT: defaults = {
 	range: numberRange(1, 2500),
 	type: "int",
 }
+
+export const GAUSSIAN_SIGMA: defaults = {
+	min: 0.0,
+	max: 0.2,
+	range: numberRange(0.0, 0.2),
+	type: "float",
+}
+
+export const FILTER_MODE: defaults = {
+	min: 0,
+	max: 2,
+	range: numberRange(0, 2),
+	type: "int",
+}
