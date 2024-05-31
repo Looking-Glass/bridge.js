@@ -8,6 +8,7 @@ export interface defaults {
     max: number;
     range: ReturnType<typeof numberRange>;
     type: NumberType;
+    defaultValue: number;
 }
 export declare const ASPECT: defaults;
 export declare const DEPTHINESS: defaults;
