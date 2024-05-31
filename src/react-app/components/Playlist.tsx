@@ -56,16 +56,16 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 								<UpdateParams 
 									playlistName={playlist.name}
 									parameter="gaussian_sigma"
-									min={defaults.CROP_POS_Y.min}
-									max={defaults.CROP_POS_Y.max}
-									numberType={defaults.CROP_POS_Y.type}
+									min={defaults.GAUSSIAN_SIGMA.min}
+									max={defaults.GAUSSIAN_SIGMA.max}
+									numberType={defaults.GAUSSIAN_SIGMA.type}
 								/>
 								<UpdateParams 
 									playlistName={playlist.name}
 									parameter="filter_mode"
-									min={defaults.CROP_POS_Y.min}
-									max={defaults.CROP_POS_Y.max}
-									numberType={defaults.CROP_POS_Y.type}
+									min={defaults.FILTER_MODE.min}
+									max={defaults.FILTER_MODE.max}
+									numberType={defaults.FILTER_MODE.type}
 								/>
 							</div>
 						</div>
