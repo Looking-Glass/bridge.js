@@ -21,6 +21,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 											parameter="depthiness"
 											min={defaults.DEPTHINESS.min}
 											max={defaults.DEPTHINESS.max}
+											defaultValue={defaults.DEPTHINESS.defaultValue}
 											numberType={defaults.DEPTHINESS.type}
 										/>
 								)}
@@ -30,6 +31,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="focus"
 									min={defaults.FOCUS.min}
 									max={defaults.FOCUS.max}
+									defaultValue={defaults.FOCUS.defaultValue}
 									numberType={defaults.FOCUS.type}
 								/>
 								<UpdateParams
@@ -37,6 +39,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="zoom"
 									min={defaults.ZOOM.min}
 									max={defaults.ZOOM.max}
+									defaultValue={defaults.ZOOM.defaultValue}
 									numberType={defaults.ZOOM.type}
 								/>
 								<UpdateParams 
@@ -44,6 +47,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="crop_pos_x"
 									min={defaults.CROP_POS_X.min}
 									max={defaults.CROP_POS_X.max}
+									defaultValue={defaults.CROP_POS_X.defaultValue}
 									numberType={defaults.CROP_POS_X.type}
 									/>
 								<UpdateParams 
@@ -51,6 +55,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="crop_pos_y"
 									min={defaults.CROP_POS_Y.min}
 									max={defaults.CROP_POS_Y.max}
+									defaultValue={defaults.CROP_POS_Y.defaultValue}
 									numberType={defaults.CROP_POS_Y.type}
 								/>
 								<UpdateParams 
@@ -58,6 +63,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="gaussian_sigma"
 									min={defaults.GAUSSIAN_SIGMA.min}
 									max={defaults.GAUSSIAN_SIGMA.max}
+									defaultValue={defaults.GAUSSIAN_SIGMA.defaultValue}
 									numberType={defaults.GAUSSIAN_SIGMA.type}
 								/>
 								<UpdateParams 
@@ -65,6 +71,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="filter_mode"
 									min={defaults.FILTER_MODE.min}
 									max={defaults.FILTER_MODE.max}
+									defaultValue={defaults.FILTER_MODE.defaultValue}
 									numberType={defaults.FILTER_MODE.type}
 								/>
 							</div>
