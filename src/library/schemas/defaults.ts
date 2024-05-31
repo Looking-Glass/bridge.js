@@ -94,9 +94,9 @@ export const QUILT_VIEW_COUNT: defaults = {
 }
 
 export const GAUSSIAN_SIGMA: defaults = {
-	min: -0.5,
-	max: 0.5,
-	range: numberRange(-0.5, 0.5),
+	min: -1,
+	max: 1,
+	range: numberRange(-1, 1),
 	type: "float",
 	defaultValue: 0.01,
 }
