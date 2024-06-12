@@ -4037,6 +4037,7 @@ const L = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   aspect: i.number(),
   viewCount: i.number(),
   focus: i.number().optional(),
+  zoom: i.number().optional(),
   tag: i.string().optional()
 }), ks = i.object({
   /**Aspect Ratio of the hologram,
