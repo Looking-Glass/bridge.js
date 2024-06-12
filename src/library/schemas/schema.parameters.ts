@@ -1,11 +1,13 @@
 import { z } from "zod"
-import { DEPTHINESS, ZOOM } from "./defaults"
+import { DEPTHINESS, FILTER_MODE, GAUSSIAN_SIGMA, ZOOM } from "./defaults"
 
 export const parameterNames = z.union([
 	z.literal("focus"),
 	z.literal("crop_pos_x"),
 	z.literal("crop_pos_y"),
 	z.literal("zoom"),
+	z.literal("filter_mode"),
+	z.literal("gaussian_sigma"),
 	//rgbd specific
 	z.literal("depth_loc"),
 	z.literal("depth_inversion"),
@@ -19,6 +21,8 @@ export const hologramParamMap = z.object({
 	crop_pos_x: z.number().optional(),
 	crop_pos_y: z.number().optional(),
 	zoom: ZOOM.range,
+	filter_mode: FILTER_MODE.range,
+	gaussian_sigma: GAUSSIAN_SIGMA.range,
 	//rgbd specific
 	depth_loc: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]),
 	depth_inversion: z.union([z.literal(0), z.literal(1)]),

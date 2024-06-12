@@ -3,7 +3,8 @@ import { BridgeValue } from "./types"
 export interface Display {
 	calibration: CalibrationType | null
 	defaultQuilt: QuiltType | null
-	hardwareVersion: BridgeValue
+	hardwareVersion: string
+	hwid: string
 	index: BridgeValue
 	state: BridgeValue
 	windowCoords: BridgeValue
@@ -106,6 +107,7 @@ export function tryParseDisplay(value: any): Display | null {
 	const display: Display = {
 		calibration: tryParseCalibration(value.calibration.value),
 		defaultQuilt: tryParseQuilt(value.defaultQuilt.value),
+		hwid: value.hwid.value,
 		hardwareVersion: value.hardwareVersion.value,
 		index: value.index.value,
 		state: value.state.value,

@@ -80,14 +80,14 @@ export class BridgeClient {
 	 */
 	public async status(): Promise<boolean> {
 		this.log("%c function call: status ", "color: magenta; font-weight: bold; border: solid")
-
-		const timeout = new Promise((reject) => {
+	
+		const timeout = new Promise<never>((_, reject) => {
 			let id = setTimeout(() => {
 				clearTimeout(id)
 				reject(new Error("Timed out"))
-			}, 5000)
+			}, 500)
 		})
-
+	
 		try {
 			const response = (await Promise.race([fetch("http://localhost:33334/"), timeout])) as Response
 			if (!response.ok) {
@@ -286,7 +286,7 @@ export class BridgeClient {
 	}
 
 	/**
-	 * QueryDisplays finds all displays that are connected to the computer,
+	 * getDisplays finds all displays that are connected to the computer,
 	 * searches for Looking Glass displays, and returns them as an array of Display objects
 	 * @returns the display object
 	 */
@@ -310,7 +310,7 @@ export class BridgeClient {
 
 		for (let key in data.response.payload.value) {
 			let display = data.response.payload.value[`${key}`]
-			if (display.value.hwid.value.includes("LKG")) {
+			if (display.value.hardwareVersion.value !== ("thirdparty")) {
 				let lkg = tryParseDisplay(display.value)
 				if (lkg != undefined) {
 					this.displays.push(lkg)
