@@ -18,7 +18,7 @@ import { PlaylistUI } from "./components/Playlist"
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
-	settings: { rows: 13, columns: 8, aspect: 0.75, viewCount: 8 * 13, tag: "steampunk" },
+	settings: { rows: 13, columns: 8, aspect: 0.75, viewCount: 8 * 13, tag: "steampunk", zoom: 1 },
 })
 
 const rgbd = new RGBDHologram({
