@@ -5,18 +5,20 @@ import { z } from "zod"
 export function UpdateParams({
 	playlistName,
 	parameter,
+	defaultValue,
 	min,
 	max,
 	numberType,
 }: {
 	playlistName: string
 	parameter: z.infer<typeof parameterNames>
+	defaultValue?: number
 	min: number
 	max: number
 	numberType: "float" | "int"
 }) {
 	const Bridge = BridgeClient.getInstance()
-	const [value, setValue] = useState(0)
+	const [value, setValue] = useState(defaultValue ? defaultValue : 0)
 
 	const stepSize = numberType == "float" ? 0.001 : 1
 
@@ -26,7 +28,7 @@ export function UpdateParams({
 			<div>Value: {value}</div>
 			<input
 				type="range"
-				defaultValue={1}
+				defaultValue={defaultValue ? defaultValue : 0}
 				min={min}
 				max={max}
 				step={stepSize}
