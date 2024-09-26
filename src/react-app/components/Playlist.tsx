@@ -15,6 +15,22 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 						<div>
 							<h3>Controls</h3>
 							<div className="flex-container">
+								<UpdateParams
+									playlistName={playlist.name}
+									parameter="crop_pos_x"
+									defaultValue={0}
+									min={defaults.CROP_POS_X.min}
+									max={defaults.CROP_POS_X.max}
+									numberType={defaults.CROP_POS_X.type}
+								/>
+								<UpdateParams
+									playlistName={playlist.name}
+									parameter="crop_pos_y"
+									defaultValue={0}
+									min={defaults.CROP_POS_Y.min}
+									max={defaults.CROP_POS_Y.max}
+									numberType={defaults.CROP_POS_Y.type}
+								/>
 								{item.hologram.type == "quilt" && (
 									<>
 										<UpdateParams
@@ -27,6 +43,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 										<UpdateParams
 											playlistName={playlist.name}
 											parameter="zoom"
+											defaultValue={1}
 											min={defaults.ZOOM.min}
 											max={defaults.ZOOM.max}
 											numberType={defaults.ZOOM.type}
