@@ -43,7 +43,7 @@ ___
 
 ### QuiltHologramArgs
 
-• `Const` **QuiltHologramArgs**: `ZodObject`<{ `aspect`: `ZodNumber` ; `columns`: `ZodNumber` ; `focus`: `ZodOptional`<`ZodNumber`\> ; `rows`: `ZodNumber` ; `tag`: `ZodOptional`<`ZodString`\> ; `viewCount`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `aspect`: `number` ; `columns`: `number` ; `focus?`: `number` ; `rows`: `number` ; `tag?`: `string` ; `viewCount`: `number`  }, { `aspect`: `number` ; `columns`: `number` ; `focus?`: `number` ; `rows`: `number` ; `tag?`: `string` ; `viewCount`: `number`  }\>
+• `Const` **QuiltHologramArgs**: `ZodObject`<{ `aspect`: `ZodNumber` ; `columns`: `ZodNumber` ; `focus`: `ZodOptional`<`ZodNumber`\> ; `rows`: `ZodNumber` ; `tag`: `ZodOptional`<`ZodString`\> ; `viewCount`: `ZodNumber` ; `zoom`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `aspect`: `number` ; `columns`: `number` ; `focus?`: `number` ; `rows`: `number` ; `tag?`: `string` ; `viewCount`: `number` ; `zoom?`: `number`  }, { `aspect`: `number` ; `columns`: `number` ; `focus?`: `number` ; `rows`: `number` ; `tag?`: `string` ; `viewCount`: `number` ; `zoom?`: `number`  }\>
 
 ___
 

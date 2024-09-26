@@ -1,6 +1,7 @@
 import { z } from "zod";
-export declare const parameterNames: z.ZodUnion<[z.ZodLiteral<"focus">, z.ZodLiteral<"crop_pos_x">, z.ZodLiteral<"crop_pos_y">, z.ZodLiteral<"zoom">, z.ZodLiteral<"depth_loc">, z.ZodLiteral<"depth_inversion">, z.ZodLiteral<"chroma_depth">, z.ZodLiteral<"depthiness">, z.ZodLiteral<"depth_cutoff">]>;
+export declare const parameterNames: z.ZodUnion<[z.ZodLiteral<"aspect">, z.ZodLiteral<"focus">, z.ZodLiteral<"crop_pos_x">, z.ZodLiteral<"crop_pos_y">, z.ZodLiteral<"zoom">, z.ZodLiteral<"depth_loc">, z.ZodLiteral<"depth_inversion">, z.ZodLiteral<"chroma_depth">, z.ZodLiteral<"depthiness">, z.ZodLiteral<"depth_cutoff">]>;
 export declare const hologramParamMap: z.ZodObject<{
+    aspect: z.ZodNumber;
     focus: z.ZodOptional<z.ZodNumber>;
     crop_pos_x: z.ZodOptional<z.ZodNumber>;
     crop_pos_y: z.ZodOptional<z.ZodNumber>;
@@ -11,6 +12,7 @@ export declare const hologramParamMap: z.ZodObject<{
     depthiness: z.ZodEffects<z.ZodNumber, number, number>;
     depth_cutoff: z.ZodOptional<z.ZodUnion<[z.ZodLiteral<1>, z.ZodLiteral<0>]>>;
 }, "strip", z.ZodTypeAny, {
+    aspect: number;
     zoom: number;
     depth_loc: 0 | 2 | 1 | 3;
     depth_inversion: 0 | 1;
@@ -21,6 +23,7 @@ export declare const hologramParamMap: z.ZodObject<{
     crop_pos_y?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
 }, {
+    aspect: number;
     zoom: number;
     depth_loc: 0 | 2 | 1 | 3;
     depth_inversion: 0 | 1;

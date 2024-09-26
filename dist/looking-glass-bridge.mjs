@@ -189,6 +189,7 @@ class Ue {
         rows: t.rows,
         cols: t.columns,
         focus: t.focus ? t.focus : 0,
+        zoom: t.zoom ? t.zoom : 1,
         aspect: t.aspect,
         view_count: t.viewCount,
         isRGBD: 0,
@@ -4093,6 +4094,7 @@ function Fs({ uri: n, type: e, settings: t }) {
   }
 }
 const en = i.union([
+  i.literal("aspect"),
   i.literal("focus"),
   i.literal("crop_pos_x"),
   i.literal("crop_pos_y"),
@@ -4104,6 +4106,7 @@ const en = i.union([
   i.literal("depthiness"),
   i.literal("depth_cutoff")
 ]), tn = i.object({
+  aspect: i.number(),
   focus: i.number().optional(),
   crop_pos_x: i.number().optional(),
   crop_pos_y: i.number().optional(),

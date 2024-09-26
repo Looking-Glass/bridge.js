@@ -2,6 +2,7 @@ import { z } from "zod"
 import { DEPTHINESS, ZOOM } from "./defaults"
 
 export const parameterNames = z.union([
+	z.literal("aspect"),
 	z.literal("focus"),
 	z.literal("crop_pos_x"),
 	z.literal("crop_pos_y"),
@@ -15,6 +16,7 @@ export const parameterNames = z.union([
 ])
 
 export const hologramParamMap = z.object({
+	aspect: z.number(),
 	focus: z.number().optional(),
 	crop_pos_x: z.number().optional(),
 	crop_pos_y: z.number().optional(),
