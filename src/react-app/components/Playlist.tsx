@@ -15,22 +15,6 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 						<div>
 							<h3>Controls</h3>
 							<div className="flex-container-vertical">
-								<UpdateParams
-									playlistName={playlist.name}
-									parameter="crop_pos_x"
-									min={defaults.CROP_POS_X.min}
-									max={defaults.CROP_POS_X.max}
-									defaultValue={defaults.CROP_POS_X.defaultValue}
-									numberType={defaults.CROP_POS_X.type}
-								/>
-								<UpdateParams
-									playlistName={playlist.name}
-									parameter="crop_pos_y"
-									min={defaults.CROP_POS_Y.min}
-									max={defaults.CROP_POS_Y.max}
-									defaultValue={defaults.CROP_POS_Y.defaultValue}
-									numberType={defaults.CROP_POS_Y.type}
-								/>
 								{item.hologram.type == "quilt" && (
 									<>
 										<UpdateParams
