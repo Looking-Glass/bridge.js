@@ -34,7 +34,17 @@ export function UpdateParams({
 	return (
 		<>
 			<div>{parameter}</div>
-			<div style={{ width: "30px" }}>Value: {value.toFixed(2)}</div>
+			<div style={{ width: "30px", display: "flex", gap: "1rem" }}>
+				Value: {value.toFixed(2)}{" "}
+				<button
+					style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
+					onClick={() => {
+						setValue(defaultValue)
+					}}>
+					reset
+				</button>
+			</div>
+
 			<input
 				type="range"
 				value={value}
