@@ -3372,7 +3372,7 @@ class Bs extends I {
     super({ bridgeEventName: "Monitor Connect", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Ds extends I {
@@ -3380,7 +3380,7 @@ class Ds extends I {
     super({ bridgeEventName: "Monitor Disconnect", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Ls extends I {
@@ -3388,7 +3388,7 @@ class Ls extends I {
     super({ bridgeEventName: "Transport Control Pause", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class $s extends I {
@@ -3396,7 +3396,7 @@ class $s extends I {
     super({ bridgeEventName: "Transport Control Play", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Us extends I {
@@ -3404,7 +3404,7 @@ class Us extends I {
     super({ bridgeEventName: "Transport Control Next", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class qs extends I {
@@ -3412,7 +3412,7 @@ class qs extends I {
     super({ bridgeEventName: "Transport Control Previous", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Previous ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Transport Control Previous ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Hs extends I {
@@ -3420,7 +3420,7 @@ class Hs extends I {
     super({ bridgeEventName: "Progress Start", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class zs extends I {
@@ -3436,7 +3436,7 @@ class Ws extends I {
     super({ bridgeEventName: "Progress Update", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Progress Update ", "color: BlueViolet; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
+    this.client.log("%c ⬅️ Progress Update ", "color: BlueViolet; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
   }
 }
 class Gs extends I {
@@ -3444,7 +3444,7 @@ class Gs extends I {
     super({ bridgeEventName: "Playlist Instance", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Js extends I {
@@ -3452,7 +3452,7 @@ class Js extends I {
     super({ bridgeEventName: "Playlist Insert", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Ys extends I {
@@ -3460,7 +3460,7 @@ class Ys extends I {
     super({ bridgeEventName: "Playlist Delete", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class Qs extends I {
@@ -3493,7 +3493,7 @@ class fs extends I {
   }
   handle(e) {
     var a, o;
-    this.client.log("%c New Item Playing ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ New Item Playing ", "color: BlueViolet; font-weight: bold; border: solid;", e);
     let t = this.client.currentPlaylistIndex, s = (o = (a = this.client.playlists) == null ? void 0 : a[t]) == null ? void 0 : o.name, r = this.client.currentPlaylistItemIndex;
     e.payload.value.playlist_name.value == s && e.payload.value.index.value == r && (this.client.isCastPending = !1);
   }
@@ -3503,7 +3503,7 @@ class ms extends I {
     super({ bridgeEventName: "All Events", client: e.client });
   }
   handle(e) {
-    e.payload.value.event.value !== "Progress Update" && this.client.log(`%c ${e.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", e);
+    e.payload.value.event.value !== "Progress Update" && this.client.log(`%c ⬅️ ${e.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 function q(n) {
@@ -3554,7 +3554,7 @@ const T = class {
    * @returns boolean, true if Bridge is running, false if Bridge is not running
    */
   async status() {
-    this.log("%c function call: status ", "color: magenta; font-weight: bold; border: solid");
+    this.log("%c ➡️ function call: status ", "color: magenta; font-weight: bold; border: solid");
     const e = new Promise((t, s) => {
       let r = setTimeout(() => {
         clearTimeout(r), s(new Error("Timed out"));
@@ -3574,7 +3574,7 @@ const T = class {
    * @returns
    */
   async connect() {
-    if (this.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !0)
+    if (this.log("%c ➡️ function call: connect ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !0)
       return console.warn("Already connected to Looking Glass Bridge."), { success: !0, response: { version: this.version, orchestration: this.orchestration } };
     if (await this.status() == !1)
       return {
@@ -3596,7 +3596,7 @@ const T = class {
    */
   async createOrchestration(e) {
     var r, a;
-    if (this.log("%c function call: createOrchestration ", "color: magenta; font-weight: bold; border: solid"), await this.status() == !1)
+    if (this.log("%c ➡️ function call: createOrchestration ", "color: magenta; font-weight: bold; border: solid"), await this.status() == !1)
       return { success: !1, response: null };
     const t = await this.getVersion();
     if (t.response.major < 2 && t.response.minor < 1)
@@ -3609,7 +3609,7 @@ const T = class {
    */
   async disconnect() {
     var t, s, r, a;
-    return this.log("%c function call: disconnect ", "color: magenta; font-weight: bold; border: solid"), this.isDisconnecting == !0 || this.isConnected == !1 ? { success: !1 } : (this.isDisconnecting = !0, this.manualDisconnect = !0, (await ot(this.orchestration)).success == !1 && console.warn(" ⚠️ Unable to exit orchestration, Bridge is not reachable."), (t = T.eventsource) == null || t.disconnectEvent(), (r = (s = T.eventsource) == null ? void 0 : s.ws) == null || r.close(), (a = T.fallback) == null || a.ws.close(), T.fallback = void 0, this.displays = [], this.playlists = [], this.currentHologram = void 0, this.orchestration = "", this.isDisconnecting = !1, this.isCastPending = !1, this.isConnected = !1, { success: !0 });
+    return this.log("%c ➡️ function call: disconnect ", "color: magenta; font-weight: bold; border: solid"), this.isDisconnecting == !0 || this.isConnected == !1 ? { success: !1 } : (this.isDisconnecting = !0, this.manualDisconnect = !0, (await ot(this.orchestration)).success == !1 && console.warn(" ⚠️ Unable to exit orchestration, Bridge is not reachable."), (t = T.eventsource) == null || t.disconnectEvent(), (r = (s = T.eventsource) == null ? void 0 : s.ws) == null || r.close(), (a = T.fallback) == null || a.ws.close(), T.fallback = void 0, this.displays = [], this.playlists = [], this.currentHologram = void 0, this.orchestration = "", this.isDisconnecting = !1, this.isCastPending = !1, this.isConnected = !1, { success: !0 });
   }
   /**
    * changes the state of the Looking Glass Bridge Window
@@ -3619,7 +3619,7 @@ const T = class {
   async showWindow(e) {
     if (this.isConnected == !1)
       return { success: !1, response: null };
-    this.log("%c function call: showWindow ", "color: magenta; font-weight: bold; border: solid");
+    this.log("%c ➡️ function call: showWindow ", "color: magenta; font-weight: bold; border: solid");
     let t = "this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.";
     if (await this.isVersionCompatible() == !1)
       return console.warn(t), { success: !1, response: null };
@@ -3640,7 +3640,7 @@ const T = class {
    */
   async getVersion() {
     var t;
-    this.log("%c function call: getVersion ", "color: magenta; font-weight: bold; border: solid");
+    this.log("%c ➡️ function call: getVersion ", "color: magenta; font-weight: bold; border: solid");
     let e = await j({ endpoint: "bridge_version", requestBody: {} });
     if (e.success == !0) {
       let s = q(e.response.payload.value);
@@ -3655,7 +3655,7 @@ const T = class {
    * @returns the current version of the Looking Glass API
    */
   async apiVersion() {
-    if (this.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: apiVersion ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: q("0") };
     if (await this.isVersionCompatible() == !1)
       return { success: !1, response: q("0") };
@@ -3668,7 +3668,7 @@ const T = class {
    * @returns the display object
    */
   async getDisplays() {
-    if (this.log("%c function call: displays ", "color: magenta; font-weight: bold; border: solid"), this.displays = [], this.isConnected == !1)
+    if (this.log("%c ➡️ function call: displays ", "color: magenta; font-weight: bold; border: solid"), this.displays = [], this.isConnected == !1)
       return { success: !1, response: null };
     const e = {
       orchestration: this.orchestration
@@ -3691,7 +3691,7 @@ const T = class {
   }
   /**Delete the instance of the playlist from Bridge, this will stop the playlist from playing if it's active. */
   async deletePlaylist(e) {
-    if (this.log("%c function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     const t = e.getInstance(this.orchestration);
     let s = await j({
@@ -3708,7 +3708,7 @@ const T = class {
     var a, o, l;
     if (this.isConnected == !1)
       return { success: !1 };
-    if (this.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
+    if (this.log("%c ➡️ function call: cast ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
       return this.warn("already casting please wait"), { success: !1 };
     if (this.displays.length == 0)
       return this.warn("no displays found"), { success: !1 };
@@ -3738,7 +3738,7 @@ const T = class {
     var a, o, l;
     if (!this.isConnected && !(await this.connect()).success)
       return { success: !1 };
-    if (console.log("%c function call: playRemotePlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
+    if (console.log("%c ➡️ function call: playRemotePlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
       return { success: !1 };
     this.isCastPending = !0;
     let s = "Cast_" + Math.random().toString(36).substring(7);
@@ -3755,7 +3755,7 @@ const T = class {
   }
   /**Play a Playlist created by Looking Glass Studio, requires the full path to the playlist.json file. */
   async playStudioPlaylist(e) {
-    if (this.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     const t = {
       orchestration: this.orchestration,
@@ -3779,7 +3779,7 @@ const T = class {
   }
   /**stop playing the studio playlist */
   async stopStudioPlaylist() {
-    if (this.log("%c function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1 };
     const e = {
       orchestration: this.orchestration,
@@ -3793,7 +3793,7 @@ const T = class {
   }
   /**Get the current playlist that is set to start automatically */
   async getAutoStartPlaylist() {
-    if (this.log("%c function call: getAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: getAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     let e = {
       orchestration: this.orchestration,
@@ -3806,7 +3806,7 @@ const T = class {
   }
   /**Choose a Playlist that exists on the local file system to set as the start up playlist */
   async setAutoStartPlaylist(e) {
-    if (this.log("%c function call: setAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: setAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     let t = {
       orchestration: this.orchestration,
@@ -3821,7 +3821,7 @@ const T = class {
   }
   /**set a playlist to auto-start, requires that all files are local on the system */
   async createAutoStartPlaylist(e) {
-    if (this.log("%c function call: createAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: createAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     for (let r = 0; r < e.playlist.items.length; r++)
       if (e.playlist.items[r].hologram.uri.includes("http"))
@@ -3901,7 +3901,7 @@ const T = class {
    */
   async subscribeToEvents() {
     var t;
-    this.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid");
+    this.log("%c ➡️ function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid");
     let e = await ((t = T.eventsource) == null ? void 0 : t.connectToBridgeEventSource(this.orchestration));
     return (e == null ? void 0 : e.success) == !0 ? { success: !0 } : { success: !1 };
   }
@@ -4207,7 +4207,7 @@ const sn = i.union([
   made_by_looking_glass: i.object({
     name: c,
     type: m,
-    value: i.string()
+    value: i.boolean()
   }),
   message: i.object({
     name: c,
