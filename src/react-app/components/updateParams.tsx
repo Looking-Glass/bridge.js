@@ -39,7 +39,7 @@ export function UpdateParams({
 				<button
 					style={{ paddingLeft: "1rem", paddingRight: "1rem" }}
 					onClick={() => {
-						setValue(defaultValue)
+						handleChange(defaultValue)
 					}}>
 					reset
 				</button>
