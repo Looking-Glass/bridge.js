@@ -127,10 +127,10 @@ export declare const insert_playlist_entry: z.ZodObject<{
     id: number;
     index: number;
     focus: number;
-    uri: string;
-    rows: number;
-    cols: number;
     aspect: number;
+    cols: number;
+    rows: number;
+    uri: string;
     view_count: number;
     isRGBD: 0 | 1;
     depth_loc?: 0 | 2 | 1 | 3 | undefined;
@@ -145,10 +145,10 @@ export declare const insert_playlist_entry: z.ZodObject<{
     id: number;
     index: number;
     focus: number;
-    uri: string;
-    rows: number;
-    cols: number;
     aspect: number;
+    cols: number;
+    rows: number;
+    uri: string;
     view_count: number;
     isRGBD: 0 | 1;
     depth_loc?: 0 | 2 | 1 | 3 | undefined;

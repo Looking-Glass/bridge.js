@@ -10,6 +10,8 @@ export interface defaults {
     type: NumberType;
     defaultValue: number;
 }
+export declare const COLUMNS: defaults;
+export declare const ROWS: defaults;
 export declare const ASPECT: defaults;
 export declare const DEPTHINESS: defaults;
 export declare const DEPTH_CUTOFF: defaults;

@@ -1,7 +1,10 @@
 import { z } from "zod";
-export declare const parameterNames: z.ZodUnion<[z.ZodLiteral<"focus">, z.ZodLiteral<"crop_pos_x">, z.ZodLiteral<"crop_pos_y">, z.ZodLiteral<"zoom">, z.ZodLiteral<"filter_mode">, z.ZodLiteral<"gaussian_sigma">, z.ZodLiteral<"depth_loc">, z.ZodLiteral<"depth_inversion">, z.ZodLiteral<"chroma_depth">, z.ZodLiteral<"depthiness">, z.ZodLiteral<"depth_cutoff">]>;
+export declare const parameterNames: z.ZodUnion<[z.ZodLiteral<"focus">, z.ZodLiteral<"aspect">, z.ZodLiteral<"cols">, z.ZodLiteral<"rows">, z.ZodLiteral<"crop_pos_x">, z.ZodLiteral<"crop_pos_y">, z.ZodLiteral<"zoom">, z.ZodLiteral<"filter_mode">, z.ZodLiteral<"gaussian_sigma">, z.ZodLiteral<"depth_loc">, z.ZodLiteral<"depth_inversion">, z.ZodLiteral<"chroma_depth">, z.ZodLiteral<"depthiness">, z.ZodLiteral<"depth_cutoff">]>;
 export declare const hologramParamMap: z.ZodObject<{
     focus: z.ZodOptional<z.ZodNumber>;
+    aspect: z.ZodOptional<z.ZodNumber>;
+    cols: z.ZodOptional<z.ZodNumber>;
+    rows: z.ZodOptional<z.ZodNumber>;
     crop_pos_x: z.ZodOptional<z.ZodNumber>;
     crop_pos_y: z.ZodOptional<z.ZodNumber>;
     zoom: z.ZodEffects<z.ZodNumber, number, number>;
@@ -21,6 +24,9 @@ export declare const hologramParamMap: z.ZodObject<{
     chroma_depth: 0 | 1;
     depthiness: number;
     focus?: number | undefined;
+    aspect?: number | undefined;
+    cols?: number | undefined;
+    rows?: number | undefined;
     crop_pos_x?: number | undefined;
     crop_pos_y?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
@@ -33,6 +39,9 @@ export declare const hologramParamMap: z.ZodObject<{
     chroma_depth: 0 | 1;
     depthiness: number;
     focus?: number | undefined;
+    aspect?: number | undefined;
+    cols?: number | undefined;
+    rows?: number | undefined;
     crop_pos_x?: number | undefined;
     crop_pos_y?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;

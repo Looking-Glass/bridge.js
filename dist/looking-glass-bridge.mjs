@@ -3367,7 +3367,7 @@ class I {
     this.bridgeEventName = e.bridgeEventName, this.client = e.client, this.client.addEventListener(this.bridgeEventName, this.handle.bind(this));
   }
 }
-class Bs extends I {
+class Ls extends I {
   constructor(e) {
     super({ bridgeEventName: "Monitor Connect", client: e.client });
   }
@@ -3375,7 +3375,7 @@ class Bs extends I {
     this.client.log("%c ⬅️ Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Ds extends I {
+class $s extends I {
   constructor(e) {
     super({ bridgeEventName: "Monitor Disconnect", client: e.client });
   }
@@ -3383,7 +3383,7 @@ class Ds extends I {
     this.client.log("%c ⬅️ Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Ls extends I {
+class Us extends I {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Pause", client: e.client });
   }
@@ -3391,7 +3391,7 @@ class Ls extends I {
     this.client.log("%c ⬅️ Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class $s extends I {
+class qs extends I {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Play", client: e.client });
   }
@@ -3399,7 +3399,7 @@ class $s extends I {
     this.client.log("%c ⬅️ Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Us extends I {
+class Hs extends I {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Next", client: e.client });
   }
@@ -3407,7 +3407,7 @@ class Us extends I {
     this.client.log("%c ⬅️ Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class qs extends I {
+class zs extends I {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Previous", client: e.client });
   }
@@ -3415,7 +3415,7 @@ class qs extends I {
     this.client.log("%c ⬅️ Transport Control Previous ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Hs extends I {
+class Ws extends I {
   constructor(e) {
     super({ bridgeEventName: "Progress Start", client: e.client });
   }
@@ -3423,7 +3423,7 @@ class Hs extends I {
     this.client.log("%c ⬅️ Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class zs extends I {
+class Gs extends I {
   constructor(e) {
     super({ bridgeEventName: "Progress Completion", client: e.client });
   }
@@ -3431,7 +3431,7 @@ class zs extends I {
     this.client.log(e);
   }
 }
-class Ws extends I {
+class Js extends I {
   constructor(e) {
     super({ bridgeEventName: "Progress Update", client: e.client });
   }
@@ -3439,7 +3439,7 @@ class Ws extends I {
     this.client.log("%c ⬅️ Progress Update ", "color: BlueViolet; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
   }
 }
-class Gs extends I {
+class Ys extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Instance", client: e.client });
   }
@@ -3447,7 +3447,7 @@ class Gs extends I {
     this.client.log("%c ⬅️ Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Js extends I {
+class Qs extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Insert", client: e.client });
   }
@@ -3455,7 +3455,7 @@ class Js extends I {
     this.client.log("%c ⬅️ Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Ys extends I {
+class Xs extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Delete", client: e.client });
   }
@@ -3463,7 +3463,7 @@ class Ys extends I {
     this.client.log("%c ⬅️ Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Qs extends I {
+class Ks extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist", client: e.client });
   }
@@ -3471,7 +3471,7 @@ class Qs extends I {
     this.client.log(e);
   }
 }
-class Xs extends I {
+class Fs extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist Complete", client: e.client });
   }
@@ -3479,7 +3479,7 @@ class Xs extends I {
     this.client.log(e);
   }
 }
-class Ks extends I {
+class en extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist Cancelled", client: e.client });
   }
@@ -3972,6 +3972,18 @@ x(N, "verbosity");
 const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   message: `The value should be between ${n} and ${e}`
 }), ys = {
+  min: 1,
+  max: 50,
+  range: O(1, 50),
+  type: "int",
+  defaultValue: 5
+}, gs = {
+  min: 1,
+  max: 50,
+  range: O(1, 50),
+  type: "int",
+  defaultValue: 9
+}, vs = {
   min: 0.1,
   max: 10,
   range: O(0.1, 10),
@@ -3983,19 +3995,19 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   range: O(0.1, 4),
   type: "float",
   defaultValue: 1.5
-}, gs = {
+}, _s = {
   min: 0,
   max: 1,
   range: O(0, 1),
   type: "float",
   defaultValue: 0
-}, vs = {
+}, bs = {
   min: -2,
   max: 2,
   range: O(-2, 2),
   type: "float",
   defaultValue: 0
-}, _s = {
+}, ws = {
   min: -2,
   max: 2,
   range: O(-2, 2),
@@ -4007,25 +4019,25 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   range: O(0.1, 4),
   type: "float",
   defaultValue: 0
-}, bs = {
+}, xs = {
   min: -0.05,
   max: 0.05,
   range: O(-0.05, 0.05),
   type: "float",
   defaultValue: 0
-}, ws = {
+}, ks = {
   min: 1,
   max: 50,
   range: O(1, 50),
   type: "int",
   defaultValue: 5
-}, xs = {
+}, Ts = {
   min: 1,
   max: 50,
   range: O(1, 50),
   type: "int",
   defaultValue: 9
-}, ks = {
+}, js = {
   min: 1,
   max: 2500,
   range: O(1, 2500),
@@ -4043,21 +4055,23 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   range: O(0, 3),
   type: "int",
   defaultValue: 2
-}, Fs = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}, tn = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  ASPECT: ys,
-  CROP_POS_X: vs,
-  CROP_POS_Y: _s,
+  ASPECT: vs,
+  COLUMNS: ys,
+  CROP_POS_X: bs,
+  CROP_POS_Y: ws,
   DEPTHINESS: Re,
-  DEPTH_CUTOFF: gs,
+  DEPTH_CUTOFF: _s,
   FILTER_MODE: et,
-  FOCUS: bs,
+  FOCUS: xs,
   GAUSSIAN_SIGMA: Fe,
-  QUILT_COLS: xs,
-  QUILT_ROWS: ws,
-  QUILT_VIEW_COUNT: ks,
+  QUILT_COLS: Ts,
+  QUILT_ROWS: ks,
+  QUILT_VIEW_COUNT: js,
+  ROWS: gs,
   ZOOM: Ve
-}, Symbol.toStringTag, { value: "Module" })), en = i.union([i.literal("quilt"), i.literal("rgbd")]), Ts = i.object({
+}, Symbol.toStringTag, { value: "Module" })), sn = i.union([i.literal("quilt"), i.literal("rgbd")]), Ps = i.object({
   rows: i.number(),
   columns: i.number(),
   aspect: i.number(),
@@ -4065,7 +4079,9 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   focus: i.number().optional(),
   zoom: i.number().optional(),
   tag: i.string().optional()
-}), js = i.object({
+}), Cs = i.object({
+  rows: i.number().optional(),
+  columns: i.number().optional(),
   /**Aspect Ratio of the hologram,
    * this should match the source image you provide, not the RGBD Pair */
   aspect: i.number(),
@@ -4088,11 +4104,11 @@ const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   /**Zoom can be between 0.1 and 2 */
   zoom: Ve.range,
   tag: i.string().optional()
-}), Ps = {
-  quilt: Ts,
-  rgbd: js
+}), Is = {
+  quilt: Ps,
+  rgbd: Cs
 };
-class Cs {
+class Es {
   constructor(e) {
     x(this, "uri");
     x(this, "type");
@@ -4100,7 +4116,7 @@ class Cs {
     this.uri = e.uri, this.type = "quilt", this.settings = e.settings;
   }
 }
-class Is {
+class Ss {
   constructor(e) {
     x(this, "uri");
     x(this, "type");
@@ -4108,18 +4124,21 @@ class Is {
     this.uri = e.uri, this.type = "rgbd", this.settings = e.settings;
   }
 }
-function tn({ uri: n, type: e, settings: t }) {
-  switch (Ps[e].safeParse(t), e) {
+function nn({ uri: n, type: e, settings: t }) {
+  switch (Is[e].safeParse(t), e) {
     case "quilt":
-      return new Cs({ uri: n, settings: t });
+      return new Es({ uri: n, settings: t });
     case "rgbd":
-      return new Is({ uri: n, settings: t });
+      return new Ss({ uri: n, settings: t });
     default:
       throw new Error(`Invalid type: ${e}`);
   }
 }
-const sn = i.union([
+const rn = i.union([
   i.literal("focus"),
+  i.literal("aspect"),
+  i.literal("cols"),
+  i.literal("rows"),
   i.literal("crop_pos_x"),
   i.literal("crop_pos_y"),
   i.literal("zoom"),
@@ -4131,8 +4150,11 @@ const sn = i.union([
   i.literal("chroma_depth"),
   i.literal("depthiness"),
   i.literal("depth_cutoff")
-]), nn = i.object({
+]), an = i.object({
   focus: i.number().optional(),
+  aspect: i.number().optional(),
+  cols: i.number().optional(),
+  rows: i.number().optional(),
   crop_pos_x: i.number().optional(),
   crop_pos_y: i.number().optional(),
   zoom: Ve.range,
@@ -4162,7 +4184,7 @@ const sn = i.union([
   i.literal("Transport Control Next"),
   i.literal("Transport Control Previous"),
   i.literal("All Events")
-]), Es = i.object({
+]), Ns = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4173,7 +4195,7 @@ const sn = i.union([
     type: m,
     value: i.string()
   })
-}), Ss = i.object({
+}), Os = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4234,7 +4256,7 @@ const sn = i.union([
     type: Ue,
     value: i.number()
   })
-}), Ns = i.object({
+}), Zs = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4255,7 +4277,7 @@ const sn = i.union([
     type: m,
     value: i.string()
   })
-}), Os = i.object({
+}), Ms = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4272,38 +4294,6 @@ const sn = i.union([
     value: i.string()
   }),
   uri: i.object({
-    name: c,
-    type: m,
-    value: i.string()
-  })
-}), Zs = i.object({
-  event: i.object({
-    name: c,
-    type: m,
-    value: J
-  }),
-  message: i.object({
-    name: c,
-    type: m,
-    value: i.string()
-  }),
-  name: i.object({
-    name: c,
-    type: m,
-    value: i.string()
-  })
-}), Ms = i.object({
-  event: i.object({
-    name: c,
-    type: m,
-    value: J
-  }),
-  message: i.object({
-    name: c,
-    type: m,
-    value: i.string()
-  }),
-  name: i.object({
     name: c,
     type: m,
     value: i.string()
@@ -4325,6 +4315,38 @@ const sn = i.union([
     value: i.string()
   })
 }), Vs = i.object({
+  event: i.object({
+    name: c,
+    type: m,
+    value: J
+  }),
+  message: i.object({
+    name: c,
+    type: m,
+    value: i.string()
+  }),
+  name: i.object({
+    name: c,
+    type: m,
+    value: i.string()
+  })
+}), As = i.object({
+  event: i.object({
+    name: c,
+    type: m,
+    value: J
+  }),
+  message: i.object({
+    name: c,
+    type: m,
+    value: i.string()
+  }),
+  name: i.object({
+    name: c,
+    type: m,
+    value: i.string()
+  })
+}), Bs = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4358,49 +4380,49 @@ const sn = i.union([
     value: n
   }),
   status: C
-}), rn = Y(Ss), an = Y(Ns), on = Y(Os), ln = Y(Zs), cn = Y(Ms), un = Y(Rs), dn = Y(Vs), hn = Y(Es);
+}), on = Y(Os), ln = Y(Zs), cn = Y(Ms), un = Y(Rs), dn = Y(Vs), hn = Y(As), pn = Y(Bs), fn = Y(Ns);
 export {
   ms as AllEventsMessageHandler,
   N as BridgeClient,
   J as BridgeEvent,
   I as MessageHandler,
-  Bs as MonitorConnectedMessageHandler,
-  Ds as MonitorDisconnectedMessageHandler,
+  Ls as MonitorConnectedMessageHandler,
+  $s as MonitorDisconnectedMessageHandler,
   fs as NewItemPlayingMessageHandler,
   De as Playlist,
-  Ys as PlaylistDeleteMessageHandler,
-  Js as PlaylistInsertMessageHandler,
-  Gs as PlaylistInstanceMessageHandler,
-  zs as ProgressCompletionMessageHandler,
-  Hs as ProgressStartMessageHandler,
-  Ws as ProgressUpdateMessageHandler,
-  Cs as QuiltHologram,
-  Ts as QuiltHologramArgs,
+  Xs as PlaylistDeleteMessageHandler,
+  Qs as PlaylistInsertMessageHandler,
+  Ys as PlaylistInstanceMessageHandler,
+  Gs as ProgressCompletionMessageHandler,
+  Ws as ProgressStartMessageHandler,
+  Js as ProgressUpdateMessageHandler,
+  Es as QuiltHologram,
+  Ps as QuiltHologramArgs,
   Ae as QuiltPlaylistItem,
-  Is as RGBDHologram,
-  js as RGBDHologramArgs,
+  Ss as RGBDHologram,
+  Cs as RGBDHologramArgs,
   Be as RGBDPlaylistItem,
-  Ks as SyncPlayPlaylistCancelledMessageHandler,
-  Xs as SyncPlayPlaylistCompleteMessageHandler,
-  Qs as SyncPlayPlaylistMessageHandler,
-  Us as TransportControlNextMessageHandler,
-  Ls as TransportControlPauseMessageHandler,
-  $s as TransportControlPlayMessageHandler,
-  qs as TransportControlPreviousMessageHandler,
-  hn as allEventsResponse,
-  Fs as defaults,
-  cn as deletePlaylistResponse,
-  tn as hologramFactory,
-  Ps as hologramMap,
-  nn as hologramParamMap,
-  en as hologramTypeSchema,
-  on as insertPlaylistResponse,
-  ln as instancePlaylistResponse,
-  rn as monitorConnectResponse,
-  dn as newItemPlayingResponse,
-  sn as parameterNames,
-  an as progressUpdateResponse,
-  un as transportControlResponse,
+  en as SyncPlayPlaylistCancelledMessageHandler,
+  Fs as SyncPlayPlaylistCompleteMessageHandler,
+  Ks as SyncPlayPlaylistMessageHandler,
+  Hs as TransportControlNextMessageHandler,
+  Us as TransportControlPauseMessageHandler,
+  qs as TransportControlPlayMessageHandler,
+  zs as TransportControlPreviousMessageHandler,
+  fn as allEventsResponse,
+  tn as defaults,
+  dn as deletePlaylistResponse,
+  nn as hologramFactory,
+  Is as hologramMap,
+  an as hologramParamMap,
+  sn as hologramTypeSchema,
+  cn as insertPlaylistResponse,
+  un as instancePlaylistResponse,
+  on as monitorConnectResponse,
+  pn as newItemPlayingResponse,
+  rn as parameterNames,
+  ln as progressUpdateResponse,
+  hn as transportControlResponse,
   nt as tryParseCalibration,
   at as tryParseDisplay,
   rt as tryParseQuilt
