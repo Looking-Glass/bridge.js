@@ -37,13 +37,12 @@ export function UpdateParams({
 			<div style={{width: "30px"}}>Value: {value.toFixed(2)}</div>
 			<input
 				type="range"
-				defaultValue={defaultValue}
-				value={defaultValue}
+				value={value}
 				min={min}
 				max={max}
 				step={stepSize}
 				onChange={(e) => handleChange(parseFloat(e.target.value))}></input>
-				<input type="number" defaultValue={1} value={value}
+				<input type="number" value={value}
 				min={min} max={max} step={stepSize} onChange={(e) => handleChange(parseFloat(e.target.value))}>
 				
 				</input>

@@ -59,6 +59,7 @@ class PlaylistItem {
 				rows: settings.rows,
 				cols: settings.columns,
 				focus: settings.focus ? settings.focus : 0,
+				zoom: settings.zoom ? settings.zoom : 1,
 				aspect: settings.aspect,
 				view_count: settings.viewCount,
 				isRGBD: 0,

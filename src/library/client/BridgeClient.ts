@@ -79,7 +79,7 @@ export class BridgeClient {
 	 * @returns boolean, true if Bridge is running, false if Bridge is not running
 	 */
 	public async status(): Promise<boolean> {
-		this.log("%c function call: status ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: status ", "color: magenta; font-weight: bold; border: solid")
 	
 		const timeout = new Promise<never>((_, reject) => {
 			let id = setTimeout(() => {
@@ -113,7 +113,7 @@ export class BridgeClient {
 		success: boolean
 		response: { version: BridgeVersion; orchestration: string }
 	}> {
-		this.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: connect ", "color: magenta; font-weight: bold; border: solid")
 
 		// check if we're already connected
 		if (this.isConnected == true) {
@@ -158,7 +158,7 @@ export class BridgeClient {
 	 * @returns string, the name of the current orchestration
 	 */
 	public async createOrchestration(name: string): Promise<{ success: boolean; response: null | string }> {
-		this.log("%c function call: createOrchestration ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: createOrchestration ", "color: magenta; font-weight: bold; border: solid")
 		if ((await this.status()) == false) {
 			return { success: false, response: null }
 		}
@@ -181,7 +181,7 @@ export class BridgeClient {
 	 */
 
 	public async disconnect(): Promise<{ success: boolean }> {
-		this.log("%c function call: disconnect ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: disconnect ", "color: magenta; font-weight: bold; border: solid")
 		// check that we're not already disconnecting
 		if (this.isDisconnecting == true || this.isConnected == false) {
 			return { success: false }
@@ -220,7 +220,7 @@ export class BridgeClient {
 		showWindow: boolean
 	): Promise<{ success: boolean; response: z.infer<typeof schema.show_window> | null }> {
 		if (this.isConnected == false) return { success: false, response: null }
-		this.log("%c function call: showWindow ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: showWindow ", "color: magenta; font-weight: bold; border: solid")
 		let errorMessage = `this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.`
 		if ((await this.isVersionCompatible()) == false) {
 			console.warn(errorMessage)
@@ -248,7 +248,7 @@ export class BridgeClient {
 	 * @returns string of the version of Looking Glass Bridge that is running
 	 */
 	public async getVersion(): Promise<{ success: boolean; response: BridgeVersion }> {
-		this.log("%c function call: getVersion ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: getVersion ", "color: magenta; font-weight: bold; border: solid")
 
 		let message = await sendMessage({ endpoint: "bridge_version", requestBody: {} })
 		if (message.success == true) {
@@ -269,7 +269,7 @@ export class BridgeClient {
 	 * @returns the current version of the Looking Glass API
 	 */
 	public async apiVersion(): Promise<{ success: boolean; response: BridgeVersion }> {
-		this.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: apiVersion ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) {
 			return { success: false, response: parseBridgeVersion("0") }
 		}
@@ -291,7 +291,7 @@ export class BridgeClient {
 	 * @returns the display object
 	 */
 	public async getDisplays(): Promise<{ success: boolean; response: Display[] | null }> {
-		this.log("%c function call: displays ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: displays ", "color: magenta; font-weight: bold; border: solid")
 		this.displays = []
 		// if there is no orchestration, attempt to create one, if that fails, return false
 		if (this.isConnected == false) return { success: false, response: null }
@@ -325,7 +325,7 @@ export class BridgeClient {
 	public async deletePlaylist(
 		playlist: Playlist
 	): Promise<{ success: boolean; response: z.infer<typeof schema.delete_playlist> | null }> {
-		this.log("%c function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) {
 			return { success: false, response: null }
 		}
@@ -348,7 +348,7 @@ export class BridgeClient {
 	 */
 	public async cast(hologram: HologramType): Promise<{ success: boolean }> {
 		if (this.isConnected == false) return { success: false }
-		this.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: cast ", "color: magenta; font-weight: bold; border: solid")
 
 		if (this.isCastPending == true) {
 			this.warn("already casting please wait")
@@ -411,7 +411,7 @@ export class BridgeClient {
 			return { success: false }
 		}
 
-		console.log("%c function call: playRemotePlaylist ", "color: magenta; font-weight: bold; border: solid")
+		console.log("%c ➡️ function call: playRemotePlaylist ", "color: magenta; font-weight: bold; border: solid")
 
 		if (this.isCastPending == true) {
 			return { success: false }
@@ -454,7 +454,7 @@ export class BridgeClient {
 	public async playStudioPlaylist(
 		playlistPath: string
 	): Promise<{ success: boolean; response: z.infer<typeof schema.play_playlist> | null }> {
-		this.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) return { success: false, response: null }
 
 		const requestBody = {
@@ -485,7 +485,7 @@ export class BridgeClient {
 
 	/**stop playing the studio playlist */
 	public async stopStudioPlaylist(): Promise<{ success: boolean }> {
-		this.log("%c function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) return { success: false }
 
 		const requestBody = {
@@ -513,7 +513,7 @@ export class BridgeClient {
 		success: boolean
 		response: z.infer<typeof schema.get_autostart_playlist> | null
 	}> {
-		this.log("%c function call: getAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: getAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) return { success: false, response: null }
 
 		let requestBody = {
@@ -538,7 +538,7 @@ export class BridgeClient {
 		success: boolean
 		response: z.infer<typeof schema.set_autostart_playlist> | null
 	}> {
-		this.log("%c function call: setAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: setAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) return { success: false, response: null }
 
 		let requestBody = {
@@ -565,7 +565,7 @@ export class BridgeClient {
 		success: boolean
 		response: z.infer<typeof schema.set_named_autostart_playlist> | null
 	}> {
-		this.log("%c function call: createAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: createAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid")
 		if (this.isConnected == false) return { success: false, response: null }
 
 		// check that all holograms are local
@@ -740,7 +740,7 @@ export class BridgeClient {
 	 * @returns the bridge event source
 	 */
 	private async subscribeToEvents(): Promise<{ success: boolean }> {
-		this.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid")
+		this.log("%c ➡️ function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid")
 
 		let events = await BridgeClient.eventsource?.connectToBridgeEventSource(this.orchestration)
 

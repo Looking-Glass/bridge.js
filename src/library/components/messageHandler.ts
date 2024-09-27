@@ -20,7 +20,7 @@ export class MonitorConnectedMessageHandler extends MessageHandler<"Monitor Conn
 	}
 
 	handle(message: BridgeEventMap["Monitor Connect"]): void {
-		this.client.log("%c Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -30,7 +30,7 @@ export class MonitorDisconnectedMessageHandler extends MessageHandler<"Monitor D
 	}
 
 	handle(message: BridgeEventMap["Monitor Disconnect"]): void {
-		this.client.log("%c Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -40,7 +40,7 @@ export class TransportControlPauseMessageHandler extends MessageHandler<"Transpo
 	}
 
 	handle(message: BridgeEventMap["Transport Control Pause"]): void {
-		this.client.log("%c Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -50,7 +50,7 @@ export class TransportControlPlayMessageHandler extends MessageHandler<"Transpor
 	}
 
 	handle(message: BridgeEventMap["Transport Control Play"]): void {
-		this.client.log("%c Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -60,7 +60,7 @@ export class TransportControlNextMessageHandler extends MessageHandler<"Transpor
 	}
 
 	handle(message: BridgeEventMap["Transport Control Next"]): void {
-		this.client.log("%c Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -71,7 +71,7 @@ export class TransportControlPreviousMessageHandler extends MessageHandler<"Tran
 
 	handle(message: BridgeEventMap["Transport Control Previous"]): void {
 		this.client.log(
-			"%c Transport Control Previous ",
+			"%c ⬅️ Transport Control Previous ",
 			"color: BlueViolet; font-weight: bold; border: solid;",
 			message
 		)
@@ -84,7 +84,7 @@ export class ProgressStartMessageHandler extends MessageHandler<"Progress Start"
 	}
 
 	handle(message: BridgeEventMap["Progress Start"]): void {
-		this.client.log("%c Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -105,7 +105,7 @@ export class ProgressUpdateMessageHandler extends MessageHandler<"Progress Updat
 
 	handle(message: BridgeEventMap["Progress Update"]): void {
 		this.client.log(
-			"%c Progress Update ",
+			"%c ⬅️ Progress Update ",
 			"color: BlueViolet; font-weight: bold; border: solid;",
 			message.payload.value.progress_type,
 			message.payload.value.progress.value
@@ -119,7 +119,7 @@ export class PlaylistInstanceMessageHandler extends MessageHandler<"Playlist Ins
 	}
 
 	handle(message: BridgeEventMap["Playlist Instance"]): void {
-		this.client.log("%c Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -129,7 +129,7 @@ export class PlaylistInsertMessageHandler extends MessageHandler<"Playlist Inser
 	}
 
 	handle(message: BridgeEventMap["Playlist Insert"]): void {
-		this.client.log("%c Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -139,7 +139,7 @@ export class PlaylistDeleteMessageHandler extends MessageHandler<"Playlist Delet
 	}
 
 	handle(message: BridgeEventMap["Playlist Delete"]): void {
-		this.client.log("%c Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
 
@@ -179,7 +179,7 @@ export class NewItemPlayingMessageHandler extends MessageHandler<"New Item Playi
 	}
 
 	handle(message: BridgeEventMap["New Item Playing"]): void {
-		this.client.log("%c New Item Playing ", "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log("%c ⬅️ New Item Playing ", "color: BlueViolet; font-weight: bold; border: solid;", message)
 
 		let index = this.client.currentPlaylistIndex
 		let playlistName = this.client.playlists?.[index]?.name
@@ -203,6 +203,6 @@ export class AllEventsMessageHandler extends MessageHandler<keyof BridgeEventMap
 		
 		if (message.payload.value.event.value ==="Progress Update") return
 
-		this.client.log(`%c ${message.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", message)
+		this.client.log(`%c ⬅️ ${message.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", message)
 	}
 }
