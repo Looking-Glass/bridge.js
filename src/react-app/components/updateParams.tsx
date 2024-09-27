@@ -34,7 +34,7 @@ export function UpdateParams({
 	return (
 		<>
 			<div>{parameter}</div>
-			<div style={{width: "30px"}}>Value: {value.toFixed(2)}</div>
+			<div style={{ width: "30px" }}>Value: {value.toFixed(2)}</div>
 			<input
 				type="range"
 				value={value}
@@ -42,10 +42,13 @@ export function UpdateParams({
 				max={max}
 				step={stepSize}
 				onChange={(e) => handleChange(parseFloat(e.target.value))}></input>
-				<input type="number" value={value}
-				min={min} max={max} step={stepSize} onChange={(e) => handleChange(parseFloat(e.target.value))}>
-				
-				</input>
+			<input
+				type="number"
+				value={value}
+				min={min}
+				max={max}
+				step={stepSize}
+				onChange={(e) => handleChange(parseFloat(e.target.value))}></input>
 		</>
 	)
 }
