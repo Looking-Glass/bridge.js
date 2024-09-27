@@ -8,6 +8,7 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     aspect: z.ZodNumber;
     viewCount: z.ZodNumber;
     focus: z.ZodOptional<z.ZodNumber>;
+    zoom: z.ZodOptional<z.ZodNumber>;
     tag: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     rows: number;
@@ -15,6 +16,7 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     columns: number;
     viewCount: number;
     focus?: number | undefined;
+    zoom?: number | undefined;
     tag?: string | undefined;
 }, {
     rows: number;
@@ -22,6 +24,7 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     columns: number;
     viewCount: number;
     focus?: number | undefined;
+    zoom?: number | undefined;
     tag?: string | undefined;
 }>;
 export declare const RGBDHologramArgs: z.ZodObject<{
