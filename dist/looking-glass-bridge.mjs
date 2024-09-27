@@ -190,6 +190,7 @@ class qe {
         rows: t.rows,
         cols: t.columns,
         focus: t.focus ? t.focus : 0,
+        zoom: t.zoom ? t.zoom : 1,
         aspect: t.aspect,
         view_count: t.viewCount,
         isRGBD: 0,
