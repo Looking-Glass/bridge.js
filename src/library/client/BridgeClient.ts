@@ -310,6 +310,7 @@ export class BridgeClient {
 
 		for (let key in data.response.payload.value) {
 			let display = data.response.payload.value[`${key}`]
+			// filter out other monitors that aren't Looking Glass displays
 			if (display.value.hardwareVersion.value !== ("thirdparty")) {
 				let lkg = tryParseDisplay(display.value)
 				if (lkg != undefined) {

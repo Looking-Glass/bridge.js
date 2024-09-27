@@ -69,7 +69,7 @@ const monitorConnected = z.object({
 	made_by_looking_glass: z.object({
 		name: schema.name,
 		type: schema.wstring,
-		value: z.string(),
+		value: z.boolean(),
 	}),
 	message: z.object({
 		name: schema.name,
@@ -254,7 +254,7 @@ export const allEventsResponse = PayloadResponse(allevents)
 
 export type BridgeEventMap = {
 	"Monitor Connect": z.infer<typeof monitorConnectResponse>
-	"Monitor Disconnect": z.infer<typeof progressUpdateResponse>
+	"Monitor Disconnect": z.infer<typeof monitorConnectResponse>
 	"Progress Start": z.infer<typeof progressUpdateResponse>
 	"Progress Completion": z.infer<typeof progressUpdateResponse>
 	"Progress Update": z.infer<typeof progressUpdateResponse>

@@ -13,10 +13,13 @@ import {
 	TransportControlPlayMessageHandler,
 	TransportControlNextMessageHandler,
 	TransportControlPreviousMessageHandler,
+	monitorConnectResponse,
+	progressUpdateResponse
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
 import { PlaylistUI } from "./components/Playlist"
 import { DisplayUI } from "./components/Display"
+import {z} from "zod"
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -94,9 +97,55 @@ function App() {
 				setDisplays(call.response)
 			}
 		})
+
+		// detect monitor changes
+		await Bridge.addEventListener("Monitor Connect", handleMonitorConnect)
+		await Bridge.addEventListener("Monitor Disconnect", handleMonitorDisconnect)
 	}
 
-	const handleProgressUpdate = async (event: any) => {
+	const handleMonitorConnect = async (event: z.infer<typeof monitorConnectResponse>) => {
+		const isLookingGlass = event.payload.value.made_by_looking_glass.value === true
+		const serial = event.payload.value.name.value
+		if (isLookingGlass) {
+			setDisplayMessage("🔌 Looking Glass Connected")
+			// Manually call Bridge.displays to update our state. ,
+			await Bridge.getDisplays().then((call) => {
+				if (!call.response || call.response.length == 0) {
+					setDisplayMessage("⚠️ No Displays Detected")
+				} else {
+					setDisplayMessage(`👍 Display${call.response.length > 1 ? "s" : ""} Detected`)
+					const serials = displays.map((display) => display.hwid)
+					if (serials.includes(serial)) return
+					setDisplays(call.response)
+				}
+			})
+		} else {
+			setDisplayMessage("⚠️ Non-Looking Glass Connected")
+		}
+	}
+
+	const handleMonitorDisconnect = async (event: z.infer<typeof monitorConnectResponse>) => {
+		const isLookingGlass = event.payload.value.made_by_looking_glass.value === true
+		const serial = event.payload.value.name.value
+		if (isLookingGlass) {
+			setDisplayMessage("🔌 Looking Glass Disconnected")
+			// Manually call Bridge.displays to update our state. ,
+			await Bridge.getDisplays().then((call) => {
+				if (!call.response || call.response.length == 0) {
+					setDisplayMessage("⚠️ No Displays Detected")
+				} else {
+					setDisplayMessage(`👍 Display${call.response.length > 1 ? "s" : ""} Detected`)
+					const serials = displays.map((display) => display.hwid)
+					if (serials.includes(serial)) return
+					setDisplays([])
+				}
+			})
+		} else {
+			setDisplayMessage("⚠️ Non-Looking Glass Connected")
+		}
+	}
+
+	const handleProgressUpdate = async (event: z.infer<typeof progressUpdateResponse>) => {
 		setProgress(event.payload.value.progress.value)
 		if (eventsink.current) {
 			if (event.payload.value.progress_type.value === "Playlist Progress") {
@@ -177,6 +226,7 @@ function App() {
 										setConnected(false)
 										setConnectionStatus("✂️ Manually Disconnected!")
 										setEventStatus("Subscribe to Events")
+										setDisplays([])
 										setDisplayMessage("Connect to Bridge to detect displays")
 									}}
 									disabled={!connected}>
@@ -446,7 +496,7 @@ function App() {
 					// There are two ways to add events.
 					// 1. You can add an event listener to the BridgeClient instance.
 					Bridge.addEventListener("Monitor Connect", () => {
-						// setDisplays(event.payload.value..value)
+						// setDisplays(event.payload.value)
 					})
 					// 2. You can create a prebuilt MessageHandler Class.
 					new PlaylistInsertMessageHandler({ client: Bridge })
