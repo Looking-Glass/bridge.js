@@ -66,6 +66,18 @@ export default function HologramForm({
 								}}></input>
 						</label>
 						<label>
+							Focus: {hologramSettings.focus}
+							<input
+								type="range"
+								min="-0.05"
+								max="0.05"
+								step="0.001"
+								defaultValue={0}
+								onChange={(e) => {
+									setHologramSettings({ ...hologramSettings, focus: parseFloat(e.target.value) })
+								}}></input>
+						</label>
+						<label>
 							Depth Location:
 							<select
 								onChange={(e) => {
