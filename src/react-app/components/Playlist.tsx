@@ -38,6 +38,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 											parameter="focus"
 											min={defaults.FOCUS.min}
 											max={defaults.FOCUS.max}
+											defaultValue={defaults.FOCUS.defaultValue}
 											numberType={defaults.FOCUS.type}
 										/>
 										<UpdateParams
@@ -77,7 +78,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									defaultValue={defaults.ZOOM.defaultValue}
 									numberType={defaults.ZOOM.type}
 								/>
-								<UpdateParams 
+								<UpdateParams
 									playlistName={playlist.name}
 									parameter="crop_pos_x"
 									min={defaults.CROP_POS_X.min}
@@ -85,7 +86,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									defaultValue={defaults.CROP_POS_X.defaultValue}
 									numberType={defaults.CROP_POS_X.type}
 									/>
-								<UpdateParams 
+								<UpdateParams
 									playlistName={playlist.name}
 									parameter="crop_pos_y"
 									min={defaults.CROP_POS_Y.min}
@@ -93,7 +94,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									defaultValue={defaults.CROP_POS_Y.defaultValue}
 									numberType={defaults.CROP_POS_Y.type}
 								/>
-								<UpdateParams 
+								<UpdateParams
 									playlistName={playlist.name}
 									parameter="gaussian_sigma"
 									min={defaults.GAUSSIAN_SIGMA.min}
@@ -101,7 +102,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									defaultValue={defaults.GAUSSIAN_SIGMA.defaultValue}
 									numberType={defaults.GAUSSIAN_SIGMA.type}
 								/>
-								<UpdateParams 
+								<UpdateParams
 									playlistName={playlist.name}
 									parameter="filter_mode"
 									min={defaults.FILTER_MODE.min}
