@@ -36,10 +36,34 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 								/>
 								<UpdateParams
 									playlistName={playlist.name}
+									parameter="aspect"
+									min={defaults.ASPECT.min}
+									max={defaults.ASPECT.max}
+									defaultValue={defaults.ASPECT.defaultValue}
+									numberType={defaults.ASPECT.type}
+								/>
+								<UpdateParams
+									playlistName={playlist.name}
+									parameter="cols"
+									min={defaults.COLUMNS.min}
+									max={defaults.COLUMNS.max}
+									defaultValue={item.hologram.settings.columns ?? defaults.COLUMNS.defaultValue}
+									numberType={defaults.COLUMNS.type}
+								/>
+								<UpdateParams
+									playlistName={playlist.name}
+									parameter="rows"
+									min={defaults.ROWS.min}
+									max={defaults.ROWS.max}
+									defaultValue={item.hologram.settings.rows ?? defaults.ROWS.defaultValue}
+									numberType={defaults.ROWS.type}
+								/>
+								<UpdateParams
+									playlistName={playlist.name}
 									parameter="zoom"
 									min={defaults.ZOOM.min}
 									max={defaults.ZOOM.max}
-									defaultValue={defaults.ZOOM.defaultValue}
+									defaultValue={item.hologram.settings.zoom ?? defaults.ZOOM.defaultValue}
 									numberType={defaults.ZOOM.type}
 								/>
 								<UpdateParams
@@ -49,7 +73,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									max={defaults.CROP_POS_X.max}
 									defaultValue={defaults.CROP_POS_X.defaultValue}
 									numberType={defaults.CROP_POS_X.type}
-									/>
+								/>
 								<UpdateParams
 									playlistName={playlist.name}
 									parameter="crop_pos_y"
@@ -73,6 +97,14 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									max={defaults.FILTER_MODE.max}
 									defaultValue={defaults.FILTER_MODE.defaultValue}
 									numberType={defaults.FILTER_MODE.type}
+								/>
+								<UpdateParams
+									playlistName={playlist.name}
+									parameter="aspect"
+									min={defaults.ASPECT.min}
+									max={defaults.ASPECT.max}
+									defaultValue={item.hologram.settings.aspect ?? defaults.ASPECT.defaultValue}
+									numberType={defaults.ASPECT.type}
 								/>
 							</div>
 						</div>
