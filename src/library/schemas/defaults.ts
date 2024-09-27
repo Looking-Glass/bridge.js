@@ -14,6 +14,22 @@ export interface defaults {
 	defaultValue: number
 }
 
+export const COLUMNS: defaults = {
+	min: 1, 
+	max: 50,
+	range: numberRange(1, 50),
+	type: "int",
+	defaultValue: 5,
+}
+
+export const ROWS: defaults = {
+	min: 1,
+	max: 50,
+	range: numberRange(1, 50),
+	type: "int",
+	defaultValue: 9,
+}
+
 export const ASPECT: defaults = {
 	min: 0.1,
 	max: 10,

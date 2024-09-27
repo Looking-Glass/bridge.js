@@ -17,6 +17,8 @@ export const QuiltHologramArgs = z.object({
 })
 
 export const RGBDHologramArgs = z.object({
+	rows: z.number().optional(),
+	columns: z.number().optional(),
 	/**Aspect Ratio of the hologram,
 	 * this should match the source image you provide, not the RGBD Pair */
 	aspect: z.number(),
