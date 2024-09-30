@@ -68,7 +68,7 @@ export class Playlist {
 
 		if (hologram.type == "quilt") {
 			item = new QuiltPlaylistItem({
-				hologram: hologram as QuiltHologram,
+				hologram: hologram,
 				id: this.items.length,
 				index: this.items.length,
 				playlistName: this.name,
@@ -79,7 +79,7 @@ export class Playlist {
 			return item
 		} else if (hologram.type == "rgbd") {
 			item = new RGBDPlaylistItem({
-				hologram: hologram as RGBDHologram,
+				hologram: hologram,
 				id: this.items.length,
 				index: this.items.length,
 				playlistName: this.name,
@@ -171,6 +171,8 @@ export class Playlist {
 				for (let i = 0; i < PlaylistItems.length; i++) {
 					PlaylistItems[i].orchestration = this.orchestration
 					const pRequestBody = PlaylistItems[i].toBridge()
+
+					console.log(pRequestBody, PlaylistItems[i])
 
 					let message = await sendMessage({ endpoint: "insert_playlist_entry", requestBody: pRequestBody })
 					if (message.success == false) {

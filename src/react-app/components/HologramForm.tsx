@@ -1,4 +1,4 @@
-import { BridgeClient, hologramFactory, QuiltHologram, RGBDHologram, hologramTypes } from "@library/index"
+import { BridgeClient, hologramFactory, QuiltHologram, RGBDHologram, hologramTypes, defaults } from "@library/index"
 import { useState } from "react"
 
 export interface HologramFactoryArgs {
@@ -69,9 +69,9 @@ export default function HologramForm({
 							Focus: {hologramSettings.focus}
 							<input
 								type="range"
-								min="-0.05"
-								max="0.05"
-								step="0.001"
+								min={defaults.FOCUS.min}
+								max={defaults.FOCUS.max}
+								step={0.01}
 								defaultValue={0}
 								onChange={(e) => {
 									setHologramSettings({ ...hologramSettings, focus: parseFloat(e.target.value) })
