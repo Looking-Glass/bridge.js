@@ -72,7 +72,7 @@ export default function HologramForm({
 								min={defaults.FOCUS.min}
 								max={defaults.FOCUS.max}
 								step={0.01}
-								defaultValue={0}
+								defaultValue={defaults.FOCUS.defaultValue}
 								onChange={(e) => {
 									setHologramSettings({ ...hologramSettings, focus: parseFloat(e.target.value) })
 								}}></input>
