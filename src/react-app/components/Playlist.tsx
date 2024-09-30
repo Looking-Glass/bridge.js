@@ -39,7 +39,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="aspect"
 									min={defaults.ASPECT.min}
 									max={defaults.ASPECT.max}
-									defaultValue={defaults.ASPECT.defaultValue}
+									defaultValue={item.hologram.settings.aspect ?? defaults.ASPECT.defaultValue}
 									numberType={defaults.ASPECT.type}
 								/>
 								<UpdateParams
@@ -97,14 +97,6 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									max={defaults.FILTER_MODE.max}
 									defaultValue={defaults.FILTER_MODE.defaultValue}
 									numberType={defaults.FILTER_MODE.type}
-								/>
-								<UpdateParams
-									playlistName={playlist.name}
-									parameter="aspect"
-									min={defaults.ASPECT.min}
-									max={defaults.ASPECT.max}
-									defaultValue={item.hologram.settings.aspect ?? defaults.ASPECT.defaultValue}
-									numberType={defaults.ASPECT.type}
 								/>
 							</div>
 						</div>
