@@ -100,13 +100,13 @@ export declare const monitorConnectResponse: z.ZodObject<{
             made_by_looking_glass: z.ZodObject<{
                 name: z.ZodString;
                 type: z.ZodLiteral<"WSTRING">;
-                value: z.ZodString;
+                value: z.ZodBoolean;
             }, "strip", z.ZodTypeAny, {
-                value: string;
+                value: boolean;
                 name: string;
                 type: "WSTRING";
             }, {
-                value: string;
+                value: boolean;
                 name: string;
                 type: "WSTRING";
             }>;
@@ -227,7 +227,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             made_by_looking_glass: {
-                value: string;
+                value: boolean;
                 name: string;
                 type: "WSTRING";
             };
@@ -288,7 +288,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             made_by_looking_glass: {
-                value: string;
+                value: boolean;
                 name: string;
                 type: "WSTRING";
             };
@@ -351,7 +351,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             made_by_looking_glass: {
-                value: string;
+                value: boolean;
                 name: string;
                 type: "WSTRING";
             };
@@ -416,7 +416,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             made_by_looking_glass: {
-                value: string;
+                value: boolean;
                 name: string;
                 type: "WSTRING";
             };
@@ -501,7 +501,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             made_by_looking_glass: {
-                value: string;
+                value: boolean;
                 name: string;
                 type: "WSTRING";
             };
@@ -579,7 +579,7 @@ export declare const monitorConnectResponse: z.ZodObject<{
                 type: "WSTRING";
             };
             made_by_looking_glass: {
-                value: string;
+                value: boolean;
                 name: string;
                 type: "WSTRING";
             };
@@ -2171,7 +2171,7 @@ export declare const allEventsResponse: z.ZodObject<{
 }>;
 export type BridgeEventMap = {
     "Monitor Connect": z.infer<typeof monitorConnectResponse>;
-    "Monitor Disconnect": z.infer<typeof progressUpdateResponse>;
+    "Monitor Disconnect": z.infer<typeof monitorConnectResponse>;
     "Progress Start": z.infer<typeof progressUpdateResponse>;
     "Progress Completion": z.infer<typeof progressUpdateResponse>;
     "Progress Update": z.infer<typeof progressUpdateResponse>;

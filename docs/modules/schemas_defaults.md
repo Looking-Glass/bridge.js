@@ -15,14 +15,18 @@
 ### Variables
 
 - [ASPECT](schemas_defaults.md#aspect)
+- [COLUMNS](schemas_defaults.md#columns)
 - [CROP\_POS\_X](schemas_defaults.md#crop_pos_x)
 - [CROP\_POS\_Y](schemas_defaults.md#crop_pos_y)
 - [DEPTHINESS](schemas_defaults.md#depthiness)
 - [DEPTH\_CUTOFF](schemas_defaults.md#depth_cutoff)
+- [FILTER\_MODE](schemas_defaults.md#filter_mode)
 - [FOCUS](schemas_defaults.md#focus)
+- [GAUSSIAN\_SIGMA](schemas_defaults.md#gaussian_sigma)
 - [QUILT\_COLS](schemas_defaults.md#quilt_cols)
 - [QUILT\_ROWS](schemas_defaults.md#quilt_rows)
 - [QUILT\_VIEW\_COUNT](schemas_defaults.md#quilt_view_count)
+- [ROWS](schemas_defaults.md#rows)
 - [ZOOM](schemas_defaults.md#zoom)
 
 ## Type Aliases
@@ -39,6 +43,12 @@ This helps prevent sending bridge values that are out of range.
 ### ASPECT
 
 • `Const` **ASPECT**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
+
+___
+
+### COLUMNS
+
+• `Const` **COLUMNS**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 
@@ -66,9 +76,21 @@ ___
 
 ___
 
+### FILTER\_MODE
+
+• `Const` **FILTER\_MODE**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
+
+___
+
 ### FOCUS
 
 • `Const` **FOCUS**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
+
+___
+
+### GAUSSIAN\_SIGMA
+
+• `Const` **GAUSSIAN\_SIGMA**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 
@@ -87,6 +109,12 @@ ___
 ### QUILT\_VIEW\_COUNT
 
 • `Const` **QUILT\_VIEW\_COUNT**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
+
+___
+
+### ROWS
+
+• `Const` **ROWS**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
 
 ___
 

@@ -11,6 +11,23 @@ export interface defaults {
 	max: number
 	range: ReturnType<typeof numberRange>
 	type: NumberType
+	defaultValue: number
+}
+
+export const COLUMNS: defaults = {
+	min: 1, 
+	max: 50,
+	range: numberRange(1, 50),
+	type: "int",
+	defaultValue: 5,
+}
+
+export const ROWS: defaults = {
+	min: 1,
+	max: 50,
+	range: numberRange(1, 50),
+	type: "int",
+	defaultValue: 9,
 }
 
 export const ASPECT: defaults = {
@@ -18,6 +35,7 @@ export const ASPECT: defaults = {
 	max: 10,
 	range: numberRange(0.1, 10),
 	type: "float",
+	defaultValue: 1,
 }
 
 export const DEPTHINESS: defaults = {
@@ -25,6 +43,7 @@ export const DEPTHINESS: defaults = {
 	max: 4,
 	range: numberRange(0.1, 4),
 	type: "float",
+	defaultValue: 1.5,
 }
 
 export const DEPTH_CUTOFF: defaults = {
@@ -32,27 +51,31 @@ export const DEPTH_CUTOFF: defaults = {
 	max: 1,
 	range: numberRange(0, 1),
 	type: "float",
+	defaultValue: 0,
 }
 
 export const CROP_POS_X: defaults = {
-	min: -1,
-	max: 1,
-	range: numberRange(-1, 1),
+	min: -2,
+	max: 2,
+	range: numberRange(-2, 2),
 	type: "float",
+	defaultValue: 0,
 }
 
 export const CROP_POS_Y: defaults = {
-	min: -1,
-	max: 1,
-	range: numberRange(-1, 1),
+	min: -2,
+	max: 2,
+	range: numberRange(-2, 2),
 	type: "float",
+	defaultValue: 0,
 }
 
 export const ZOOM: defaults = {
 	min: 0.1,
-	max: 2,
-	range: numberRange(0.1, 2),
+	max: 4,
+	range: numberRange(0.1, 4),
 	type: "float",
+	defaultValue: 0,
 }
 
 export const FOCUS: defaults = {
@@ -60,6 +83,7 @@ export const FOCUS: defaults = {
 	max: 0.05,
 	range: numberRange(-0.05, 0.05),
 	type: "float",
+	defaultValue: 0,
 }
 
 export const QUILT_ROWS: defaults = {
@@ -67,6 +91,7 @@ export const QUILT_ROWS: defaults = {
 	max: 50,
 	range: numberRange(1, 50),
 	type: "int",
+	defaultValue: 5,
 }
 
 export const QUILT_COLS: defaults = {
@@ -74,10 +99,28 @@ export const QUILT_COLS: defaults = {
 	max: 50,
 	range: numberRange(1, 50),
 	type: "int",
+	defaultValue: 9
 }
 export const QUILT_VIEW_COUNT: defaults = {
 	min: 1,
 	max: 2500,
 	range: numberRange(1, 2500),
 	type: "int",
+	defaultValue: 45
+}
+
+export const GAUSSIAN_SIGMA: defaults = {
+	min: -1,
+	max: 1,
+	range: numberRange(-1, 1),
+	type: "float",
+	defaultValue: 0.01,
+}
+
+export const FILTER_MODE: defaults = {
+	min: 0,
+	max: 3,
+	range: numberRange(0, 3),
+	type: "int",
+	defaultValue: 2,
 }

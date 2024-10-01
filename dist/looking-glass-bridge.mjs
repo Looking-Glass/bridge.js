@@ -1,7 +1,7 @@
-var Fe = Object.defineProperty;
-var et = (n, e, t) => e in n ? Fe(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
-var x = (n, e, t) => (et(n, typeof e != "symbol" ? e + "" : e, t), t);
-function tt(n) {
+var tt = Object.defineProperty;
+var st = (n, e, t) => e in n ? tt(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
+var x = (n, e, t) => (st(n, typeof e != "symbol" ? e + "" : e, t), t);
+function nt(n) {
   const e = JSON.parse(n);
   return e == null ? (console.warn("Unable to parse calibration"), null) : {
     DPI: e.DPI.value,
@@ -21,7 +21,7 @@ function tt(n) {
     viewCone: e.viewCone.value
   };
 }
-function st(n) {
+function rt(n) {
   const e = JSON.parse(n);
   return e == null ? null : {
     quiltAspect: e.quiltAspect,
@@ -31,10 +31,11 @@ function st(n) {
     columns: e.tileX
   };
 }
-function nt(n) {
+function at(n) {
   return {
-    calibration: tt(n.calibration.value),
-    defaultQuilt: st(n.defaultQuilt.value),
+    calibration: nt(n.calibration.value),
+    defaultQuilt: rt(n.defaultQuilt.value),
+    hwid: n.hwid.value,
     hardwareVersion: n.hardwareVersion.value,
     index: n.index.value,
     state: n.state.value,
@@ -57,7 +58,7 @@ async function j(n) {
     return console.group("%c Bridge Error:", "color: #ff0000"), console.error("Bridge Error", r), console.groupEnd(), console.groupEnd(), { success: !1, response: null };
   }
 }
-async function rt({ name: n, orchestration: e }) {
+async function it({ name: n, orchestration: e }) {
   if (N.getInstance().log("%c function call: tryEnterOrchestration ", "color: magenta; font-weight: bold; border: solid"), (n == null || n == "") && (n = "default"), e !== "" && e !== void 0)
     return { success: !1, response: null };
   let r = await j({
@@ -68,7 +69,7 @@ async function rt({ name: n, orchestration: e }) {
   });
   return r.success == !1 ? (console.error("failed to enter orchestration", r), { success: !1, response: null }) : (console.groupEnd(), { success: !0, response: r.response });
 }
-async function at(n) {
+async function ot(n) {
   let e = {
     orchestration: n
   }, t = new Promise((r) => {
@@ -84,13 +85,13 @@ async function at(n) {
   ]);
   return !s || s.success == !1 ? { success: !1, response: null } : { success: !0, response: s.response };
 }
-function it() {
+function lt() {
   return window !== void 0 ? !0 : (console.error("Window is unavailable!"), !1);
 }
-function ot() {
+function ct() {
   return "WebSocket" in window ? !0 : (console.error("WebSocket NOT supported by your Browser!"), !1);
 }
-class lt {
+class ut {
   constructor() {
     x(this, "eventSource");
     x(this, "MessageHandler");
@@ -142,9 +143,9 @@ class lt {
   }
   async connectToBridgeEventSource(e) {
     const t = N.getInstance();
-    if (t.log("%c Connect to Bridge Events Source ", "color: chartreuse; font-weight: bold; border: solid"), !it())
+    if (t.log("%c Connect to Bridge Events Source ", "color: chartreuse; font-weight: bold; border: solid"), !lt())
       return { success: !1 };
-    if (!ot())
+    if (!ct())
       return { success: !1 };
     let s = this;
     return this.ws = new WebSocket("ws://localhost:9724/event_source"), new Promise((r) => {
@@ -166,7 +167,7 @@ class lt {
     });
   }
 }
-class Ue {
+class qe {
   constructor(e) {
     x(this, "orchestration");
     x(this, "hologram");
@@ -189,6 +190,7 @@ class Ue {
         rows: t.rows,
         cols: t.columns,
         focus: t.focus ? t.focus : 0,
+        zoom: t.zoom ? t.zoom : 1,
         aspect: t.aspect,
         view_count: t.viewCount,
         isRGBD: 0,
@@ -219,12 +221,12 @@ class Ue {
     throw new Error("Invalid hologram type");
   }
 }
-class Be extends Ue {
+class Ae extends qe {
   constructor(e) {
     super(e);
   }
 }
-class Ve extends Ue {
+class Be extends qe {
   constructor(e) {
     super(e);
   }
@@ -238,7 +240,7 @@ class De {
     var t;
     this.name = e.name, this.loop = e.loop, this.orchestration = e.orchestration, e.items ? this.items = (t = e.items) == null ? void 0 : t.map((s, r) => {
       if (s.type == "quilt")
-        return new Be({
+        return new Ae({
           hologram: s,
           id: r,
           index: r,
@@ -246,7 +248,7 @@ class De {
           orchestration: this.orchestration
         });
       if (s.type == "rgbd")
-        return new Ve({
+        return new Be({
           hologram: s,
           id: r,
           index: r,
@@ -260,13 +262,13 @@ class De {
   }
   addItem(e) {
     let t;
-    return e.type == "quilt" ? (t = new Be({
+    return e.type == "quilt" ? (t = new Ae({
       hologram: e,
       id: this.items.length,
       index: this.items.length,
       playlistName: this.name,
       orchestration: this.orchestration
-    }), this.items.push(t), t) : e.type == "rgbd" ? (t = new Ve({
+    }), this.items.push(t), t) : e.type == "rgbd" ? (t = new Be({
       hologram: e,
       id: this.items.length,
       index: this.items.length,
@@ -328,7 +330,7 @@ class De {
       for (let d = 0; d < a.length; d++) {
         a[d].orchestration = this.orchestration;
         const h = a[d].toBridge();
-        if ((await j({ endpoint: "insert_playlist_entry", requestBody: h })).success == !1)
+        if (console.log(h, a[d]), (await j({ endpoint: "insert_playlist_entry", requestBody: h })).success == !1)
           return console.error("failed to insert playlist entry"), !1;
       }
     const o = this.getCurrent({ orchestration: t, head: e });
@@ -441,8 +443,8 @@ const p = k.arrayToEnum([
   "invalid_intersection_types",
   "not_multiple_of",
   "not_finite"
-]), ct = (n) => JSON.stringify(n, null, 2).replace(/"([^"]+)":/g, "$1:");
-class Z extends Error {
+]), dt = (n) => JSON.stringify(n, null, 2).replace(/"([^"]+)":/g, "$1:");
+class M extends Error {
   constructor(e) {
     super(), this.issues = [], this.addIssue = (s) => {
       this.issues = [...this.issues, s];
@@ -497,7 +499,7 @@ class Z extends Error {
     return this.flatten();
   }
 }
-Z.create = (n) => new Z(n);
+M.create = (n) => new M(n);
 const ie = (n, e) => {
   let t;
   switch (n.code) {
@@ -555,7 +557,7 @@ const ie = (n, e) => {
   return { message: t };
 };
 let He = ie;
-function ut(n) {
+function ht(n) {
   He = n;
 }
 function _e() {
@@ -575,7 +577,7 @@ const be = (n) => {
     path: a,
     message: r.message || l
   };
-}, dt = [];
+}, pt = [];
 function f(n, e) {
   const t = be({
     issueData: e,
@@ -637,7 +639,7 @@ var y;
 (function(n) {
   n.errToObj = (e) => typeof e == "string" ? { message: e } : e || {}, n.toString = (e) => typeof e == "string" ? e : e == null ? void 0 : e.message;
 })(y || (y = {}));
-class V {
+class D {
   constructor(e, t, s, r) {
     this._cachedPath = [], this.parent = e, this.data = t, this._path = s, this._key = r;
   }
@@ -655,7 +657,7 @@ const Le = (n, e) => {
     get error() {
       if (this._error)
         return this._error;
-      const t = new Z(n.common.issues);
+      const t = new M(n.common.issues);
       return this._error = t, this._error;
     }
   };
@@ -768,7 +770,7 @@ class w {
     return this._refinement((s, r) => e(s) ? !0 : (r.addIssue(typeof t == "function" ? t(s, r) : t), !1));
   }
   _refinement(e) {
-    return new R({
+    return new V({
       schema: this,
       typeName: g.ZodEffects,
       effect: { type: "refinement", refinement: e }
@@ -787,7 +789,7 @@ class w {
     return this.nullable().optional();
   }
   array() {
-    return M.create(this, this._def);
+    return R.create(this, this._def);
   }
   promise() {
     return ae.create(this, this._def);
@@ -799,7 +801,7 @@ class w {
     return de.create(this, e, this._def);
   }
   transform(e) {
-    return new R({
+    return new V({
       ..._(this._def),
       schema: this,
       typeName: g.ZodEffects,
@@ -848,23 +850,23 @@ class w {
     return this.safeParse(null).success;
   }
 }
-const ht = /^c[^\s-]{8,}$/i, pt = /^[a-z][a-z0-9]*$/, ft = /[0-9A-HJKMNP-TV-Z]{26}/, mt = /^([a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}|00000000-0000-0000-0000-000000000000)$/i, yt = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\])|(\[IPv6:(([a-f0-9]{1,4}:){7}|::([a-f0-9]{1,4}:){0,6}|([a-f0-9]{1,4}:){1}:([a-f0-9]{1,4}:){0,5}|([a-f0-9]{1,4}:){2}:([a-f0-9]{1,4}:){0,4}|([a-f0-9]{1,4}:){3}:([a-f0-9]{1,4}:){0,3}|([a-f0-9]{1,4}:){4}:([a-f0-9]{1,4}:){0,2}|([a-f0-9]{1,4}:){5}:([a-f0-9]{1,4}:){0,1})([a-f0-9]{1,4}|(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2})))\])|([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])*(\.[A-Za-z]{2,})+))$/, gt = /^(\p{Extended_Pictographic}|\p{Emoji_Component})+$/u, vt = /^(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))$/, _t = /^(([a-f0-9]{1,4}:){7}|::([a-f0-9]{1,4}:){0,6}|([a-f0-9]{1,4}:){1}:([a-f0-9]{1,4}:){0,5}|([a-f0-9]{1,4}:){2}:([a-f0-9]{1,4}:){0,4}|([a-f0-9]{1,4}:){3}:([a-f0-9]{1,4}:){0,3}|([a-f0-9]{1,4}:){4}:([a-f0-9]{1,4}:){0,2}|([a-f0-9]{1,4}:){5}:([a-f0-9]{1,4}:){0,1})([a-f0-9]{1,4}|(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2})))$/, bt = (n) => n.precision ? n.offset ? new RegExp(`^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{${n.precision}}(([+-]\\d{2}(:?\\d{2})?)|Z)$`) : new RegExp(`^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{${n.precision}}Z$`) : n.precision === 0 ? n.offset ? new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(([+-]\\d{2}(:?\\d{2})?)|Z)$") : new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$") : n.offset ? new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(([+-]\\d{2}(:?\\d{2})?)|Z)$") : new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$");
-function wt(n, e) {
-  return !!((e === "v4" || !e) && vt.test(n) || (e === "v6" || !e) && _t.test(n));
+const ft = /^c[^\s-]{8,}$/i, mt = /^[a-z][a-z0-9]*$/, yt = /[0-9A-HJKMNP-TV-Z]{26}/, gt = /^([a-f0-9]{8}-[a-f0-9]{4}-[1-5][a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12}|00000000-0000-0000-0000-000000000000)$/i, vt = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\])|(\[IPv6:(([a-f0-9]{1,4}:){7}|::([a-f0-9]{1,4}:){0,6}|([a-f0-9]{1,4}:){1}:([a-f0-9]{1,4}:){0,5}|([a-f0-9]{1,4}:){2}:([a-f0-9]{1,4}:){0,4}|([a-f0-9]{1,4}:){3}:([a-f0-9]{1,4}:){0,3}|([a-f0-9]{1,4}:){4}:([a-f0-9]{1,4}:){0,2}|([a-f0-9]{1,4}:){5}:([a-f0-9]{1,4}:){0,1})([a-f0-9]{1,4}|(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2})))\])|([A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])*(\.[A-Za-z]{2,})+))$/, _t = /^(\p{Extended_Pictographic}|\p{Emoji_Component})+$/u, bt = /^(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))$/, wt = /^(([a-f0-9]{1,4}:){7}|::([a-f0-9]{1,4}:){0,6}|([a-f0-9]{1,4}:){1}:([a-f0-9]{1,4}:){0,5}|([a-f0-9]{1,4}:){2}:([a-f0-9]{1,4}:){0,4}|([a-f0-9]{1,4}:){3}:([a-f0-9]{1,4}:){0,3}|([a-f0-9]{1,4}:){4}:([a-f0-9]{1,4}:){0,2}|([a-f0-9]{1,4}:){5}:([a-f0-9]{1,4}:){0,1})([a-f0-9]{1,4}|(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2})))$/, xt = (n) => n.precision ? n.offset ? new RegExp(`^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{${n.precision}}(([+-]\\d{2}(:?\\d{2})?)|Z)$`) : new RegExp(`^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{${n.precision}}Z$`) : n.precision === 0 ? n.offset ? new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(([+-]\\d{2}(:?\\d{2})?)|Z)$") : new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$") : n.offset ? new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(([+-]\\d{2}(:?\\d{2})?)|Z)$") : new RegExp("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$");
+function kt(n, e) {
+  return !!((e === "v4" || !e) && bt.test(n) || (e === "v6" || !e) && wt.test(n));
 }
-class O extends w {
+class Z extends w {
   constructor() {
     super(...arguments), this._regex = (e, t, s) => this.refinement((r) => e.test(r), {
       validation: t,
       code: u.invalid_string,
       ...y.errToObj(s)
-    }), this.nonempty = (e) => this.min(1, y.errToObj(e)), this.trim = () => new O({
+    }), this.nonempty = (e) => this.min(1, y.errToObj(e)), this.trim = () => new Z({
       ...this._def,
       checks: [...this._def.checks, { kind: "trim" }]
-    }), this.toLowerCase = () => new O({
+    }), this.toLowerCase = () => new Z({
       ...this._def,
       checks: [...this._def.checks, { kind: "toLowerCase" }]
-    }), this.toUpperCase = () => new O({
+    }), this.toUpperCase = () => new Z({
       ...this._def,
       checks: [...this._def.checks, { kind: "toUpperCase" }]
     });
@@ -921,37 +923,37 @@ class O extends w {
           message: a.message
         }), s.dirty());
       } else if (a.kind === "email")
-        yt.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
+        vt.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
           validation: "email",
           code: u.invalid_string,
           message: a.message
         }), s.dirty());
       else if (a.kind === "emoji")
-        gt.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
+        _t.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
           validation: "emoji",
           code: u.invalid_string,
           message: a.message
         }), s.dirty());
       else if (a.kind === "uuid")
-        mt.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
+        gt.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
           validation: "uuid",
           code: u.invalid_string,
           message: a.message
         }), s.dirty());
       else if (a.kind === "cuid")
-        ht.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
+        ft.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
           validation: "cuid",
           code: u.invalid_string,
           message: a.message
         }), s.dirty());
       else if (a.kind === "cuid2")
-        pt.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
+        mt.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
           validation: "cuid2",
           code: u.invalid_string,
           message: a.message
         }), s.dirty());
       else if (a.kind === "ulid")
-        ft.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
+        yt.test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
           validation: "ulid",
           code: u.invalid_string,
           message: a.message
@@ -983,11 +985,11 @@ class O extends w {
           code: u.invalid_string,
           validation: { endsWith: a.value },
           message: a.message
-        }), s.dirty()) : a.kind === "datetime" ? bt(a).test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
+        }), s.dirty()) : a.kind === "datetime" ? xt(a).test(e.data) || (r = this._getOrReturnCtx(e, r), f(r, {
           code: u.invalid_string,
           validation: "datetime",
           message: a.message
-        }), s.dirty()) : a.kind === "ip" ? wt(e.data, a.version) || (r = this._getOrReturnCtx(e, r), f(r, {
+        }), s.dirty()) : a.kind === "ip" ? kt(e.data, a.version) || (r = this._getOrReturnCtx(e, r), f(r, {
           validation: "ip",
           code: u.invalid_string,
           message: a.message
@@ -995,7 +997,7 @@ class O extends w {
     return { status: s.value, value: e.data };
   }
   _addCheck(e) {
-    return new O({
+    return new Z({
       ...this._def,
       checks: [...this._def.checks, e]
     });
@@ -1128,16 +1130,16 @@ class O extends w {
     return e;
   }
 }
-O.create = (n) => {
+Z.create = (n) => {
   var e;
-  return new O({
+  return new Z({
     checks: [],
     typeName: g.ZodString,
     coerce: (e = n == null ? void 0 : n.coerce) !== null && e !== void 0 ? e : !1,
     ..._(n)
   });
 };
-function xt(n, e) {
+function Tt(n, e) {
   const t = (n.toString().split(".")[1] || "").length, s = (e.toString().split(".")[1] || "").length, r = t > s ? t : s, a = parseInt(n.toFixed(r).replace(".", "")), o = parseInt(e.toFixed(r).replace(".", ""));
   return a % o / Math.pow(10, r);
 }
@@ -1176,7 +1178,7 @@ class z extends w {
         inclusive: a.inclusive,
         exact: !1,
         message: a.message
-      }), r.dirty()) : a.kind === "multipleOf" ? xt(e.data, a.value) !== 0 && (s = this._getOrReturnCtx(e, s), f(s, {
+      }), r.dirty()) : a.kind === "multipleOf" ? Tt(e.data, a.value) !== 0 && (s = this._getOrReturnCtx(e, s), f(s, {
         code: u.not_multiple_of,
         multipleOf: a.value,
         message: a.message
@@ -1612,7 +1614,7 @@ Q.create = (n) => new Q({
   typeName: g.ZodUnknown,
   ..._(n)
 });
-class q extends w {
+class U extends w {
   _parse(e) {
     const t = this._getOrReturnCtx(e);
     return f(t, {
@@ -1622,7 +1624,7 @@ class q extends w {
     }), v;
   }
 }
-q.create = (n) => new q({
+U.create = (n) => new U({
   typeName: g.ZodNever,
   ..._(n)
 });
@@ -1643,7 +1645,7 @@ Te.create = (n) => new Te({
   typeName: g.ZodVoid,
   ..._(n)
 });
-class M extends w {
+class R extends w {
   _parse(e) {
     const { ctx: t, status: s } = this._processInputParams(e), r = this._def;
     if (t.parsedType !== p.array)
@@ -1679,27 +1681,27 @@ class M extends w {
       exact: !1,
       message: r.maxLength.message
     }), s.dirty()), t.common.async)
-      return Promise.all([...t.data].map((o, l) => r.type._parseAsync(new V(t, o, t.path, l)))).then((o) => E.mergeArray(s, o));
-    const a = [...t.data].map((o, l) => r.type._parseSync(new V(t, o, t.path, l)));
+      return Promise.all([...t.data].map((o, l) => r.type._parseAsync(new D(t, o, t.path, l)))).then((o) => E.mergeArray(s, o));
+    const a = [...t.data].map((o, l) => r.type._parseSync(new D(t, o, t.path, l)));
     return E.mergeArray(s, a);
   }
   get element() {
     return this._def.type;
   }
   min(e, t) {
-    return new M({
+    return new R({
       ...this._def,
       minLength: { value: e, message: y.toString(t) }
     });
   }
   max(e, t) {
-    return new M({
+    return new R({
       ...this._def,
       maxLength: { value: e, message: y.toString(t) }
     });
   }
   length(e, t) {
-    return new M({
+    return new R({
       ...this._def,
       exactLength: { value: e, message: y.toString(t) }
     });
@@ -1708,7 +1710,7 @@ class M extends w {
     return this.min(1, e);
   }
 }
-M.create = (n, e) => new M({
+R.create = (n, e) => new R({
   type: n,
   minLength: null,
   maxLength: null,
@@ -1728,10 +1730,10 @@ function te(n) {
       shape: () => e
     });
   } else
-    return n instanceof M ? new M({
+    return n instanceof R ? new R({
       ...n._def,
       type: te(n.element)
-    }) : n instanceof $ ? $.create(te(n.unwrap())) : n instanceof F ? F.create(te(n.unwrap())) : n instanceof D ? D.create(n.items.map((e) => te(e))) : n;
+    }) : n instanceof $ ? $.create(te(n.unwrap())) : n instanceof F ? F.create(te(n.unwrap())) : n instanceof L ? L.create(n.items.map((e) => te(e))) : n;
 }
 class P extends w {
   constructor() {
@@ -1753,7 +1755,7 @@ class P extends w {
       }), v;
     }
     const { status: s, ctx: r } = this._processInputParams(e), { shape: a, keys: o } = this._getCached(), l = [];
-    if (!(this._def.catchall instanceof q && this._def.unknownKeys === "strip"))
+    if (!(this._def.catchall instanceof U && this._def.unknownKeys === "strip"))
       for (const h in r.data)
         o.includes(h) || l.push(h);
     const d = [];
@@ -1761,11 +1763,11 @@ class P extends w {
       const b = a[h], ee = r.data[h];
       d.push({
         key: { status: "valid", value: h },
-        value: b._parse(new V(r, ee, r.path, h)),
+        value: b._parse(new D(r, ee, r.path, h)),
         alwaysSet: h in r.data
       });
     }
-    if (this._def.catchall instanceof q) {
+    if (this._def.catchall instanceof U) {
       const h = this._def.unknownKeys;
       if (h === "passthrough")
         for (const b of l)
@@ -1787,7 +1789,7 @@ class P extends w {
         d.push({
           key: { status: "valid", value: b },
           value: h._parse(
-            new V(r, ee, r.path, b)
+            new D(r, ee, r.path, b)
             //, ctx.child(key), value, getParsedType(value)
           ),
           alwaysSet: b in r.data
@@ -2003,21 +2005,21 @@ class P extends w {
 P.create = (n, e) => new P({
   shape: () => n,
   unknownKeys: "strip",
-  catchall: q.create(),
+  catchall: U.create(),
   typeName: g.ZodObject,
   ..._(e)
 });
 P.strictCreate = (n, e) => new P({
   shape: () => n,
   unknownKeys: "strict",
-  catchall: q.create(),
+  catchall: U.create(),
   typeName: g.ZodObject,
   ..._(e)
 });
 P.lazycreate = (n, e) => new P({
   shape: n,
   unknownKeys: "strip",
-  catchall: q.create(),
+  catchall: U.create(),
   typeName: g.ZodObject,
   ..._(e)
 });
@@ -2031,7 +2033,7 @@ class ue extends w {
       for (const l of a)
         if (l.result.status === "dirty")
           return t.common.issues.push(...l.ctx.common.issues), l.result;
-      const o = a.map((l) => new Z(l.ctx.common.issues));
+      const o = a.map((l) => new M(l.ctx.common.issues));
       return f(t, {
         code: u.invalid_union,
         unionErrors: o
@@ -2078,7 +2080,7 @@ class ue extends w {
       }
       if (a)
         return t.common.issues.push(...a.ctx.common.issues), a.result;
-      const l = o.map((d) => new Z(d));
+      const l = o.map((d) => new M(d));
       return f(t, {
         code: u.invalid_union,
         unionErrors: l
@@ -2094,7 +2096,7 @@ ue.create = (n, e) => new ue({
   typeName: g.ZodUnion,
   ..._(e)
 });
-const ve = (n) => n instanceof pe ? ve(n.schema) : n instanceof R ? ve(n.innerType()) : n instanceof fe ? [n.value] : n instanceof G ? n.options : n instanceof me ? Object.keys(n.enum) : n instanceof ye ? ve(n._def.innerType) : n instanceof le ? [void 0] : n instanceof ce ? [null] : null;
+const ve = (n) => n instanceof pe ? ve(n.schema) : n instanceof V ? ve(n.innerType()) : n instanceof fe ? [n.value] : n instanceof G ? n.options : n instanceof me ? Object.keys(n.enum) : n instanceof ye ? ve(n._def.innerType) : n instanceof le ? [void 0] : n instanceof ce ? [null] : null;
 class Ie extends w {
   _parse(e) {
     const { ctx: t } = this._processInputParams(e);
@@ -2222,7 +2224,7 @@ de.create = (n, e, t) => new de({
   typeName: g.ZodIntersection,
   ..._(t)
 });
-class D extends w {
+class L extends w {
   _parse(e) {
     const { status: t, ctx: s } = this._processInputParams(e);
     if (s.parsedType !== p.array)
@@ -2248,7 +2250,7 @@ class D extends w {
     }), t.dirty());
     const a = [...s.data].map((o, l) => {
       const d = this._def.items[l] || this._def.rest;
-      return d ? d._parse(new V(s, o, s.path, l)) : null;
+      return d ? d._parse(new D(s, o, s.path, l)) : null;
     }).filter((o) => !!o);
     return s.common.async ? Promise.all(a).then((o) => E.mergeArray(t, o)) : E.mergeArray(t, a);
   }
@@ -2256,16 +2258,16 @@ class D extends w {
     return this._def.items;
   }
   rest(e) {
-    return new D({
+    return new L({
       ...this._def,
       rest: e
     });
   }
 }
-D.create = (n, e) => {
+L.create = (n, e) => {
   if (!Array.isArray(n))
     throw new Error("You must pass an array of schemas to z.tuple([ ... ])");
-  return new D({
+  return new L({
     items: n,
     typeName: g.ZodTuple,
     rest: null,
@@ -2290,8 +2292,8 @@ class he extends w {
     const r = [], a = this._def.keyType, o = this._def.valueType;
     for (const l in s.data)
       r.push({
-        key: a._parse(new V(s, l, s.path, l)),
-        value: o._parse(new V(s, s.data[l], s.path, l))
+        key: a._parse(new D(s, l, s.path, l)),
+        value: o._parse(new D(s, s.data[l], s.path, l))
       });
     return s.common.async ? E.mergeObjectAsync(t, r) : E.mergeObjectSync(t, r);
   }
@@ -2305,7 +2307,7 @@ class he extends w {
       typeName: g.ZodRecord,
       ..._(s)
     }) : new he({
-      keyType: O.create(),
+      keyType: Z.create(),
       valueType: e,
       typeName: g.ZodRecord,
       ..._(t)
@@ -2322,8 +2324,8 @@ class je extends w {
         received: s.parsedType
       }), v;
     const r = this._def.keyType, a = this._def.valueType, o = [...s.data.entries()].map(([l, d], h) => ({
-      key: r._parse(new V(s, l, s.path, [h, "key"])),
-      value: a._parse(new V(s, d, s.path, [h, "value"]))
+      key: r._parse(new D(s, l, s.path, [h, "key"])),
+      value: a._parse(new D(s, d, s.path, [h, "value"]))
     }));
     if (s.common.async) {
       const l = /* @__PURE__ */ new Map();
@@ -2389,7 +2391,7 @@ class K extends w {
       }
       return { status: t.value, value: h };
     }
-    const l = [...s.data.values()].map((d, h) => a._parse(new V(s, d, s.path, h)));
+    const l = [...s.data.values()].map((d, h) => a._parse(new D(s, d, s.path, h)));
     return s.common.async ? Promise.all(l).then((d) => o(d)) : o(l);
   }
   min(e, t) {
@@ -2464,7 +2466,7 @@ class se extends w {
     }
     const a = { errorMap: t.common.contextualErrorMap }, o = t.data;
     return this._def.returns instanceof ae ? S(async (...l) => {
-      const d = new Z([]), h = await this._def.args.parseAsync(l, a).catch((Ee) => {
+      const d = new M([]), h = await this._def.args.parseAsync(l, a).catch((Ee) => {
         throw d.addIssue(s(l, Ee)), d;
       }), b = await o(...h);
       return await this._def.returns._def.type.parseAsync(b, a).catch((Ee) => {
@@ -2473,10 +2475,10 @@ class se extends w {
     }) : S((...l) => {
       const d = this._def.args.safeParse(l, a);
       if (!d.success)
-        throw new Z([s(l, d.error)]);
+        throw new M([s(l, d.error)]);
       const h = o(...d.data), b = this._def.returns.safeParse(h, a);
       if (!b.success)
-        throw new Z([r(h, b.error)]);
+        throw new M([r(h, b.error)]);
       return b.data;
     });
   }
@@ -2489,7 +2491,7 @@ class se extends w {
   args(...e) {
     return new se({
       ...this._def,
-      args: D.create(e).rest(Q.create())
+      args: L.create(e).rest(Q.create())
     });
   }
   returns(e) {
@@ -2506,7 +2508,7 @@ class se extends w {
   }
   static create(e, t, s) {
     return new se({
-      args: e || D.create([]).rest(Q.create()),
+      args: e || L.create([]).rest(Q.create()),
       returns: t || Q.create(),
       typeName: g.ZodFunction,
       ..._(s)
@@ -2658,7 +2660,7 @@ ae.create = (n, e) => new ae({
   typeName: g.ZodPromise,
   ..._(e)
 });
-class R extends w {
+class V extends w {
   innerType() {
     return this._def.schema;
   }
@@ -2724,13 +2726,13 @@ class R extends w {
     k.assertNever(r);
   }
 }
-R.create = (n, e, t) => new R({
+V.create = (n, e, t) => new V({
   schema: n,
   typeName: g.ZodEffects,
   effect: e,
   ..._(t)
 });
-R.createWithPreprocess = (n, e, t) => new R({
+V.createWithPreprocess = (n, e, t) => new V({
   schema: e,
   effect: { type: "preprocess", transform: n },
   typeName: g.ZodEffects,
@@ -2801,7 +2803,7 @@ class Pe extends w {
       status: "valid",
       value: a.status === "valid" ? a.value : this._def.catchValue({
         get error() {
-          return new Z(s.common.issues);
+          return new M(s.common.issues);
         },
         input: s.data
       })
@@ -2809,7 +2811,7 @@ class Pe extends w {
       status: "valid",
       value: r.status === "valid" ? r.value : this._def.catchValue({
         get error() {
-          return new Z(s.common.issues);
+          return new M(s.common.issues);
         },
         input: s.data
       })
@@ -2842,7 +2844,7 @@ Ce.create = (n) => new Ce({
   typeName: g.ZodNaN,
   ..._(n)
 });
-const kt = Symbol("zod_brand");
+const jt = Symbol("zod_brand");
 class Ge extends w {
   _parse(e) {
     const { ctx: t } = this._processInputParams(e), s = t.data;
@@ -2902,17 +2904,17 @@ const Je = (n, e = {}, t) => n ? re.create().superRefine((s, r) => {
     const l = typeof e == "function" ? e(s) : typeof e == "string" ? { message: e } : e, d = (o = (a = l.fatal) !== null && a !== void 0 ? a : t) !== null && o !== void 0 ? o : !0, h = typeof l == "string" ? { message: l } : l;
     r.addIssue({ code: "custom", ...h, fatal: d });
   }
-}) : re.create(), Tt = {
+}) : re.create(), Pt = {
   object: P.lazycreate
 };
 var g;
 (function(n) {
   n.ZodString = "ZodString", n.ZodNumber = "ZodNumber", n.ZodNaN = "ZodNaN", n.ZodBigInt = "ZodBigInt", n.ZodBoolean = "ZodBoolean", n.ZodDate = "ZodDate", n.ZodSymbol = "ZodSymbol", n.ZodUndefined = "ZodUndefined", n.ZodNull = "ZodNull", n.ZodAny = "ZodAny", n.ZodUnknown = "ZodUnknown", n.ZodNever = "ZodNever", n.ZodVoid = "ZodVoid", n.ZodArray = "ZodArray", n.ZodObject = "ZodObject", n.ZodUnion = "ZodUnion", n.ZodDiscriminatedUnion = "ZodDiscriminatedUnion", n.ZodIntersection = "ZodIntersection", n.ZodTuple = "ZodTuple", n.ZodRecord = "ZodRecord", n.ZodMap = "ZodMap", n.ZodSet = "ZodSet", n.ZodFunction = "ZodFunction", n.ZodLazy = "ZodLazy", n.ZodLiteral = "ZodLiteral", n.ZodEnum = "ZodEnum", n.ZodEffects = "ZodEffects", n.ZodNativeEnum = "ZodNativeEnum", n.ZodOptional = "ZodOptional", n.ZodNullable = "ZodNullable", n.ZodDefault = "ZodDefault", n.ZodCatch = "ZodCatch", n.ZodPromise = "ZodPromise", n.ZodBranded = "ZodBranded", n.ZodPipeline = "ZodPipeline";
 })(g || (g = {}));
-const jt = (n, e = {
+const Ct = (n, e = {
   message: `Input not instance of ${n.name}`
-}) => Je((t) => t instanceof n, e), Me = O.create, Ye = z.create, Pt = Ce.create, Ct = W.create, Qe = oe.create, It = X.create, Et = ke.create, St = le.create, Nt = ce.create, Ot = re.create, Zt = Q.create, Mt = q.create, Rt = Te.create, At = M.create, Xe = P.create, Bt = P.strictCreate, Ke = ue.create, Vt = Ie.create, Dt = de.create, Lt = D.create, $t = he.create, qt = je.create, Ut = K.create, Ht = se.create, zt = pe.create, A = fe.create, Wt = G.create, Gt = me.create, Jt = ae.create, $e = R.create, Yt = $.create, Qt = F.create, Xt = R.createWithPreprocess, Kt = ge.create, Ft = () => Me().optional(), es = () => Ye().optional(), ts = () => Qe().optional(), ss = {
-  string: (n) => O.create({ ...n, coerce: !0 }),
+}) => Je((t) => t instanceof n, e), Me = Z.create, Ye = z.create, It = Ce.create, Et = W.create, Qe = oe.create, St = X.create, Nt = ke.create, Ot = le.create, Zt = ce.create, Mt = re.create, Rt = Q.create, Vt = U.create, At = Te.create, Bt = R.create, Xe = P.create, Dt = P.strictCreate, Ke = ue.create, Lt = Ie.create, $t = de.create, Ut = L.create, qt = he.create, Ht = je.create, zt = K.create, Wt = se.create, Gt = pe.create, A = fe.create, Jt = G.create, Yt = me.create, Qt = ae.create, $e = V.create, Xt = $.create, Kt = F.create, Ft = V.createWithPreprocess, es = ge.create, ts = () => Me().optional(), ss = () => Ye().optional(), ns = () => Qe().optional(), rs = {
+  string: (n) => Z.create({ ...n, coerce: !0 }),
   number: (n) => z.create({ ...n, coerce: !0 }),
   boolean: (n) => oe.create({
     ...n,
@@ -2920,14 +2922,14 @@ const jt = (n, e = {
   }),
   bigint: (n) => W.create({ ...n, coerce: !0 }),
   date: (n) => X.create({ ...n, coerce: !0 })
-}, ns = v;
+}, as = v;
 var i = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   defaultErrorMap: ie,
-  setErrorMap: ut,
+  setErrorMap: ht,
   getErrorMap: _e,
   makeIssue: be,
-  EMPTY_PATH: dt,
+  EMPTY_PATH: pt,
   addIssueToContext: f,
   ParseStatus: E,
   INVALID: v,
@@ -2946,7 +2948,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodParsedType: p,
   getParsedType: H,
   ZodType: w,
-  ZodString: O,
+  ZodString: Z,
   ZodNumber: z,
   ZodBigInt: W,
   ZodBoolean: oe,
@@ -2956,14 +2958,14 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodNull: ce,
   ZodAny: re,
   ZodUnknown: Q,
-  ZodNever: q,
+  ZodNever: U,
   ZodVoid: Te,
-  ZodArray: M,
+  ZodArray: R,
   ZodObject: P,
   ZodUnion: ue,
   ZodDiscriminatedUnion: Ie,
   ZodIntersection: de,
-  ZodTuple: D,
+  ZodTuple: L,
   ZodRecord: he,
   ZodMap: je,
   ZodSet: K,
@@ -2973,72 +2975,72 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodEnum: G,
   ZodNativeEnum: me,
   ZodPromise: ae,
-  ZodEffects: R,
-  ZodTransformer: R,
+  ZodEffects: V,
+  ZodTransformer: V,
   ZodOptional: $,
   ZodNullable: F,
   ZodDefault: ye,
   ZodCatch: Pe,
   ZodNaN: Ce,
-  BRAND: kt,
+  BRAND: jt,
   ZodBranded: Ge,
   ZodPipeline: ge,
   custom: Je,
   Schema: w,
   ZodSchema: w,
-  late: Tt,
+  late: Pt,
   get ZodFirstPartyTypeKind() {
     return g;
   },
-  coerce: ss,
-  any: Ot,
-  array: At,
-  bigint: Ct,
+  coerce: rs,
+  any: Mt,
+  array: Bt,
+  bigint: Et,
   boolean: Qe,
-  date: It,
-  discriminatedUnion: Vt,
+  date: St,
+  discriminatedUnion: Lt,
   effect: $e,
-  enum: Wt,
-  function: Ht,
-  instanceof: jt,
-  intersection: Dt,
-  lazy: zt,
+  enum: Jt,
+  function: Wt,
+  instanceof: Ct,
+  intersection: $t,
+  lazy: Gt,
   literal: A,
-  map: qt,
-  nan: Pt,
-  nativeEnum: Gt,
-  never: Mt,
-  null: Nt,
-  nullable: Qt,
+  map: Ht,
+  nan: It,
+  nativeEnum: Yt,
+  never: Vt,
+  null: Zt,
+  nullable: Kt,
   number: Ye,
   object: Xe,
-  oboolean: ts,
-  onumber: es,
-  optional: Yt,
-  ostring: Ft,
-  pipeline: Kt,
-  preprocess: Xt,
-  promise: Jt,
-  record: $t,
-  set: Ut,
-  strictObject: Bt,
+  oboolean: ns,
+  onumber: ss,
+  optional: Xt,
+  ostring: ts,
+  pipeline: es,
+  preprocess: Ft,
+  promise: Qt,
+  record: qt,
+  set: zt,
+  strictObject: Dt,
   string: Me,
-  symbol: Et,
+  symbol: Nt,
   transformer: $e,
-  tuple: Lt,
-  undefined: St,
+  tuple: Ut,
+  undefined: Ot,
   union: Ke,
-  unknown: Zt,
-  void: Rt,
-  NEVER: ns,
+  unknown: Rt,
+  void: At,
+  NEVER: as,
   ZodIssueCode: u,
-  quotelessJson: ct,
-  ZodError: Z
+  quotelessJson: dt,
+  ZodError: M
 });
-const ne = A("UNSIGNED_INT"), qe = A("INT"), rs = A("FLOAT"), as = A("INT2"), m = A("WSTRING"), B = A("VARIANT_MAP"), is = A("Completion"), os = A("UnknownOrchestration"), ls = A("Pending"), cs = A("Failure"), c = Me(), C = Xe({
+const ne = A("UNSIGNED_INT"), Ue = A("INT"), is = A("FLOAT"), os = A("INT2"), m = A("WSTRING"), B = A("VARIANT_MAP"), ls = A("Completion"), cs = A("UnknownOrchestration"), us = A("Pending"), ds = A("Failure"), c = Me(), C = Xe({
   name: c,
   type: m,
-  value: Ke([is, ls, cs, os])
+  value: Ke([ls, us, ds, cs])
 });
 i.object({
   name: c,
@@ -3153,7 +3155,7 @@ i.object({
   }),
   status: C
 });
-const us = i.object({
+const hs = i.object({
   name: c,
   type: B,
   value: i.object({
@@ -3189,14 +3191,14 @@ const us = i.object({
     }),
     windowCoords: i.object({
       name: c,
-      type: as,
+      type: os,
       value: i.object({
         x: i.number(),
         y: i.number()
       })
     })
   })
-}), ds = i.object({
+}), ps = i.object({
   name: c,
   orchestration: i.object({
     name: c,
@@ -3206,7 +3208,7 @@ const us = i.object({
   payload: i.object({
     name: c,
     type: B,
-    value: i.record(us).optional()
+    value: i.record(hs).optional()
   }),
   status: C
 });
@@ -3365,63 +3367,63 @@ class I {
     this.bridgeEventName = e.bridgeEventName, this.client = e.client, this.client.addEventListener(this.bridgeEventName, this.handle.bind(this));
   }
 }
-class As extends I {
+class Ls extends I {
   constructor(e) {
     super({ bridgeEventName: "Monitor Connect", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
-  }
-}
-class Bs extends I {
-  constructor(e) {
-    super({ bridgeEventName: "Monitor Disconnect", client: e.client });
-  }
-  handle(e) {
-    this.client.log("%c Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
-  }
-}
-class Vs extends I {
-  constructor(e) {
-    super({ bridgeEventName: "Transport Control Pause", client: e.client });
-  }
-  handle(e) {
-    this.client.log("%c Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", e);
-  }
-}
-class Ds extends I {
-  constructor(e) {
-    super({ bridgeEventName: "Transport Control Play", client: e.client });
-  }
-  handle(e) {
-    this.client.log("%c Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", e);
-  }
-}
-class Ls extends I {
-  constructor(e) {
-    super({ bridgeEventName: "Transport Control Next", client: e.client });
-  }
-  handle(e) {
-    this.client.log("%c Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class $s extends I {
   constructor(e) {
-    super({ bridgeEventName: "Transport Control Previous", client: e.client });
+    super({ bridgeEventName: "Monitor Disconnect", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Transport Control Previous ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+  }
+}
+class Us extends I {
+  constructor(e) {
+    super({ bridgeEventName: "Transport Control Pause", client: e.client });
+  }
+  handle(e) {
+    this.client.log("%c ⬅️ Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
 class qs extends I {
   constructor(e) {
+    super({ bridgeEventName: "Transport Control Play", client: e.client });
+  }
+  handle(e) {
+    this.client.log("%c ⬅️ Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+  }
+}
+class Hs extends I {
+  constructor(e) {
+    super({ bridgeEventName: "Transport Control Next", client: e.client });
+  }
+  handle(e) {
+    this.client.log("%c ⬅️ Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+  }
+}
+class zs extends I {
+  constructor(e) {
+    super({ bridgeEventName: "Transport Control Previous", client: e.client });
+  }
+  handle(e) {
+    this.client.log("%c ⬅️ Transport Control Previous ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+  }
+}
+class Ws extends I {
+  constructor(e) {
     super({ bridgeEventName: "Progress Start", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Us extends I {
+class Gs extends I {
   constructor(e) {
     super({ bridgeEventName: "Progress Completion", client: e.client });
   }
@@ -3429,39 +3431,39 @@ class Us extends I {
     this.client.log(e);
   }
 }
-class Hs extends I {
+class Js extends I {
   constructor(e) {
     super({ bridgeEventName: "Progress Update", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Progress Update ", "color: BlueViolet; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
+    this.client.log("%c ⬅️ Progress Update ", "color: BlueViolet; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
   }
 }
-class zs extends I {
+class Ys extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Instance", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Ws extends I {
+class Qs extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Insert", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Gs extends I {
+class Xs extends I {
   constructor(e) {
     super({ bridgeEventName: "Playlist Delete", client: e.client });
   }
   handle(e) {
-    this.client.log("%c Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Js extends I {
+class Ks extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist", client: e.client });
   }
@@ -3469,7 +3471,7 @@ class Js extends I {
     this.client.log(e);
   }
 }
-class Ys extends I {
+class Fs extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist Complete", client: e.client });
   }
@@ -3477,7 +3479,7 @@ class Ys extends I {
     this.client.log(e);
   }
 }
-class Qs extends I {
+class en extends I {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist Cancelled", client: e.client });
   }
@@ -3485,26 +3487,26 @@ class Qs extends I {
     this.client.log(e);
   }
 }
-class hs extends I {
+class fs extends I {
   constructor(e) {
     super({ bridgeEventName: "New Item Playing", client: e.client });
   }
   handle(e) {
     var a, o;
-    this.client.log("%c New Item Playing ", "color: BlueViolet; font-weight: bold; border: solid;", e);
+    this.client.log("%c ⬅️ New Item Playing ", "color: BlueViolet; font-weight: bold; border: solid;", e);
     let t = this.client.currentPlaylistIndex, s = (o = (a = this.client.playlists) == null ? void 0 : a[t]) == null ? void 0 : o.name, r = this.client.currentPlaylistItemIndex;
     e.payload.value.playlist_name.value == s && e.payload.value.index.value == r && (this.client.isCastPending = !1);
   }
 }
-class ps extends I {
+class ms extends I {
   constructor(e) {
     super({ bridgeEventName: "All Events", client: e.client });
   }
   handle(e) {
-    e.payload.value.event.value !== "Progress Update" && this.client.log(`%c ${e.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", e);
+    e.payload.value.event.value !== "Progress Update" && this.client.log(`%c ⬅️ ${e.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-function U(n) {
+function q(n) {
   const [e, t, s, r] = n.split(".").map(Number);
   return {
     major: e,
@@ -3539,7 +3541,7 @@ const T = class {
     /**a boolean for whether a disconnect was triggered automatically or manually */
     x(this, "manualDisconnect", !1);
     x(this, "playState", "STOPPED");
-    if (this.orchestration = "", this.isConnected = !1, this.isDisconnecting = !1, this.displays = [], T.eventsource = new lt(), T.fallback = void 0, this.playlists = [], this.currentPlaylistIndex = 0, this.currentPlaylistItemIndex = 0, this.version = { major: 0, minor: 0, patch: 0, hotfix: 0 }, !T.instance)
+    if (this.orchestration = "", this.isConnected = !1, this.isDisconnecting = !1, this.displays = [], T.eventsource = new ut(), T.fallback = void 0, this.playlists = [], this.currentPlaylistIndex = 0, this.currentPlaylistItemIndex = 0, this.version = { major: 0, minor: 0, patch: 0, hotfix: 0 }, !T.instance)
       T.instance = this;
     else
       return T.instance;
@@ -3552,11 +3554,11 @@ const T = class {
    * @returns boolean, true if Bridge is running, false if Bridge is not running
    */
   async status() {
-    this.log("%c function call: status ", "color: magenta; font-weight: bold; border: solid");
-    const e = new Promise((t) => {
-      let s = setTimeout(() => {
-        clearTimeout(s), t(new Error("Timed out"));
-      }, 5e3);
+    this.log("%c ➡️ function call: status ", "color: magenta; font-weight: bold; border: solid");
+    const e = new Promise((t, s) => {
+      let r = setTimeout(() => {
+        clearTimeout(r), s(new Error("Timed out"));
+      }, 500);
     });
     try {
       const t = await Promise.race([fetch("http://localhost:33334/"), e]);
@@ -3572,7 +3574,7 @@ const T = class {
    * @returns
    */
   async connect() {
-    if (this.log("%c function call: connect ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !0)
+    if (this.log("%c ➡️ function call: connect ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !0)
       return console.warn("Already connected to Looking Glass Bridge."), { success: !0, response: { version: this.version, orchestration: this.orchestration } };
     if (await this.status() == !1)
       return {
@@ -3582,11 +3584,11 @@ const T = class {
     if (this.isConnected = !0, (await this.createOrchestration("")).success == !1) {
       let s = await this.getVersion();
       if (s.success == !1)
-        return { success: !1, response: { version: U("0"), orchestration: "" } };
+        return { success: !1, response: { version: q("0"), orchestration: "" } };
       if (s.response.major < 2 && s.response.minor < 1)
         return { success: !1, response: { version: s.response, orchestration: "" } };
     }
-    return await this.subscribeToEvents(), T.eventsource.connectEvent(), new hs({ client: this }), new ps({ client: this }), { success: !0, response: { version: this.version, orchestration: this.orchestration } };
+    return await this.subscribeToEvents(), T.eventsource.connectEvent(), new fs({ client: this }), new ms({ client: this }), { success: !0, response: { version: this.version, orchestration: this.orchestration } };
   }
   /**
    * Creates an orchestration called "default" if one does not already exist.
@@ -3594,12 +3596,12 @@ const T = class {
    */
   async createOrchestration(e) {
     var r, a;
-    if (this.log("%c function call: createOrchestration ", "color: magenta; font-weight: bold; border: solid"), await this.status() == !1)
+    if (this.log("%c ➡️ function call: createOrchestration ", "color: magenta; font-weight: bold; border: solid"), await this.status() == !1)
       return { success: !1, response: null };
     const t = await this.getVersion();
     if (t.response.major < 2 && t.response.minor < 1)
       return console.error("Unable to get Looking Glass Bridge version, please upgrade Looking Glass Bridge."), { success: !1, response: null };
-    let s = await rt({ name: e, orchestration: this.orchestration });
+    let s = await it({ name: e, orchestration: this.orchestration });
     return s.success == !0 && (r = s.response) != null && r.payload.value && (this.orchestration = (a = s.response) == null ? void 0 : a.payload.value), { success: !0, response: this.orchestration };
   }
   /**
@@ -3607,7 +3609,7 @@ const T = class {
    */
   async disconnect() {
     var t, s, r, a;
-    return this.log("%c function call: disconnect ", "color: magenta; font-weight: bold; border: solid"), this.isDisconnecting == !0 || this.isConnected == !1 ? { success: !1 } : (this.isDisconnecting = !0, this.manualDisconnect = !0, (await at(this.orchestration)).success == !1 && console.warn(" ⚠️ Unable to exit orchestration, Bridge is not reachable."), (t = T.eventsource) == null || t.disconnectEvent(), (r = (s = T.eventsource) == null ? void 0 : s.ws) == null || r.close(), (a = T.fallback) == null || a.ws.close(), T.fallback = void 0, this.displays = [], this.playlists = [], this.currentHologram = void 0, this.orchestration = "", this.isDisconnecting = !1, this.isCastPending = !1, this.isConnected = !1, { success: !0 });
+    return this.log("%c ➡️ function call: disconnect ", "color: magenta; font-weight: bold; border: solid"), this.isDisconnecting == !0 || this.isConnected == !1 ? { success: !1 } : (this.isDisconnecting = !0, this.manualDisconnect = !0, (await ot(this.orchestration)).success == !1 && console.warn(" ⚠️ Unable to exit orchestration, Bridge is not reachable."), (t = T.eventsource) == null || t.disconnectEvent(), (r = (s = T.eventsource) == null ? void 0 : s.ws) == null || r.close(), (a = T.fallback) == null || a.ws.close(), T.fallback = void 0, this.displays = [], this.playlists = [], this.currentHologram = void 0, this.orchestration = "", this.isDisconnecting = !1, this.isCastPending = !1, this.isConnected = !1, { success: !0 });
   }
   /**
    * changes the state of the Looking Glass Bridge Window
@@ -3617,7 +3619,7 @@ const T = class {
   async showWindow(e) {
     if (this.isConnected == !1)
       return { success: !1, response: null };
-    this.log("%c function call: showWindow ", "color: magenta; font-weight: bold; border: solid");
+    this.log("%c ➡️ function call: showWindow ", "color: magenta; font-weight: bold; border: solid");
     let t = "this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge.";
     if (await this.isVersionCompatible() == !1)
       return console.warn(t), { success: !1, response: null };
@@ -3638,14 +3640,14 @@ const T = class {
    */
   async getVersion() {
     var t;
-    this.log("%c function call: getVersion ", "color: magenta; font-weight: bold; border: solid");
+    this.log("%c ➡️ function call: getVersion ", "color: magenta; font-weight: bold; border: solid");
     let e = await j({ endpoint: "bridge_version", requestBody: {} });
     if (e.success == !0) {
-      let s = U(e.response.payload.value);
+      let s = q(e.response.payload.value);
       return this.version = s, { success: !0, response: this.version };
     } else {
       let s = await ((t = T.fallback) == null ? void 0 : t.getLegacyVersion());
-      return s == null ? { success: !1, response: U("0") } : { success: !0, response: U(s) };
+      return s == null ? { success: !1, response: q("0") } : { success: !0, response: q(s) };
     }
   }
   /**
@@ -3653,20 +3655,20 @@ const T = class {
    * @returns the current version of the Looking Glass API
    */
   async apiVersion() {
-    if (this.log("%c function call: apiVersion ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
-      return { success: !1, response: U("0") };
+    if (this.log("%c ➡️ function call: apiVersion ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+      return { success: !1, response: q("0") };
     if (await this.isVersionCompatible() == !1)
-      return { success: !1, response: U("0") };
+      return { success: !1, response: q("0") };
     let e = await j({ endpoint: "api_version", requestBody: {} });
-    return e.success == !1 ? (console.warn("this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge."), { success: !1, response: U("0") }) : { success: !0, response: U(e.response.payload.value) };
+    return e.success == !1 ? (console.warn("this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge."), { success: !1, response: q("0") }) : { success: !0, response: q(e.response.payload.value) };
   }
   /**
-   * QueryDisplays finds all displays that are connected to the computer,
+   * getDisplays finds all displays that are connected to the computer,
    * searches for Looking Glass displays, and returns them as an array of Display objects
    * @returns the display object
    */
   async getDisplays() {
-    if (this.log("%c function call: displays ", "color: magenta; font-weight: bold; border: solid"), this.displays = [], this.isConnected == !1)
+    if (this.log("%c ➡️ function call: displays ", "color: magenta; font-weight: bold; border: solid"), this.displays = [], this.isConnected == !1)
       return { success: !1, response: null };
     const e = {
       orchestration: this.orchestration
@@ -3677,11 +3679,11 @@ const T = class {
     });
     if (t.success == !1)
       return { success: !1, response: null };
-    ds.safeParse(t.response);
+    ps.safeParse(t.response);
     for (let s in t.response.payload.value) {
       let r = t.response.payload.value[`${s}`];
-      if (r.value.hwid.value.includes("LKG")) {
-        let a = nt(r.value);
+      if (r.value.hardwareVersion.value !== "thirdparty") {
+        let a = at(r.value);
         a != null && this.displays.push(a);
       }
     }
@@ -3689,7 +3691,7 @@ const T = class {
   }
   /**Delete the instance of the playlist from Bridge, this will stop the playlist from playing if it's active. */
   async deletePlaylist(e) {
-    if (this.log("%c function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: deletePlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     const t = e.getInstance(this.orchestration);
     let s = await j({
@@ -3706,7 +3708,7 @@ const T = class {
     var a, o, l;
     if (this.isConnected == !1)
       return { success: !1 };
-    if (this.log("%c function call: cast ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
+    if (this.log("%c ➡️ function call: cast ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
       return this.warn("already casting please wait"), { success: !1 };
     if (this.displays.length == 0)
       return this.warn("no displays found"), { success: !1 };
@@ -3736,7 +3738,7 @@ const T = class {
     var a, o, l;
     if (!this.isConnected && !(await this.connect()).success)
       return { success: !1 };
-    if (console.log("%c function call: playRemotePlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
+    if (console.log("%c ➡️ function call: playRemotePlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isCastPending == !0)
       return { success: !1 };
     this.isCastPending = !0;
     let s = "Cast_" + Math.random().toString(36).substring(7);
@@ -3753,7 +3755,7 @@ const T = class {
   }
   /**Play a Playlist created by Looking Glass Studio, requires the full path to the playlist.json file. */
   async playStudioPlaylist(e) {
-    if (this.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     const t = {
       orchestration: this.orchestration,
@@ -3777,7 +3779,7 @@ const T = class {
   }
   /**stop playing the studio playlist */
   async stopStudioPlaylist() {
-    if (this.log("%c function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: stopStudioPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1 };
     const e = {
       orchestration: this.orchestration,
@@ -3791,7 +3793,7 @@ const T = class {
   }
   /**Get the current playlist that is set to start automatically */
   async getAutoStartPlaylist() {
-    if (this.log("%c function call: getAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: getAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     let e = {
       orchestration: this.orchestration,
@@ -3804,7 +3806,7 @@ const T = class {
   }
   /**Choose a Playlist that exists on the local file system to set as the start up playlist */
   async setAutoStartPlaylist(e) {
-    if (this.log("%c function call: setAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: setAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     let t = {
       orchestration: this.orchestration,
@@ -3819,7 +3821,7 @@ const T = class {
   }
   /**set a playlist to auto-start, requires that all files are local on the system */
   async createAutoStartPlaylist(e) {
-    if (this.log("%c function call: createAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
+    if (this.log("%c ➡️ function call: createAutoStartPlaylist ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
       return { success: !1, response: null };
     for (let r = 0; r < e.playlist.items.length; r++)
       if (e.playlist.items[r].hologram.uri.includes("http"))
@@ -3899,7 +3901,7 @@ const T = class {
    */
   async subscribeToEvents() {
     var t;
-    this.log("%c function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid");
+    this.log("%c ➡️ function call: subscribeToEvents ", "color: magenta; font-weight: bold; border: solid");
     let e = await ((t = T.eventsource) == null ? void 0 : t.connectToBridgeEventSource(this.orchestration));
     return (e == null ? void 0 : e.success) == !0 ? { success: !0 } : { success: !1 };
   }
@@ -3967,71 +3969,109 @@ let N = T;
 x(N, "instance"), x(N, "fallback"), /** The websocket connection to Bridge's Event Source, this returns information from Bridge */
 x(N, "eventsource"), /**control how often we log to the console, 3 is everything, 0 is nothing */
 x(N, "verbosity");
-const L = (n, e) => i.number().refine((t) => t >= n && t <= e, {
+const O = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   message: `The value should be between ${n} and ${e}`
-}), fs = {
+}), ys = {
+  min: 1,
+  max: 50,
+  range: O(1, 50),
+  type: "int",
+  defaultValue: 5
+}, gs = {
+  min: 1,
+  max: 50,
+  range: O(1, 50),
+  type: "int",
+  defaultValue: 9
+}, vs = {
   min: 0.1,
   max: 10,
-  range: L(0.1, 10),
-  type: "float"
+  range: O(0.1, 10),
+  type: "float",
+  defaultValue: 1
 }, Re = {
   min: 0.1,
   max: 4,
-  range: L(0.1, 4),
-  type: "float"
-}, ms = {
+  range: O(0.1, 4),
+  type: "float",
+  defaultValue: 1.5
+}, _s = {
   min: 0,
   max: 1,
-  range: L(0, 1),
-  type: "float"
-}, ys = {
-  min: -1,
-  max: 1,
-  range: L(-1, 1),
-  type: "float"
-}, gs = {
-  min: -1,
-  max: 1,
-  range: L(-1, 1),
-  type: "float"
-}, Ae = {
-  min: 0.1,
+  range: O(0, 1),
+  type: "float",
+  defaultValue: 0
+}, bs = {
+  min: -2,
   max: 2,
-  range: L(0.1, 2),
-  type: "float"
-}, vs = {
+  range: O(-2, 2),
+  type: "float",
+  defaultValue: 0
+}, ws = {
+  min: -2,
+  max: 2,
+  range: O(-2, 2),
+  type: "float",
+  defaultValue: 0
+}, Ve = {
+  min: 0.1,
+  max: 4,
+  range: O(0.1, 4),
+  type: "float",
+  defaultValue: 0
+}, xs = {
   min: -0.05,
   max: 0.05,
-  range: L(-0.05, 0.05),
-  type: "float"
-}, _s = {
+  range: O(-0.05, 0.05),
+  type: "float",
+  defaultValue: 0
+}, ks = {
   min: 1,
   max: 50,
-  range: L(1, 50),
-  type: "int"
-}, bs = {
+  range: O(1, 50),
+  type: "int",
+  defaultValue: 5
+}, Ts = {
   min: 1,
   max: 50,
-  range: L(1, 50),
-  type: "int"
-}, ws = {
+  range: O(1, 50),
+  type: "int",
+  defaultValue: 9
+}, js = {
   min: 1,
   max: 2500,
-  range: L(1, 2500),
-  type: "int"
-}, Xs = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  range: O(1, 2500),
+  type: "int",
+  defaultValue: 45
+}, Fe = {
+  min: -1,
+  max: 1,
+  range: O(-1, 1),
+  type: "float",
+  defaultValue: 0.01
+}, et = {
+  min: 0,
+  max: 3,
+  range: O(0, 3),
+  type: "int",
+  defaultValue: 2
+}, tn = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  ASPECT: fs,
-  CROP_POS_X: ys,
-  CROP_POS_Y: gs,
+  ASPECT: vs,
+  COLUMNS: ys,
+  CROP_POS_X: bs,
+  CROP_POS_Y: ws,
   DEPTHINESS: Re,
-  DEPTH_CUTOFF: ms,
-  FOCUS: vs,
-  QUILT_COLS: bs,
-  QUILT_ROWS: _s,
-  QUILT_VIEW_COUNT: ws,
-  ZOOM: Ae
-}, Symbol.toStringTag, { value: "Module" })), Ks = i.union([i.literal("quilt"), i.literal("rgbd")]), xs = i.object({
+  DEPTH_CUTOFF: _s,
+  FILTER_MODE: et,
+  FOCUS: xs,
+  GAUSSIAN_SIGMA: Fe,
+  QUILT_COLS: Ts,
+  QUILT_ROWS: ks,
+  QUILT_VIEW_COUNT: js,
+  ROWS: gs,
+  ZOOM: Ve
+}, Symbol.toStringTag, { value: "Module" })), sn = i.union([i.literal("quilt"), i.literal("rgbd")]), Ps = i.object({
   rows: i.number(),
   columns: i.number(),
   aspect: i.number(),
@@ -4039,7 +4079,9 @@ const L = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   focus: i.number().optional(),
   zoom: i.number().optional(),
   tag: i.string().optional()
-}), ks = i.object({
+}), Cs = i.object({
+  rows: i.number().optional(),
+  columns: i.number().optional(),
   /**Aspect Ratio of the hologram,
    * this should match the source image you provide, not the RGBD Pair */
   aspect: i.number(),
@@ -4060,13 +4102,13 @@ const L = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   /**Whether or not to cutoff depth beyond a certain point. 0 for false, 1 for true */
   depth_cutoff: i.union([i.literal(1), i.literal(0)]).optional(),
   /**Zoom can be between 0.1 and 2 */
-  zoom: Ae.range,
+  zoom: Ve.range,
   tag: i.string().optional()
-}), Ts = {
-  quilt: xs,
-  rgbd: ks
+}), Is = {
+  quilt: Ps,
+  rgbd: Cs
 };
-class js {
+class Es {
   constructor(e) {
     x(this, "uri");
     x(this, "type");
@@ -4074,7 +4116,7 @@ class js {
     this.uri = e.uri, this.type = "quilt", this.settings = e.settings;
   }
 }
-class Ps {
+class Ss {
   constructor(e) {
     x(this, "uri");
     x(this, "type");
@@ -4082,32 +4124,42 @@ class Ps {
     this.uri = e.uri, this.type = "rgbd", this.settings = e.settings;
   }
 }
-function Fs({ uri: n, type: e, settings: t }) {
-  switch (Ts[e].safeParse(t), e) {
+function nn({ uri: n, type: e, settings: t }) {
+  switch (Is[e].safeParse(t), e) {
     case "quilt":
-      return new js({ uri: n, settings: t });
+      return new Es({ uri: n, settings: t });
     case "rgbd":
-      return new Ps({ uri: n, settings: t });
+      return new Ss({ uri: n, settings: t });
     default:
       throw new Error(`Invalid type: ${e}`);
   }
 }
-const en = i.union([
+const rn = i.union([
   i.literal("focus"),
+  i.literal("aspect"),
+  i.literal("cols"),
+  i.literal("rows"),
   i.literal("crop_pos_x"),
   i.literal("crop_pos_y"),
   i.literal("zoom"),
+  i.literal("filter_mode"),
+  i.literal("gaussian_sigma"),
   //rgbd specific
   i.literal("depth_loc"),
   i.literal("depth_inversion"),
   i.literal("chroma_depth"),
   i.literal("depthiness"),
   i.literal("depth_cutoff")
-]), tn = i.object({
+]), an = i.object({
   focus: i.number().optional(),
+  aspect: i.number().optional(),
+  cols: i.number().optional(),
+  rows: i.number().optional(),
   crop_pos_x: i.number().optional(),
   crop_pos_y: i.number().optional(),
-  zoom: Ae.range,
+  zoom: Ve.range,
+  filter_mode: et.range,
+  gaussian_sigma: Fe.range,
   //rgbd specific
   depth_loc: i.union([i.literal(0), i.literal(1), i.literal(2), i.literal(3)]),
   depth_inversion: i.union([i.literal(0), i.literal(1)]),
@@ -4132,7 +4184,7 @@ const en = i.union([
   i.literal("Transport Control Next"),
   i.literal("Transport Control Previous"),
   i.literal("All Events")
-]), Cs = i.object({
+]), Ns = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4143,7 +4195,7 @@ const en = i.union([
     type: m,
     value: i.string()
   })
-}), Is = i.object({
+}), Os = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4177,7 +4229,7 @@ const en = i.union([
   made_by_looking_glass: i.object({
     name: c,
     type: m,
-    value: i.string()
+    value: i.boolean()
   }),
   message: i.object({
     name: c,
@@ -4196,15 +4248,15 @@ const en = i.union([
   }),
   x: i.object({
     name: c,
-    type: qe,
+    type: Ue,
     value: i.number()
   }),
   y: i.object({
     name: c,
-    type: qe,
+    type: Ue,
     value: i.number()
   })
-}), Es = i.object({
+}), Zs = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4217,7 +4269,7 @@ const en = i.union([
   }),
   progress: i.object({
     name: c,
-    type: rs,
+    type: is,
     value: i.number()
   }),
   progress_type: i.object({
@@ -4225,7 +4277,7 @@ const en = i.union([
     type: m,
     value: i.string()
   })
-}), Ss = i.object({
+}), Ms = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4246,7 +4298,7 @@ const en = i.union([
     type: m,
     value: i.string()
   })
-}), Ns = i.object({
+}), Rs = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4262,7 +4314,7 @@ const en = i.union([
     type: m,
     value: i.string()
   })
-}), Os = i.object({
+}), Vs = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4278,7 +4330,7 @@ const en = i.union([
     type: m,
     value: i.string()
   })
-}), Zs = i.object({
+}), As = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4294,7 +4346,7 @@ const en = i.union([
     type: m,
     value: i.string()
   })
-}), Ms = i.object({
+}), Bs = i.object({
   event: i.object({
     name: c,
     type: m,
@@ -4328,48 +4380,51 @@ const en = i.union([
     value: n
   }),
   status: C
-}), sn = Y(Is), nn = Y(Es), rn = Y(Ss), an = Y(Ns), on = Y(Os), ln = Y(Zs), cn = Y(Ms), un = Y(Cs);
+}), on = Y(Os), ln = Y(Zs), cn = Y(Ms), un = Y(Rs), dn = Y(Vs), hn = Y(As), pn = Y(Bs), fn = Y(Ns);
 export {
-  ps as AllEventsMessageHandler,
+  ms as AllEventsMessageHandler,
   N as BridgeClient,
   J as BridgeEvent,
   I as MessageHandler,
-  As as MonitorConnectedMessageHandler,
-  Bs as MonitorDisconnectedMessageHandler,
-  hs as NewItemPlayingMessageHandler,
+  Ls as MonitorConnectedMessageHandler,
+  $s as MonitorDisconnectedMessageHandler,
+  fs as NewItemPlayingMessageHandler,
   De as Playlist,
-  Gs as PlaylistDeleteMessageHandler,
-  Ws as PlaylistInsertMessageHandler,
-  zs as PlaylistInstanceMessageHandler,
-  Us as ProgressCompletionMessageHandler,
-  qs as ProgressStartMessageHandler,
-  Hs as ProgressUpdateMessageHandler,
-  js as QuiltHologram,
-  xs as QuiltHologramArgs,
-  Be as QuiltPlaylistItem,
-  Ps as RGBDHologram,
-  ks as RGBDHologramArgs,
-  Ve as RGBDPlaylistItem,
-  Qs as SyncPlayPlaylistCancelledMessageHandler,
-  Ys as SyncPlayPlaylistCompleteMessageHandler,
-  Js as SyncPlayPlaylistMessageHandler,
-  Ls as TransportControlNextMessageHandler,
-  Vs as TransportControlPauseMessageHandler,
-  Ds as TransportControlPlayMessageHandler,
-  $s as TransportControlPreviousMessageHandler,
-  un as allEventsResponse,
-  Xs as defaults,
-  on as deletePlaylistResponse,
-  Fs as hologramFactory,
-  Ts as hologramMap,
-  tn as hologramParamMap,
-  Ks as hologramTypeSchema,
-  rn as insertPlaylistResponse,
-  an as instancePlaylistResponse,
-  sn as monitorConnectResponse,
-  cn as newItemPlayingResponse,
-  en as parameterNames,
-  nn as progressUpdateResponse,
-  ln as transportControlResponse
+  Xs as PlaylistDeleteMessageHandler,
+  Qs as PlaylistInsertMessageHandler,
+  Ys as PlaylistInstanceMessageHandler,
+  Gs as ProgressCompletionMessageHandler,
+  Ws as ProgressStartMessageHandler,
+  Js as ProgressUpdateMessageHandler,
+  Es as QuiltHologram,
+  Ps as QuiltHologramArgs,
+  Ae as QuiltPlaylistItem,
+  Ss as RGBDHologram,
+  Cs as RGBDHologramArgs,
+  Be as RGBDPlaylistItem,
+  en as SyncPlayPlaylistCancelledMessageHandler,
+  Fs as SyncPlayPlaylistCompleteMessageHandler,
+  Ks as SyncPlayPlaylistMessageHandler,
+  Hs as TransportControlNextMessageHandler,
+  Us as TransportControlPauseMessageHandler,
+  qs as TransportControlPlayMessageHandler,
+  zs as TransportControlPreviousMessageHandler,
+  fn as allEventsResponse,
+  tn as defaults,
+  dn as deletePlaylistResponse,
+  nn as hologramFactory,
+  Is as hologramMap,
+  an as hologramParamMap,
+  sn as hologramTypeSchema,
+  cn as insertPlaylistResponse,
+  un as instancePlaylistResponse,
+  on as monitorConnectResponse,
+  pn as newItemPlayingResponse,
+  rn as parameterNames,
+  ln as progressUpdateResponse,
+  hn as transportControlResponse,
+  nt as tryParseCalibration,
+  at as tryParseDisplay,
+  rt as tryParseQuilt
 };
 //# sourceMappingURL=looking-glass-bridge.mjs.map

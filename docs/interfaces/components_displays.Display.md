@@ -11,6 +11,7 @@
 - [calibration](components_displays.Display.md#calibration)
 - [defaultQuilt](components_displays.Display.md#defaultquilt)
 - [hardwareVersion](components_displays.Display.md#hardwareversion)
+- [hwid](components_displays.Display.md#hwid)
 - [index](components_displays.Display.md#index)
 - [state](components_displays.Display.md#state)
 - [windowCoords](components_displays.Display.md#windowcoords)
@@ -31,7 +32,13 @@ ___
 
 ### hardwareVersion
 
-• **hardwareVersion**: [`BridgeValue`](components_types.BridgeValue.md)
+• **hardwareVersion**: `string`
+
+___
+
+### hwid
+
+• **hwid**: `string`
 
 ___
 
