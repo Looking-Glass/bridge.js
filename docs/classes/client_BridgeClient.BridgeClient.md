@@ -364,7 +364,7 @@ ___
 
 ▸ **getDisplays**(): `Promise`<{ `response`: ``null`` \| [`Display`](../interfaces/components_displays.Display.md)[] ; `success`: `boolean`  }\>
 
-QueryDisplays finds all displays that are connected to the computer,
+getDisplays finds all displays that are connected to the computer,
 searches for Looking Glass displays, and returns them as an array of Display objects
 
 #### Returns
@@ -665,7 +665,7 @@ Update the parameters of the current hologram
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends ``"focus"`` \| ``"crop_pos_x"`` \| ``"crop_pos_y"`` \| ``"zoom"`` \| ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"depth_cutoff"`` |
+| `T` | extends ``"focus"`` \| ``"aspect"`` \| ``"cols"`` \| ``"rows"`` \| ``"crop_pos_x"`` \| ``"crop_pos_y"`` \| ``"zoom"`` \| ``"filter_mode"`` \| ``"gaussian_sigma"`` \| ``"depth_loc"`` \| ``"depth_inversion"`` \| ``"chroma_depth"`` \| ``"depthiness"`` \| ``"depth_cutoff"`` |
 
 #### Parameters
 
@@ -674,7 +674,7 @@ Update the parameters of the current hologram
 | `«destructured»` | `Object` |
 | › `name` | `string` |
 | › `parameter` | `T` |
-| › `value` | { `chroma_depth`: ``0`` \| ``1`` ; `crop_pos_x?`: `number` ; `crop_pos_y?`: `number` ; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` = DEPTHINESS.range; `focus?`: `number` ; `zoom`: `number` = ZOOM.range }[`T`] |
+| › `value` | { `aspect?`: `number` ; `chroma_depth`: ``0`` \| ``1`` ; `cols?`: `number` ; `crop_pos_x?`: `number` ; `crop_pos_y?`: `number` ; `depth_cutoff?`: ``0`` \| ``1`` ; `depth_inversion`: ``0`` \| ``1`` ; `depth_loc`: ``0`` \| ``2`` \| ``1`` \| ``3`` ; `depthiness`: `number` = DEPTHINESS.range; `filter_mode`: `number` = FILTER\_MODE.range; `focus?`: `number` ; `gaussian_sigma`: `number` = GAUSSIAN\_SIGMA.range; `rows?`: `number` ; `zoom`: `number` = ZOOM.range }[`T`] |
 
 #### Returns
 

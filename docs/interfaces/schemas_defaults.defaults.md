@@ -8,12 +8,19 @@
 
 ### Properties
 
+- [defaultValue](schemas_defaults.defaults.md#defaultvalue)
 - [max](schemas_defaults.defaults.md#max)
 - [min](schemas_defaults.defaults.md#min)
 - [range](schemas_defaults.defaults.md#range)
 - [type](schemas_defaults.defaults.md#type)
 
 ## Properties
+
+### defaultValue
+
+• **defaultValue**: `number`
+
+___
 
 ### max
 

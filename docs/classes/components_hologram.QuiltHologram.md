@@ -36,6 +36,7 @@ Create a new Quilt Hologram
 | `args.settings.rows` | `number` |
 | `args.settings.tag?` | `string` |
 | `args.settings.viewCount` | `number` |
+| `args.settings.zoom?` | `number` |
 | `args.uri` | `string` |
 
 ## Properties
@@ -54,6 +55,7 @@ Create a new Quilt Hologram
 | `rows` | `number` |
 | `tag?` | `string` |
 | `viewCount` | `number` |
+| `zoom?` | `number` |
 
 ___
 
