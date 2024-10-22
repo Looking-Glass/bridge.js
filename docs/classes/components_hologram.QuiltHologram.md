@@ -32,6 +32,8 @@ Create a new Quilt Hologram
 | `args.settings` | `Object` |
 | `args.settings.aspect` | `number` |
 | `args.settings.columns` | `number` |
+| `args.settings.crop_pos_x?` | `number` |
+| `args.settings.crop_pos_y?` | `number` |
 | `args.settings.focus?` | `number` |
 | `args.settings.rows` | `number` |
 | `args.settings.tag?` | `string` |
@@ -51,6 +53,8 @@ Create a new Quilt Hologram
 | :------ | :------ |
 | `aspect` | `number` |
 | `columns` | `number` |
+| `crop_pos_x?` | `number` |
+| `crop_pos_y?` | `number` |
 | `focus?` | `number` |
 | `rows` | `number` |
 | `tag?` | `string` |

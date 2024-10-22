@@ -5,6 +5,8 @@ export type hologramTypes = z.infer<typeof hologramTypeSchema>;
 export declare const QuiltHologramArgs: z.ZodObject<{
     rows: z.ZodNumber;
     columns: z.ZodNumber;
+    crop_pos_x: z.ZodOptional<z.ZodNumber>;
+    crop_pos_y: z.ZodOptional<z.ZodNumber>;
     aspect: z.ZodNumber;
     viewCount: z.ZodNumber;
     focus: z.ZodOptional<z.ZodNumber>;
@@ -15,6 +17,8 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     rows: number;
     columns: number;
     viewCount: number;
+    crop_pos_x?: number | undefined;
+    crop_pos_y?: number | undefined;
     focus?: number | undefined;
     zoom?: number | undefined;
     tag?: string | undefined;
@@ -23,6 +27,8 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     rows: number;
     columns: number;
     viewCount: number;
+    crop_pos_x?: number | undefined;
+    crop_pos_y?: number | undefined;
     focus?: number | undefined;
     zoom?: number | undefined;
     tag?: string | undefined;
@@ -30,6 +36,8 @@ export declare const QuiltHologramArgs: z.ZodObject<{
 export declare const RGBDHologramArgs: z.ZodObject<{
     rows: z.ZodOptional<z.ZodNumber>;
     columns: z.ZodOptional<z.ZodNumber>;
+    crop_pos_x: z.ZodOptional<z.ZodNumber>;
+    crop_pos_y: z.ZodOptional<z.ZodNumber>;
     /**Aspect Ratio of the hologram,
      * this should match the source image you provide, not the RGBD Pair */
     aspect: z.ZodNumber;
@@ -61,6 +69,8 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     depthiness: number;
     rows?: number | undefined;
     columns?: number | undefined;
+    crop_pos_x?: number | undefined;
+    crop_pos_y?: number | undefined;
     focus?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
     tag?: string | undefined;
@@ -73,6 +83,8 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     depthiness: number;
     rows?: number | undefined;
     columns?: number | undefined;
+    crop_pos_x?: number | undefined;
+    crop_pos_y?: number | undefined;
     focus?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
     tag?: string | undefined;

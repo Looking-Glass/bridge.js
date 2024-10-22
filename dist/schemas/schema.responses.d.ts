@@ -753,6 +753,261 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 }>;
+                displayProblems: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
+                    name: z.ZodLiteral<"displayProblems">;
+                    type: z.ZodLiteral<"VARIANT_MAP">;
+                    value: z.ZodRecord<z.ZodString, z.ZodObject<{
+                        name: z.ZodString;
+                        type: z.ZodLiteral<"WSTRING">;
+                        value: z.ZodObject<{
+                            errorType: z.ZodObject<{
+                                name: z.ZodString;
+                                type: z.ZodLiteral<"WSTRING">;
+                                value: z.ZodUnion<[z.ZodLiteral<"invalidResolution">, z.ZodLiteral<"invalidScale">, z.ZodLiteral<"invalidOrientation">, z.ZodLiteral<"invalidBitDepth">]>;
+                            }, "strip", z.ZodTypeAny, {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            }, {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            }>;
+                            expectedX: z.ZodObject<{
+                                name: z.ZodString;
+                                type: z.ZodLiteral<"FLOAT">;
+                                value: z.ZodNumber;
+                            }, "strip", z.ZodTypeAny, {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            }, {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            }>;
+                            expectedY: z.ZodOptional<z.ZodObject<{
+                                name: z.ZodString;
+                                type: z.ZodLiteral<"FLOAT">;
+                                value: z.ZodNumber;
+                            }, "strip", z.ZodTypeAny, {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            }, {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            }>>;
+                            observeredX: z.ZodObject<{
+                                name: z.ZodString;
+                                type: z.ZodLiteral<"FLOAT">;
+                                value: z.ZodNumber;
+                            }, "strip", z.ZodTypeAny, {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            }, {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            }>;
+                            observeredY: z.ZodOptional<z.ZodObject<{
+                                name: z.ZodString;
+                                type: z.ZodLiteral<"FLOAT">;
+                                value: z.ZodNumber;
+                            }, "strip", z.ZodTypeAny, {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            }, {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            }>>;
+                        }, "strip", z.ZodTypeAny, {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        }, {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        }>;
+                    }, "strip", z.ZodTypeAny, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>>;
+                }, "strip", z.ZodTypeAny, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }>>>;
                 hardwareVersion: z.ZodObject<{
                     name: z.ZodString;
                     type: z.ZodLiteral<"WSTRING">;
@@ -872,6 +1127,41 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "INT2";
                 };
+                displayProblems?: Record<string, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }> | undefined;
             }, {
                 index: {
                     value: number;
@@ -911,6 +1201,41 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "INT2";
                 };
+                displayProblems?: Record<string, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }> | undefined;
             }>;
         }, "strip", z.ZodTypeAny, {
             value: {
@@ -952,6 +1277,41 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "INT2";
                 };
+                displayProblems?: Record<string, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }> | undefined;
             };
             name: string;
             type: "VARIANT_MAP";
@@ -995,6 +1355,41 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "INT2";
                 };
+                displayProblems?: Record<string, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }> | undefined;
             };
             name: string;
             type: "VARIANT_MAP";
@@ -1042,6 +1437,41 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "INT2";
                 };
+                displayProblems?: Record<string, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }> | undefined;
             };
             name: string;
             type: "VARIANT_MAP";
@@ -1089,6 +1519,41 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "INT2";
                 };
+                displayProblems?: Record<string, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }> | undefined;
             };
             name: string;
             type: "VARIANT_MAP";
@@ -1156,6 +1621,41 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "INT2";
                 };
+                displayProblems?: Record<string, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }> | undefined;
             };
             name: string;
             type: "VARIANT_MAP";
@@ -1216,6 +1716,41 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "INT2";
                 };
+                displayProblems?: Record<string, {
+                    value: Record<string, {
+                        value: {
+                            errorType: {
+                                value: "invalidResolution" | "invalidScale" | "invalidOrientation" | "invalidBitDepth";
+                                name: string;
+                                type: "WSTRING";
+                            };
+                            expectedX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            observeredX: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            };
+                            expectedY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                            observeredY?: {
+                                value: number;
+                                name: string;
+                                type: "FLOAT";
+                            } | undefined;
+                        };
+                        name: string;
+                        type: "WSTRING";
+                    }>;
+                    name: "displayProblems";
+                    type: "VARIANT_MAP";
+                }> | undefined;
             };
             name: string;
             type: "VARIANT_MAP";

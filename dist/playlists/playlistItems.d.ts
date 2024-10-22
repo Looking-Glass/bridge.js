@@ -17,6 +17,8 @@ export interface PlaylistItemArgs {
     depth_inversion: 0 | 1;
     chroma_depth: 0 | 1;
     depthiness: number;
+    crop_pos_x: number | undefined;
+    crop_pos_y: number | undefined;
     zoom: number;
 }
 /**Playist items are what we actually end up sending to Bridge.

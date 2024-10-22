@@ -1,6 +1,7 @@
 export * from "./client/BridgeClient";
 export * from "./playlists/playlist";
 export * from "./components/displays";
+export { sendMessage } from "./components/endpoints";
 export * from "./playlists/playlistItems";
 export * from "./components/messageHandler";
 export * from "./components/hologram";
