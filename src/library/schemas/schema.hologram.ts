@@ -9,6 +9,8 @@ export type hologramTypes = z.infer<typeof hologramTypeSchema>
 export const QuiltHologramArgs = z.object({
 	rows: z.number(),
 	columns: z.number(),
+	crop_pos_x: z.number().optional(),
+	crop_pos_y: z.number().optional(),
 	aspect: z.number(),
 	viewCount: z.number(),
 	focus: z.number().optional(),
@@ -19,6 +21,8 @@ export const QuiltHologramArgs = z.object({
 export const RGBDHologramArgs = z.object({
 	rows: z.number().optional(),
 	columns: z.number().optional(),
+	crop_pos_x: z.number().optional(),
+	crop_pos_y: z.number().optional(),
 	/**Aspect Ratio of the hologram,
 	 * this should match the source image you provide, not the RGBD Pair */
 	aspect: z.number(),

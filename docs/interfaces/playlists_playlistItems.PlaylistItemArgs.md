@@ -11,6 +11,8 @@
 - [aspect](playlists_playlistItems.PlaylistItemArgs.md#aspect)
 - [chroma\_depth](playlists_playlistItems.PlaylistItemArgs.md#chroma_depth)
 - [cols](playlists_playlistItems.PlaylistItemArgs.md#cols)
+- [crop\_pos\_x](playlists_playlistItems.PlaylistItemArgs.md#crop_pos_x)
+- [crop\_pos\_y](playlists_playlistItems.PlaylistItemArgs.md#crop_pos_y)
 - [depth\_inversion](playlists_playlistItems.PlaylistItemArgs.md#depth_inversion)
 - [depth\_loc](playlists_playlistItems.PlaylistItemArgs.md#depth_loc)
 - [depthiness](playlists_playlistItems.PlaylistItemArgs.md#depthiness)
@@ -42,6 +44,18 @@ ___
 ### cols
 
 • **cols**: `number`
+
+___
+
+### crop\_pos\_x
+
+• **crop\_pos\_x**: `undefined` \| `number`
+
+___
+
+### crop\_pos\_y
+
+• **crop\_pos\_y**: `undefined` \| `number`
 
 ___
 

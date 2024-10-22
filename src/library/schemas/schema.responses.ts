@@ -125,6 +125,49 @@ export const show_window = z.object({
 	status: schema.status,
 })
 
+const displayProblems = z.object({
+	name: z.literal("displayProblems"),
+	type: schema.variant_map,
+	value: z.record(
+		z.object({
+			name: schema.name,
+			type: schema.wstring,
+			value: z.object({
+				errorType: z.object({
+					name: schema.name,
+					type: schema.wstring,
+					value: z.union([
+						z.literal("invalidResolution"),
+						z.literal("invalidScale"),
+						z.literal("invalidOrientation"),
+						z.literal("invalidBitDepth"),
+					]),
+				}),
+				expectedX: z.object({
+					name: schema.name,
+					type: schema.float,
+					value: z.number(),
+				}),
+				expectedY: z.object({
+					name: schema.name,
+					type: schema.float,
+					value: z.number(),
+				}).optional(),
+				observeredX: z.object({
+					name: schema.name,
+					type: schema.float,
+					value: z.number(),
+				}),
+				observeredY: z.object({
+					name: schema.name,
+					type: schema.float,
+					value: z.number(),
+				}).optional(),
+			}),
+		})
+	),
+})
+
 const displayItem = z.object({
 	name: schema.name,
 	type: schema.variant_map,
@@ -139,6 +182,7 @@ const displayItem = z.object({
 			type: schema.wstring,
 			value: z.string(),
 		}),
+		displayProblems: z.record(displayProblems).optional(),
 		hardwareVersion: z.object({
 			name: schema.name,
 			type: schema.wstring,

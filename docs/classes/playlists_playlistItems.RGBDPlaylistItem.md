@@ -125,6 +125,8 @@ PlaylistItem.tag
 | `aspect` | `number` |
 | `chroma_depth?` | ``0`` \| ``1`` |
 | `cols` | `number` |
+| `crop_pos_x` | `number` |
+| `crop_pos_y` | `number` |
 | `depth_inversion?` | ``0`` \| ``1`` |
 | `depth_loc?` | ``0`` \| ``2`` \| ``1`` \| ``3`` |
 | `depthiness?` | `number` |
