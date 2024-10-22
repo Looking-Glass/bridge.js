@@ -14,16 +14,23 @@ import {
 	TransportControlNextMessageHandler,
 	TransportControlPreviousMessageHandler,
 	monitorConnectResponse,
-	progressUpdateResponse
+	progressUpdateResponse,
 } from "@library/index"
 import HologramForm from "./components/HologramForm"
 import { PlaylistUI } from "./components/Playlist"
 import { DisplayUI } from "./components/Display"
-import {z} from "zod"
+import { z } from "zod"
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
-	settings: { rows: 13, columns: 8, aspect: 0.75, viewCount: 8 * 13, tag: "steampunk", zoom: 1 },
+	settings: {
+		rows: 13,
+		columns: 8,
+		aspect: 0.75,
+		viewCount: 8 * 13,
+		tag: "steampunk",
+		zoom: 2,
+	},
 })
 
 const rgbd = new RGBDHologram({
@@ -51,7 +58,7 @@ function App() {
 		"Not Connected. Click the Connect button below to connect to Bridge"
 	)
 	const [displayMessage, setDisplayMessage] = useState<string>("Connect to Bridge to detect displays")
-	
+
 	const [displays, setDisplays] = useState<Display[]>([])
 
 	//internal application state
@@ -193,7 +200,7 @@ function App() {
 			</p>
 			<h2>Status: {`${connectionStatus}`}</h2>
 			<h2>Displays: {displayMessage}</h2>
-			<DisplayUI displays={displays}/>
+			<DisplayUI displays={displays} />
 
 			<div>
 				<div>
@@ -275,10 +282,10 @@ function App() {
 										onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
 											Bridge.setVerbosity(parseInt(e.target.value) as 0 | 1 | 2 | 3)
 										}}>
-											<option value="3">All</option>
-											<option value="2">Only Responses</option>
-											<option value="1">Only Warnings</option>
-											<option value="0">No Logging</option>
+										<option value="3">All</option>
+										<option value="2">Only Responses</option>
+										<option value="1">Only Warnings</option>
+										<option value="0">No Logging</option>
 									</select>
 								</div>
 							</div>

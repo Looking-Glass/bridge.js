@@ -71,7 +71,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="crop_pos_x"
 									min={defaults.CROP_POS_X.min}
 									max={defaults.CROP_POS_X.max}
-									defaultValue={defaults.CROP_POS_X.defaultValue}
+									defaultValue={item.hologram.settings.crop_pos_x ?? defaults.CROP_POS_X.defaultValue}
 									numberType={defaults.CROP_POS_X.type}
 								/>
 								<UpdateParams
@@ -79,7 +79,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="crop_pos_y"
 									min={defaults.CROP_POS_Y.min}
 									max={defaults.CROP_POS_Y.max}
-									defaultValue={defaults.CROP_POS_Y.defaultValue}
+									defaultValue={item.hologram.settings.crop_pos_y ?? defaults.CROP_POS_Y.defaultValue}
 									numberType={defaults.CROP_POS_Y.type}
 								/>
 								<UpdateParams

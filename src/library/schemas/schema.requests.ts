@@ -63,6 +63,8 @@ export const insert_playlist_entry = z.object({
 	cols: z.number(),
 	aspect: z.number(),
 	view_count: z.number(),
+	crop_pos_x: z.number(),
+	crop_pos_y: z.number(),
 	isRGBD: z.union([z.literal(0), z.literal(1)]),
 	depth_loc: z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3)]).optional(),
 	depth_inversion: z.union([z.literal(0), z.literal(1)]).optional(),

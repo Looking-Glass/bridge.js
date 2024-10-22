@@ -18,6 +18,8 @@ export interface PlaylistItemArgs {
 	depth_inversion: 0 | 1
 	chroma_depth: 0 | 1
 	depthiness: number
+	crop_pos_x: number | undefined
+	crop_pos_y: number | undefined
 	zoom: number
 }
 
@@ -60,6 +62,8 @@ class PlaylistItem {
 				cols: settings.columns,
 				focus: settings.focus ? settings.focus : 0,
 				zoom: settings.zoom ? settings.zoom : 1,
+				crop_pos_x: settings.crop_pos_x ? settings.crop_pos_x : 0,
+				crop_pos_y: settings.crop_pos_y ? settings.crop_pos_y : 0,
 				aspect: settings.aspect,
 				view_count: settings.viewCount,
 				isRGBD: 0,
@@ -81,6 +85,8 @@ class PlaylistItem {
 				view_count: 8 * 13,
 				isRGBD: 1,
 				depth_loc: settings.depth_loc,
+				crop_pos_x: settings.crop_pos_x ? settings.crop_pos_x : 0,
+				crop_pos_y: settings.crop_pos_y ? settings.crop_pos_y : 0,
 				depth_inversion: settings.depth_inversion,
 				chroma_depth: settings.chroma_depth,
 				depthiness: settings.depthiness,
