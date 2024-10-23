@@ -15,7 +15,6 @@
 - [components/messageHandler](modules/components_messageHandler.md)
 - [components/orchestration](modules/components_orchestration.md)
 - [components/types](modules/components_types.md)
-- [index](modules/index.md)
 - [playlists/playlist](modules/playlists_playlist.md)
 - [playlists/playlistItems](modules/playlists_playlistItems.md)
 - [schemas/defaults](modules/schemas_defaults.md)
