@@ -172,8 +172,6 @@ export class Playlist {
 					PlaylistItems[i].orchestration = this.orchestration
 					const pRequestBody = PlaylistItems[i].toBridge()
 
-					console.log(pRequestBody, PlaylistItems[i])
-
 					let message = await sendMessage({ endpoint: "insert_playlist_entry", requestBody: pRequestBody })
 					if (message.success == false) {
 						console.error("failed to insert playlist entry")
