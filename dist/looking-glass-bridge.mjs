@@ -334,7 +334,7 @@ class Le {
       for (let d = 0; d < i.length; d++) {
         i[d].orchestration = this.orchestration;
         const h = i[d].toBridge();
-        if (console.log(h, i[d]), (await j({ endpoint: "insert_playlist_entry", requestBody: h })).success == !1)
+        if ((await j({ endpoint: "insert_playlist_entry", requestBody: h })).success == !1)
           return console.error("failed to insert playlist entry"), !1;
       }
     const o = this.getCurrent({ orchestration: t, head: e });
