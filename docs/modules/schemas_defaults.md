@@ -14,6 +14,7 @@
 
 ### Variables
 
+- [AA\_STRENGTH](schemas_defaults.md#aa_strength)
 - [ASPECT](schemas_defaults.md#aspect)
 - [COLUMNS](schemas_defaults.md#columns)
 - [CROP\_POS\_X](schemas_defaults.md#crop_pos_x)
@@ -39,6 +40,12 @@ for certain values we need defaults in order to define our type schemas and also
 This helps prevent sending bridge values that are out of range.
 
 ## Variables
+
+### AA\_STRENGTH
+
+• `Const` **AA\_STRENGTH**: [`defaults`](../interfaces/schemas_defaults.defaults.md)
+
+___
 
 ### ASPECT
 

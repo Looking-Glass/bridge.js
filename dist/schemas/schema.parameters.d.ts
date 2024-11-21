@@ -1,5 +1,5 @@
 import { z } from "zod";
-export declare const parameterNames: z.ZodUnion<[z.ZodLiteral<"focus">, z.ZodLiteral<"aspect">, z.ZodLiteral<"cols">, z.ZodLiteral<"rows">, z.ZodLiteral<"crop_pos_x">, z.ZodLiteral<"crop_pos_y">, z.ZodLiteral<"zoom">, z.ZodLiteral<"filter_mode">, z.ZodLiteral<"gaussian_sigma">, z.ZodLiteral<"depth_loc">, z.ZodLiteral<"depth_inversion">, z.ZodLiteral<"chroma_depth">, z.ZodLiteral<"depthiness">, z.ZodLiteral<"depth_cutoff">]>;
+export declare const parameterNames: z.ZodUnion<[z.ZodLiteral<"focus">, z.ZodLiteral<"aspect">, z.ZodLiteral<"cols">, z.ZodLiteral<"rows">, z.ZodLiteral<"crop_pos_x">, z.ZodLiteral<"crop_pos_y">, z.ZodLiteral<"zoom">, z.ZodLiteral<"filter_mode">, z.ZodLiteral<"gaussian_sigma">, z.ZodLiteral<"depth_loc">, z.ZodLiteral<"depth_inversion">, z.ZodLiteral<"chroma_depth">, z.ZodLiteral<"depthiness">, z.ZodLiteral<"depth_cutoff">, z.ZodLiteral<"antiAliasingStrength">]>;
 export declare const hologramParamMap: z.ZodObject<{
     focus: z.ZodOptional<z.ZodNumber>;
     aspect: z.ZodOptional<z.ZodNumber>;
@@ -15,6 +15,7 @@ export declare const hologramParamMap: z.ZodObject<{
     chroma_depth: z.ZodUnion<[z.ZodLiteral<0>, z.ZodLiteral<1>]>;
     depthiness: z.ZodEffects<z.ZodNumber, number, number>;
     depth_cutoff: z.ZodOptional<z.ZodUnion<[z.ZodLiteral<1>, z.ZodLiteral<0>]>>;
+    antiAliasingStrength: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
     zoom: number;
     filter_mode: number;
@@ -30,6 +31,7 @@ export declare const hologramParamMap: z.ZodObject<{
     crop_pos_x?: number | undefined;
     crop_pos_y?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
+    antiAliasingStrength?: number | undefined;
 }, {
     zoom: number;
     filter_mode: number;
@@ -45,5 +47,6 @@ export declare const hologramParamMap: z.ZodObject<{
     crop_pos_x?: number | undefined;
     crop_pos_y?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
+    antiAliasingStrength?: number | undefined;
 }>;
 export type HologramParamMap = z.infer<typeof hologramParamMap>;

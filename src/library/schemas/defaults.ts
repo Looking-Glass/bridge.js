@@ -119,8 +119,16 @@ export const GAUSSIAN_SIGMA: defaults = {
 
 export const FILTER_MODE: defaults = {
 	min: 0,
-	max: 3,
-	range: numberRange(0, 3),
+	max: 7,
+	range: numberRange(0, 7),
 	type: "int",
 	defaultValue: 2,
+}
+
+export const AA_STRENGTH: defaults = {
+	min: -1,
+	max: 2,
+	range: numberRange(-1, 2),
+	type: "float",
+	defaultValue: 1,
 }
