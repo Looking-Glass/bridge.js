@@ -24,3 +24,4 @@ export declare const QUILT_COLS: defaults;
 export declare const QUILT_VIEW_COUNT: defaults;
 export declare const GAUSSIAN_SIGMA: defaults;
 export declare const FILTER_MODE: defaults;
+export declare const AA_STRENGTH: defaults;
