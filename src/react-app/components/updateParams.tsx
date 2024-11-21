@@ -33,44 +33,41 @@ export function UpdateParams({
 
 	return (
 		<>
-			<div style={{ 
-  display: "flex", 
-  gap: "1rem", 
-  flexDirection: "row", 
-  alignItems: "center", 
-  width: "100%",
-  paddingBottom: "1rem", 
-  borderBottom: "2px solid white" 
-}}>{parameter}
-			<input
-			style={{width: "60px"}}
-				type="number"
-				value={value}
-				min={min}
-				max={max}
-				step={stepSize}
-				onChange={(e) => handleChange(parseFloat(e.target.value))}></input>
-					Value: {value.toFixed(2)}{" "}
-
-
-	
-
-			<input
-				type="range"
-				value={value}
-				min={min}
-				max={max}
-				step={stepSize}
-				onChange={(e) => handleChange(parseFloat(e.target.value))}></input>
-							
-							<button
+			<div
+				style={{
+					display: "flex",
+					gap: "1rem",
+					flexDirection: "row",
+					alignItems: "center",
+					width: "100%",
+					paddingBottom: "1rem",
+					borderBottom: "2px solid white",
+				}}>
+				{parameter}
+				<input
+					style={{ width: "60px" }}
+					type="number"
+					value={value}
+					min={min}
+					max={max}
+					step={stepSize}
+					onChange={(e) => handleChange(parseFloat(e.target.value))}></input>
+				Value: {value.toFixed(2)}{" "}
+				<input
+					type="range"
+					value={value}
+					min={min}
+					max={max}
+					step={stepSize}
+					onChange={(e) => handleChange(parseFloat(e.target.value))}></input>
+				<button
 					style={{ paddingLeft: "1rem", paddingRight: "1rem", display: "block", width: "180px" }}
 					onClick={() => {
 						handleChange(defaultValue)
 					}}>
 					reset
 				</button>
-</div>
+			</div>
 		</>
 	)
 }

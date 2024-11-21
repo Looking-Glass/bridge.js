@@ -98,6 +98,15 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									defaultValue={defaults.FILTER_MODE.defaultValue}
 									numberType={defaults.FILTER_MODE.type}
 								/>
+								<UpdateParams
+									playlistName={playlist.name}
+									parameter="antiAliasingStrength"
+									min={defaults.AA_STRENGTH.min}
+									max={defaults.AA_STRENGTH.max}
+						
+									defaultValue={defaults.AA_STRENGTH.defaultValue}
+									numberType={defaults.AA_STRENGTH.type}
+								/>
 							</div>
 						</div>
 					</div>

@@ -17,6 +17,7 @@ export const parameterNames = z.union([
 	z.literal("chroma_depth"),
 	z.literal("depthiness"),
 	z.literal("depth_cutoff"),
+	z.literal("antiAliasingStrength"),
 ])
 
 export const hologramParamMap = z.object({
@@ -35,6 +36,7 @@ export const hologramParamMap = z.object({
 	chroma_depth: z.union([z.literal(0), z.literal(1)]),
 	depthiness: DEPTHINESS.range,
 	depth_cutoff: z.union([z.literal(1), z.literal(0)]).optional(),
+	antiAliasingStrength: z.number().optional(),
 })
 
 export type HologramParamMap = z.infer<typeof hologramParamMap>
