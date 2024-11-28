@@ -137,11 +137,11 @@ export declare const insert_playlist_entry: z.ZodObject<{
     uri: string;
     view_count: number;
     isRGBD: 0 | 1;
+    zoom?: number | undefined;
     depth_loc?: 0 | 2 | 1 | 3 | undefined;
     depth_inversion?: 0 | 1 | undefined;
     chroma_depth?: 0 | 1 | undefined;
     depthiness?: number | undefined;
-    zoom?: number | undefined;
     tag?: string | undefined;
 }, {
     orchestration: string;
@@ -157,11 +157,11 @@ export declare const insert_playlist_entry: z.ZodObject<{
     uri: string;
     view_count: number;
     isRGBD: 0 | 1;
+    zoom?: number | undefined;
     depth_loc?: 0 | 2 | 1 | 3 | undefined;
     depth_inversion?: 0 | 1 | undefined;
     chroma_depth?: 0 | 1 | undefined;
     depthiness?: number | undefined;
-    zoom?: number | undefined;
     tag?: string | undefined;
 }>;
 export type update_playlist_entry = {
