@@ -17,9 +17,9 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     rows: number;
     columns: number;
     viewCount: number;
+    focus?: number | undefined;
     crop_pos_x?: number | undefined;
     crop_pos_y?: number | undefined;
-    focus?: number | undefined;
     zoom?: number | undefined;
     tag?: string | undefined;
 }, {
@@ -27,9 +27,9 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     rows: number;
     columns: number;
     viewCount: number;
+    focus?: number | undefined;
     crop_pos_x?: number | undefined;
     crop_pos_y?: number | undefined;
-    focus?: number | undefined;
     zoom?: number | undefined;
     tag?: string | undefined;
 }>;
@@ -67,13 +67,13 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     depth_inversion: 0 | 1;
     chroma_depth: 0 | 1;
     depthiness: number;
+    focus?: number | undefined;
     rows?: number | undefined;
-    columns?: number | undefined;
     crop_pos_x?: number | undefined;
     crop_pos_y?: number | undefined;
-    focus?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
     tag?: string | undefined;
+    columns?: number | undefined;
 }, {
     aspect: number;
     zoom: number;
@@ -81,13 +81,13 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     depth_inversion: 0 | 1;
     chroma_depth: 0 | 1;
     depthiness: number;
+    focus?: number | undefined;
     rows?: number | undefined;
-    columns?: number | undefined;
     crop_pos_x?: number | undefined;
     crop_pos_y?: number | undefined;
-    focus?: number | undefined;
     depth_cutoff?: 0 | 1 | undefined;
     tag?: string | undefined;
+    columns?: number | undefined;
 }>;
 export interface HologramClasses {
     quilt: QuiltHologram;

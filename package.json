@@ -1,6 +1,6 @@
 {
 	"name": "@lookingglass/bridge",
-	"version": "0.0.8-alpha.5",
+	"version": "0.0.8-alpha.6",
 	"license": "MIT",
 	"description": "Official Looking Glass Library for interacting with Looking Glass holographic displays.",
 	"types": "./dist/index.d.ts",
@@ -29,10 +29,10 @@
 		"typedoc:watch": "npx typedoc --plugin typedoc-plugin-markdown --out docs --entryPoints src/library/**/*.ts --excludePrivate --readme none --disableSources --watch"
 	},
 	"dependencies": {
-		"utf-8-validate": "6.0.3",
 		"bufferutil": "^4.0.7",
 		"holoplay-core": "^0.0.9",
-		"zod": "^3.21.4"
+		"utf-8-validate": "6.0.5",
+		"zod": "^3.23.8"
 	},
 	"devDependencies": {
 		"@lookingglass/blocks.js": "^0.1.1",
