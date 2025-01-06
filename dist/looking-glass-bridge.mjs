@@ -32,7 +32,7 @@ function ht(n) {
   };
 }
 function ft(n) {
-  return {
+  return console.log(`debugging in parsing function ${{ value: n }}`), {
     calibration: ut(n.calibration.value),
     defaultQuilt: ht(n.defaultQuilt.value),
     hwid: n.hwid.value,
@@ -667,8 +667,9 @@ const k = class {
       console.log("%c ⚠️ DEBUG! ", "color: orange; font-weight: bold; border: solid", { payload: t.response.payload });
       let r = t.response.payload.value[`${s}`];
       if (console.log("%c ⚠️ DEBUG! ", "color: orange; font-weight: bold; border: solid", { display: r }), r.value.hardwareVersion.value !== "thirdparty") {
-        let a = ft(r.value);
-        console.log("%c ⚠️ DEBUG! ", "color: orange; font-weight: bold; border: solid", { display: r.value }), a != null && this.displays.push(a);
+        console.log("%c ⚠️ DEBUG -- display value! ", "color: orange; font-weight: bold; border: solid", { display: r }), r.value || console.log("%c ⚠️ DEBUG -- display value failed! ", "color: orange; font-weight: bold; border: solid", { display: r });
+        let o = ft(r.value);
+        console.log("%c ⚠️ DEBUG -- parsed display failed! ", "color: orange; font-weight: bold; border: solid", { display: r.value }), o != null && this.displays.push(o);
       }
     }
     return { success: !0, response: this.displays };
@@ -2351,7 +2352,7 @@ X.create = (n) => new X({
   typeName: m.ZodUnknown,
   ...v(n)
 });
-class U extends _ {
+class L extends _ {
   _parse(e) {
     const t = this._getOrReturnCtx(e);
     return h(t, {
@@ -2361,7 +2362,7 @@ class U extends _ {
     }), g;
   }
 }
-U.create = (n) => new U({
+L.create = (n) => new L({
   typeName: m.ZodNever,
   ...v(n)
 });
@@ -2492,7 +2493,7 @@ class P extends _ {
       }), g;
     }
     const { status: s, ctx: r } = this._processInputParams(e), { shape: a, keys: o } = this._getCached(), l = [];
-    if (!(this._def.catchall instanceof U && this._def.unknownKeys === "strip"))
+    if (!(this._def.catchall instanceof L && this._def.unknownKeys === "strip"))
       for (const u in r.data)
         o.includes(u) || l.push(u);
     const d = [];
@@ -2504,7 +2505,7 @@ class P extends _ {
         alwaysSet: u in r.data
       });
     }
-    if (this._def.catchall instanceof U) {
+    if (this._def.catchall instanceof L) {
       const u = this._def.unknownKeys;
       if (u === "passthrough")
         for (const y of l)
@@ -2536,10 +2537,10 @@ class P extends _ {
     return r.common.async ? Promise.resolve().then(async () => {
       const u = [];
       for (const y of d) {
-        const Z = await y.key, Ue = await y.value;
+        const Z = await y.key, Le = await y.value;
         u.push({
           key: Z,
-          value: Ue,
+          value: Le,
           alwaysSet: y.alwaysSet
         });
       }
@@ -2742,21 +2743,21 @@ class P extends _ {
 P.create = (n, e) => new P({
   shape: () => n,
   unknownKeys: "strip",
-  catchall: U.create(),
+  catchall: L.create(),
   typeName: m.ZodObject,
   ...v(e)
 });
 P.strictCreate = (n, e) => new P({
   shape: () => n,
   unknownKeys: "strict",
-  catchall: U.create(),
+  catchall: L.create(),
   typeName: m.ZodObject,
   ...v(e)
 });
 P.lazycreate = (n, e) => new P({
   shape: n,
   unknownKeys: "strip",
-  catchall: U.create(),
+  catchall: L.create(),
   typeName: m.ZodObject,
   ...v(e)
 });
@@ -2833,7 +2834,7 @@ pe.create = (n, e) => new pe({
   typeName: m.ZodUnion,
   ...v(e)
 });
-const L = (n) => n instanceof ye ? L(n.schema) : n instanceof A ? L(n.innerType()) : n instanceof ve ? [n.value] : n instanceof G ? n.options : n instanceof _e ? x.objectValues(n.enum) : n instanceof be ? L(n._def.innerType) : n instanceof he ? [void 0] : n instanceof fe ? [null] : n instanceof B ? [void 0, ...L(n.unwrap())] : n instanceof Y ? [null, ...L(n.unwrap())] : n instanceof Be || n instanceof xe ? L(n.unwrap()) : n instanceof we ? L(n._def.innerType) : [];
+const U = (n) => n instanceof ye ? U(n.schema) : n instanceof A ? U(n.innerType()) : n instanceof ve ? [n.value] : n instanceof G ? n.options : n instanceof _e ? x.objectValues(n.enum) : n instanceof be ? U(n._def.innerType) : n instanceof he ? [void 0] : n instanceof fe ? [null] : n instanceof B ? [void 0, ...U(n.unwrap())] : n instanceof Y ? [null, ...U(n.unwrap())] : n instanceof Be || n instanceof xe ? U(n.unwrap()) : n instanceof we ? U(n._def.innerType) : [];
 class je extends _ {
   _parse(e) {
     const { ctx: t } = this._processInputParams(e);
@@ -2878,7 +2879,7 @@ class je extends _ {
   static create(e, t, s) {
     const r = /* @__PURE__ */ new Map();
     for (const a of t) {
-      const o = L(a.shape[e]);
+      const o = U(a.shape[e]);
       if (!o.length)
         throw new Error(`A discriminator value for key \`${e}\` could not be extracted from all schema options`);
       for (const l of o) {
@@ -3703,9 +3704,9 @@ var m;
 (function(n) {
   n.ZodString = "ZodString", n.ZodNumber = "ZodNumber", n.ZodNaN = "ZodNaN", n.ZodBigInt = "ZodBigInt", n.ZodBoolean = "ZodBoolean", n.ZodDate = "ZodDate", n.ZodSymbol = "ZodSymbol", n.ZodUndefined = "ZodUndefined", n.ZodNull = "ZodNull", n.ZodAny = "ZodAny", n.ZodUnknown = "ZodUnknown", n.ZodNever = "ZodNever", n.ZodVoid = "ZodVoid", n.ZodArray = "ZodArray", n.ZodObject = "ZodObject", n.ZodUnion = "ZodUnion", n.ZodDiscriminatedUnion = "ZodDiscriminatedUnion", n.ZodIntersection = "ZodIntersection", n.ZodTuple = "ZodTuple", n.ZodRecord = "ZodRecord", n.ZodMap = "ZodMap", n.ZodSet = "ZodSet", n.ZodFunction = "ZodFunction", n.ZodLazy = "ZodLazy", n.ZodLiteral = "ZodLiteral", n.ZodEnum = "ZodEnum", n.ZodEffects = "ZodEffects", n.ZodNativeEnum = "ZodNativeEnum", n.ZodOptional = "ZodOptional", n.ZodNullable = "ZodNullable", n.ZodDefault = "ZodDefault", n.ZodCatch = "ZodCatch", n.ZodPromise = "ZodPromise", n.ZodBranded = "ZodBranded", n.ZodPipeline = "ZodPipeline", n.ZodReadonly = "ZodReadonly";
 })(m || (m = {}));
-const Lt = (n, e = {
+const Ut = (n, e = {
   message: `Input not instance of ${n.name}`
-}) => st((t) => t instanceof n, e), De = R.create, nt = z.create, Ut = Ne.create, Ht = W.create, rt = ue.create, qt = F.create, zt = Ee.create, Wt = he.create, Gt = fe.create, Yt = re.create, Jt = X.create, Qt = U.create, Xt = Se.create, Ft = M.create, at = P.create, Kt = P.strictCreate, it = pe.create, es = je.create, ts = me.create, ss = $.create, ns = ge.create, rs = Ie.create, as = K.create, is = se.create, os = ye.create, V = ve.create, ls = G.create, cs = _e.create, ds = ae.create, Ge = A.create, us = B.create, hs = Y.create, fs = A.createWithPreprocess, ps = ke.create, ms = () => De().optional(), gs = () => nt().optional(), ys = () => rt().optional(), vs = {
+}) => st((t) => t instanceof n, e), De = R.create, nt = z.create, Lt = Ne.create, Ht = W.create, rt = ue.create, qt = F.create, zt = Ee.create, Wt = he.create, Gt = fe.create, Yt = re.create, Jt = X.create, Qt = L.create, Xt = Se.create, Ft = M.create, at = P.create, Kt = P.strictCreate, it = pe.create, es = je.create, ts = me.create, ss = $.create, ns = ge.create, rs = Ie.create, as = K.create, is = se.create, os = ye.create, V = ve.create, ls = G.create, cs = _e.create, ds = ae.create, Ge = A.create, us = B.create, hs = Y.create, fs = A.createWithPreprocess, ps = ke.create, ms = () => De().optional(), gs = () => nt().optional(), ys = () => rt().optional(), vs = {
   string: (n) => R.create({ ...n, coerce: !0 }),
   number: (n) => z.create({ ...n, coerce: !0 }),
   boolean: (n) => ue.create({
@@ -3751,7 +3752,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodNull: fe,
   ZodAny: re,
   ZodUnknown: X,
-  ZodNever: U,
+  ZodNever: L,
   ZodVoid: Se,
   ZodArray: M,
   ZodObject: P,
@@ -3796,12 +3797,12 @@ var i = /* @__PURE__ */ Object.freeze({
   effect: Ge,
   enum: ls,
   function: is,
-  instanceof: Lt,
+  instanceof: Ut,
   intersection: ts,
   lazy: os,
   literal: V,
   map: rs,
-  nan: Ut,
+  nan: Lt,
   nativeEnum: cs,
   never: Qt,
   null: Gt,
@@ -3875,7 +3876,7 @@ const j = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   range: j(-2, 2),
   type: "float",
   defaultValue: 0
-}, Le = {
+}, Ue = {
   min: 0.1,
   max: 4,
   range: j(0.1, 4),
@@ -3932,7 +3933,7 @@ const j = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   QUILT_ROWS: Es,
   QUILT_VIEW_COUNT: Is,
   ROWS: ws,
-  ZOOM: Le
+  ZOOM: Ue
 }, Symbol.toStringTag, { value: "Module" })), pn = i.union([i.literal("quilt"), i.literal("rgbd")]), Ns = i.object({
   rows: i.number(),
   columns: i.number(),
@@ -3968,7 +3969,7 @@ const j = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   /**Whether or not to cutoff depth beyond a certain point. 0 for false, 1 for true */
   depth_cutoff: i.union([i.literal(1), i.literal(0)]).optional(),
   /**Zoom can be between 0.1 and 2 */
-  zoom: Le.range,
+  zoom: Ue.range,
   tag: i.string().optional()
 }), Os = {
   quilt: Ns,
@@ -4023,7 +4024,7 @@ const gn = i.union([
   rows: i.number().optional(),
   crop_pos_x: i.number().optional(),
   crop_pos_y: i.number().optional(),
-  zoom: Le.range,
+  zoom: Ue.range,
   filter_mode: lt.range,
   gaussian_sigma: ot.range,
   //rgbd specific
@@ -4034,7 +4035,7 @@ const gn = i.union([
   depth_cutoff: i.union([i.literal(1), i.literal(0)]).optional()
 }), le = V("UNSIGNED_INT"), Ye = V("INT"), Ms = V("FLOAT");
 V("INT2");
-const T = V("WSTRING"), As = V("VARIANT_MAP"), Vs = V("Completion"), Bs = V("UnknownOrchestration"), Ds = V("Pending"), $s = V("Failure"), b = De(), Ls = at({
+const T = V("WSTRING"), As = V("VARIANT_MAP"), Vs = V("Completion"), Bs = V("UnknownOrchestration"), Ds = V("Pending"), $s = V("Failure"), b = De(), Us = at({
   name: b,
   type: T,
   value: it([Vs, Ds, $s, Bs])
@@ -4056,7 +4057,7 @@ const T = V("WSTRING"), As = V("VARIANT_MAP"), Vs = V("Completion"), Bs = V("Unk
   i.literal("Transport Control Next"),
   i.literal("Transport Control Previous"),
   i.literal("All Events")
-]), Us = i.object({
+]), Ls = i.object({
   event: i.object({
     name: b,
     type: T,
@@ -4251,8 +4252,8 @@ const T = V("WSTRING"), As = V("VARIANT_MAP"), Vs = V("Completion"), Bs = V("Unk
     type: As,
     value: n
   }),
-  status: Ls
-}), vn = Q(Hs), _n = Q(qs), bn = Q(zs), wn = Q(Ws), xn = Q(Gs), kn = Q(Ys), Tn = Q(Js), Cn = Q(Us);
+  status: Us
+}), vn = Q(Hs), _n = Q(qs), bn = Q(zs), wn = Q(Ws), xn = Q(Gs), kn = Q(Ys), Tn = Q(Js), Cn = Q(Ls);
 export {
   bt as AllEventsMessageHandler,
   N as BridgeClient,
