@@ -104,6 +104,8 @@ export function tryParseQuilt(value: string): QuiltType | null {
 }
 
 export function tryParseDisplay(value: any): Display | null {
+
+	console.log(`debugging in parsing function ${{value: value}}`)
 	const display: Display = {
 		calibration: tryParseCalibration(value.calibration.value),
 		defaultQuilt: tryParseQuilt(value.defaultQuilt.value),
