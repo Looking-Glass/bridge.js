@@ -81,10 +81,9 @@ export const update_playlist_entry = z
 		playlistIndex: z.number(),
 	})
 	.extend(
-		Object.fromEntries(Object.keys(hologramParamMap.shape).map((key) => [key, z.string()])) as Record<
-			keyof HologramParamMap,
-			z.ZodString
-		>
+		Object.fromEntries(
+			Object.keys(hologramParamMap.shape).map((key) => [key, z.string().optional()])
+		) as Record<keyof HologramParamMap, z.ZodOptional<z.ZodString>>
 	)
 
 export const update_current_entry = z
@@ -93,10 +92,9 @@ export const update_current_entry = z
 		name: z.string(),
 	})
 	.extend(
-		Object.fromEntries(Object.keys(hologramParamMap.shape).map((key) => [key, z.string()])) as Record<
-			keyof HologramParamMap,
-			z.ZodString
-		>
+		Object.fromEntries(
+			Object.keys(hologramParamMap.shape).map((key) => [key, z.string().optional()])
+		) as Record<keyof HologramParamMap, z.ZodOptional<z.ZodString>>
 	)
 
 export const play_playlist = z.object({
