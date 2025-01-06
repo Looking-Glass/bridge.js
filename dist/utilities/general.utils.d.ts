@@ -5,4 +5,4 @@ import { BridgeVersion } from "@library/components/types";
  * @param versionString The version string to parse
  * @returns BridgeVersion
  */
-export declare function parseBridgeVersion(versionString?: string): BridgeVersion;
+export declare function parseBridgeVersion(versionString: string): BridgeVersion;

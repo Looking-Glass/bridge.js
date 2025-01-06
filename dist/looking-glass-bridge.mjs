@@ -499,8 +499,6 @@ class bt extends E {
   }
 }
 function L(n) {
-  if (!n)
-    throw new Error("No version string provided");
   const [e, t, s, r] = n.split(".").map(Number);
   return {
     major: e,
