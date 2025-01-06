@@ -10,7 +10,7 @@ function ut(n) {
     flipImageX: e.flipImageX.value,
     flipImageY: e.flipImageY.value,
     flipSubp: e.flipSubp.value,
-    fringe: e.fringe.value,
+    fringe: e.fringe.value ?? 0,
     invView: e.invView.value,
     pitch: e.pitch.value,
     screenH: e.screenH.value,
