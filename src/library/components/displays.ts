@@ -73,7 +73,7 @@ export function tryParseCalibration(value: string): CalibrationType | null {
 		flipImageX: parsedValue.flipImageX.value,
 		flipImageY: parsedValue.flipImageY.value,
 		flipSubp: parsedValue.flipSubp.value,
-		fringe: parsedValue.fringe.value,
+		fringe: parsedValue.fringe.value ?? 0,
 		invView: parsedValue.invView.value,
 		pitch: parsedValue.pitch.value,
 		screenH: parsedValue.screenH.value,
