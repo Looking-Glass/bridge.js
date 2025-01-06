@@ -31,7 +31,6 @@
 	"dependencies": {
 		"bufferutil": "^4.0.7",
 		"holoplay-core": "^0.0.9",
-		"utf-8-validate": "6.0.5",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
