@@ -306,10 +306,12 @@ export class BridgeClient {
 			return { success: false, response: null }
 		}
 
-		schema.available_output_devices.safeParse(data.response)
+		// schema.available_output_devices.safeParse(data.response)
 
 		for (let key in data.response.payload.value) {
+			console.log(`%c ⚠️ DEBUG! `, "color: orange; font-weight: bold; border: solid", {payload: data.response.payload})
 			let display = data.response.payload.value[`${key}`]
+			console.log(`%c ⚠️ DEBUG! `, "color: orange; font-weight: bold; border: solid", {display: display})
 			// filter out other monitors that aren't Looking Glass displays
 			if (display.value.hardwareVersion.value !== ("thirdparty")) {
 				let lkg = tryParseDisplay(display.value)
