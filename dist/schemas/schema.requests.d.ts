@@ -125,9 +125,9 @@ export declare const insert_playlist_entry: z.ZodObject<{
     tag: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     orchestration: string;
+    index: number;
     name: string;
     id: number;
-    index: number;
     focus: number;
     aspect: number;
     cols: number;
@@ -145,9 +145,9 @@ export declare const insert_playlist_entry: z.ZodObject<{
     tag?: string | undefined;
 }, {
     orchestration: string;
+    index: number;
     name: string;
     id: number;
-    index: number;
     focus: number;
     aspect: number;
     cols: number;
