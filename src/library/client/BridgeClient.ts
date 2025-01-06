@@ -310,8 +310,6 @@ export class BridgeClient {
 			return { success: false, response: null }
 		}
 
-		// schema.available_output_devices.safeParse(data.response)
-
 		for (let key in data.response.payload?.value) {
 			
 			let display = data.response.payload?.value[`${key}`]
