@@ -3909,7 +3909,7 @@ const T = class {
       let r = t.response.payload.value[`${s}`];
       if (r.value.hardwareVersion.value !== "thirdparty") {
         let a = yt(r.value);
-        a != null && this.displays.push(a);
+        console.log("%c ⚠️ DEBUG! ", "color: orange; font-weight: bold; border: solid", { display: r.value }), a != null && this.displays.push(a);
       }
     }
     return { success: !0, response: this.displays };
