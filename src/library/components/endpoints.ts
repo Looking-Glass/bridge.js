@@ -69,8 +69,8 @@ export type BridgeRequestBodyMap = {
 	instance_playlist: z.infer<typeof BridgeRequest.instance_playlist>
 	delete_playlist: z.infer<typeof BridgeRequest.delete_playlist>
 	insert_playlist_entry: z.infer<typeof BridgeRequest.insert_playlist_entry>
-	update_playlist_entry: BridgeRequest.update_playlist_entry
-	update_current_entry: BridgeRequest.update_current_entry
+	update_playlist_entry: z.infer<typeof BridgeRequest.update_playlist_entry>
+	update_current_entry: z.infer<typeof BridgeRequest.update_current_entry>
 	// sync_overwrite_playlist: z.infer<typeof BridgeRequest.sync_overwrite_playlist>
 	// cancel_pending: z.infer<typeof BridgeRequest.cancel_pending>
 	// synced_file_hash: z.infer<typeof BridgeRequest.synced_file_hash>
