@@ -497,7 +497,9 @@ class bt extends E {
     e.payload.value.event.value !== "Progress Update" && this.client.log(`%c ⬅️ ${e.payload.value.event.value}`, "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-function H(n) {
+function U(n) {
+  if (!n)
+    throw new Error("No version string provided");
   const [e, t, s, r] = n.split(".").map(Number);
   return {
     major: e,
@@ -575,7 +577,7 @@ const k = class {
     if (this.isConnected = !0, (await this.createOrchestration("")).success == !1) {
       let s = await this.getVersion();
       if (s.success == !1)
-        return { success: !1, response: { version: H("0"), orchestration: "" } };
+        return { success: !1, response: { version: U("0"), orchestration: "" } };
       if (s.response.major < 2 && s.response.minor < 1)
         return { success: !1, response: { version: s.response, orchestration: "" } };
     }
@@ -586,14 +588,14 @@ const k = class {
    * @returns string, the name of the current orchestration
    */
   async createOrchestration(e) {
-    var r, a;
+    var r, a, o;
     if (this.log("%c ➡️ function call: createOrchestration ", "color: magenta; font-weight: bold; border: solid"), await this.status() == !1)
       return { success: !1, response: null };
     const t = await this.getVersion();
     if (t.response.major < 2 && t.response.minor < 1)
       return console.error("Unable to get Looking Glass Bridge version, please upgrade Looking Glass Bridge."), { success: !1, response: null };
     let s = await pt({ name: e, orchestration: this.orchestration });
-    return s.success == !0 && (r = s.response) != null && r.payload.value && (this.orchestration = (a = s.response) == null ? void 0 : a.payload.value), { success: !0, response: this.orchestration };
+    return s.success == !0 && (a = (r = s.response) == null ? void 0 : r.payload) != null && a.value && (this.orchestration = (o = s.response) == null ? void 0 : o.payload.value), { success: !0, response: this.orchestration };
   }
   /**
    * Disconnect from Looking Glass Bridge, free up resources.
@@ -630,15 +632,15 @@ const k = class {
    * @returns string of the version of Looking Glass Bridge that is running
    */
   async getVersion() {
-    var t;
+    var t, s;
     this.log("%c ➡️ function call: getVersion ", "color: magenta; font-weight: bold; border: solid");
     let e = await C({ endpoint: "bridge_version", requestBody: {} });
     if (e.success == !0) {
-      let s = H(e.response.payload.value);
-      return this.version = s, { success: !0, response: this.version };
+      let r = U((t = e.response.payload) == null ? void 0 : t.value);
+      return this.version = r, { success: !0, response: this.version };
     } else {
-      let s = await ((t = k.fallback) == null ? void 0 : t.getLegacyVersion());
-      return s == null ? { success: !1, response: H("0") } : { success: !0, response: H(s) };
+      let r = await ((s = k.fallback) == null ? void 0 : s.getLegacyVersion());
+      return r == null ? { success: !1, response: U("0") } : { success: !0, response: U(r) };
     }
   }
   /**
@@ -646,12 +648,13 @@ const k = class {
    * @returns the current version of the Looking Glass API
    */
   async apiVersion() {
+    var s, r;
     if (this.log("%c ➡️ function call: apiVersion ", "color: magenta; font-weight: bold; border: solid"), this.isConnected == !1)
-      return { success: !1, response: H("0") };
+      return { success: !1, response: U("0") };
     if (await this.isVersionCompatible() == !1)
-      return { success: !1, response: H("0") };
+      return { success: !1, response: U("0") };
     let e = await C({ endpoint: "api_version", requestBody: {} });
-    return e.success == !1 ? (console.warn("this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge."), { success: !1, response: H("0") }) : { success: !0, response: H(e.response.payload.value) };
+    return e.success == !1 ? (console.warn("this call is only supported in bridge 2.2 or newer, please upgrade Looking Glass Bridge."), { success: !1, response: U("0") }) : ((s = e.response.payload) == null ? void 0 : s.value) == null ? { success: !1, response: U("0") } : { success: !0, response: U((r = e.response.payload) == null ? void 0 : r.value) };
   }
   /**
    * getDisplays finds all displays that are connected to the computer,
@@ -659,6 +662,7 @@ const k = class {
    * @returns the display object
    */
   async getDisplays() {
+    var s, r, a, o;
     if (this.log("%c ➡️ function call: displays ", "color: magenta; font-weight: bold; border: solid"), this.displays = [], this.isConnected == !1)
       return { success: !1, response: null };
     const e = {
@@ -670,13 +674,13 @@ const k = class {
     });
     if (t.success == !1)
       return { success: !1, response: null };
-    for (let s in t.response.payload.value) {
+    for (let l in (s = t.response.payload) == null ? void 0 : s.value) {
       console.log("%c ⚠️ DEBUG! ", "color: orange; font-weight: bold; border: solid", { payload: t.response.payload });
-      let r = t.response.payload.value[`${s}`];
-      if (console.log("%c ⚠️ DEBUG! ", "color: orange; font-weight: bold; border: solid", { display: r }), r.value.hardwareVersion.value !== "thirdparty") {
-        console.log("%c ⚠️ DEBUG -- display value! ", "color: orange; font-weight: bold; border: solid", { display: r }), r.value || console.log("%c ⚠️ DEBUG -- display value failed! ", "color: orange; font-weight: bold; border: solid", { display: r });
-        let o = ft(r.value);
-        console.log("%c ⚠️ DEBUG -- parsed display failed! ", "color: orange; font-weight: bold; border: solid", { display: r.value }), o != null && this.displays.push(o);
+      let d = (r = t.response.payload) == null ? void 0 : r.value[`${l}`];
+      if (console.log("%c ⚠️ DEBUG! ", "color: orange; font-weight: bold; border: solid", { display: d }), ((o = (a = d.value) == null ? void 0 : a.hardwareVersion) == null ? void 0 : o.value) !== "thirdparty") {
+        console.log("%c ⚠️ DEBUG -- display value! ", "color: orange; font-weight: bold; border: solid", { display: d }), d.value || console.log("%c ⚠️ DEBUG -- display value failed! ", "color: orange; font-weight: bold; border: solid", { display: d });
+        let m = ft(d.value);
+        console.log("%c ⚠️ DEBUG -- parsed display failed! ", "color: orange; font-weight: bold; border: solid", { display: d.value }), m != null && this.displays.push(m);
       }
     }
     return { success: !0, response: this.displays };
@@ -1238,7 +1242,7 @@ class S {
     const s = [];
     for (const r of t) {
       if (r.status === "aborted")
-        return g;
+        return y;
       r.status === "dirty" && e.dirty(), s.push(r.value);
     }
     return { status: e.value, value: s };
@@ -1259,13 +1263,13 @@ class S {
     for (const r of t) {
       const { key: a, value: o } = r;
       if (a.status === "aborted" || o.status === "aborted")
-        return g;
+        return y;
       a.status === "dirty" && e.dirty(), o.status === "dirty" && e.dirty(), a.value !== "__proto__" && (typeof o.value < "u" || r.alwaysSet) && (s[a.value] = o.value);
     }
     return { status: e.value, value: s };
   }
 }
-const g = Object.freeze({
+const y = Object.freeze({
   status: "aborted"
 }), te = (n) => ({ status: "dirty", value: n }), I = (n) => ({ status: "valid", value: n }), Me = (n) => n.status === "aborted", Ae = (n) => n.status === "dirty", ce = (n) => n.status === "valid", de = (n) => typeof Promise < "u" && n instanceof Promise;
 function Pe(n, e, t, s) {
@@ -1320,8 +1324,8 @@ function v(n) {
     throw new Error(`Can't use "invalid_type_error" or "required_error" in conjunction with custom error map.`);
   return e ? { errorMap: e, description: r } : { errorMap: (o, l) => {
     var d, u;
-    const { message: y } = n;
-    return o.code === "invalid_enum_value" ? { message: y ?? l.defaultError } : typeof l.data > "u" ? { message: (d = y ?? s) !== null && d !== void 0 ? d : l.defaultError } : o.code !== "invalid_type" ? { message: l.defaultError } : { message: (u = y ?? t) !== null && u !== void 0 ? u : l.defaultError };
+    const { message: m } = n;
+    return o.code === "invalid_enum_value" ? { message: m ?? l.defaultError } : typeof l.data > "u" ? { message: (d = m ?? s) !== null && d !== void 0 ? d : l.defaultError } : o.code !== "invalid_type" ? { message: l.defaultError } : { message: (u = m ?? t) !== null && u !== void 0 ? u : l.defaultError };
   }, description: r };
 }
 class _ {
@@ -1426,7 +1430,7 @@ class _ {
   _refinement(e) {
     return new A({
       schema: this,
-      typeName: m.ZodEffects,
+      typeName: g.ZodEffects,
       effect: { type: "refinement", refinement: e }
     });
   }
@@ -1458,7 +1462,7 @@ class _ {
     return new A({
       ...v(this._def),
       schema: this,
-      typeName: m.ZodEffects,
+      typeName: g.ZodEffects,
       effect: { type: "transform", transform: e }
     });
   }
@@ -1468,12 +1472,12 @@ class _ {
       ...v(this._def),
       innerType: this,
       defaultValue: t,
-      typeName: m.ZodDefault
+      typeName: g.ZodDefault
     });
   }
   brand() {
     return new Be({
-      typeName: m.ZodBranded,
+      typeName: g.ZodBranded,
       type: this,
       ...v(this._def)
     });
@@ -1484,7 +1488,7 @@ class _ {
       ...v(this._def),
       innerType: this,
       catchValue: t,
-      typeName: m.ZodCatch
+      typeName: g.ZodCatch
     });
   }
   describe(e) {
@@ -1533,7 +1537,7 @@ class R extends _ {
         code: c.invalid_type,
         expected: f.string,
         received: a.parsedType
-      }), g;
+      }), y;
     }
     const s = new S();
     let r;
@@ -1879,7 +1883,7 @@ R.create = (n) => {
   var e;
   return new R({
     checks: [],
-    typeName: m.ZodString,
+    typeName: g.ZodString,
     coerce: (e = n == null ? void 0 : n.coerce) !== null && e !== void 0 ? e : !1,
     ...v(n)
   });
@@ -1899,7 +1903,7 @@ class z extends _ {
         code: c.invalid_type,
         expected: f.number,
         received: a.parsedType
-      }), g;
+      }), y;
     }
     let s;
     const r = new S();
@@ -2056,7 +2060,7 @@ class z extends _ {
 }
 z.create = (n) => new z({
   checks: [],
-  typeName: m.ZodNumber,
+  typeName: g.ZodNumber,
   coerce: (n == null ? void 0 : n.coerce) || !1,
   ...v(n)
 });
@@ -2071,7 +2075,7 @@ class W extends _ {
         code: c.invalid_type,
         expected: f.bigint,
         received: a.parsedType
-      }), g;
+      }), y;
     }
     let s;
     const r = new S();
@@ -2183,7 +2187,7 @@ W.create = (n) => {
   var e;
   return new W({
     checks: [],
-    typeName: m.ZodBigInt,
+    typeName: g.ZodBigInt,
     coerce: (e = n == null ? void 0 : n.coerce) !== null && e !== void 0 ? e : !1,
     ...v(n)
   });
@@ -2196,13 +2200,13 @@ class ue extends _ {
         code: c.invalid_type,
         expected: f.boolean,
         received: s.parsedType
-      }), g;
+      }), y;
     }
     return I(e.data);
   }
 }
 ue.create = (n) => new ue({
-  typeName: m.ZodBoolean,
+  typeName: g.ZodBoolean,
   coerce: (n == null ? void 0 : n.coerce) || !1,
   ...v(n)
 });
@@ -2214,13 +2218,13 @@ class F extends _ {
         code: c.invalid_type,
         expected: f.date,
         received: a.parsedType
-      }), g;
+      }), y;
     }
     if (isNaN(e.data.getTime())) {
       const a = this._getOrReturnCtx(e);
       return h(a, {
         code: c.invalid_date
-      }), g;
+      }), y;
     }
     const s = new S();
     let r;
@@ -2281,7 +2285,7 @@ class F extends _ {
 F.create = (n) => new F({
   checks: [],
   coerce: (n == null ? void 0 : n.coerce) || !1,
-  typeName: m.ZodDate,
+  typeName: g.ZodDate,
   ...v(n)
 });
 class Ee extends _ {
@@ -2292,13 +2296,13 @@ class Ee extends _ {
         code: c.invalid_type,
         expected: f.symbol,
         received: s.parsedType
-      }), g;
+      }), y;
     }
     return I(e.data);
   }
 }
 Ee.create = (n) => new Ee({
-  typeName: m.ZodSymbol,
+  typeName: g.ZodSymbol,
   ...v(n)
 });
 class he extends _ {
@@ -2309,13 +2313,13 @@ class he extends _ {
         code: c.invalid_type,
         expected: f.undefined,
         received: s.parsedType
-      }), g;
+      }), y;
     }
     return I(e.data);
   }
 }
 he.create = (n) => new he({
-  typeName: m.ZodUndefined,
+  typeName: g.ZodUndefined,
   ...v(n)
 });
 class fe extends _ {
@@ -2326,13 +2330,13 @@ class fe extends _ {
         code: c.invalid_type,
         expected: f.null,
         received: s.parsedType
-      }), g;
+      }), y;
     }
     return I(e.data);
   }
 }
 fe.create = (n) => new fe({
-  typeName: m.ZodNull,
+  typeName: g.ZodNull,
   ...v(n)
 });
 class re extends _ {
@@ -2344,7 +2348,7 @@ class re extends _ {
   }
 }
 re.create = (n) => new re({
-  typeName: m.ZodAny,
+  typeName: g.ZodAny,
   ...v(n)
 });
 class X extends _ {
@@ -2356,21 +2360,21 @@ class X extends _ {
   }
 }
 X.create = (n) => new X({
-  typeName: m.ZodUnknown,
+  typeName: g.ZodUnknown,
   ...v(n)
 });
-class L extends _ {
+class H extends _ {
   _parse(e) {
     const t = this._getOrReturnCtx(e);
     return h(t, {
       code: c.invalid_type,
       expected: f.never,
       received: t.parsedType
-    }), g;
+    }), y;
   }
 }
-L.create = (n) => new L({
-  typeName: m.ZodNever,
+H.create = (n) => new H({
+  typeName: g.ZodNever,
   ...v(n)
 });
 class Se extends _ {
@@ -2381,13 +2385,13 @@ class Se extends _ {
         code: c.invalid_type,
         expected: f.void,
         received: s.parsedType
-      }), g;
+      }), y;
     }
     return I(e.data);
   }
 }
 Se.create = (n) => new Se({
-  typeName: m.ZodVoid,
+  typeName: g.ZodVoid,
   ...v(n)
 });
 class M extends _ {
@@ -2398,7 +2402,7 @@ class M extends _ {
         code: c.invalid_type,
         expected: f.array,
         received: t.parsedType
-      }), g;
+      }), y;
     if (r.exactLength !== null) {
       const o = t.data.length > r.exactLength.value, l = t.data.length < r.exactLength.value;
       (o || l) && (h(t, {
@@ -2460,7 +2464,7 @@ M.create = (n, e) => new M({
   minLength: null,
   maxLength: null,
   exactLength: null,
-  typeName: m.ZodArray,
+  typeName: g.ZodArray,
   ...v(e)
 });
 function ee(n) {
@@ -2497,28 +2501,28 @@ class P extends _ {
         code: c.invalid_type,
         expected: f.object,
         received: u.parsedType
-      }), g;
+      }), y;
     }
     const { status: s, ctx: r } = this._processInputParams(e), { shape: a, keys: o } = this._getCached(), l = [];
-    if (!(this._def.catchall instanceof L && this._def.unknownKeys === "strip"))
+    if (!(this._def.catchall instanceof H && this._def.unknownKeys === "strip"))
       for (const u in r.data)
         o.includes(u) || l.push(u);
     const d = [];
     for (const u of o) {
-      const y = a[u], Z = r.data[u];
+      const m = a[u], Z = r.data[u];
       d.push({
         key: { status: "valid", value: u },
-        value: y._parse(new D(r, Z, r.path, u)),
+        value: m._parse(new D(r, Z, r.path, u)),
         alwaysSet: u in r.data
       });
     }
-    if (this._def.catchall instanceof L) {
+    if (this._def.catchall instanceof H) {
       const u = this._def.unknownKeys;
       if (u === "passthrough")
-        for (const y of l)
+        for (const m of l)
           d.push({
-            key: { status: "valid", value: y },
-            value: { status: "valid", value: r.data[y] }
+            key: { status: "valid", value: m },
+            value: { status: "valid", value: r.data[m] }
           });
       else if (u === "strict")
         l.length > 0 && (h(r, {
@@ -2529,26 +2533,26 @@ class P extends _ {
         throw new Error("Internal ZodObject error: invalid unknownKeys value.");
     } else {
       const u = this._def.catchall;
-      for (const y of l) {
-        const Z = r.data[y];
+      for (const m of l) {
+        const Z = r.data[m];
         d.push({
-          key: { status: "valid", value: y },
+          key: { status: "valid", value: m },
           value: u._parse(
-            new D(r, Z, r.path, y)
+            new D(r, Z, r.path, m)
             //, ctx.child(key), value, getParsedType(value)
           ),
-          alwaysSet: y in r.data
+          alwaysSet: m in r.data
         });
       }
     }
     return r.common.async ? Promise.resolve().then(async () => {
       const u = [];
-      for (const y of d) {
-        const Z = await y.key, Le = await y.value;
+      for (const m of d) {
+        const Z = await m.key, Le = await m.value;
         u.push({
           key: Z,
           value: Le,
-          alwaysSet: y.alwaysSet
+          alwaysSet: m.alwaysSet
         });
       }
       return u;
@@ -2625,7 +2629,7 @@ class P extends _ {
         ...this._def.shape(),
         ...e._def.shape()
       }),
-      typeName: m.ZodObject
+      typeName: g.ZodObject
     });
   }
   // merge<
@@ -2750,22 +2754,22 @@ class P extends _ {
 P.create = (n, e) => new P({
   shape: () => n,
   unknownKeys: "strip",
-  catchall: L.create(),
-  typeName: m.ZodObject,
+  catchall: H.create(),
+  typeName: g.ZodObject,
   ...v(e)
 });
 P.strictCreate = (n, e) => new P({
   shape: () => n,
   unknownKeys: "strict",
-  catchall: L.create(),
-  typeName: m.ZodObject,
+  catchall: H.create(),
+  typeName: g.ZodObject,
   ...v(e)
 });
 P.lazycreate = (n, e) => new P({
   shape: n,
   unknownKeys: "strip",
-  catchall: L.create(),
-  typeName: m.ZodObject,
+  catchall: H.create(),
+  typeName: g.ZodObject,
   ...v(e)
 });
 class pe extends _ {
@@ -2782,7 +2786,7 @@ class pe extends _ {
       return h(t, {
         code: c.invalid_union,
         unionErrors: o
-      }), g;
+      }), y;
     }
     if (t.common.async)
       return Promise.all(s.map(async (a) => {
@@ -2814,14 +2818,14 @@ class pe extends _ {
             issues: []
           },
           parent: null
-        }, y = d._parseSync({
+        }, m = d._parseSync({
           data: t.data,
           path: t.path,
           parent: u
         });
-        if (y.status === "valid")
-          return y;
-        y.status === "dirty" && !a && (a = { result: y, ctx: u }), u.common.issues.length && o.push(u.common.issues);
+        if (m.status === "valid")
+          return m;
+        m.status === "dirty" && !a && (a = { result: m, ctx: u }), u.common.issues.length && o.push(u.common.issues);
       }
       if (a)
         return t.common.issues.push(...a.ctx.common.issues), a.result;
@@ -2829,7 +2833,7 @@ class pe extends _ {
       return h(t, {
         code: c.invalid_union,
         unionErrors: l
-      }), g;
+      }), y;
     }
   }
   get options() {
@@ -2838,10 +2842,10 @@ class pe extends _ {
 }
 pe.create = (n, e) => new pe({
   options: n,
-  typeName: m.ZodUnion,
+  typeName: g.ZodUnion,
   ...v(e)
 });
-const U = (n) => n instanceof ye ? U(n.schema) : n instanceof A ? U(n.innerType()) : n instanceof ve ? [n.value] : n instanceof G ? n.options : n instanceof _e ? x.objectValues(n.enum) : n instanceof be ? U(n._def.innerType) : n instanceof he ? [void 0] : n instanceof fe ? [null] : n instanceof B ? [void 0, ...U(n.unwrap())] : n instanceof Y ? [null, ...U(n.unwrap())] : n instanceof Be || n instanceof xe ? U(n.unwrap()) : n instanceof we ? U(n._def.innerType) : [];
+const L = (n) => n instanceof ye ? L(n.schema) : n instanceof A ? L(n.innerType()) : n instanceof ve ? [n.value] : n instanceof G ? n.options : n instanceof _e ? x.objectValues(n.enum) : n instanceof be ? L(n._def.innerType) : n instanceof he ? [void 0] : n instanceof fe ? [null] : n instanceof B ? [void 0, ...L(n.unwrap())] : n instanceof Y ? [null, ...L(n.unwrap())] : n instanceof Be || n instanceof xe ? L(n.unwrap()) : n instanceof we ? L(n._def.innerType) : [];
 class je extends _ {
   _parse(e) {
     const { ctx: t } = this._processInputParams(e);
@@ -2850,7 +2854,7 @@ class je extends _ {
         code: c.invalid_type,
         expected: f.object,
         received: t.parsedType
-      }), g;
+      }), y;
     const s = this.discriminator, r = t.data[s], a = this.optionsMap.get(r);
     return a ? t.common.async ? a._parseAsync({
       data: t.data,
@@ -2864,7 +2868,7 @@ class je extends _ {
       code: c.invalid_union_discriminator,
       options: Array.from(this.optionsMap.keys()),
       path: [s]
-    }), g);
+    }), y);
   }
   get discriminator() {
     return this._def.discriminator;
@@ -2886,7 +2890,7 @@ class je extends _ {
   static create(e, t, s) {
     const r = /* @__PURE__ */ new Map();
     for (const a of t) {
-      const o = U(a.shape[e]);
+      const o = L(a.shape[e]);
       if (!o.length)
         throw new Error(`A discriminator value for key \`${e}\` could not be extracted from all schema options`);
       for (const l of o) {
@@ -2896,7 +2900,7 @@ class je extends _ {
       }
     }
     return new je({
-      typeName: m.ZodDiscriminatedUnion,
+      typeName: g.ZodDiscriminatedUnion,
       discriminator: e,
       options: t,
       optionsMap: r,
@@ -2935,11 +2939,11 @@ class me extends _ {
   _parse(e) {
     const { status: t, ctx: s } = this._processInputParams(e), r = (a, o) => {
       if (Me(a) || Me(o))
-        return g;
+        return y;
       const l = Ve(a.value, o.value);
       return l.valid ? ((Ae(a) || Ae(o)) && t.dirty(), { status: t.value, value: l.data }) : (h(s, {
         code: c.invalid_intersection_types
-      }), g);
+      }), y);
     };
     return s.common.async ? Promise.all([
       this._def.left._parseAsync({
@@ -2966,7 +2970,7 @@ class me extends _ {
 me.create = (n, e, t) => new me({
   left: n,
   right: e,
-  typeName: m.ZodIntersection,
+  typeName: g.ZodIntersection,
   ...v(t)
 });
 class $ extends _ {
@@ -2977,7 +2981,7 @@ class $ extends _ {
         code: c.invalid_type,
         expected: f.array,
         received: s.parsedType
-      }), g;
+      }), y;
     if (s.data.length < this._def.items.length)
       return h(s, {
         code: c.too_small,
@@ -2985,7 +2989,7 @@ class $ extends _ {
         inclusive: !0,
         exact: !1,
         type: "array"
-      }), g;
+      }), y;
     !this._def.rest && s.data.length > this._def.items.length && (h(s, {
       code: c.too_big,
       maximum: this._def.items.length,
@@ -3014,7 +3018,7 @@ $.create = (n, e) => {
     throw new Error("You must pass an array of schemas to z.tuple([ ... ])");
   return new $({
     items: n,
-    typeName: m.ZodTuple,
+    typeName: g.ZodTuple,
     rest: null,
     ...v(e)
   });
@@ -3033,7 +3037,7 @@ class ge extends _ {
         code: c.invalid_type,
         expected: f.object,
         received: s.parsedType
-      }), g;
+      }), y;
     const r = [], a = this._def.keyType, o = this._def.valueType;
     for (const l in s.data)
       r.push({
@@ -3050,12 +3054,12 @@ class ge extends _ {
     return t instanceof _ ? new ge({
       keyType: e,
       valueType: t,
-      typeName: m.ZodRecord,
+      typeName: g.ZodRecord,
       ...v(s)
     }) : new ge({
       keyType: R.create(),
       valueType: e,
-      typeName: m.ZodRecord,
+      typeName: g.ZodRecord,
       ...v(t)
     });
   }
@@ -3074,7 +3078,7 @@ class Ie extends _ {
         code: c.invalid_type,
         expected: f.map,
         received: s.parsedType
-      }), g;
+      }), y;
     const r = this._def.keyType, a = this._def.valueType, o = [...s.data.entries()].map(([l, d], u) => ({
       key: r._parse(new D(s, l, s.path, [u, "key"])),
       value: a._parse(new D(s, d, s.path, [u, "value"]))
@@ -3083,20 +3087,20 @@ class Ie extends _ {
       const l = /* @__PURE__ */ new Map();
       return Promise.resolve().then(async () => {
         for (const d of o) {
-          const u = await d.key, y = await d.value;
-          if (u.status === "aborted" || y.status === "aborted")
-            return g;
-          (u.status === "dirty" || y.status === "dirty") && t.dirty(), l.set(u.value, y.value);
+          const u = await d.key, m = await d.value;
+          if (u.status === "aborted" || m.status === "aborted")
+            return y;
+          (u.status === "dirty" || m.status === "dirty") && t.dirty(), l.set(u.value, m.value);
         }
         return { status: t.value, value: l };
       });
     } else {
       const l = /* @__PURE__ */ new Map();
       for (const d of o) {
-        const u = d.key, y = d.value;
-        if (u.status === "aborted" || y.status === "aborted")
-          return g;
-        (u.status === "dirty" || y.status === "dirty") && t.dirty(), l.set(u.value, y.value);
+        const u = d.key, m = d.value;
+        if (u.status === "aborted" || m.status === "aborted")
+          return y;
+        (u.status === "dirty" || m.status === "dirty") && t.dirty(), l.set(u.value, m.value);
       }
       return { status: t.value, value: l };
     }
@@ -3105,7 +3109,7 @@ class Ie extends _ {
 Ie.create = (n, e, t) => new Ie({
   valueType: e,
   keyType: n,
-  typeName: m.ZodMap,
+  typeName: g.ZodMap,
   ...v(t)
 });
 class K extends _ {
@@ -3116,7 +3120,7 @@ class K extends _ {
         code: c.invalid_type,
         expected: f.set,
         received: s.parsedType
-      }), g;
+      }), y;
     const r = this._def;
     r.minSize !== null && s.data.size < r.minSize.value && (h(s, {
       code: c.too_small,
@@ -3136,10 +3140,10 @@ class K extends _ {
     const a = this._def.valueType;
     function o(d) {
       const u = /* @__PURE__ */ new Set();
-      for (const y of d) {
-        if (y.status === "aborted")
-          return g;
-        y.status === "dirty" && t.dirty(), u.add(y.value);
+      for (const m of d) {
+        if (m.status === "aborted")
+          return y;
+        m.status === "dirty" && t.dirty(), u.add(m.value);
       }
       return { status: t.value, value: u };
     }
@@ -3169,7 +3173,7 @@ K.create = (n, e) => new K({
   valueType: n,
   minSize: null,
   maxSize: null,
-  typeName: m.ZodSet,
+  typeName: g.ZodSet,
   ...v(e)
 });
 class se extends _ {
@@ -3183,7 +3187,7 @@ class se extends _ {
         code: c.invalid_type,
         expected: f.function,
         received: t.parsedType
-      }), g;
+      }), y;
     function s(l, d) {
       return Ce({
         data: l,
@@ -3220,9 +3224,9 @@ class se extends _ {
     if (this._def.returns instanceof ae) {
       const l = this;
       return I(async function(...d) {
-        const u = new O([]), y = await l._def.args.parseAsync(d, a).catch((Oe) => {
+        const u = new O([]), m = await l._def.args.parseAsync(d, a).catch((Oe) => {
           throw u.addIssue(s(d, Oe)), u;
-        }), Z = await Reflect.apply(o, this, y);
+        }), Z = await Reflect.apply(o, this, m);
         return await l._def.returns._def.type.parseAsync(Z, a).catch((Oe) => {
           throw u.addIssue(r(Z, Oe)), u;
         });
@@ -3233,9 +3237,9 @@ class se extends _ {
         const u = l._def.args.safeParse(d, a);
         if (!u.success)
           throw new O([s(d, u.error)]);
-        const y = Reflect.apply(o, this, u.data), Z = l._def.returns.safeParse(y, a);
+        const m = Reflect.apply(o, this, u.data), Z = l._def.returns.safeParse(m, a);
         if (!Z.success)
-          throw new O([r(y, Z.error)]);
+          throw new O([r(m, Z.error)]);
         return Z.data;
       });
     }
@@ -3268,7 +3272,7 @@ class se extends _ {
     return new se({
       args: e || $.create([]).rest(X.create()),
       returns: t || X.create(),
-      typeName: m.ZodFunction,
+      typeName: g.ZodFunction,
       ...v(s)
     });
   }
@@ -3284,7 +3288,7 @@ class ye extends _ {
 }
 ye.create = (n, e) => new ye({
   getter: n,
-  typeName: m.ZodLazy,
+  typeName: g.ZodLazy,
   ...v(e)
 });
 class ve extends _ {
@@ -3295,7 +3299,7 @@ class ve extends _ {
         received: t.data,
         code: c.invalid_literal,
         expected: this._def.value
-      }), g;
+      }), y;
     }
     return { status: "valid", value: e.data };
   }
@@ -3305,13 +3309,13 @@ class ve extends _ {
 }
 ve.create = (n, e) => new ve({
   value: n,
-  typeName: m.ZodLiteral,
+  typeName: g.ZodLiteral,
   ...v(e)
 });
 function tt(n, e) {
   return new G({
     values: n,
-    typeName: m.ZodEnum,
+    typeName: g.ZodEnum,
     ...v(e)
   });
 }
@@ -3326,7 +3330,7 @@ class G extends _ {
         expected: x.joinValues(s),
         received: t.parsedType,
         code: c.invalid_type
-      }), g;
+      }), y;
     }
     if (Pe(this, ie, "f") || Xe(this, ie, new Set(this._def.values), "f"), !Pe(this, ie, "f").has(e.data)) {
       const t = this._getOrReturnCtx(e), s = this._def.values;
@@ -3334,7 +3338,7 @@ class G extends _ {
         received: t.data,
         code: c.invalid_enum_value,
         options: s
-      }), g;
+      }), y;
     }
     return I(e.data);
   }
@@ -3386,7 +3390,7 @@ class _e extends _ {
         expected: x.joinValues(r),
         received: s.parsedType,
         code: c.invalid_type
-      }), g;
+      }), y;
     }
     if (Pe(this, oe, "f") || Xe(this, oe, new Set(x.getValidEnumValues(this._def.values)), "f"), !Pe(this, oe, "f").has(e.data)) {
       const r = x.objectValues(t);
@@ -3394,7 +3398,7 @@ class _e extends _ {
         received: s.data,
         code: c.invalid_enum_value,
         options: r
-      }), g;
+      }), y;
     }
     return I(e.data);
   }
@@ -3405,7 +3409,7 @@ class _e extends _ {
 oe = /* @__PURE__ */ new WeakMap();
 _e.create = (n, e) => new _e({
   values: n,
-  typeName: m.ZodNativeEnum,
+  typeName: g.ZodNativeEnum,
   ...v(e)
 });
 class ae extends _ {
@@ -3419,7 +3423,7 @@ class ae extends _ {
         code: c.invalid_type,
         expected: f.promise,
         received: t.parsedType
-      }), g;
+      }), y;
     const s = t.parsedType === f.promise ? t.data : Promise.resolve(t.data);
     return I(s.then((r) => this._def.type.parseAsync(r, {
       path: t.path,
@@ -3429,7 +3433,7 @@ class ae extends _ {
 }
 ae.create = (n, e) => new ae({
   type: n,
-  typeName: m.ZodPromise,
+  typeName: g.ZodPromise,
   ...v(e)
 });
 class A extends _ {
@@ -3437,7 +3441,7 @@ class A extends _ {
     return this._def.schema;
   }
   sourceType() {
-    return this._def.schema._def.typeName === m.ZodEffects ? this._def.schema.sourceType() : this._def.schema;
+    return this._def.schema._def.typeName === g.ZodEffects ? this._def.schema.sourceType() : this._def.schema;
   }
   _parse(e) {
     const { status: t, ctx: s } = this._processInputParams(e), r = this._def.effect || null, a = {
@@ -3453,23 +3457,23 @@ class A extends _ {
       if (s.common.async)
         return Promise.resolve(o).then(async (l) => {
           if (t.value === "aborted")
-            return g;
+            return y;
           const d = await this._def.schema._parseAsync({
             data: l,
             path: s.path,
             parent: s
           });
-          return d.status === "aborted" ? g : d.status === "dirty" || t.value === "dirty" ? te(d.value) : d;
+          return d.status === "aborted" ? y : d.status === "dirty" || t.value === "dirty" ? te(d.value) : d;
         });
       {
         if (t.value === "aborted")
-          return g;
+          return y;
         const l = this._def.schema._parseSync({
           data: o,
           path: s.path,
           parent: s
         });
-        return l.status === "aborted" ? g : l.status === "dirty" || t.value === "dirty" ? te(l.value) : l;
+        return l.status === "aborted" ? y : l.status === "dirty" || t.value === "dirty" ? te(l.value) : l;
       }
     }
     if (r.type === "refinement") {
@@ -3487,9 +3491,9 @@ class A extends _ {
           path: s.path,
           parent: s
         });
-        return l.status === "aborted" ? g : (l.status === "dirty" && t.dirty(), o(l.value), { status: t.value, value: l.value });
+        return l.status === "aborted" ? y : (l.status === "dirty" && t.dirty(), o(l.value), { status: t.value, value: l.value });
       } else
-        return this._def.schema._parseAsync({ data: s.data, path: s.path, parent: s }).then((l) => l.status === "aborted" ? g : (l.status === "dirty" && t.dirty(), o(l.value).then(() => ({ status: t.value, value: l.value }))));
+        return this._def.schema._parseAsync({ data: s.data, path: s.path, parent: s }).then((l) => l.status === "aborted" ? y : (l.status === "dirty" && t.dirty(), o(l.value).then(() => ({ status: t.value, value: l.value }))));
     }
     if (r.type === "transform")
       if (s.common.async === !1) {
@@ -3511,14 +3515,14 @@ class A extends _ {
 }
 A.create = (n, e, t) => new A({
   schema: n,
-  typeName: m.ZodEffects,
+  typeName: g.ZodEffects,
   effect: e,
   ...v(t)
 });
 A.createWithPreprocess = (n, e, t) => new A({
   schema: e,
   effect: { type: "preprocess", transform: n },
-  typeName: m.ZodEffects,
+  typeName: g.ZodEffects,
   ...v(t)
 });
 class B extends _ {
@@ -3531,7 +3535,7 @@ class B extends _ {
 }
 B.create = (n, e) => new B({
   innerType: n,
-  typeName: m.ZodOptional,
+  typeName: g.ZodOptional,
   ...v(e)
 });
 class Y extends _ {
@@ -3544,7 +3548,7 @@ class Y extends _ {
 }
 Y.create = (n, e) => new Y({
   innerType: n,
-  typeName: m.ZodNullable,
+  typeName: g.ZodNullable,
   ...v(e)
 });
 class be extends _ {
@@ -3563,7 +3567,7 @@ class be extends _ {
 }
 be.create = (n, e) => new be({
   innerType: n,
-  typeName: m.ZodDefault,
+  typeName: g.ZodDefault,
   defaultValue: typeof e.default == "function" ? e.default : () => e.default,
   ...v(e)
 });
@@ -3606,7 +3610,7 @@ class we extends _ {
 }
 we.create = (n, e) => new we({
   innerType: n,
-  typeName: m.ZodCatch,
+  typeName: g.ZodCatch,
   catchValue: typeof e.catch == "function" ? e.catch : () => e.catch,
   ...v(e)
 });
@@ -3618,13 +3622,13 @@ class Ne extends _ {
         code: c.invalid_type,
         expected: f.nan,
         received: s.parsedType
-      }), g;
+      }), y;
     }
     return { status: "valid", value: e.data };
   }
 }
 Ne.create = (n) => new Ne({
-  typeName: m.ZodNaN,
+  typeName: g.ZodNaN,
   ...v(n)
 });
 const Dt = Symbol("zod_brand");
@@ -3651,7 +3655,7 @@ class ke extends _ {
           path: s.path,
           parent: s
         });
-        return a.status === "aborted" ? g : a.status === "dirty" ? (t.dirty(), te(a.value)) : this._def.out._parseAsync({
+        return a.status === "aborted" ? y : a.status === "dirty" ? (t.dirty(), te(a.value)) : this._def.out._parseAsync({
           data: a.value,
           path: s.path,
           parent: s
@@ -3663,7 +3667,7 @@ class ke extends _ {
         path: s.path,
         parent: s
       });
-      return r.status === "aborted" ? g : r.status === "dirty" ? (t.dirty(), {
+      return r.status === "aborted" ? y : r.status === "dirty" ? (t.dirty(), {
         status: "dirty",
         value: r.value
       }) : this._def.out._parseSync({
@@ -3677,7 +3681,7 @@ class ke extends _ {
     return new ke({
       in: e,
       out: t,
-      typeName: m.ZodPipeline
+      typeName: g.ZodPipeline
     });
   }
 }
@@ -3692,7 +3696,7 @@ class xe extends _ {
 }
 xe.create = (n, e) => new xe({
   innerType: n,
-  typeName: m.ZodReadonly,
+  typeName: g.ZodReadonly,
   ...v(e)
 });
 function st(n, e = {}, t) {
@@ -3707,13 +3711,13 @@ function st(n, e = {}, t) {
 const $t = {
   object: P.lazycreate
 };
-var m;
+var g;
 (function(n) {
   n.ZodString = "ZodString", n.ZodNumber = "ZodNumber", n.ZodNaN = "ZodNaN", n.ZodBigInt = "ZodBigInt", n.ZodBoolean = "ZodBoolean", n.ZodDate = "ZodDate", n.ZodSymbol = "ZodSymbol", n.ZodUndefined = "ZodUndefined", n.ZodNull = "ZodNull", n.ZodAny = "ZodAny", n.ZodUnknown = "ZodUnknown", n.ZodNever = "ZodNever", n.ZodVoid = "ZodVoid", n.ZodArray = "ZodArray", n.ZodObject = "ZodObject", n.ZodUnion = "ZodUnion", n.ZodDiscriminatedUnion = "ZodDiscriminatedUnion", n.ZodIntersection = "ZodIntersection", n.ZodTuple = "ZodTuple", n.ZodRecord = "ZodRecord", n.ZodMap = "ZodMap", n.ZodSet = "ZodSet", n.ZodFunction = "ZodFunction", n.ZodLazy = "ZodLazy", n.ZodLiteral = "ZodLiteral", n.ZodEnum = "ZodEnum", n.ZodEffects = "ZodEffects", n.ZodNativeEnum = "ZodNativeEnum", n.ZodOptional = "ZodOptional", n.ZodNullable = "ZodNullable", n.ZodDefault = "ZodDefault", n.ZodCatch = "ZodCatch", n.ZodPromise = "ZodPromise", n.ZodBranded = "ZodBranded", n.ZodPipeline = "ZodPipeline", n.ZodReadonly = "ZodReadonly";
-})(m || (m = {}));
+})(g || (g = {}));
 const Ut = (n, e = {
   message: `Input not instance of ${n.name}`
-}) => st((t) => t instanceof n, e), De = R.create, nt = z.create, Lt = Ne.create, Ht = W.create, rt = ue.create, qt = F.create, zt = Ee.create, Wt = he.create, Gt = fe.create, Yt = re.create, Jt = X.create, Qt = L.create, Xt = Se.create, Ft = M.create, at = P.create, Kt = P.strictCreate, it = pe.create, es = je.create, ts = me.create, ss = $.create, ns = ge.create, rs = Ie.create, as = K.create, is = se.create, os = ye.create, V = ve.create, ls = G.create, cs = _e.create, ds = ae.create, Ge = A.create, us = B.create, hs = Y.create, fs = A.createWithPreprocess, ps = ke.create, ms = () => De().optional(), gs = () => nt().optional(), ys = () => rt().optional(), vs = {
+}) => st((t) => t instanceof n, e), De = R.create, nt = z.create, Lt = Ne.create, Ht = W.create, rt = ue.create, qt = F.create, zt = Ee.create, Wt = he.create, Gt = fe.create, Yt = re.create, Jt = X.create, Qt = H.create, Xt = Se.create, Ft = M.create, at = P.create, Kt = P.strictCreate, it = pe.create, es = je.create, ts = me.create, ss = $.create, ns = ge.create, rs = Ie.create, as = K.create, is = se.create, os = ye.create, V = ve.create, ls = G.create, cs = _e.create, ds = ae.create, Ge = A.create, us = B.create, hs = Y.create, fs = A.createWithPreprocess, ps = ke.create, ms = () => De().optional(), gs = () => nt().optional(), ys = () => rt().optional(), vs = {
   string: (n) => R.create({ ...n, coerce: !0 }),
   number: (n) => z.create({ ...n, coerce: !0 }),
   boolean: (n) => ue.create({
@@ -3722,7 +3726,7 @@ const Ut = (n, e = {
   }),
   bigint: (n) => W.create({ ...n, coerce: !0 }),
   date: (n) => F.create({ ...n, coerce: !0 })
-}, _s = g;
+}, _s = y;
 var i = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   defaultErrorMap: ne,
@@ -3732,7 +3736,7 @@ var i = /* @__PURE__ */ Object.freeze({
   EMPTY_PATH: kt,
   addIssueToContext: h,
   ParseStatus: S,
-  INVALID: g,
+  INVALID: y,
   DIRTY: te,
   OK: I,
   isAborted: Me,
@@ -3759,7 +3763,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodNull: fe,
   ZodAny: re,
   ZodUnknown: X,
-  ZodNever: L,
+  ZodNever: H,
   ZodVoid: Se,
   ZodArray: M,
   ZodObject: P,
@@ -3792,7 +3796,7 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodSchema: _,
   late: $t,
   get ZodFirstPartyTypeKind() {
-    return m;
+    return g;
   },
   coerce: vs,
   any: Yt,

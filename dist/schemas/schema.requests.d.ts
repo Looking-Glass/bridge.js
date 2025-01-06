@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { HologramParamMap } from "./schema.parameters";
 export declare const version: z.ZodObject<{}, "strict", z.ZodTypeAny, {}, {}>;
 export declare const orchestration: z.ZodObject<{}, "strict", z.ZodTypeAny, {}, {}>;
 export declare const show_window: z.ZodObject<{
@@ -164,19 +163,85 @@ export declare const insert_playlist_entry: z.ZodObject<{
     depthiness?: number | undefined;
     tag?: string | undefined;
 }>;
-export type update_playlist_entry = {
+export declare const update_playlist_entry: z.ZodObject<z.objectUtil.extendShape<{
+    orchestration: z.ZodString;
+    playlistName: z.ZodString;
+    playlistIndex: z.ZodNumber;
+}, Record<("zoom" | "filter_mode" | "gaussian_sigma" | "depth_loc" | "depth_inversion" | "chroma_depth" | "depthiness") | ("focus" | "aspect" | "cols" | "rows" | "crop_pos_x" | "crop_pos_y" | "depth_cutoff"), z.ZodOptional<z.ZodString>>>, "strip", z.ZodTypeAny, {
     orchestration: string;
     playlistName: string;
     playlistIndex: number;
-} & {
-    [K in keyof HologramParamMap]?: `${K}: ${HologramParamMap[K]}`;
-};
-export type update_current_entry = {
+    focus?: string | undefined;
+    aspect?: string | undefined;
+    cols?: string | undefined;
+    rows?: string | undefined;
+    crop_pos_x?: string | undefined;
+    crop_pos_y?: string | undefined;
+    zoom?: string | undefined;
+    filter_mode?: string | undefined;
+    gaussian_sigma?: string | undefined;
+    depth_loc?: string | undefined;
+    depth_inversion?: string | undefined;
+    chroma_depth?: string | undefined;
+    depthiness?: string | undefined;
+    depth_cutoff?: string | undefined;
+}, {
+    orchestration: string;
+    playlistName: string;
+    playlistIndex: number;
+    focus?: string | undefined;
+    aspect?: string | undefined;
+    cols?: string | undefined;
+    rows?: string | undefined;
+    crop_pos_x?: string | undefined;
+    crop_pos_y?: string | undefined;
+    zoom?: string | undefined;
+    filter_mode?: string | undefined;
+    gaussian_sigma?: string | undefined;
+    depth_loc?: string | undefined;
+    depth_inversion?: string | undefined;
+    chroma_depth?: string | undefined;
+    depthiness?: string | undefined;
+    depth_cutoff?: string | undefined;
+}>;
+export declare const update_current_entry: z.ZodObject<z.objectUtil.extendShape<{
+    orchestration: z.ZodString;
+    name: z.ZodString;
+}, Record<("zoom" | "filter_mode" | "gaussian_sigma" | "depth_loc" | "depth_inversion" | "chroma_depth" | "depthiness") | ("focus" | "aspect" | "cols" | "rows" | "crop_pos_x" | "crop_pos_y" | "depth_cutoff"), z.ZodOptional<z.ZodString>>>, "strip", z.ZodTypeAny, {
     orchestration: string;
     name: string;
-} & {
-    [K in keyof HologramParamMap]?: `${K}: ${HologramParamMap[K]}`;
-};
+    focus?: string | undefined;
+    aspect?: string | undefined;
+    cols?: string | undefined;
+    rows?: string | undefined;
+    crop_pos_x?: string | undefined;
+    crop_pos_y?: string | undefined;
+    zoom?: string | undefined;
+    filter_mode?: string | undefined;
+    gaussian_sigma?: string | undefined;
+    depth_loc?: string | undefined;
+    depth_inversion?: string | undefined;
+    chroma_depth?: string | undefined;
+    depthiness?: string | undefined;
+    depth_cutoff?: string | undefined;
+}, {
+    orchestration: string;
+    name: string;
+    focus?: string | undefined;
+    aspect?: string | undefined;
+    cols?: string | undefined;
+    rows?: string | undefined;
+    crop_pos_x?: string | undefined;
+    crop_pos_y?: string | undefined;
+    zoom?: string | undefined;
+    filter_mode?: string | undefined;
+    gaussian_sigma?: string | undefined;
+    depth_loc?: string | undefined;
+    depth_inversion?: string | undefined;
+    chroma_depth?: string | undefined;
+    depthiness?: string | undefined;
+    depth_cutoff?: string | undefined;
+}>;
 export declare const play_playlist: z.ZodObject<{
     orchestration: z.ZodString;
     name: z.ZodString;
