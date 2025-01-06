@@ -104,16 +104,23 @@ export function tryParseQuilt(value: string): QuiltType | null {
 }
 
 export function tryParseDisplay(value: any): Display | null {
+	console.log(`debugging in parsing function ${{ value: {value} }}`)
 
-	console.log(`debugging in parsing function ${{value: value}}`)
-	const display: Display = {
-		calibration: tryParseCalibration(value.calibration.value),
-		defaultQuilt: tryParseQuilt(value.defaultQuilt.value),
-		hwid: value.hwid.value,
-		hardwareVersion: value.hardwareVersion.value,
-		index: value.index.value,
-		state: value.state.value,
-		windowCoords: value.windowCoords.value,
+	let display: Display | null = null
+	try {
+		display = {
+			calibration: tryParseCalibration(value.calibration.value),
+			defaultQuilt: tryParseQuilt(value.defaultQuilt.value),
+			hwid: value.hwid.value,
+			hardwareVersion: value.hardwareVersion.value,
+			index: value.index.value,
+			state: value.state.value,
+			windowCoords: value.windowCoords.value,
+		}
+	} catch (e) {
+		console.error({ error: e })
+		console.log(display)
 	}
+
 	return display
 }
