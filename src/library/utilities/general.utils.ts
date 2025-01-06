@@ -7,7 +7,11 @@ import { BridgeVersion } from "@library/components/types"
  * @returns BridgeVersion
  */
 
-export function parseBridgeVersion(versionString: string): BridgeVersion {
+export function parseBridgeVersion(versionString?: string): BridgeVersion {
+	if (!versionString) {
+		throw new Error("No version string provided")
+	}
+
 	const [major, minor, patch, hotfix] = versionString.split(".").map(Number)
 	return {
 		major,
