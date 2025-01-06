@@ -32,15 +32,22 @@ function ht(n) {
   };
 }
 function ft(n) {
-  return console.log(`debugging in parsing function ${{ value: n }}`), {
-    calibration: ut(n.calibration.value),
-    defaultQuilt: ht(n.defaultQuilt.value),
-    hwid: n.hwid.value,
-    hardwareVersion: n.hardwareVersion.value,
-    index: n.index.value,
-    state: n.state.value,
-    windowCoords: n.windowCoords.value
-  };
+  console.log(`debugging in parsing function ${{ value: { value: n } }}`);
+  let e = null;
+  try {
+    e = {
+      calibration: ut(n.calibration.value),
+      defaultQuilt: ht(n.defaultQuilt.value),
+      hwid: n.hwid.value,
+      hardwareVersion: n.hardwareVersion.value,
+      index: n.index.value,
+      state: n.state.value,
+      windowCoords: n.windowCoords.value
+    };
+  } catch (t) {
+    console.error({ error: t }), console.log(e);
+  }
+  return e;
 }
 async function C(n) {
   let e, t = N.getInstance();

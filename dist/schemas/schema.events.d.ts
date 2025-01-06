@@ -926,15 +926,15 @@ export declare const insertPlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             }>;
         }, "strip", z.ZodTypeAny, {
-            message: {
-                value: string;
-                name: string;
-                type: "WSTRING";
-            };
             index: {
                 value: number;
                 name: string;
                 type: "UNSIGNED_INT";
+            };
+            message: {
+                value: string;
+                name: string;
+                type: "WSTRING";
             };
             uri: {
                 value: string;
@@ -947,15 +947,15 @@ export declare const insertPlaylistResponse: z.ZodObject<{
                 type: "WSTRING";
             };
         }, {
-            message: {
-                value: string;
-                name: string;
-                type: "WSTRING";
-            };
             index: {
                 value: number;
                 name: string;
                 type: "UNSIGNED_INT";
+            };
+            message: {
+                value: string;
+                name: string;
+                type: "WSTRING";
             };
             uri: {
                 value: string;
@@ -970,15 +970,15 @@ export declare const insertPlaylistResponse: z.ZodObject<{
         }>;
     }, "strip", z.ZodTypeAny, {
         value: {
-            message: {
-                value: string;
-                name: string;
-                type: "WSTRING";
-            };
             index: {
                 value: number;
                 name: string;
                 type: "UNSIGNED_INT";
+            };
+            message: {
+                value: string;
+                name: string;
+                type: "WSTRING";
             };
             uri: {
                 value: string;
@@ -995,15 +995,15 @@ export declare const insertPlaylistResponse: z.ZodObject<{
         type: "VARIANT_MAP";
     }, {
         value: {
-            message: {
-                value: string;
-                name: string;
-                type: "WSTRING";
-            };
             index: {
                 value: number;
                 name: string;
                 type: "UNSIGNED_INT";
+            };
+            message: {
+                value: string;
+                name: string;
+                type: "WSTRING";
             };
             uri: {
                 value: string;
@@ -1040,15 +1040,15 @@ export declare const insertPlaylistResponse: z.ZodObject<{
     };
     payload: {
         value: {
-            message: {
-                value: string;
-                name: string;
-                type: "WSTRING";
-            };
             index: {
                 value: number;
                 name: string;
                 type: "UNSIGNED_INT";
+            };
+            message: {
+                value: string;
+                name: string;
+                type: "WSTRING";
             };
             uri: {
                 value: string;
@@ -1078,15 +1078,15 @@ export declare const insertPlaylistResponse: z.ZodObject<{
     };
     payload: {
         value: {
-            message: {
-                value: string;
-                name: string;
-                type: "WSTRING";
-            };
             index: {
                 value: number;
                 name: string;
                 type: "UNSIGNED_INT";
+            };
+            message: {
+                value: string;
+                name: string;
+                type: "WSTRING";
             };
             uri: {
                 value: string;
