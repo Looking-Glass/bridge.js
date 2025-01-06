@@ -12,7 +12,7 @@
 
 ### parseBridgeVersion
 
-▸ **parseBridgeVersion**(`versionString`): [`BridgeVersion`](components_types.md#bridgeversion)
+▸ **parseBridgeVersion**(`versionString?`): [`BridgeVersion`](components_types.md#bridgeversion)
 
 Parse the version from Bridge's version string
 Bridge uses a major, minor, patch, hotfix versioning system
@@ -21,7 +21,7 @@ Bridge uses a major, minor, patch, hotfix versioning system
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `versionString` | `string` | The version string to parse |
+| `versionString?` | `string` | The version string to parse |
 
 #### Returns
 

@@ -4,11 +4,6 @@
 
 ## Table of contents
 
-### Type Aliases
-
-- [update\_current\_entry](schemas_schema_requests.md#update_current_entry)
-- [update\_playlist\_entry](schemas_schema_requests.md#update_playlist_entry)
-
 ### Variables
 
 - [available\_output\_devices](schemas_schema_requests.md#available_output_devices)
@@ -27,19 +22,9 @@
 - [transport\_control\_play](schemas_schema_requests.md#transport_control_play)
 - [transport\_control\_previous](schemas_schema_requests.md#transport_control_previous)
 - [transport\_control\_seek\_to\_index](schemas_schema_requests.md#transport_control_seek_to_index)
+- [update\_current\_entry](schemas_schema_requests.md#update_current_entry)
+- [update\_playlist\_entry](schemas_schema_requests.md#update_playlist_entry)
 - [version](schemas_schema_requests.md#version)
-
-## Type Aliases
-
-### update\_current\_entry
-
-Ƭ **update\_current\_entry**: { `name`: `string` ; `orchestration`: `string`  } & { [K in keyof HologramParamMap]?: \`${K}: ${HologramParamMap[K]}\` }
-
-___
-
-### update\_playlist\_entry
-
-Ƭ **update\_playlist\_entry**: { `orchestration`: `string` ; `playlistIndex`: `number` ; `playlistName`: `string`  } & { [K in keyof HologramParamMap]?: \`${K}: ${HologramParamMap[K]}\` }
 
 ## Variables
 
@@ -136,6 +121,18 @@ ___
 ### transport\_control\_seek\_to\_index
 
 • `Const` **transport\_control\_seek\_to\_index**: `ZodObject`<{ `index`: `ZodNumber` ; `orchestration`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `index`: `number` ; `orchestration`: `string`  }, { `index`: `number` ; `orchestration`: `string`  }\>
+
+___
+
+### update\_current\_entry
+
+• `Const` **update\_current\_entry**: `ZodObject`<`extendShape`<{ `name`: `ZodString` ; `orchestration`: `ZodString`  }, `Record`<`requiredKeys`<`baseObjectOutputType`<{ `aspect`: `ZodOptional`<`ZodNumber`\> ; `chroma_depth`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `cols`: `ZodOptional`<`ZodNumber`\> ; `crop_pos_x`: `ZodOptional`<`ZodNumber`\> ; `crop_pos_y`: `ZodOptional`<`ZodNumber`\> ; `depth_cutoff`: `ZodOptional`<`ZodUnion`<[`ZodLiteral`<``1``\>, `ZodLiteral`<``0``\>]\>\> ; `depth_inversion`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `depth_loc`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>, `ZodLiteral`<``2``\>, `ZodLiteral`<``3``\>]\> ; `depthiness`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = DEPTHINESS.range; `filter_mode`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = FILTER\_MODE.range; `focus`: `ZodOptional`<`ZodNumber`\> ; `gaussian_sigma`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = GAUSSIAN\_SIGMA.range; `rows`: `ZodOptional`<`ZodNumber`\> ; `zoom`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = ZOOM.range }\>\> \| `optionalKeys`<`baseObjectOutputType`<{ `aspect`: `ZodOptional`<`ZodNumber`\> ; `chroma_depth`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `cols`: `ZodOptional`<`ZodNumber`\> ; `crop_pos_x`: `ZodOptional`<`ZodNumber`\> ; `crop_pos_y`: `ZodOptional`<`ZodNumber`\> ; `depth_cutoff`: `ZodOptional`<`ZodUnion`<[`ZodLiteral`<``1``\>, `ZodLiteral`<``0``\>]\>\> ; `depth_inversion`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `depth_loc`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>, `ZodLiteral`<``2``\>, `ZodLiteral`<``3``\>]\> ; `depthiness`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = DEPTHINESS.range; `filter_mode`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = FILTER\_MODE.range; `focus`: `ZodOptional`<`ZodNumber`\> ; `gaussian_sigma`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = GAUSSIAN\_SIGMA.range; `rows`: `ZodOptional`<`ZodNumber`\> ; `zoom`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = ZOOM.range }\>\>, `ZodOptional`<`ZodString`\>\>\>, ``"strip"``, `ZodTypeAny`, { `aspect`: `undefined` \| `string` ; `chroma_depth`: `undefined` \| `string` ; `cols`: `undefined` \| `string` ; `crop_pos_x`: `undefined` \| `string` ; `crop_pos_y`: `undefined` \| `string` ; `depth_cutoff`: `undefined` \| `string` ; `depth_inversion`: `undefined` \| `string` ; `depth_loc`: `undefined` \| `string` ; `depthiness`: `undefined` \| `string` ; `filter_mode`: `undefined` \| `string` ; `focus`: `undefined` \| `string` ; `gaussian_sigma`: `undefined` \| `string` ; `name`: `string` ; `orchestration`: `string` ; `rows`: `undefined` \| `string` ; `zoom`: `undefined` \| `string`  }, { `aspect`: `undefined` \| `string` ; `chroma_depth`: `undefined` \| `string` ; `cols`: `undefined` \| `string` ; `crop_pos_x`: `undefined` \| `string` ; `crop_pos_y`: `undefined` \| `string` ; `depth_cutoff`: `undefined` \| `string` ; `depth_inversion`: `undefined` \| `string` ; `depth_loc`: `undefined` \| `string` ; `depthiness`: `undefined` \| `string` ; `filter_mode`: `undefined` \| `string` ; `focus`: `undefined` \| `string` ; `gaussian_sigma`: `undefined` \| `string` ; `name`: `string` ; `orchestration`: `string` ; `rows`: `undefined` \| `string` ; `zoom`: `undefined` \| `string`  }\>
+
+___
+
+### update\_playlist\_entry
+
+• `Const` **update\_playlist\_entry**: `ZodObject`<`extendShape`<{ `orchestration`: `ZodString` ; `playlistIndex`: `ZodNumber` ; `playlistName`: `ZodString`  }, `Record`<`requiredKeys`<`baseObjectOutputType`<{ `aspect`: `ZodOptional`<`ZodNumber`\> ; `chroma_depth`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `cols`: `ZodOptional`<`ZodNumber`\> ; `crop_pos_x`: `ZodOptional`<`ZodNumber`\> ; `crop_pos_y`: `ZodOptional`<`ZodNumber`\> ; `depth_cutoff`: `ZodOptional`<`ZodUnion`<[`ZodLiteral`<``1``\>, `ZodLiteral`<``0``\>]\>\> ; `depth_inversion`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `depth_loc`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>, `ZodLiteral`<``2``\>, `ZodLiteral`<``3``\>]\> ; `depthiness`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = DEPTHINESS.range; `filter_mode`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = FILTER\_MODE.range; `focus`: `ZodOptional`<`ZodNumber`\> ; `gaussian_sigma`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = GAUSSIAN\_SIGMA.range; `rows`: `ZodOptional`<`ZodNumber`\> ; `zoom`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = ZOOM.range }\>\> \| `optionalKeys`<`baseObjectOutputType`<{ `aspect`: `ZodOptional`<`ZodNumber`\> ; `chroma_depth`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `cols`: `ZodOptional`<`ZodNumber`\> ; `crop_pos_x`: `ZodOptional`<`ZodNumber`\> ; `crop_pos_y`: `ZodOptional`<`ZodNumber`\> ; `depth_cutoff`: `ZodOptional`<`ZodUnion`<[`ZodLiteral`<``1``\>, `ZodLiteral`<``0``\>]\>\> ; `depth_inversion`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>]\> ; `depth_loc`: `ZodUnion`<[`ZodLiteral`<``0``\>, `ZodLiteral`<``1``\>, `ZodLiteral`<``2``\>, `ZodLiteral`<``3``\>]\> ; `depthiness`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = DEPTHINESS.range; `filter_mode`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = FILTER\_MODE.range; `focus`: `ZodOptional`<`ZodNumber`\> ; `gaussian_sigma`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = GAUSSIAN\_SIGMA.range; `rows`: `ZodOptional`<`ZodNumber`\> ; `zoom`: `ZodEffects`<`ZodNumber`, `number`, `number`\> = ZOOM.range }\>\>, `ZodOptional`<`ZodString`\>\>\>, ``"strip"``, `ZodTypeAny`, { `aspect`: `undefined` \| `string` ; `chroma_depth`: `undefined` \| `string` ; `cols`: `undefined` \| `string` ; `crop_pos_x`: `undefined` \| `string` ; `crop_pos_y`: `undefined` \| `string` ; `depth_cutoff`: `undefined` \| `string` ; `depth_inversion`: `undefined` \| `string` ; `depth_loc`: `undefined` \| `string` ; `depthiness`: `undefined` \| `string` ; `filter_mode`: `undefined` \| `string` ; `focus`: `undefined` \| `string` ; `gaussian_sigma`: `undefined` \| `string` ; `orchestration`: `string` ; `playlistIndex`: `number` ; `playlistName`: `string` ; `rows`: `undefined` \| `string` ; `zoom`: `undefined` \| `string`  }, { `aspect`: `undefined` \| `string` ; `chroma_depth`: `undefined` \| `string` ; `cols`: `undefined` \| `string` ; `crop_pos_x`: `undefined` \| `string` ; `crop_pos_y`: `undefined` \| `string` ; `depth_cutoff`: `undefined` \| `string` ; `depth_inversion`: `undefined` \| `string` ; `depth_loc`: `undefined` \| `string` ; `depthiness`: `undefined` \| `string` ; `filter_mode`: `undefined` \| `string` ; `focus`: `undefined` \| `string` ; `gaussian_sigma`: `undefined` \| `string` ; `orchestration`: `string` ; `playlistIndex`: `number` ; `playlistName`: `string` ; `rows`: `undefined` \| `string` ; `zoom`: `undefined` \| `string`  }\>
 
 ___
 
