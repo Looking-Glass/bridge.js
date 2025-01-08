@@ -104,7 +104,6 @@ export function tryParseQuilt(value: string): QuiltType | null {
 }
 
 export function tryParseDisplay(value: any): Display | null {
-	console.log(`debugging in parsing function ${{ value: {value} }}`)
 
 	let display: Display | null = null
 	try {
@@ -119,7 +118,6 @@ export function tryParseDisplay(value: any): Display | null {
 		}
 	} catch (e) {
 		console.error({ error: e })
-		console.log(display)
 	}
 
 	return display
