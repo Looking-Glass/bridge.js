@@ -169,7 +169,7 @@ export class BridgeClient {
 		}
 		let new_orchestration = await tryEnterOrchestration({ name: name, orchestration: this.orchestration })
 		if (new_orchestration.success == true) {
-			if (new_orchestration.response?.payload.value) {
+			if (new_orchestration.response?.payload?.value) {
 				this.orchestration = new_orchestration.response?.payload.value
 			}
 		}
@@ -252,7 +252,7 @@ export class BridgeClient {
 
 		let message = await sendMessage({ endpoint: "bridge_version", requestBody: {} })
 		if (message.success == true) {
-			let response = parseBridgeVersion(message.response.payload.value)
+			let response = parseBridgeVersion(message.response.payload?.value)
 			this.version = response
 			return { success: true, response: this.version }
 		}
@@ -281,7 +281,11 @@ export class BridgeClient {
 			return { success: false, response: parseBridgeVersion("0") }
 		}
 
-		let APIVersion = parseBridgeVersion(response.response.payload.value)
+		if (response.response.payload?.value == undefined) {
+			return { success: false, response: parseBridgeVersion("0") }
+		}
+
+		let APIVersion = parseBridgeVersion(response.response.payload?.value)
 		return { success: true, response: APIVersion }
 	}
 
@@ -306,12 +310,12 @@ export class BridgeClient {
 			return { success: false, response: null }
 		}
 
-		schema.available_output_devices.safeParse(data.response)
-
-		for (let key in data.response.payload.value) {
-			let display = data.response.payload.value[`${key}`]
+		for (let key in data.response.payload?.value) {
+			
+			let display = data.response.payload?.value[`${key}`]
+			
 			// filter out other monitors that aren't Looking Glass displays
-			if (display.value.hardwareVersion.value !== ("thirdparty")) {
+			if (display.value?.hardwareVersion?.value !== ("thirdparty")) {
 				let lkg = tryParseDisplay(display.value)
 				if (lkg != undefined) {
 					this.displays.push(lkg)

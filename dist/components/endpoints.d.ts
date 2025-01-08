@@ -38,8 +38,8 @@ export type BridgeRequestBodyMap = {
     instance_playlist: z.infer<typeof BridgeRequest.instance_playlist>;
     delete_playlist: z.infer<typeof BridgeRequest.delete_playlist>;
     insert_playlist_entry: z.infer<typeof BridgeRequest.insert_playlist_entry>;
-    update_playlist_entry: BridgeRequest.update_playlist_entry;
-    update_current_entry: BridgeRequest.update_current_entry;
+    update_playlist_entry: z.infer<typeof BridgeRequest.update_playlist_entry>;
+    update_current_entry: z.infer<typeof BridgeRequest.update_current_entry>;
     transport_control_play: z.infer<typeof BridgeRequest.transport_control_play>;
     transport_control_pause: z.infer<typeof BridgeRequest.transport_control_pause>;
     transport_control_next: z.infer<typeof BridgeRequest.transport_control_next>;

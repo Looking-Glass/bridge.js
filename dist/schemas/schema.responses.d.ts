@@ -1089,17 +1089,7 @@ export declare const available_output_devices: z.ZodObject<{
                     type: "INT2";
                 }>;
             }, "strip", z.ZodTypeAny, {
-                index: {
-                    value: number;
-                    name: string;
-                    type: "UNSIGNED_INT";
-                };
-                calibration: {
-                    value: string;
-                    name: string;
-                    type: "WSTRING";
-                };
-                defaultQuilt: {
+                hwid: {
                     value: string;
                     name: string;
                     type: "WSTRING";
@@ -1109,10 +1099,10 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 };
-                hwid: {
-                    value: string;
+                index: {
+                    value: number;
                     name: string;
-                    type: "WSTRING";
+                    type: "UNSIGNED_INT";
                 };
                 state: {
                     value: string;
@@ -1126,6 +1116,16 @@ export declare const available_output_devices: z.ZodObject<{
                     };
                     name: string;
                     type: "INT2";
+                };
+                calibration: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
+                };
+                defaultQuilt: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
                 };
                 displayProblems?: Record<string, {
                     value: Record<string, {
@@ -1163,17 +1163,7 @@ export declare const available_output_devices: z.ZodObject<{
                     type: "VARIANT_MAP";
                 }> | undefined;
             }, {
-                index: {
-                    value: number;
-                    name: string;
-                    type: "UNSIGNED_INT";
-                };
-                calibration: {
-                    value: string;
-                    name: string;
-                    type: "WSTRING";
-                };
-                defaultQuilt: {
+                hwid: {
                     value: string;
                     name: string;
                     type: "WSTRING";
@@ -1183,10 +1173,10 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 };
-                hwid: {
-                    value: string;
+                index: {
+                    value: number;
                     name: string;
-                    type: "WSTRING";
+                    type: "UNSIGNED_INT";
                 };
                 state: {
                     value: string;
@@ -1200,6 +1190,16 @@ export declare const available_output_devices: z.ZodObject<{
                     };
                     name: string;
                     type: "INT2";
+                };
+                calibration: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
+                };
+                defaultQuilt: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
                 };
                 displayProblems?: Record<string, {
                     value: Record<string, {
@@ -1239,17 +1239,7 @@ export declare const available_output_devices: z.ZodObject<{
             }>;
         }, "strip", z.ZodTypeAny, {
             value: {
-                index: {
-                    value: number;
-                    name: string;
-                    type: "UNSIGNED_INT";
-                };
-                calibration: {
-                    value: string;
-                    name: string;
-                    type: "WSTRING";
-                };
-                defaultQuilt: {
+                hwid: {
                     value: string;
                     name: string;
                     type: "WSTRING";
@@ -1259,10 +1249,10 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 };
-                hwid: {
-                    value: string;
+                index: {
+                    value: number;
                     name: string;
-                    type: "WSTRING";
+                    type: "UNSIGNED_INT";
                 };
                 state: {
                     value: string;
@@ -1276,6 +1266,16 @@ export declare const available_output_devices: z.ZodObject<{
                     };
                     name: string;
                     type: "INT2";
+                };
+                calibration: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
+                };
+                defaultQuilt: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
                 };
                 displayProblems?: Record<string, {
                     value: Record<string, {
@@ -1317,17 +1317,7 @@ export declare const available_output_devices: z.ZodObject<{
             type: "VARIANT_MAP";
         }, {
             value: {
-                index: {
-                    value: number;
-                    name: string;
-                    type: "UNSIGNED_INT";
-                };
-                calibration: {
-                    value: string;
-                    name: string;
-                    type: "WSTRING";
-                };
-                defaultQuilt: {
+                hwid: {
                     value: string;
                     name: string;
                     type: "WSTRING";
@@ -1337,10 +1327,10 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 };
-                hwid: {
-                    value: string;
+                index: {
+                    value: number;
                     name: string;
-                    type: "WSTRING";
+                    type: "UNSIGNED_INT";
                 };
                 state: {
                     value: string;
@@ -1354,6 +1344,16 @@ export declare const available_output_devices: z.ZodObject<{
                     };
                     name: string;
                     type: "INT2";
+                };
+                calibration: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
+                };
+                defaultQuilt: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
                 };
                 displayProblems?: Record<string, {
                     value: Record<string, {
@@ -1399,17 +1399,7 @@ export declare const available_output_devices: z.ZodObject<{
         type: "VARIANT_MAP";
         value?: Record<string, {
             value: {
-                index: {
-                    value: number;
-                    name: string;
-                    type: "UNSIGNED_INT";
-                };
-                calibration: {
-                    value: string;
-                    name: string;
-                    type: "WSTRING";
-                };
-                defaultQuilt: {
+                hwid: {
                     value: string;
                     name: string;
                     type: "WSTRING";
@@ -1419,10 +1409,10 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 };
-                hwid: {
-                    value: string;
+                index: {
+                    value: number;
                     name: string;
-                    type: "WSTRING";
+                    type: "UNSIGNED_INT";
                 };
                 state: {
                     value: string;
@@ -1436,6 +1426,16 @@ export declare const available_output_devices: z.ZodObject<{
                     };
                     name: string;
                     type: "INT2";
+                };
+                calibration: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
+                };
+                defaultQuilt: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
                 };
                 displayProblems?: Record<string, {
                     value: Record<string, {
@@ -1481,17 +1481,7 @@ export declare const available_output_devices: z.ZodObject<{
         type: "VARIANT_MAP";
         value?: Record<string, {
             value: {
-                index: {
-                    value: number;
-                    name: string;
-                    type: "UNSIGNED_INT";
-                };
-                calibration: {
-                    value: string;
-                    name: string;
-                    type: "WSTRING";
-                };
-                defaultQuilt: {
+                hwid: {
                     value: string;
                     name: string;
                     type: "WSTRING";
@@ -1501,10 +1491,10 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 };
-                hwid: {
-                    value: string;
+                index: {
+                    value: number;
                     name: string;
-                    type: "WSTRING";
+                    type: "UNSIGNED_INT";
                 };
                 state: {
                     value: string;
@@ -1518,6 +1508,16 @@ export declare const available_output_devices: z.ZodObject<{
                     };
                     name: string;
                     type: "INT2";
+                };
+                calibration: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
+                };
+                defaultQuilt: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
                 };
                 displayProblems?: Record<string, {
                     value: Record<string, {
@@ -1583,17 +1583,7 @@ export declare const available_output_devices: z.ZodObject<{
         type: "VARIANT_MAP";
         value?: Record<string, {
             value: {
-                index: {
-                    value: number;
-                    name: string;
-                    type: "UNSIGNED_INT";
-                };
-                calibration: {
-                    value: string;
-                    name: string;
-                    type: "WSTRING";
-                };
-                defaultQuilt: {
+                hwid: {
                     value: string;
                     name: string;
                     type: "WSTRING";
@@ -1603,10 +1593,10 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 };
-                hwid: {
-                    value: string;
+                index: {
+                    value: number;
                     name: string;
-                    type: "WSTRING";
+                    type: "UNSIGNED_INT";
                 };
                 state: {
                     value: string;
@@ -1620,6 +1610,16 @@ export declare const available_output_devices: z.ZodObject<{
                     };
                     name: string;
                     type: "INT2";
+                };
+                calibration: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
+                };
+                defaultQuilt: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
                 };
                 displayProblems?: Record<string, {
                     value: Record<string, {
@@ -1678,17 +1678,7 @@ export declare const available_output_devices: z.ZodObject<{
         type: "VARIANT_MAP";
         value?: Record<string, {
             value: {
-                index: {
-                    value: number;
-                    name: string;
-                    type: "UNSIGNED_INT";
-                };
-                calibration: {
-                    value: string;
-                    name: string;
-                    type: "WSTRING";
-                };
-                defaultQuilt: {
+                hwid: {
                     value: string;
                     name: string;
                     type: "WSTRING";
@@ -1698,10 +1688,10 @@ export declare const available_output_devices: z.ZodObject<{
                     name: string;
                     type: "WSTRING";
                 };
-                hwid: {
-                    value: string;
+                index: {
+                    value: number;
                     name: string;
-                    type: "WSTRING";
+                    type: "UNSIGNED_INT";
                 };
                 state: {
                     value: string;
@@ -1715,6 +1705,16 @@ export declare const available_output_devices: z.ZodObject<{
                     };
                     name: string;
                     type: "INT2";
+                };
+                calibration: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
+                };
+                defaultQuilt: {
+                    value: string;
+                    name: string;
+                    type: "WSTRING";
                 };
                 displayProblems?: Record<string, {
                     value: Record<string, {

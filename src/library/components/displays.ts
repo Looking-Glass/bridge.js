@@ -21,7 +21,7 @@ interface BridgeCalibrationResponse {
 	flipImageX: Value
 	flipImageY: Value
 	flipSubp: Value
-	fringe: Value
+	fringe: Value | undefined
 	invView: Value
 	pitch: Value
 	screenH: Value
@@ -73,7 +73,7 @@ export function tryParseCalibration(value: string): CalibrationType | null {
 		flipImageX: parsedValue.flipImageX.value,
 		flipImageY: parsedValue.flipImageY.value,
 		flipSubp: parsedValue.flipSubp.value,
-		fringe: parsedValue.fringe.value,
+		fringe: parsedValue.fringe?.value ?? 0,
 		invView: parsedValue.invView.value,
 		pitch: parsedValue.pitch.value,
 		screenH: parsedValue.screenH.value,
@@ -104,14 +104,21 @@ export function tryParseQuilt(value: string): QuiltType | null {
 }
 
 export function tryParseDisplay(value: any): Display | null {
-	const display: Display = {
-		calibration: tryParseCalibration(value.calibration.value),
-		defaultQuilt: tryParseQuilt(value.defaultQuilt.value),
-		hwid: value.hwid.value,
-		hardwareVersion: value.hardwareVersion.value,
-		index: value.index.value,
-		state: value.state.value,
-		windowCoords: value.windowCoords.value,
+
+	let display: Display | null = null
+	try {
+		display = {
+			calibration: tryParseCalibration(value.calibration.value),
+			defaultQuilt: tryParseQuilt(value.defaultQuilt.value),
+			hwid: value.hwid.value,
+			hardwareVersion: value.hardwareVersion.value,
+			index: value.index.value,
+			state: value.state.value,
+			windowCoords: value.windowCoords.value,
+		}
+	} catch (e) {
+		console.error({ error: e })
 	}
+
 	return display
 }
