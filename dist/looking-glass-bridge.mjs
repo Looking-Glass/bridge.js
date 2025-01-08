@@ -33,7 +33,6 @@ function ht(n) {
   };
 }
 function ft(n) {
-  console.log(`debugging in parsing function ${{ value: { value: n } }}`);
   let e = null;
   try {
     e = {
@@ -46,7 +45,7 @@ function ft(n) {
       windowCoords: n.windowCoords.value
     };
   } catch (t) {
-    console.error({ error: t }), console.log(e);
+    console.error({ error: t });
   }
   return e;
 }
