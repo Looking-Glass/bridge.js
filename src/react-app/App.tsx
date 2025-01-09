@@ -29,7 +29,7 @@ const quilt = new QuiltHologram({
 		aspect: 0.75,
 		viewCount: 8 * 13,
 		tag: "steampunk",
-		zoom: 2,
+		zoom: 1,
 	},
 })
 
