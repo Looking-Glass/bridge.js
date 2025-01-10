@@ -8,6 +8,7 @@
 
 ### Properties
 
+- [CellPatternMode](components_displays.CalibrationType.md#cellpatternmode)
 - [DPI](components_displays.CalibrationType.md#dpi)
 - [center](components_displays.CalibrationType.md#center)
 - [configVersion](components_displays.CalibrationType.md#configversion)
@@ -21,10 +22,17 @@
 - [screenW](components_displays.CalibrationType.md#screenw)
 - [serial](components_displays.CalibrationType.md#serial)
 - [slope](components_displays.CalibrationType.md#slope)
+- [subpixelCells](components_displays.CalibrationType.md#subpixelcells)
 - [verticalAngle](components_displays.CalibrationType.md#verticalangle)
 - [viewCone](components_displays.CalibrationType.md#viewcone)
 
 ## Properties
+
+### CellPatternMode
+
+• **CellPatternMode**: `number`
+
+___
 
 ### DPI
 
@@ -101,6 +109,12 @@ ___
 ### slope
 
 • **slope**: `number`
+
+___
+
+### subpixelCells
+
+• `Optional` **subpixelCells**: `subpixelCell`[]
 
 ___
 

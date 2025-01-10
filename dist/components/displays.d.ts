@@ -8,7 +8,17 @@ export interface Display {
     state: BridgeValue;
     windowCoords: BridgeValue;
 }
+type subpixelCell = {
+    BOffsetX: number;
+    BOffsetY: number;
+    GOffsetX: number;
+    GOffsetY: number;
+    ROffsetX: number;
+    ROffsetY: number;
+};
 export interface CalibrationType {
+    CellPatternMode: number;
+    subpixelCells?: subpixelCell[];
     DPI: number;
     center: number;
     configVersion: string;
@@ -35,3 +45,4 @@ export interface QuiltType {
 export declare function tryParseCalibration(value: string): CalibrationType | null;
 export declare function tryParseQuilt(value: string): QuiltType | null;
 export declare function tryParseDisplay(value: any): Display | null;
+export {};
