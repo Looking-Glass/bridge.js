@@ -92,7 +92,7 @@ body {
 	display: flex;
 	gap: 16px;
 	flex-direction: row;
-	justify-content: start; /* align item horizontally */
+	justify-content: center; /* align item horizontally */
 	align-items: start; /* align item vertically */
 }
 

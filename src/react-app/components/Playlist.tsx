@@ -1,21 +1,21 @@
 import { Playlist } from "@library/index"
 import { UpdateParams } from "./updateParams"
 import { defaults } from "@library/index"
+import { Hologram } from "./HologramForm"
 
-export function PlaylistUI({ playlist }: { playlist: Playlist }) {
+export function PlaylistUI({ playlist, hologram }: { playlist: Playlist, hologram: Hologram }) {
 	return (
 		<div>
-			{playlist.items.map((item, index) => (
-				<div key={index}>
+				<div>
 					<hr />
 					<div>
 						<h3>
-							Playlist Item: {item.id} Type: {item.hologram.type} Index: {item.index}
+							Type: {hologram.type}
 						</h3>
 						<div>
 							<h3>Controls</h3>
 							<div className="flex-container-vertical">
-								{item.hologram.type == "rgbd" && (
+								{hologram.type == "rgbd" && (
 									<UpdateParams
 										playlistName={playlist.name}
 										parameter="depthiness"
@@ -39,7 +39,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="aspect"
 									min={defaults.ASPECT.min}
 									max={defaults.ASPECT.max}
-									defaultValue={item.hologram.settings.aspect ?? defaults.ASPECT.defaultValue}
+									defaultValue={hologram.settings.aspect ?? defaults.ASPECT.defaultValue}
 									numberType={defaults.ASPECT.type}
 								/>
 								<UpdateParams
@@ -47,7 +47,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="cols"
 									min={defaults.COLUMNS.min}
 									max={defaults.COLUMNS.max}
-									defaultValue={item.hologram.settings.columns ?? defaults.COLUMNS.defaultValue}
+									defaultValue={hologram.settings.columns ?? defaults.COLUMNS.defaultValue}
 									numberType={defaults.COLUMNS.type}
 								/>
 								<UpdateParams
@@ -55,7 +55,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="rows"
 									min={defaults.ROWS.min}
 									max={defaults.ROWS.max}
-									defaultValue={item.hologram.settings.rows ?? defaults.ROWS.defaultValue}
+									defaultValue={hologram.settings.rows ?? defaults.ROWS.defaultValue}
 									numberType={defaults.ROWS.type}
 								/>
 								<UpdateParams
@@ -63,7 +63,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="zoom"
 									min={defaults.ZOOM.min}
 									max={defaults.ZOOM.max}
-									defaultValue={item.hologram.settings.zoom ?? defaults.ZOOM.defaultValue}
+									defaultValue={hologram.settings.zoom ?? defaults.ZOOM.defaultValue}
 									numberType={defaults.ZOOM.type}
 								/>
 								<UpdateParams
@@ -71,7 +71,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="crop_pos_x"
 									min={defaults.CROP_POS_X.min}
 									max={defaults.CROP_POS_X.max}
-									defaultValue={item.hologram.settings.crop_pos_x ?? defaults.CROP_POS_X.defaultValue}
+									defaultValue={hologram.settings.crop_pos_x ?? defaults.CROP_POS_X.defaultValue}
 									numberType={defaults.CROP_POS_X.type}
 								/>
 								<UpdateParams
@@ -79,7 +79,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 									parameter="crop_pos_y"
 									min={defaults.CROP_POS_Y.min}
 									max={defaults.CROP_POS_Y.max}
-									defaultValue={item.hologram.settings.crop_pos_y ?? defaults.CROP_POS_Y.defaultValue}
+									defaultValue={hologram.settings.crop_pos_y ?? defaults.CROP_POS_Y.defaultValue}
 									numberType={defaults.CROP_POS_Y.type}
 								/>
 								<UpdateParams
@@ -102,7 +102,7 @@ export function PlaylistUI({ playlist }: { playlist: Playlist }) {
 						</div>
 					</div>
 				</div>
-			))}
+	
 		</div>
 	)
 }

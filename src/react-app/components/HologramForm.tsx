@@ -1,10 +1,13 @@
-import { BridgeClient, hologramFactory, QuiltHologram, RGBDHologram, hologramTypes, defaults } from "@library/index"
+import { hologramFactory, QuiltHologram, RGBDHologram, hologramTypes, defaults } from "@library/index"
 import { useState } from "react"
+
+export type Hologram = QuiltHologram | RGBDHologram
 
 export interface HologramFactoryArgs {
 	connected: boolean
 	hologram: QuiltHologram | RGBDHologram
-	setHologram: (hologram: QuiltHologram | RGBDHologram) => void
+	holograms: Hologram[]
+	setHolograms: (holograms: Hologram[]) => void
 	setResponse: (response: string | null) => void
 	hologramType: hologramTypes
 	setHologramType: (hologramType: hologramTypes) => void
@@ -14,16 +17,16 @@ export interface HologramFactoryArgs {
 export default function HologramForm({
 	connected,
 	hologram,
-	setHologram,
+	holograms,
+	setHolograms,
 	setResponse,
 	hologramType,
 	setHologramType,
 	isCastPending,
-	setIsCastPending,
 }: HologramFactoryArgs) {
 	const [hologramUri, setHologramUri] = useState<string>(hologram.uri)
 	const [hologramSettings, setHologramSettings] = useState(hologram.settings)
-	const Bridge = BridgeClient.getInstance()
+	
 	return (
 		<>
 			<h3>Create a Hologram</h3>
@@ -148,8 +151,9 @@ export default function HologramForm({
 						}}></input>
 				</label>
 			</form>
-
+			<br/>
 			<button
+			style={{width: "100%"}}
 				onClick={async () => {
 					setResponse("Casting Hologram")
 					let hologram = hologramFactory({
@@ -157,13 +161,13 @@ export default function HologramForm({
 						type: hologramType,
 						settings: hologramSettings,
 					})
-					setHologram(hologram)
-					let call = await Bridge.cast(hologram)
-					setResponse(JSON.stringify(call))
-					setIsCastPending(Bridge.isCastPending)
+					setHolograms([...holograms, hologram])
+					// let call = await Bridge.cast(hologram)
+					// setResponse(JSON.stringify(call))
+					// setIsCastPending(Bridge.isCastPending)
 				}}
 				disabled={!connected || isCastPending}>
-				Cast hologram
+				Add hologram
 			</button>
 		</>
 	)
