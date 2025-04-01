@@ -26,9 +26,9 @@ export default function HologramForm({
 }: HologramFactoryArgs) {
 	const [hologramUri, setHologramUri] = useState<string>(hologram.uri)
 	const [hologramSettings, setHologramSettings] = useState(hologram.settings)
-	
+
 	return (
-		<>
+		<div style={{minWidth: "240px"}}>
 			<h3>Create a Hologram</h3>
 			<form>
 				<label>
@@ -89,9 +89,10 @@ export default function HologramForm({
 										depth_loc: parseInt(e.target.value) as 0 | 1 | 2 | 3,
 									})
 								}}>
+								<option value="2">Right</option>
 								<option value="0">Top</option>
 								<option value="1">Bottom</option>
-								<option value="2">Right</option>
+
 								<option value="3">Left</option>
 							</select>
 						</label>
@@ -151,9 +152,9 @@ export default function HologramForm({
 						}}></input>
 				</label>
 			</form>
-			<br/>
+			<br />
 			<button
-			style={{width: "100%"}}
+				style={{ width: "100%" }}
 				onClick={async () => {
 					setResponse("Casting Hologram")
 					let hologram = hologramFactory({
@@ -169,6 +170,6 @@ export default function HologramForm({
 				disabled={!connected || isCastPending}>
 				Add hologram
 			</button>
-		</>
+		</div>
 	)
 }

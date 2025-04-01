@@ -5,6 +5,7 @@ body {
 }
 
 button {
+	cursor: "pointer";
 	position: relative;
 	display: block;
 	width: 200px;
@@ -161,4 +162,57 @@ select {
 	border-radius: 3px;
 	padding: 8px;
 	margin: 8px;
+}
+
+.glass,
+#LookingGlassWebXRControls {
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(17.7px);
+  -webkit-backdrop-filter: blur(17.7px);
+  background: linear-gradient(152deg, rgba(255, 255, 255, 0.25) 17.43%, rgba(144, 124, 188, 0.15) 100%);
+  background-blend-mode: screen;
+  box-shadow: 0px 8px 40px 0px rgba(0, 0, 0, 0.25);
+}
+
+.glass::before,
+#LookingGlassWebXRControls::before {
+  border-radius: 0.75rem;
+  /* border-width: 2px; */
+  /* border-color: rgba(0,0,0,0.3); */
+  content: '';
+  position: absolute;
+
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: rgba(0, 0, 0, 0);
+  /* Adjust the opacity and color to darken */
+  z-index: -1;
+  /* Ensure it is behind the content but above the background */
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass,
+  #LookingGlassWebXRControls {
+    border: 2px solid rgba(106, 104, 168, 0.5);
+    background: linear-gradient(152deg, rgba(106, 104, 168, 0.5) 17.43%, rgba(89, 67, 134, 0.3) 100%);
+  }
+
+  .glass::after,
+  #LookingGlassWebXRControls::after {
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 0.75rem;
+    background: url('/public/glass-noise.png');
+    opacity: 1;
+  }
+
+  .glass::before,
+  #LookingGlassWebXRControls::before {
+    border-radius: 0.75rem;
+    background: rgba(53, 40, 79, 0.5);
+  }
 }

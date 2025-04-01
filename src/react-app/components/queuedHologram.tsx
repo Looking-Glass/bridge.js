@@ -1,3 +1,4 @@
+import { BridgeClient } from "@library/index"
 import { Hologram } from "./HologramForm"
 
 export default function QueuedHologram({
@@ -13,6 +14,7 @@ export default function QueuedHologram({
 	setHolograms: (holograms: Hologram[]) => void
 	activeItemIndex: number | null
 }) {
+	const Bridge = BridgeClient.getInstance()
 	// Function to handle updating the hologram
 	const handleUpdate = () => {
 		// Create a copy of the holograms array
@@ -31,11 +33,17 @@ export default function QueuedHologram({
 	}
 
 	return (
-		<div className="border" style={{ padding: "10px", margin: "10px 0" }}>
+		<div
+			className="border glass"
+			style={{ padding: "10px", margin: "10px 0", borderRadius: "18px", cursor: "pointer", minWidth: "100%" }} 
+			onClick={async () => {
+				await Bridge.seek(index)
+			}}>
 			<h3 id={`playlist-item-${index}`} style={{ color: activeItemIndex === index ? "green" : "white" }}>
-                Queued Hologram {index + 1} ({item.type})
-            </h3>
-			<p>{JSON.stringify(item)}</p>
+				Queued Hologram {index + 1} ({item.type})
+			</h3>
+			<a href={item.uri}>{item.uri}</a>
+			{/* <p>{JSON.stringify(item.settings)}</p> */}
 			<div style={{ display: "flex", gap: "10px" }}>
 				<button onClick={handleUpdate}>Update</button>
 				<button onClick={handleRemove}>Remove</button>

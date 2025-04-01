@@ -7,11 +7,9 @@ export function PlaylistUI({ playlist, hologram }: { playlist: Playlist, hologra
 	return (
 		<div>
 				<div>
-					<hr />
+			
 					<div>
-						<h3>
-							Type: {hologram.type}
-						</h3>
+				
 						<div>
 							<h3>Controls</h3>
 							<div className="flex-container-vertical">
