@@ -5,7 +5,7 @@ export function DisplayUI({ displays }: { displays: Display[] }) {
 		<div>
 			{displays.map((display, index) => (
 				<div key={index}>
-					<hr />
+			
 					<div>
 						<h3>📺 Display: {display.hwid}</h3>
 						<ul>

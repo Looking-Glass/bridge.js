@@ -1,52 +1,66 @@
 import { BridgeClient } from "@library/index"
-import { Hologram } from "./HologramForm"
+import { useLocalStorage, Stores } from "../store/useLocalStorage"
+import { StoredHologram } from "../App"
+import { useCallback } from "react"
 
 export default function QueuedHologram({
 	item,
 	index,
-	holograms,
 	setHolograms,
+	holograms,
 	activeItemIndex,
 }: {
-	item: Hologram
+	item: StoredHologram
 	index: number
-	holograms: Hologram[]
-	setHolograms: (holograms: Hologram[]) => void
+	setHolograms: (holograms: StoredHologram[]) => void
+	holograms: StoredHologram[]
 	activeItemIndex: number | null
 }) {
 	const Bridge = BridgeClient.getInstance()
-	// Function to handle updating the hologram
-	const handleUpdate = () => {
-		// Create a copy of the holograms array
-		const updatedHolograms = [...holograms]
-
-		updatedHolograms[index] = { ...item }
-
-		// Set the updated array
-		setHolograms(updatedHolograms)
-	}
+	const deleteData = useLocalStorage((state) => state.deleteData)
+	const updateData = useLocalStorage((state) => state.updateData)
 
 	// Function to remove this hologram from the array
 	const handleRemove = () => {
-		const filteredHolograms = holograms.filter((_, i) => i !== index)
-		setHolograms(filteredHolograms)
+		deleteData(Stores.Playlists ,item.id)
+		setHolograms(holograms.filter((m) => m.id !== item.id))
 	}
+
+	const handleUpdate = useCallback(() => {
+		updateData(Stores.Playlists, item.id, {
+			...item,
+			settings: {
+				...item.hologram.settings,
+			},
+		})
+	}, [item])
 
 	return (
 		<div
-			className="border glass"
-			style={{ padding: "10px", margin: "10px 0", borderRadius: "18px", cursor: "pointer", minWidth: "100%" }} 
+			className="glass"
+			style={{ 
+				flexGrow: 1, 
+				width: "100%", 
+				padding: "10px", 
+				paddingLeft: "0px",
+				paddingRight: "0px",
+				margin: "10px 0", 
+				borderRadius: "18px", 
+				cursor: "pointer" 
+			}} 
 			onClick={async () => {
 				await Bridge.seek(index)
 			}}>
+				<div style={{ display: "flex", flexDirection: "column", gap: "10px", paddingLeft: "10px" }}>
 			<h3 id={`playlist-item-${index}`} style={{ color: activeItemIndex === index ? "green" : "white" }}>
-				Queued Hologram {index + 1} ({item.type})
+				Hologram {index + 1} ({item.hologram.type})
 			</h3>
-			<a href={item.uri}>{item.uri}</a>
+			<a style={{fontSize: "12px"}} href={item.hologram.uri}>{item.hologram.uri}</a>
 			{/* <p>{JSON.stringify(item.settings)}</p> */}
 			<div style={{ display: "flex", gap: "10px" }}>
-				<button onClick={handleUpdate}>Update</button>
 				<button onClick={handleRemove}>Remove</button>
+				<button onClick={handleUpdate}>Update</button>
+			</div>
 			</div>
 		</div>
 	)

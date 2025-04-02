@@ -1,13 +1,15 @@
 import { hologramFactory, QuiltHologram, RGBDHologram, hologramTypes, defaults } from "@library/index"
 import { useState } from "react"
+import { useLocalStorage } from "../store/useLocalStorage"
+import { StoredHologram } from "../App"
 
 export type Hologram = QuiltHologram | RGBDHologram
 
 export interface HologramFactoryArgs {
 	connected: boolean
 	hologram: QuiltHologram | RGBDHologram
-	holograms: Hologram[]
-	setHolograms: (holograms: Hologram[]) => void
+	holograms: StoredHologram[]
+	setHolograms: (holograms: StoredHologram[]) => void
 	setResponse: (response: string | null) => void
 	hologramType: hologramTypes
 	setHologramType: (hologramType: hologramTypes) => void
@@ -24,6 +26,8 @@ export default function HologramForm({
 	setHologramType,
 	isCastPending,
 }: HologramFactoryArgs) {
+	const saveHologram = useLocalStorage((state) => state.saveHologram)
+
 	const [hologramUri, setHologramUri] = useState<string>(hologram.uri)
 	const [hologramSettings, setHologramSettings] = useState(hologram.settings)
 
@@ -162,10 +166,8 @@ export default function HologramForm({
 						type: hologramType,
 						settings: hologramSettings,
 					})
-					setHolograms([...holograms, hologram])
-					// let call = await Bridge.cast(hologram)
-					// setResponse(JSON.stringify(call))
-					// setIsCastPending(Bridge.isCastPending)
+					const holo = await saveHologram(hologram)
+					setHolograms([...holograms, holo])
 				}}
 				disabled={!connected || isCastPending}>
 				Add hologram

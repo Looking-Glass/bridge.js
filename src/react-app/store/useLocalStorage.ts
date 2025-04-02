@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { Hologram } from '../components/HologramForm'
+import { StoredHologram } from '../App'
 
 type DBStatus = {
   db: IDBDatabase | null
@@ -19,7 +20,8 @@ export interface LocalStorageState {
   setDBStatus: (dbStatus: DBStatus) => void
   addData: <T>(storeName: string, data: T) => Promise<T | string | null>
   getData: any
-  savePlaylist: (playlist: Hologram[]) => Promise<void>
+  updateData: <T>(storeName: string, key: number, data: T) => Promise<T | number | null>
+  saveHologram: (hologram: Hologram) => Promise<StoredHologram>
   loadPlaylist: <T>(storeName: Stores, key: string) => Promise<T>
   loadLibrary: <T>(storeName: Stores) => Promise<T[]>
   deleteData: (storeName: string, key: any) => Promise<void>
@@ -27,7 +29,7 @@ export interface LocalStorageState {
   setDefaultModels: () => Promise<void>
 }
 
-export const useLocalStorage = create<LocalStorageState>((set, get) => ({
+export const useLocalStorage = create<LocalStorageState>((set: any, get: any) => ({
   initializeDatabase: async () => {
     let request: IDBOpenDBRequest
     let db: IDBDatabase
@@ -44,7 +46,7 @@ export const useLocalStorage = create<LocalStorageState>((set, get) => ({
 
         // if the data object store doesn't exist, create it
         if (!db.objectStoreNames.contains(Stores.Playlists)) {
-          console.log('Creating models store')
+          console.log('Creating playlist store')
           db.createObjectStore(Stores.Playlists, { keyPath: 'id' })
         }
         // no need to resolve here
@@ -72,6 +74,34 @@ export const useLocalStorage = create<LocalStorageState>((set, get) => ({
       ...state,
       dbStatus
     }))
+  },
+
+  updateData: <T>(storeName: string, key: number, data: T) => {
+    return new Promise<T | number | null>((resolve, reject) => {
+      const { dbStatus } = get()
+      const request = indexedDB.open('myDB', dbStatus.version)
+
+      request.onsuccess = () => {
+        console.log('request.onsuccess - updateData', data)
+        const db = request.result
+        const tx = db.transaction(storeName, 'readwrite')
+        const store = tx.objectStore(storeName)
+
+        const updateRequest = store.put({ ...data, id: key })
+
+        updateRequest.onsuccess = () => {
+          resolve(data)
+        }
+
+        updateRequest.onerror = () => {
+          reject('Error updating data in the store')
+        }
+      }
+
+      request.onerror = () => {
+        reject('Error opening the database')
+      }
+    })
   },
 
   addData: <T>(storeName: string, data: T) => {
@@ -118,23 +148,26 @@ export const useLocalStorage = create<LocalStorageState>((set, get) => ({
       }
     })
   },
-  savePlaylist: async (playlist: Hologram[]) => {
+  saveHologram: async (hologram: Hologram): Promise<StoredHologram> => {
     const { addData } = get()
     // we must pass an Id since it's our primary key declared in our createObjectStoreMethod  { keyPath: 'id' }
     const id = Date.now()
-
+  
     try {
       await addData(Stores.Playlists, {
         id,
-        items: playlist
-        
+        hologram
       })
+  
+      return { id, hologram }
+  
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message)
       } else {
         console.error('Something went wrong')
       }
+      throw err // Re-throw the error to be handled by the caller
     }
   },
 
