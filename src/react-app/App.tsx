@@ -420,6 +420,7 @@ function App() {
 			<div className="glass" style={{ padding: "10px", borderRadius: "18px" }}>
 				<div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
 					<button
+						disabled={!connected}
 						style={{ width: "100%" }}
 						onClick={async () => {
 							setResponse("Casting Playlist")
@@ -437,9 +438,10 @@ function App() {
 
 							// setIsCastPending(Bridge.isCastPending)
 						}}>
-						Cast Playlist
+						{connected ? "Cast Playlist" : "Connect to Bridge to Cast Playlist"}
 					</button>
 					<button
+						disabled={!connected}
 						style={{ width: "100%" }}
 						onClick={async () => {
 							setResponse("Casting Playlist")
@@ -449,7 +451,7 @@ function App() {
 								await Bridge.showWindow(false)
 							}
 						}}>
-						Stop Playlist
+						{connected ? "Stop Playlist" : "Connect to Bridge to Stop Playlist"}
 					</button>
 				</div>
 				<br />

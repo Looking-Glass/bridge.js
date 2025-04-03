@@ -34,7 +34,7 @@ export function PlaylistUI({
           parameter="focus"
           min={defaults.FOCUS.min}
           max={defaults.FOCUS.max}
-          defaultValue={defaults.FOCUS.defaultValue}
+          defaultValue={hologram.settings?.focus ?? defaults.FOCUS.defaultValue}
           numberType={defaults.FOCUS.type}
           hologram={hologram}
           setHologram={setHologram}

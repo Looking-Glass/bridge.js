@@ -27,6 +27,7 @@ export function UpdateParams({
   
   // Sync component state with hologram settings on mount and when hologram changes
   useEffect(() => {
+    console.log(`Updating ${parameter} to ${defaultValue}`)
 	//@ts-expect-error - hologram type issues
     const initialValue = hologram.settings[parameter] 
       
@@ -39,6 +40,11 @@ export function UpdateParams({
   const handleChange = async (newValue: number) => {
     // Ensure value is within bounds
     const boundedValue = Math.min(Math.max(newValue, min), max)
+
+    if (!boundedValue) {
+      console.warn(`Invalid value for ${parameter}: ${boundedValue}`)
+      return
+    }
     
     // Round to reasonable precision for float values
     const processedValue = numberType === "float" 
@@ -98,7 +104,7 @@ export function UpdateParams({
         onChange={(e) => handleChange(parseFloat(e.target.value))}
       />
       <div style={{ minWidth: "80px" }}>
-        Value: {value.toFixed(2)}
+        Value: {value}
       </div>
       <input
         type="range"
