@@ -420,7 +420,7 @@ function App() {
 			<div className="glass" style={{ padding: "10px", borderRadius: "18px" }}>
 				<div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
 					<button
-						disabled={!connected}
+						disabled={!connected || (holograms.length === 0)}
 						style={{ width: "100%" }}
 						onClick={async () => {
 							setResponse("Casting Playlist")
