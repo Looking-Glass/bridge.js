@@ -407,7 +407,7 @@ function App() {
 									<div
 										key={index}
 										className={"glass"}
-										style={{ borderRadius: "18px", padding: "18px", marginTop: "10px", width: "80%" }}>
+										style={{ borderRadius: "18px", padding: "18px", width: "80%" }}>
 										{activeItemIndex !== null && (
 											<PlaylistUI playlist={item} hologram={holograms[activeItemIndex].hologram} setHologram={setHologram} />
 										)}

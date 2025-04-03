@@ -49,7 +49,7 @@ export function PlaylistUI({
           hologram={hologram}
           setHologram={setHologram}
         />
-        <UpdateParams
+        {/* <UpdateParams
           playlistName={playlist.name}
           parameter="cols"
           min={defaults.COLUMNS.min}
@@ -68,7 +68,7 @@ export function PlaylistUI({
           numberType={defaults.ROWS.type}
           hologram={hologram}
           setHologram={setHologram}
-        />
+        /> */}
         <UpdateParams
           playlistName={playlist.name}
           parameter="zoom"

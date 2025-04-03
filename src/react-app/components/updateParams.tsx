@@ -35,32 +35,24 @@ export function UpdateParams({
     setValue(initialValue)
   }, [hologram, parameter, defaultValue])
 
-  const stepSize = numberType === "float" ? 0.01 : 1
+  const stepSize = numberType === "float" ? 0.001 : 1
 
   const handleChange = async (newValue: number) => {
     // Ensure value is within bounds
-    const boundedValue = Math.min(Math.max(newValue, min), max)
-
-    if (!boundedValue) {
-      console.warn(`Invalid value for ${parameter}: ${boundedValue}`)
-      return
+    if (newValue === undefined) {
+      newValue = 0
     }
-    
-    // Round to reasonable precision for float values
-    const processedValue = numberType === "float" 
-      ? parseFloat(boundedValue.toFixed(3)) 
-      : Math.round(boundedValue)
     
     try {
       // Update the current hologram in Bridge
       await Bridge.updateCurrentHologram({
         name: playlistName,
         parameter: parameter,
-        value: processedValue,
+        value: newValue,
       })
       
       // Update local state
-      setValue(processedValue)
+      setValue(newValue)
       
       // Create a shallow copy of the hologram
       const updatedHologram = { ...hologram };
@@ -83,6 +75,17 @@ export function UpdateParams({
   }
 
   return (
+    <div  style={{
+      display: "flex",
+      gap: "1rem",
+      flexDirection: "column",
+      alignItems: "center",
+      width: "100%",
+      paddingBottom: "1rem",
+      borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+    }}>
+
+    
     <div
       style={{
         display: "flex",
@@ -90,8 +93,6 @@ export function UpdateParams({
         flexDirection: "row",
         alignItems: "center",
         width: "100%",
-        paddingBottom: "1rem",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
       }}>
       <div style={{ minWidth: "100px", fontWeight: "bold" }}>{parameter}</div>
       <input
@@ -106,15 +107,7 @@ export function UpdateParams({
       <div style={{ minWidth: "80px" }}>
         Value: {value}
       </div>
-      <input
-        type="range"
-        style={{ flexGrow: 1 }}
-        value={value}
-        min={min}
-        max={max}
-        step={stepSize}
-        onChange={(e) => handleChange(parseFloat(e.target.value))}
-      />
+
       <button
         style={{ 
           padding: "0.5rem 1rem",
@@ -127,5 +120,15 @@ export function UpdateParams({
         Reset
       </button>
     </div>
+          <input
+          type="range"
+          style={{ flexGrow: 1 }}
+          value={value}
+          min={min}
+          max={max}
+          step={stepSize}
+          onChange={(e) => handleChange(parseFloat(e.target.value))}
+        />
+        </div>
   )
 }
