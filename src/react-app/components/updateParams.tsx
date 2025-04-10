@@ -2,6 +2,7 @@ import { BridgeClient, parameterNames } from "@library/index"
 import { useState, useEffect } from "react"
 import { z } from "zod"
 import { Hologram } from "./HologramForm"
+import { StoredHologram } from "../App"
 
 export function UpdateParams({
   playlistName,
@@ -10,17 +11,19 @@ export function UpdateParams({
   min,
   max,
   numberType,
-  hologram,
-  setHologram,
+  index,
+  holograms, 
+  updateHologram,
 }: {
   playlistName: string
   parameter: z.infer<typeof parameterNames>
   defaultValue: number
   min: number
   max: number
-  numberType: "float" | "int"
-  hologram: Hologram
-  setHologram: (hologram: Hologram) => void
+  numberType: "float" | "int",
+  index: number
+  holograms: StoredHologram[]
+  updateHologram: (index: number, hologram: Hologram) => void
 }) {
   const Bridge = BridgeClient.getInstance()
   const [value, setValue] = useState(defaultValue)
@@ -29,11 +32,11 @@ export function UpdateParams({
   useEffect(() => {
     console.log(`Updating ${parameter} to ${defaultValue}`)
 	//@ts-expect-error - hologram type issues
-    const initialValue = hologram.settings[parameter] 
+    const initialValue = holograms[index].hologram.settings[parameter] 
       
     
     setValue(initialValue)
-  }, [hologram, parameter, defaultValue])
+  }, [holograms, parameter, defaultValue])
 
   const stepSize = numberType === "float" ? 0.001 : 1
 
@@ -55,20 +58,25 @@ export function UpdateParams({
       setValue(newValue)
       
       // Create a shallow copy of the hologram
-      const updatedHologram = { ...hologram };
+      const updatedHologram = { ...holograms[index].hologram };
       
       // Ensure settings object exists
       if (!updatedHologram.settings) {
         console.warn(`Settings object is missing in hologram`)
-		return
+		    return
       }
       
       // Update the specific parameter in the settings
-	  //@ts-expect-error - hard to find parameter type
-      updatedHologram.settings[parameter] = processedValue;
+      //@ts-expect-error - hologram type issues
+      console.log({settings: updatedHologram.settings, parameter, param: updatedHologram.settings[parameter]})
+
+      //@ts-expect-error - hologram type issues
+      updatedHologram.settings[parameter] = newValue;
+
+      console.log({hologram: updatedHologram.settings})
       
       // Pass the updated hologram to parent
-      setHologram(updatedHologram);
+      updateHologram(index, updatedHologram);
     } catch (error) {
       console.error(`Failed to update ${parameter}:`, error)
     }

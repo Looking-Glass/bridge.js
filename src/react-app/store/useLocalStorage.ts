@@ -27,6 +27,8 @@ export interface LocalStorageState {
   deleteData: (storeName: string, key: any) => Promise<void>
   deleteModel: (id: number) => Promise<void>
   setDefaultModels: () => Promise<void>
+  exportPlaylistData: () => Promise<string>
+  importPlaylistData: (jsonData: string) => Promise<boolean>
 }
 
 export const useLocalStorage = create<LocalStorageState>((set: any, get: any) => ({
@@ -336,5 +338,125 @@ export const useLocalStorage = create<LocalStorageState>((set: any, get: any) =>
         console.error('Something went wrong')
       }
     }
+  },
+
+  exportPlaylistData: async (): Promise<string> => {
+    const { getData } = get()
+    try {
+      // Get all data from the Playlists store
+      const playlistData = await getData(Stores.Playlists)
+      
+      // Convert data to JSON string
+      const jsonData = JSON.stringify(playlistData, null, 2)
+      
+      console.log('Playlist data exported successfully')
+      return jsonData
+      
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error('Error exporting playlist data:', err.message)
+      } else {
+        console.error('Something went wrong exporting playlist data')
+      }
+      return JSON.stringify({ error: 'Failed to export data' })
+    }
+  },
+
+  importPlaylistData: async (jsonData: string): Promise<boolean> => {
+    const { getData, deleteData, dbStatus } = get()
+    
+    try {
+      // Parse the JSON data
+      const playlistData = JSON.parse(jsonData)
+      
+      // Validate that the data is an array
+      if (!Array.isArray(playlistData)) {
+        console.error('Invalid import data: Expected an array')
+        return false
+      }
+      
+      // Get existing data to check for duplicates
+      const existingData = await getData(Stores.Playlists)
+      const existingIds = existingData ? existingData.map((item: any) => item.id) : []
+      
+      // Open a transaction to the database
+      const request = indexedDB.open('myDB', dbStatus.version)
+      
+      return new Promise((resolve) => {
+        request.onsuccess = async () => {
+          const db = request.result
+          
+          try {
+            // First, delete any items that might conflict with our import
+            for (const item of playlistData) {
+              // If the item has an ID and it already exists in our database
+              if (item.id && existingIds.includes(item.id)) {
+                try {
+                  await deleteData(Stores.Playlists, item.id)
+                  console.log(`Deleted existing item with ID: ${item.id}`)
+                } catch (error) {
+                  console.warn(`Failed to delete item with ID: ${item.id}`, error)
+                  // Continue anyway
+                }
+              }
+            }
+            
+            // Now add all the items
+            const tx = db.transaction(Stores.Playlists, 'readwrite')
+            const store = tx.objectStore(Stores.Playlists)
+            
+            // Process each item in the array
+            let successful = true
+            
+            // Use promises to track all operations
+            const promises = playlistData.map(item => {
+              return new Promise<void>((resolveItem) => {
+                // Keep the original ID or generate a new one if it doesn't exist
+                const id = item.id || Date.now() + Math.random()
+                const newItem = { ...item, id }
+                
+                const addRequest = store.add(newItem)
+                
+                addRequest.onsuccess = () => resolveItem()
+                addRequest.onerror = (event) => {
+                  console.error('Error importing item:', event)
+                  successful = false
+                  // Continue with other items even if one fails
+                  resolveItem()
+                }
+              })
+            })
+            
+            await Promise.all(promises)
+            tx.oncomplete = () => {
+              console.log('Import completed successfully')
+              resolve(successful)
+            }
+            tx.onerror = () => {
+              console.error('Transaction error during import')
+              resolve(false)
+            }
+          } catch (error) {
+            console.error('Error during import:', error)
+            resolve(false)
+          }
+        }
+        
+        request.onerror = () => {
+          console.error('Error opening database for import')
+          resolve(false)
+        }
+      })
+      
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error('Error importing playlist data:', err.message)
+      } else {
+        console.error('Something went wrong importing playlist data')
+      }
+      return false
+    }
   }
+
+
 }))

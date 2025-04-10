@@ -23,6 +23,7 @@ import { DisplayUI } from "./components/Display"
 import { z } from "zod"
 import QueuedHologram from "./components/queuedHologram"
 import { Stores, useLocalStorage } from "./store/useLocalStorage"
+import { PlaylistImporter } from "./components/PlaylistImporter"
 
 export type StoredHologram = { id: number; hologram: Hologram }
 
@@ -58,17 +59,17 @@ function App() {
 	const saveHologram = useLocalStorage((state) => state.saveHologram)
 	const loadLibrary = useLocalStorage((state) => state.loadLibrary)
 
+	const fetchData = async () => {
+		await initializeDatabase()
+		const holos = await loadLibrary(Stores.Playlists)
+
+		console.log(holos)
+
+		//@ts-expect-error - types are not matching
+		setHolograms(holos)
+	}
+
 	useEffect(() => {
-		const fetchData = async () => {
-			await initializeDatabase()
-			const holos = await loadLibrary(Stores.Playlists)
-
-			console.log(holos)
-
-			//@ts-expect-error - types are not matching
-			setHolograms(holos)
-		}
-
 		fetchData()
 	}, [])
 
@@ -113,7 +114,7 @@ function App() {
 	const onConnected = async () => {
 		setConnected(true)
 		setConnectionStatus("✅ Connected")
-		Bridge.setVerbosity(3)
+		Bridge.setVerbosity(0)
 		// add an event listener to handle a disconnect event from Bridge.
 		await Bridge.addEventListener("Bridge Disconnected", handleEventDisconnected)
 		// react-ify the bridge state for cast pending
@@ -204,6 +205,33 @@ function App() {
 		setConnectionStatus("⚠️ Bridge Disconnected!")
 		setEventStatus("Subscribe to Events")
 		setDisplayMessage("Connect to Bridge to detect displays")
+	}
+
+	const updateHologram = useCallback(
+		(index: number, hologram: Hologram) => {
+			setHolograms((prevHolograms) => {
+				const updatedHolograms = [...prevHolograms]
+				updatedHolograms[index] = { ...updatedHolograms[index], hologram: hologram }
+				return updatedHolograms
+			})
+		},
+		[holograms]
+	)
+
+	const handleExport = async () => {
+		const jsonData = await useLocalStorage.getState().exportPlaylistData()
+
+		// Create a downloadable file
+		const blob = new Blob([jsonData], { type: "application/json" })
+		const url = URL.createObjectURL(blob)
+
+		// Create a download link and trigger it
+		const a = document.createElement("a")
+		a.href = url
+		a.download = "playlists_export.json"
+		a.click()
+
+		URL.revokeObjectURL(url)
 	}
 
 	useEffect(() => {
@@ -334,6 +362,8 @@ function App() {
 				<hr />
 
 				<h1>Media Player</h1>
+				<PlaylistImporter onImport={fetchData}/>
+				<br/>
 				<div className="flex-container glass" style={{ borderRadius: "12px", padding: "18px" }}>
 					<div className="glass" style={{ borderRadius: "12px", padding: "18px" }}>
 						<HologramForm
@@ -397,30 +427,33 @@ function App() {
 									/>
 								))}
 							</div>
-
-							
 						</div>
-						
 					</div>
 					<div style={{ flex: 1, width: "100%" }}>
-								{Bridge.playlists?.map((item, index) => (
-									<div
-										key={index}
-										className={"glass"}
-										style={{ borderRadius: "18px", padding: "18px", width: "80%" }}>
-										{activeItemIndex !== null && (
-											<PlaylistUI playlist={item} hologram={holograms[activeItemIndex].hologram} setHologram={setHologram} />
-										)}
-									</div>
-								))}
+						{Bridge.playlists?.map((item, index) => (
+							<div
+								key={index}
+								className={"glass"}
+								style={{ borderRadius: "18px", padding: "18px", width: "80%" }}>
+								{activeItemIndex !== null && holograms.length > 0 && (
+									<PlaylistUI
+										playlist={item}
+										holograms={holograms}
+										index={activeItemIndex}
+										updateHologram={updateHologram}
+									/>
+								)}
 							</div>
+						))}
+					</div>
 				</div>
 			</div>
 			<br />
 			<div className="glass" style={{ padding: "10px", borderRadius: "18px" }}>
 				<div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+				
 					<button
-						disabled={!connected || (holograms.length === 0)}
+						disabled={!connected || holograms.length === 0}
 						style={{ width: "100%" }}
 						onClick={async () => {
 							setResponse("Casting Playlist")
@@ -453,6 +486,11 @@ function App() {
 						}}>
 						{connected ? "Stop Playlist" : "Connect to Bridge to Stop Playlist"}
 					</button>
+
+					<div className="playlist-exporter">
+					
+						<button onClick={handleExport}>Export Playlist Data</button>
+					</div>
 				</div>
 				<br />
 				<div className="w3-light-grey">

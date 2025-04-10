@@ -32,10 +32,14 @@ export default function QueuedHologram({
 		await new Promise((resolve) => setTimeout(resolve, 300))
 
 		updateData(Stores.Playlists, item.id, {
-			...item,
-			settings: {
-				...item.hologram.settings,
-			},
+			id: item.id,
+			hologram: {
+				...item.hologram,
+				settings: {
+					...holograms[index].hologram.settings
+				},
+			}
+			
 		})
 		setUpdateText("Saved!")
 
