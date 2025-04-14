@@ -34,6 +34,7 @@
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
+		"vite-plugin-pwa": "^0.20.5",
 		"@lookingglass/blocks.js": "^0.1.1",
 		"@rollup/plugin-typescript": "^9.0.1",
 		"@types/node": "^18.11.2",

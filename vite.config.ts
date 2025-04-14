@@ -3,7 +3,9 @@ import typescript from "@rollup/plugin-typescript"
 import path from "path"
 import { typescriptPaths } from "rollup-plugin-typescript-paths"
 import react from "@vitejs/plugin-react"
+import { VitePWA } from "vite-plugin-pwa"
 
+//@ts-ignore
 export default defineConfig(({ mode }) => {
 	// build the bridge.js library
 	if (mode === "library") {
@@ -54,7 +56,18 @@ export default defineConfig(({ mode }) => {
 			build: {
 				outDir: "app",
 			},
-			plugins: [react()],
+			plugins: [
+				react(),
+				VitePWA({
+					registerType: "autoUpdate",
+					devOptions: {
+						enabled: true,
+					},
+					workbox: {
+						maximumFileSizeToCacheInBytes: 3000000,
+					},
+				}),
+			],
 			resolve: {
 				alias: {
 					"@library": path.resolve(__dirname, "./src/library"),
