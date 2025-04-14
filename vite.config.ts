@@ -54,6 +54,7 @@ export default defineConfig(({ mode }) => {
 		console.log("commit hash:", commitHash)
 		return {
 			build: {
+				manifest: true,
 				outDir: "app",
 			},
 			plugins: [
@@ -66,6 +67,19 @@ export default defineConfig(({ mode }) => {
 					workbox: {
 						maximumFileSizeToCacheInBytes: 3000000,
 					},
+					manifest: {
+						name: "Looking Glass Bridge Media Player (Beta)",
+						short_name: "LG",
+						description: "Looking Glass",
+						theme_color: "#ffffff",
+						icons: [
+							{
+								src: "icon.jpg",
+								sizes: "192x192",
+								type: "image/png",
+							},
+						],
+					}
 				}),
 			],
 			resolve: {
