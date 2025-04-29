@@ -135,7 +135,7 @@ const quilt = new QuiltHologram({
 	settings: { rows: 13, columns: 8, aspect: 0.75, viewCount: 8 * 13 },
 })
 // add the item to the playlist
-playlist.addItem = hologram
+playlist.addItem(quilt)
 // play the playlist
 await Bridge.play(playlist)
 ```
