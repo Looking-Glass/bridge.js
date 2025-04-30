@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import {
 	Display,
 	BridgeClient,
@@ -15,11 +15,17 @@ import {
 	TransportControlPreviousMessageHandler,
 	monitorConnectResponse,
 	progressUpdateResponse,
+	newItemPlayingResponse,
 } from "@library/index"
-import HologramForm from "./components/HologramForm"
+import HologramForm, { Hologram } from "./components/HologramForm"
 import { PlaylistUI } from "./components/Playlist"
 import { DisplayUI } from "./components/Display"
 import { z } from "zod"
+import QueuedHologram from "./components/queuedHologram"
+import { Stores, useLocalStorage } from "./store/useLocalStorage"
+import { PlaylistImporter } from "./components/PlaylistImporter"
+
+export type StoredHologram = { id: number; hologram: Hologram }
 
 const quilt = new QuiltHologram({
 	uri: "https://s3.amazonaws.com/lkg-blocks/u/9aa4b54a7346471d/steampunk_qs8x13.jpg",
@@ -29,7 +35,7 @@ const quilt = new QuiltHologram({
 		aspect: 0.75,
 		viewCount: 8 * 13,
 		tag: "steampunk",
-		zoom: 2,
+		zoom: 1,
 	},
 })
 
@@ -49,6 +55,24 @@ const rgbd = new RGBDHologram({
 })
 
 function App() {
+	const initializeDatabase = useLocalStorage((state: any) => state.initializeDatabase)
+	const saveHologram = useLocalStorage((state) => state.saveHologram)
+	const loadLibrary = useLocalStorage((state) => state.loadLibrary)
+
+	const fetchData = async () => {
+		await initializeDatabase()
+		const holos = await loadLibrary(Stores.Playlists)
+
+		console.log(holos)
+
+		//@ts-expect-error - types are not matching
+		setHolograms(holos)
+	}
+
+	useEffect(() => {
+		fetchData()
+	}, [])
+
 	// link setup for hash commit link
 	const githubRepo = "https://github.com/Looking-Glass/Bridge.js"
 	const commitUrl = `${githubRepo}/commit/${__COMMIT_HASH__}`
@@ -60,11 +84,11 @@ function App() {
 	const [displayMessage, setDisplayMessage] = useState<string>("Connect to Bridge to detect displays")
 
 	const [displays, setDisplays] = useState<Display[]>([])
+	const [holograms, setHolograms] = useState<StoredHologram[]>([])
 
 	//internal application state
 	const [isWindowVisible, setIsWindowVisible] = useState(true)
 	const [studioPlaylistPath, setStudioPlaylistPath] = useState<string>("")
-	const [index, setIndex] = useState(0)
 	const [progress, setProgress] = useState(0)
 	const [autoStartPlaylistName, setAutoStartPlaylistName] = useState<string>("")
 	const [isCastPending, setIsCastPending] = useState(false)
@@ -72,6 +96,8 @@ function App() {
 	// Custom Hologram State
 	const [hologram, setHologram] = useState<QuiltHologram | RGBDHologram>(quilt)
 	const [hologramType, setHologramType] = useState<hologramTypes>("quilt")
+
+	const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null)
 
 	// State for managing events and responses from Bridge:
 	const [eventStatus, setEventStatus] = useState<string>("Listen to Events")
@@ -88,7 +114,7 @@ function App() {
 	const onConnected = async () => {
 		setConnected(true)
 		setConnectionStatus("✅ Connected")
-		Bridge.setVerbosity(3)
+		Bridge.setVerbosity(0)
 		// add an event listener to handle a disconnect event from Bridge.
 		await Bridge.addEventListener("Bridge Disconnected", handleEventDisconnected)
 		// react-ify the bridge state for cast pending
@@ -108,6 +134,7 @@ function App() {
 		// detect monitor changes
 		await Bridge.addEventListener("Monitor Connect", handleMonitorConnect)
 		await Bridge.addEventListener("Monitor Disconnect", handleMonitorDisconnect)
+		// await Bridge.addEventListener("New Item Playing", handleNewItemPlaying)
 	}
 
 	const handleMonitorConnect = async (event: z.infer<typeof monitorConnectResponse>) => {
@@ -163,15 +190,48 @@ function App() {
 		}
 	}
 
-	const handleNewItemPlaying = async () => {
+	const handleNewItemPlaying = useCallback(async (event: z.infer<typeof newItemPlayingResponse>) => {
 		setIsCastPending(Bridge.isCastPending)
-	}
+
+		const index = event.payload.value.index.value
+		console.log(`New item index: ${index}`)
+
+		// Update the active index in state - this will trigger a re-render
+		setActiveItemIndex(index)
+	}, [])
 
 	const handleEventDisconnected = async () => {
 		setConnected(false)
 		setConnectionStatus("⚠️ Bridge Disconnected!")
 		setEventStatus("Subscribe to Events")
 		setDisplayMessage("Connect to Bridge to detect displays")
+	}
+
+	const updateHologram = useCallback(
+		(index: number, hologram: Hologram) => {
+			setHolograms((prevHolograms) => {
+				const updatedHolograms = [...prevHolograms]
+				updatedHolograms[index] = { ...updatedHolograms[index], hologram: hologram }
+				return updatedHolograms
+			})
+		},
+		[holograms]
+	)
+
+	const handleExport = async () => {
+		const jsonData = await useLocalStorage.getState().exportPlaylistData()
+
+		// Create a downloadable file
+		const blob = new Blob([jsonData], { type: "application/json" })
+		const url = URL.createObjectURL(blob)
+
+		// Create a download link and trigger it
+		const a = document.createElement("a")
+		a.href = url
+		a.download = "playlists_export.json"
+		a.click()
+
+		URL.revokeObjectURL(url)
 	}
 
 	useEffect(() => {
@@ -198,9 +258,15 @@ function App() {
 					{__COMMIT_HASH__}
 				</a>
 			</p>
-			<h2>Status: {`${connectionStatus}`}</h2>
-			<h2>Displays: {displayMessage}</h2>
-			<DisplayUI displays={displays} />
+			<div
+				className="glass"
+				style={{ display: "flex", flexDirection: "row", gap: "10px", borderRadius: "18px", padding: "10px" }}>
+				<div style={{ display: "flex", flexDirection: "column" }}>
+					<h3>Status: {`${connectionStatus}`}</h3>
+					<h3>Displays: {displayMessage}</h3>
+				</div>
+				<DisplayUI displays={displays} />
+			</div>
 
 			<div>
 				<div>
@@ -290,212 +356,276 @@ function App() {
 								</div>
 							</div>
 						</div>
-						<div>
-							<h2>Playlist Management</h2>
-							<hr />
+					</div>
+				</div>
 
-							<div className="flex-container">
-								<div className="border">
-									<button
-										onClick={async () => {
-											let call = await Bridge.playStudioPlaylist(studioPlaylistPath)
-											setResponse(JSON.stringify(call.response))
-										}}
-										disabled={!connected}>
-										Play Studio Playlist
-									</button>
-									<label>
-										Full Path to Playlist.json
-										<input
-											type="text"
-											onChange={(e) => {
-												// remove "" from the uri, quotes are auto-added by windows' copy as path option.
-												let cleaned = e.target.value.replace(/"/g, "")
-												setStudioPlaylistPath(cleaned)
-											}}></input>
-									</label>
-								</div>
-								<button
-									onClick={async () => {
-										await Bridge.stopStudioPlaylist()
-										// setResponse(JSON.stringify(call.response))
-									}}
-									disabled={!connected}>
-									Stop Studio Playlist
-								</button>
-								<button
-									onClick={async () => {
-										let call = await Bridge.getAutoStartPlaylist()
-										setResponse(JSON.stringify(call.response))
-									}}>
-									Get Auto Start Playlist
-								</button>
-								<div className="border">
-									<button
-										onClick={async () => {
-											let call = await Bridge.setAutoStartPlaylist({
-												playlistName: "test",
-												playlistPath:
-													"C:\\Users\\Public\\Documents\\Looking Glass Factory\\HoloPlay Studio\\Playlists\\test.json",
-											})
-											setResponse(JSON.stringify(call.response))
-										}}
-										disabled={!connected}>
-										Set Auto Start Playlist
-									</button>
-									<div>
-										<label>
-											Set Auto Start Playlist Name
-											<input
-												type="text"
-												onChange={(e) => {
-													setAutoStartPlaylistName(e.target.value)
-												}}></input>
-										</label>
-									</div>
-								</div>
-								<button
-									onClick={async () => {
-										// Check to see if playlists exist
-										if (Bridge.playlists) {
-											// Find the playlist with the name that matches the one we want to auto start
-											let playlist = Bridge.playlists.find(
-												(playlist: Playlist | undefined) => playlist && playlist.name == autoStartPlaylistName
-											)
-											// Throw an error if no playlist with that name is found
-											if (!playlist) {
-												setResponse(`No Playlist with named ${autoStartPlaylistName} found`)
-												return
-											}
-											let call = await Bridge.createAutoStartPlaylist({ playlist })
-											setResponse(JSON.stringify(call.response))
-										}
-									}}>
-									Create Auto Start Playlist
-								</button>
+				<hr />
+
+				<h1>Media Player</h1>
+				<PlaylistImporter onImport={fetchData}/>
+				<br/>
+				<div className="flex-container glass" style={{ borderRadius: "12px", padding: "18px" }}>
+					<div className="glass" style={{ borderRadius: "12px", padding: "18px" }}>
+						<HologramForm
+							connected={connected}
+							hologram={hologram}
+							holograms={holograms}
+							setHolograms={setHolograms}
+							hologramType={hologramType}
+							setHologramType={setHologramType}
+							setResponse={setResponse}
+							isCastPending={isCastPending}
+							setIsCastPending={setIsCastPending}
+						/>
+						<h3>Add Predefined Holograms</h3>
+						<button
+							style={{ width: "100%" }}
+							title={"Cast a prebuilt quilt hologram"}
+							onClick={async () => {
+								setResponse("Casting Hologram")
+
+								const holo = await saveHologram(quilt)
+								setHolograms([...holograms, holo])
+							}}
+							disabled={!connected || isCastPending}>
+							Add Quilt hologram
+						</button>
+						<br />
+						<button
+							style={{ width: "100%" }}
+							onClick={async () => {
+								setResponse("Casting Hologram")
+								// setHolograms([...holograms, rgbd])
+								const holo = await saveHologram(rgbd)
+								setHolograms([...holograms, holo])
+								// setIsCastPending(Bridge.isCastPending)
+							}}
+							disabled={!connected || isCastPending}>
+							Add RGBD hologram
+						</button>
+					</div>
+					{/* PLAYLIST SECTION */}
+
+					<div style={{ width: "100%" }}>
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "row",
+								gap: "10px",
+								justifyContent: "space-between",
+								width: "100%",
+							}}>
+							<div style={{ flex: 1, width: "100%" }}>
+								{holograms.map((item, index) => (
+									<QueuedHologram
+										item={item}
+										index={index}
+										activeItemIndex={activeItemIndex}
+										key={index}
+										holograms={holograms}
+										setHolograms={setHolograms}
+									/>
+								))}
 							</div>
 						</div>
-						<div>
-							<h2>Response</h2>
-							<hr />
-							<p>{bridgeResponse}</p>
-						</div>
 					</div>
-					<h2>Controls</h2>
-					<hr />
-					<div className="flex-container">
-						<button
-							onClick={async () => {
-								await Bridge.play()
-								// setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							PLAY
-						</button>
-						<button
-							onClick={async () => {
-								await Bridge.pause()
-								// setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							PAUSE
-						</button>
-						<button
-							onClick={async () => {
-								await Bridge.previous()
-								// setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							PREVIOUS
-						</button>
-						<button
-							onClick={async () => {
-								await Bridge.next()
-								// setResponse(JSON.stringify(call.response))
-							}}
-							disabled={!connected}>
-							NEXT
-						</button>
-						<div>
-							<label>
-								Index to seek to
-								<input
-									type="number"
-									onChange={(e) => {
-										// remove "" from the uri, quotes are auto-added by windows' copy as path option.
-										setIndex(parseInt(e.target.value))
-									}}></input>
-							</label>
-						</div>
-						<button
-							onClick={async () => {
-								await Bridge.seek(index)
-							}}
-							disabled={!connected}>
-							SEEK
-						</button>
-					</div>
-					<br />
-					<div className="w3-light-grey">
-						<div className="w3-container w3-green w3-center" style={{ width: `${progress}%` }}></div>
-						<div className="w3-center">{Math.round(progress)}%</div>
-					</div>
-					<div className="flex-container">
-						<div>
-							<h2>Casting</h2>
-							<hr />
-							<HologramForm
-								connected={connected}
-								hologram={hologram}
-								setHologram={setHologram}
-								hologramType={hologramType}
-								setHologramType={setHologramType}
-								setResponse={setResponse}
-								isCastPending={isCastPending}
-								setIsCastPending={setIsCastPending}
-							/>
-							<h3>Cast Predefined Holograms</h3>
-							<button
-								title={"Cast a prebuilt quilt hologram"}
-								onClick={async () => {
-									setResponse("Casting Hologram")
-									let call = await Bridge.cast(quilt)
-									setHologram(quilt)
-									setResponse(JSON.stringify(call))
-									setIsCastPending(Bridge.isCastPending)
-								}}
-								disabled={!connected || isCastPending}>
-								Cast Quilt hologram
-							</button>
-							<button
-								onClick={async () => {
-									setResponse("Casting Hologram")
-									let call = await Bridge.cast(rgbd)
-									setHologram(rgbd)
-									setResponse(JSON.stringify(call))
-									setIsCastPending(Bridge.isCastPending)
-								}}
-								disabled={!connected || isCastPending}>
-								Cast RGBD hologram
-							</button>
-						</div>
-						{/* PLAYLIST SECTION */}
-						<div>
-							<h2>Properties</h2>
-							<hr />
-							<h3>Current Hologram:</h3>
-							<p>{JSON.stringify(hologram)}</p>
-							<h3>Playlists:</h3>
-							{Bridge.playlists?.map((item, index) => (
-								<div key={index} className={"border"}>
-									<h3>Playlist {item.name}</h3>
-									<PlaylistUI playlist={item} />
-								</div>
-							))}
-						</div>
+					<div style={{ flex: 1, width: "100%" }}>
+						{Bridge.playlists?.map((item, index) => (
+							<div
+								key={index}
+								className={"glass"}
+								style={{ borderRadius: "18px", padding: "18px", width: "80%" }}>
+								{activeItemIndex !== null && holograms.length > 0 && (
+									<PlaylistUI
+										playlist={item}
+										holograms={holograms}
+										index={activeItemIndex}
+										updateHologram={updateHologram}
+									/>
+								)}
+							</div>
+						))}
 					</div>
 				</div>
 			</div>
+			<br />
+			<div className="glass" style={{ padding: "10px", borderRadius: "18px" }}>
+				<div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+				
+					<button
+						disabled={!connected || holograms.length === 0}
+						style={{ width: "100%" }}
+						onClick={async () => {
+							setResponse("Casting Playlist")
+							const playlist = Bridge.playlists?.[0]
+							if (playlist) {
+								await Bridge.deletePlaylist(playlist)
+							}
+
+							const holos = holograms.map((item) => {
+								return item.hologram
+							})
+
+							let call = await Bridge.playRemotePlaylist(holos)
+							setResponse(JSON.stringify(call))
+
+							// setIsCastPending(Bridge.isCastPending)
+						}}>
+						{connected ? "Cast Playlist" : "Connect to Bridge to Cast Playlist"}
+					</button>
+					<button
+						disabled={!connected}
+						style={{ width: "100%" }}
+						onClick={async () => {
+							setResponse("Casting Playlist")
+							const playlist = Bridge.playlists?.[0]
+							if (playlist) {
+								await Bridge.deletePlaylist(playlist)
+								await Bridge.showWindow(false)
+							}
+						}}>
+						{connected ? "Stop Playlist" : "Connect to Bridge to Stop Playlist"}
+					</button>
+
+					<div className="playlist-exporter">
+					
+						<button onClick={handleExport}>Export Playlist Data</button>
+					</div>
+				</div>
+				<br />
+				<div className="w3-light-grey">
+					<div className="w3-container w3-green w3-center" style={{ width: `${progress}%` }}></div>
+					<div className="w3-center">{Math.round(progress)}%</div>
+				</div>
+				<br />
+				<hr />
+				<div className="flex-container">
+					<button
+						onClick={async () => {
+							await Bridge.play()
+							// setResponse(JSON.stringify(call.response))
+						}}
+						disabled={!connected}>
+						PLAY
+					</button>
+					<button
+						onClick={async () => {
+							await Bridge.pause()
+							// setResponse(JSON.stringify(call.response))
+						}}
+						disabled={!connected}>
+						PAUSE
+					</button>
+					<button
+						onClick={async () => {
+							await Bridge.previous()
+							// setResponse(JSON.stringify(call.response))
+						}}
+						disabled={!connected}>
+						PREVIOUS
+					</button>
+					<button
+						onClick={async () => {
+							await Bridge.next()
+							// setResponse(JSON.stringify(call.response))
+						}}
+						disabled={!connected}>
+						NEXT
+					</button>
+				</div>
+			</div>
+			<div>
+				<hr />
+				<div>
+					<h2>Response</h2>
+					<hr />
+					<p style={{ font: "m" }}>{bridgeResponse}</p>
+				</div>
+				<h2>Playlist Management</h2>
+				<hr />
+
+				<div className="flex-container">
+					<div className="border">
+						<button
+							onClick={async () => {
+								let call = await Bridge.playStudioPlaylist(studioPlaylistPath)
+								setResponse(JSON.stringify(call.response))
+							}}
+							disabled={!connected}>
+							Play Studio Playlist
+						</button>
+						<label>
+							Full Path to Playlist.json
+							<input
+								type="text"
+								onChange={(e) => {
+									// remove "" from the uri, quotes are auto-added by windows' copy as path option.
+									let cleaned = e.target.value.replace(/"/g, "")
+									setStudioPlaylistPath(cleaned)
+								}}></input>
+						</label>
+					</div>
+					<button
+						onClick={async () => {
+							await Bridge.stopStudioPlaylist()
+							// setResponse(JSON.stringify(call.response))
+						}}
+						disabled={!connected}>
+						Stop Studio Playlist
+					</button>
+					<button
+						onClick={async () => {
+							let call = await Bridge.getAutoStartPlaylist()
+							setResponse(JSON.stringify(call.response))
+						}}>
+						Get Auto Start Playlist
+					</button>
+					<div className="border">
+						<button
+							onClick={async () => {
+								let call = await Bridge.setAutoStartPlaylist({
+									playlistName: "test",
+									playlistPath:
+										"C:\\Users\\Public\\Documents\\Looking Glass Factory\\HoloPlay Studio\\Playlists\\test.json",
+								})
+								setResponse(JSON.stringify(call.response))
+							}}
+							disabled={!connected}>
+							Set Auto Start Playlist
+						</button>
+						<div>
+							<label>
+								Set Auto Start Playlist Name
+								<input
+									type="text"
+									onChange={(e) => {
+										setAutoStartPlaylistName(e.target.value)
+									}}></input>
+							</label>
+						</div>
+					</div>
+					<button
+						onClick={async () => {
+							// Check to see if playlists exist
+							if (Bridge.playlists) {
+								// Find the playlist with the name that matches the one we want to auto start
+								let playlist = Bridge.playlists.find(
+									(playlist: Playlist | undefined) => playlist && playlist.name == autoStartPlaylistName
+								)
+								// Throw an error if no playlist with that name is found
+								if (!playlist) {
+									setResponse(`No Playlist with named ${autoStartPlaylistName} found`)
+									return
+								}
+								let call = await Bridge.createAutoStartPlaylist({ playlist })
+								setResponse(JSON.stringify(call.response))
+							}
+						}}>
+						Create Auto Start Playlist
+					</button>
+				</div>
+			</div>
+
 			<h2>Bridge Events</h2>
 			<button
 				onClick={() => {

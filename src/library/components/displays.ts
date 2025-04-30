@@ -14,7 +14,18 @@ type Value = {
 	value: number
 }
 
+type subpixelCell = {
+	BOffsetX: number
+	BOffsetY: number
+	GOffsetX: number
+	GOffsetY: number
+	ROffsetX: number
+	ROffsetY: number
+}
+
 interface BridgeCalibrationResponse {
+	CellPatternMode: Value | undefined
+	subpixelCells?: subpixelCell[]
 	DPI: Value
 	center: Value
 	configVersion: string
@@ -33,6 +44,8 @@ interface BridgeCalibrationResponse {
 }
 
 export interface CalibrationType {
+	CellPatternMode: number
+	subpixelCells?: subpixelCell[]
 	DPI: number
 	center: number
 	configVersion: string
@@ -67,6 +80,8 @@ export function tryParseCalibration(value: string): CalibrationType | null {
 	}
 
 	const calibration: CalibrationType = {
+		CellPatternMode: parsedValue.CellPatternMode?.value ?? 0,
+		subpixelCells: parsedValue.subpixelCells ?? undefined,
 		DPI: parsedValue.DPI.value,
 		center: parsedValue.center.value,
 		configVersion: parsedValue.configVersion,

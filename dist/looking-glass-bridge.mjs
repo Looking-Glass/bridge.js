@@ -2,16 +2,18 @@ var ct = Object.defineProperty;
 var dt = (n, e, t) => e in n ? ct(n, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : n[e] = t;
 var w = (n, e, t) => (dt(n, typeof e != "symbol" ? e + "" : e, t), t);
 function ut(n) {
-  var s;
+  var s, r;
   const e = JSON.parse(n);
   return e == null ? (console.warn("Unable to parse calibration"), null) : {
+    CellPatternMode: ((s = e.CellPatternMode) == null ? void 0 : s.value) ?? 0,
+    subpixelCells: e.subpixelCells ?? void 0,
     DPI: e.DPI.value,
     center: e.center.value,
     configVersion: e.configVersion,
     flipImageX: e.flipImageX.value,
     flipImageY: e.flipImageY.value,
     flipSubp: e.flipSubp.value,
-    fringe: ((s = e.fringe) == null ? void 0 : s.value) ?? 0,
+    fringe: ((r = e.fringe) == null ? void 0 : r.value) ?? 0,
     invView: e.invView.value,
     pitch: e.pitch.value,
     screenH: e.screenH.value,
