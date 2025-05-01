@@ -1,23 +1,6 @@
 import { BridgeEventMap } from "../schemas/schema.events"
 import { BridgeClient } from ".."
 
-function isWindowAvailable() {
-	if (window !== undefined) {
-		return true
-	} else {
-		console.error("Window is unavailable!")
-		return false
-	}
-}
-function isWebSocketAvailable() {
-	if ("WebSocket" in window) {
-		return true
-	} else {
-		console.error("WebSocket NOT supported by your Browser!")
-		return false
-	}
-}
-
 export type MessageHandlerType = {
 	[event in keyof BridgeEventMap]?: ((payload: BridgeEventMap[event]) => void)[]
 }
@@ -131,8 +114,6 @@ export class BridgeEventSource {
 	public async connectToBridgeEventSource(orchestration: string): Promise<{ success: boolean }> {
 		const client = BridgeClient.getInstance()
 		client.log("%c Connect to Bridge Events Source ", "color: chartreuse; font-weight: bold; border: solid")
-		if (!isWindowAvailable()) return { success: false }
-		if (!isWebSocketAvailable()) return { success: false }
 		let bridgeEventSource = this
 		// provided we have web socket support, we can proceed to query Bridge
 		this.ws = new WebSocket("ws://localhost:9724/event_source")
