@@ -9,6 +9,7 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     crop_pos_y: z.ZodOptional<z.ZodNumber>;
     aspect: z.ZodNumber;
     viewCount: z.ZodNumber;
+    duration: z.ZodOptional<z.ZodNumber>;
     focus: z.ZodOptional<z.ZodNumber>;
     zoom: z.ZodOptional<z.ZodNumber>;
     tag: z.ZodOptional<z.ZodString>;
@@ -22,6 +23,7 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     crop_pos_y?: number | undefined;
     zoom?: number | undefined;
     tag?: string | undefined;
+    duration?: number | undefined;
 }, {
     aspect: number;
     rows: number;
@@ -32,12 +34,14 @@ export declare const QuiltHologramArgs: z.ZodObject<{
     crop_pos_y?: number | undefined;
     zoom?: number | undefined;
     tag?: string | undefined;
+    duration?: number | undefined;
 }>;
 export declare const RGBDHologramArgs: z.ZodObject<{
     rows: z.ZodOptional<z.ZodNumber>;
     columns: z.ZodOptional<z.ZodNumber>;
     crop_pos_x: z.ZodOptional<z.ZodNumber>;
     crop_pos_y: z.ZodOptional<z.ZodNumber>;
+    duration: z.ZodOptional<z.ZodNumber>;
     /**Aspect Ratio of the hologram,
      * this should match the source image you provide, not the RGBD Pair */
     aspect: z.ZodNumber;
@@ -74,6 +78,7 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     depth_cutoff?: 0 | 1 | undefined;
     tag?: string | undefined;
     columns?: number | undefined;
+    duration?: number | undefined;
 }, {
     aspect: number;
     zoom: number;
@@ -88,6 +93,7 @@ export declare const RGBDHologramArgs: z.ZodObject<{
     depth_cutoff?: 0 | 1 | undefined;
     tag?: string | undefined;
     columns?: number | undefined;
+    duration?: number | undefined;
 }>;
 export interface HologramClasses {
     quilt: QuiltHologram;

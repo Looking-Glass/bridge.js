@@ -196,6 +196,7 @@ class Je {
         uri: this.hologram.uri,
         rows: t.rows,
         cols: t.columns,
+        durationMS: t.duration ? t.duration : 1e4,
         focus: t.focus ? t.focus : 0,
         zoom: t.zoom ? t.zoom : 1,
         crop_pos_x: t.crop_pos_x ? t.crop_pos_x : 0,
@@ -218,6 +219,7 @@ class Je {
         focus: t.focus ? t.focus : 0,
         aspect: t.aspect,
         view_count: 8 * 13,
+        durationMS: t.duration ? t.duration : 1e4,
         isRGBD: 1,
         depth_loc: t.depth_loc,
         crop_pos_x: t.crop_pos_x ? t.crop_pos_x : 0,
@@ -351,14 +353,14 @@ class ze {
     })).success != !1;
   }
 }
-class E {
+class S {
   constructor(e) {
     w(this, "bridgeEventName");
     w(this, "client");
     this.bridgeEventName = e.bridgeEventName, this.client = e.client, this.client.addEventListener(this.bridgeEventName, this.handle.bind(this));
   }
 }
-class Xs extends E {
+class Xs extends S {
   constructor(e) {
     super({ bridgeEventName: "Monitor Connect", client: e.client });
   }
@@ -366,7 +368,7 @@ class Xs extends E {
     this.client.log("%c ⬅️ Monitor Connect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Fs extends E {
+class Fs extends S {
   constructor(e) {
     super({ bridgeEventName: "Monitor Disconnect", client: e.client });
   }
@@ -374,7 +376,7 @@ class Fs extends E {
     this.client.log("%c ⬅️ Monitor Disconnect ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class Ks extends E {
+class Ks extends S {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Pause", client: e.client });
   }
@@ -382,7 +384,7 @@ class Ks extends E {
     this.client.log("%c ⬅️ Transport Control Pause ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class en extends E {
+class en extends S {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Play", client: e.client });
   }
@@ -390,7 +392,7 @@ class en extends E {
     this.client.log("%c ⬅️ Transport Control Play ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class tn extends E {
+class tn extends S {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Next", client: e.client });
   }
@@ -398,7 +400,7 @@ class tn extends E {
     this.client.log("%c ⬅️ Transport Control Next ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class sn extends E {
+class sn extends S {
   constructor(e) {
     super({ bridgeEventName: "Transport Control Previous", client: e.client });
   }
@@ -406,7 +408,7 @@ class sn extends E {
     this.client.log("%c ⬅️ Transport Control Previous ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class nn extends E {
+class nn extends S {
   constructor(e) {
     super({ bridgeEventName: "Progress Start", client: e.client });
   }
@@ -414,7 +416,7 @@ class nn extends E {
     this.client.log("%c ⬅️ Progress Start ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class rn extends E {
+class rn extends S {
   constructor(e) {
     super({ bridgeEventName: "Progress Completion", client: e.client });
   }
@@ -422,7 +424,7 @@ class rn extends E {
     this.client.log(e);
   }
 }
-class an extends E {
+class an extends S {
   constructor(e) {
     super({ bridgeEventName: "Progress Update", client: e.client });
   }
@@ -430,7 +432,7 @@ class an extends E {
     this.client.log("%c ⬅️ Progress Update ", "color: BlueViolet; font-weight: bold; border: solid;", e.payload.value.progress_type, e.payload.value.progress.value);
   }
 }
-class on extends E {
+class on extends S {
   constructor(e) {
     super({ bridgeEventName: "Playlist Instance", client: e.client });
   }
@@ -438,7 +440,7 @@ class on extends E {
     this.client.log("%c ⬅️ Playlist Instance ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class ln extends E {
+class ln extends S {
   constructor(e) {
     super({ bridgeEventName: "Playlist Insert", client: e.client });
   }
@@ -446,7 +448,7 @@ class ln extends E {
     this.client.log("%c ⬅️ Playlist Insert ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class cn extends E {
+class cn extends S {
   constructor(e) {
     super({ bridgeEventName: "Playlist Delete", client: e.client });
   }
@@ -454,7 +456,7 @@ class cn extends E {
     this.client.log("%c ⬅️ Playlist Delete ", "color: BlueViolet; font-weight: bold; border: solid;", e);
   }
 }
-class dn extends E {
+class dn extends S {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist", client: e.client });
   }
@@ -462,7 +464,7 @@ class dn extends E {
     this.client.log(e);
   }
 }
-class un extends E {
+class un extends S {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist Complete", client: e.client });
   }
@@ -470,7 +472,7 @@ class un extends E {
     this.client.log(e);
   }
 }
-class hn extends E {
+class hn extends S {
   constructor(e) {
     super({ bridgeEventName: "Sync/Play Playlist Cancelled", client: e.client });
   }
@@ -478,7 +480,7 @@ class hn extends E {
     this.client.log(e);
   }
 }
-class _t extends E {
+class _t extends S {
   constructor(e) {
     super({ bridgeEventName: "New Item Playing", client: e.client });
   }
@@ -489,7 +491,7 @@ class _t extends E {
     e.payload.value.playlist_name.value == s && e.payload.value.index.value == r && (this.client.isCastPending = !1);
   }
 }
-class bt extends E {
+class bt extends S {
   constructor(e) {
     super({ bridgeEventName: "All Events", client: e.client });
   }
@@ -1224,7 +1226,7 @@ function h(n, e) {
   });
   n.common.issues.push(s);
 }
-class S {
+class E {
   constructor() {
     this.value = "valid";
   }
@@ -1252,7 +1254,7 @@ class S {
         value: o
       });
     }
-    return S.mergeObjectSync(e, s);
+    return E.mergeObjectSync(e, s);
   }
   static mergeObjectSync(e, t) {
     const s = {};
@@ -1346,7 +1348,7 @@ class _ {
   }
   _processInputParams(e) {
     return {
-      status: new S(),
+      status: new E(),
       ctx: {
         common: e.parent.common,
         data: e.data,
@@ -1507,7 +1509,7 @@ class _ {
     return this.safeParse(null).success;
   }
 }
-const Tt = /^c[^\s-]{8,}$/i, Ct = /^[0-9a-z]+$/, Pt = /^[0-9A-HJKMNP-TV-Z]{26}$/, Et = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/i, St = /^[a-z0-9_-]{21}$/i, It = /^[-+]?P(?!$)(?:(?:[-+]?\d+Y)|(?:[-+]?\d+[.,]\d+Y$))?(?:(?:[-+]?\d+M)|(?:[-+]?\d+[.,]\d+M$))?(?:(?:[-+]?\d+W)|(?:[-+]?\d+[.,]\d+W$))?(?:(?:[-+]?\d+D)|(?:[-+]?\d+[.,]\d+D$))?(?:T(?=[\d+-])(?:(?:[-+]?\d+H)|(?:[-+]?\d+[.,]\d+H$))?(?:(?:[-+]?\d+M)|(?:[-+]?\d+[.,]\d+M$))?(?:[-+]?\d+(?:[.,]\d+)?S)?)??$/, Nt = /^(?!\.)(?!.*\.\.)([A-Z0-9_'+\-\.]*)[A-Z0-9_+-]@([A-Z0-9][A-Z0-9\-]*\.)+[A-Z]{2,}$/i, jt = "^(\\p{Extended_Pictographic}|\\p{Emoji_Component})+$";
+const Tt = /^c[^\s-]{8,}$/i, Ct = /^[0-9a-z]+$/, Pt = /^[0-9A-HJKMNP-TV-Z]{26}$/, St = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/i, Et = /^[a-z0-9_-]{21}$/i, It = /^[-+]?P(?!$)(?:(?:[-+]?\d+Y)|(?:[-+]?\d+[.,]\d+Y$))?(?:(?:[-+]?\d+M)|(?:[-+]?\d+[.,]\d+M$))?(?:(?:[-+]?\d+W)|(?:[-+]?\d+[.,]\d+W$))?(?:(?:[-+]?\d+D)|(?:[-+]?\d+[.,]\d+D$))?(?:T(?=[\d+-])(?:(?:[-+]?\d+H)|(?:[-+]?\d+[.,]\d+H$))?(?:(?:[-+]?\d+M)|(?:[-+]?\d+[.,]\d+M$))?(?:[-+]?\d+(?:[.,]\d+)?S)?)??$/, Nt = /^(?!\.)(?!.*\.\.)([A-Z0-9_'+\-\.]*)[A-Z0-9_+-]@([A-Z0-9][A-Z0-9\-]*\.)+[A-Z]{2,}$/i, jt = "^(\\p{Extended_Pictographic}|\\p{Emoji_Component})+$";
 let Ze;
 const Ot = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$/, Zt = /^(([a-f0-9]{1,4}:){7}|::([a-f0-9]{1,4}:){0,6}|([a-f0-9]{1,4}:){1}:([a-f0-9]{1,4}:){0,5}|([a-f0-9]{1,4}:){2}:([a-f0-9]{1,4}:){0,4}|([a-f0-9]{1,4}:){3}:([a-f0-9]{1,4}:){0,3}|([a-f0-9]{1,4}:){4}:([a-f0-9]{1,4}:){0,2}|([a-f0-9]{1,4}:){5}:([a-f0-9]{1,4}:){0,1})([a-f0-9]{1,4}|(((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2}))\.){3}((25[0-5])|(2[0-4][0-9])|(1[0-9]{2})|([0-9]{1,2})))$/, Rt = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/, Fe = "((\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\\d|3[01])|(0[469]|11)-(0[1-9]|[12]\\d|30)|(02)-(0[1-9]|1\\d|2[0-8])))", Mt = new RegExp(`^${Fe}$`);
 function Ke(n) {
@@ -1535,7 +1537,7 @@ class R extends _ {
         received: a.parsedType
       }), g;
     }
-    const s = new S();
+    const s = new E();
     let r;
     for (const a of this._def.checks)
       if (a.kind === "min")
@@ -1586,13 +1588,13 @@ class R extends _ {
           message: a.message
         }), s.dirty());
       else if (a.kind === "uuid")
-        Et.test(e.data) || (r = this._getOrReturnCtx(e, r), h(r, {
+        St.test(e.data) || (r = this._getOrReturnCtx(e, r), h(r, {
           validation: "uuid",
           code: c.invalid_string,
           message: a.message
         }), s.dirty());
       else if (a.kind === "nanoid")
-        St.test(e.data) || (r = this._getOrReturnCtx(e, r), h(r, {
+        Et.test(e.data) || (r = this._getOrReturnCtx(e, r), h(r, {
           validation: "nanoid",
           code: c.invalid_string,
           message: a.message
@@ -1902,7 +1904,7 @@ class z extends _ {
       }), g;
     }
     let s;
-    const r = new S();
+    const r = new E();
     for (const a of this._def.checks)
       a.kind === "int" ? x.isInteger(e.data) || (s = this._getOrReturnCtx(e, s), h(s, {
         code: c.invalid_type,
@@ -2074,7 +2076,7 @@ class W extends _ {
       }), g;
     }
     let s;
-    const r = new S();
+    const r = new E();
     for (const a of this._def.checks)
       a.kind === "min" ? (a.inclusive ? e.data < a.value : e.data <= a.value) && (s = this._getOrReturnCtx(e, s), h(s, {
         code: c.too_small,
@@ -2222,7 +2224,7 @@ class F extends _ {
         code: c.invalid_date
       }), g;
     }
-    const s = new S();
+    const s = new E();
     let r;
     for (const a of this._def.checks)
       a.kind === "min" ? e.data.getTime() < a.value && (r = this._getOrReturnCtx(e, r), h(r, {
@@ -2284,7 +2286,7 @@ F.create = (n) => new F({
   typeName: m.ZodDate,
   ...v(n)
 });
-class Ee extends _ {
+class Se extends _ {
   _parse(e) {
     if (this._getType(e) !== f.symbol) {
       const s = this._getOrReturnCtx(e);
@@ -2297,7 +2299,7 @@ class Ee extends _ {
     return I(e.data);
   }
 }
-Ee.create = (n) => new Ee({
+Se.create = (n) => new Se({
   typeName: m.ZodSymbol,
   ...v(n)
 });
@@ -2373,7 +2375,7 @@ H.create = (n) => new H({
   typeName: m.ZodNever,
   ...v(n)
 });
-class Se extends _ {
+class Ee extends _ {
   _parse(e) {
     if (this._getType(e) !== f.undefined) {
       const s = this._getOrReturnCtx(e);
@@ -2386,7 +2388,7 @@ class Se extends _ {
     return I(e.data);
   }
 }
-Se.create = (n) => new Se({
+Ee.create = (n) => new Ee({
   typeName: m.ZodVoid,
   ...v(n)
 });
@@ -2426,9 +2428,9 @@ class M extends _ {
       exact: !1,
       message: r.maxLength.message
     }), s.dirty()), t.common.async)
-      return Promise.all([...t.data].map((o, l) => r.type._parseAsync(new D(t, o, t.path, l)))).then((o) => S.mergeArray(s, o));
+      return Promise.all([...t.data].map((o, l) => r.type._parseAsync(new D(t, o, t.path, l)))).then((o) => E.mergeArray(s, o));
     const a = [...t.data].map((o, l) => r.type._parseSync(new D(t, o, t.path, l)));
-    return S.mergeArray(s, a);
+    return E.mergeArray(s, a);
   }
   get element() {
     return this._def.type;
@@ -2552,7 +2554,7 @@ class P extends _ {
         });
       }
       return u;
-    }).then((u) => S.mergeObjectSync(s, u)) : S.mergeObjectSync(s, d);
+    }).then((u) => E.mergeObjectSync(s, u)) : E.mergeObjectSync(s, d);
   }
   get shape() {
     return this._def.shape();
@@ -2997,7 +2999,7 @@ class $ extends _ {
       const d = this._def.items[l] || this._def.rest;
       return d ? d._parse(new D(s, o, s.path, l)) : null;
     }).filter((o) => !!o);
-    return s.common.async ? Promise.all(a).then((o) => S.mergeArray(t, o)) : S.mergeArray(t, a);
+    return s.common.async ? Promise.all(a).then((o) => E.mergeArray(t, o)) : E.mergeArray(t, a);
   }
   get items() {
     return this._def.items;
@@ -3041,7 +3043,7 @@ class ge extends _ {
         value: o._parse(new D(s, s.data[l], s.path, l)),
         alwaysSet: l in s.data
       });
-    return s.common.async ? S.mergeObjectAsync(t, r) : S.mergeObjectSync(t, r);
+    return s.common.async ? E.mergeObjectAsync(t, r) : E.mergeObjectSync(t, r);
   }
   get element() {
     return this._def.valueType;
@@ -3713,7 +3715,7 @@ var m;
 })(m || (m = {}));
 const Lt = (n, e = {
   message: `Input not instance of ${n.name}`
-}) => st((t) => t instanceof n, e), De = R.create, nt = z.create, Ut = Ne.create, Ht = W.create, rt = ue.create, qt = F.create, zt = Ee.create, Wt = he.create, Gt = fe.create, Yt = re.create, Jt = X.create, Qt = H.create, Xt = Se.create, Ft = M.create, at = P.create, Kt = P.strictCreate, it = pe.create, es = je.create, ts = me.create, ss = $.create, ns = ge.create, rs = Ie.create, as = K.create, is = se.create, os = ye.create, V = ve.create, ls = G.create, cs = _e.create, ds = ae.create, Ge = A.create, us = B.create, hs = Y.create, fs = A.createWithPreprocess, ps = ke.create, ms = () => De().optional(), gs = () => nt().optional(), ys = () => rt().optional(), vs = {
+}) => st((t) => t instanceof n, e), De = R.create, nt = z.create, Ut = Ne.create, Ht = W.create, rt = ue.create, qt = F.create, zt = Se.create, Wt = he.create, Gt = fe.create, Yt = re.create, Jt = X.create, Qt = H.create, Xt = Ee.create, Ft = M.create, at = P.create, Kt = P.strictCreate, it = pe.create, es = je.create, ts = me.create, ss = $.create, ns = ge.create, rs = Ie.create, as = K.create, is = se.create, os = ye.create, V = ve.create, ls = G.create, cs = _e.create, ds = ae.create, Ge = A.create, us = B.create, hs = Y.create, fs = A.createWithPreprocess, ps = ke.create, ms = () => De().optional(), gs = () => nt().optional(), ys = () => rt().optional(), vs = {
   string: (n) => R.create({ ...n, coerce: !0 }),
   number: (n) => z.create({ ...n, coerce: !0 }),
   boolean: (n) => ue.create({
@@ -3731,7 +3733,7 @@ var i = /* @__PURE__ */ Object.freeze({
   makeIssue: Ce,
   EMPTY_PATH: kt,
   addIssueToContext: h,
-  ParseStatus: S,
+  ParseStatus: E,
   INVALID: g,
   DIRTY: te,
   OK: I,
@@ -3754,13 +3756,13 @@ var i = /* @__PURE__ */ Object.freeze({
   ZodBigInt: W,
   ZodBoolean: ue,
   ZodDate: F,
-  ZodSymbol: Ee,
+  ZodSymbol: Se,
   ZodUndefined: he,
   ZodNull: fe,
   ZodAny: re,
   ZodUnknown: X,
   ZodNever: H,
-  ZodVoid: Se,
+  ZodVoid: Ee,
   ZodArray: M,
   ZodObject: P,
   ZodUnion: pe,
@@ -3895,13 +3897,13 @@ const j = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   range: j(-0.05, 0.05),
   type: "float",
   defaultValue: 0
-}, Es = {
+}, Ss = {
   min: 1,
   max: 50,
   range: j(1, 50),
   type: "int",
   defaultValue: 5
-}, Ss = {
+}, Es = {
   min: 1,
   max: 50,
   range: j(1, 50),
@@ -3936,8 +3938,8 @@ const j = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   FILTER_MODE: lt,
   FOCUS: Ps,
   GAUSSIAN_SIGMA: ot,
-  QUILT_COLS: Ss,
-  QUILT_ROWS: Es,
+  QUILT_COLS: Es,
+  QUILT_ROWS: Ss,
   QUILT_VIEW_COUNT: Is,
   ROWS: ws,
   ZOOM: Le
@@ -3948,6 +3950,7 @@ const j = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   crop_pos_y: i.number().optional(),
   aspect: i.number(),
   viewCount: i.number(),
+  duration: i.number().optional(),
   focus: i.number().optional(),
   zoom: i.number().optional(),
   tag: i.string().optional()
@@ -3956,6 +3959,7 @@ const j = (n, e) => i.number().refine((t) => t >= n && t <= e, {
   columns: i.number().optional(),
   crop_pos_x: i.number().optional(),
   crop_pos_y: i.number().optional(),
+  duration: i.number().optional(),
   /**Aspect Ratio of the hologram,
    * this should match the source image you provide, not the RGBD Pair */
   aspect: i.number(),
@@ -4265,7 +4269,7 @@ export {
   bt as AllEventsMessageHandler,
   N as BridgeClient,
   J as BridgeEvent,
-  E as MessageHandler,
+  S as MessageHandler,
   Xs as MonitorConnectedMessageHandler,
   Fs as MonitorDisconnectedMessageHandler,
   _t as NewItemPlayingMessageHandler,

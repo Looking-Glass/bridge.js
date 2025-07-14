@@ -12,6 +12,7 @@ export interface PlaylistItemArgs {
     cols: number;
     aspect: number;
     view_count: number;
+    durationMS: number;
     isRGBD: 0 | 1;
     depth_loc: 0 | 1 | 2 | 3;
     depth_inversion: 0 | 1;

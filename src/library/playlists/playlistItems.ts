@@ -13,6 +13,7 @@ export interface PlaylistItemArgs {
 	cols: number
 	aspect: number
 	view_count: number
+	durationMS: number
 	isRGBD: 0 | 1
 	depth_loc: 0 | 1 | 2 | 3
 	depth_inversion: 0 | 1
@@ -60,6 +61,7 @@ class PlaylistItem {
 				uri: this.hologram.uri,
 				rows: settings.rows,
 				cols: settings.columns,
+				durationMS: settings.duration ? settings.duration : 10_000,
 				focus: settings.focus ? settings.focus : 0,
 				zoom: settings.zoom ? settings.zoom : 1,
 				crop_pos_x: settings.crop_pos_x ? settings.crop_pos_x : 0,
@@ -83,6 +85,7 @@ class PlaylistItem {
 				focus: settings.focus ? settings.focus : 0,
 				aspect: settings.aspect,
 				view_count: 8 * 13,
+				durationMS: settings.duration ? settings.duration : 10_000,
 				isRGBD: 1,
 				depth_loc: settings.depth_loc,
 				crop_pos_x: settings.crop_pos_x ? settings.crop_pos_x : 0,
