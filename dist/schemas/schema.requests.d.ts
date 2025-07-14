@@ -113,6 +113,7 @@ export declare const insert_playlist_entry: z.ZodObject<{
     cols: z.ZodNumber;
     aspect: z.ZodNumber;
     view_count: z.ZodNumber;
+    durationMS: z.ZodNumber;
     crop_pos_x: z.ZodNumber;
     crop_pos_y: z.ZodNumber;
     isRGBD: z.ZodUnion<[z.ZodLiteral<0>, z.ZodLiteral<1>]>;
@@ -135,6 +136,7 @@ export declare const insert_playlist_entry: z.ZodObject<{
     crop_pos_y: number;
     uri: string;
     view_count: number;
+    durationMS: number;
     isRGBD: 0 | 1;
     zoom?: number | undefined;
     depth_loc?: 0 | 2 | 1 | 3 | undefined;
@@ -155,6 +157,7 @@ export declare const insert_playlist_entry: z.ZodObject<{
     crop_pos_y: number;
     uri: string;
     view_count: number;
+    durationMS: number;
     isRGBD: 0 | 1;
     zoom?: number | undefined;
     depth_loc?: 0 | 2 | 1 | 3 | undefined;

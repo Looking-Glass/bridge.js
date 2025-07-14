@@ -16,6 +16,7 @@
 - [depth\_inversion](playlists_playlistItems.PlaylistItemArgs.md#depth_inversion)
 - [depth\_loc](playlists_playlistItems.PlaylistItemArgs.md#depth_loc)
 - [depthiness](playlists_playlistItems.PlaylistItemArgs.md#depthiness)
+- [durationMS](playlists_playlistItems.PlaylistItemArgs.md#durationms)
 - [id](playlists_playlistItems.PlaylistItemArgs.md#id)
 - [index](playlists_playlistItems.PlaylistItemArgs.md#index)
 - [isRGBD](playlists_playlistItems.PlaylistItemArgs.md#isrgbd)
@@ -74,6 +75,12 @@ ___
 ### depthiness
 
 • **depthiness**: `number`
+
+___
+
+### durationMS
+
+• **durationMS**: `number`
 
 ___
 
