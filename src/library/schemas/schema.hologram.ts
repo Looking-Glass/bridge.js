@@ -13,6 +13,7 @@ export const QuiltHologramArgs = z.object({
 	crop_pos_y: z.number().optional(),
 	aspect: z.number(),
 	viewCount: z.number(),
+	duration: z.number().optional(),
 	focus: z.number().optional(),
 	zoom: z.number().optional(),
 	tag: z.string().optional(),
@@ -23,6 +24,7 @@ export const RGBDHologramArgs = z.object({
 	columns: z.number().optional(),
 	crop_pos_x: z.number().optional(),
 	crop_pos_y: z.number().optional(),
+	duration: z.number().optional(),
 	/**Aspect Ratio of the hologram,
 	 * this should match the source image you provide, not the RGBD Pair */
 	aspect: z.number(),

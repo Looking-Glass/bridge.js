@@ -51,6 +51,12 @@ export default function HologramForm({
 								setHologramUri(cleaned)
 							}}></input>
 					</label>
+					<label>
+						duration (seconds):
+						<input type="number" onChange={(e) => {setHologramSettings({...hologramSettings, duration: parseInt(e.target.value) * 1000})}} min={1} max={100}>
+
+						</input>
+					</label>
 				</div>
 
 				{/* Settings for RGBD holograms */}

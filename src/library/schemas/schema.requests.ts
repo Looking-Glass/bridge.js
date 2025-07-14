@@ -63,6 +63,7 @@ export const insert_playlist_entry = z.object({
 	cols: z.number(),
 	aspect: z.number(),
 	view_count: z.number(),
+	durationMS: z.number(),
 	crop_pos_x: z.number(),
 	crop_pos_y: z.number(),
 	isRGBD: z.union([z.literal(0), z.literal(1)]),
