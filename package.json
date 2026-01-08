@@ -13,6 +13,7 @@
 	"module": "./dist/looking-glass-bridge.mjs",
 	"exports": {
 		".": {
+			"types": "./dist/index.d.ts",
 			"import": "./dist/looking-glass-bridge.js",
 			"require": "./dist/looking-glass-bridge.mjs"
 		}
